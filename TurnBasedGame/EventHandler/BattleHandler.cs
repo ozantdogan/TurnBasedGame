@@ -30,11 +30,11 @@ namespace TurnBasedGame.Main
                         bool actionResult;
                         if(unit.UnitType == EnumUnitType.Player)
                         {
-                            actionResult = PerformTurn(unit, mobUnits);
+                            actionResult = PerformTurn(unit, mobUnits, playerUnits);
                         }
                         else
                         {
-                            actionResult = PerformTurn(unit, playerUnits.Where(u => u.IsAlive).ToList());
+                            actionResult = PerformTurn(unit, playerUnits.Where(u => u.IsAlive).ToList(), mobUnits.Where(u => u.IsAlive).ToList());
                         }
                         if (actionResult)
                         {
@@ -91,7 +91,7 @@ namespace TurnBasedGame.Main
             return 0;
         }
 
-        private bool PerformTurn(Unit actor, List<Unit> targets)
+        private bool PerformTurn(Unit actor, List<Unit> enemyTargets, List<Unit> friendlyTargets)
         {
             Console.WriteLine($"{actor.Name}'s turn!");
 
@@ -100,7 +100,7 @@ namespace TurnBasedGame.Main
             if (actor.UnitType == EnumUnitType.Player)
             {
                 // Display skill choices using Spectre.Console
-                var skillChoices = actor.Skills.Select((skill, index) => $"{index + 1}. {skill.Name}  (MP: {skill.ManaCost})").ToArray();
+                var skillChoices = actor.Skills.Select((skill, index) => $"{index + 1}. {skill.Name}  [cyan]({skill.ManaCost})[/]").ToArray();
                 var skillChoiceIndex = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("Choose an action:")
@@ -116,8 +116,13 @@ namespace TurnBasedGame.Main
                     return false;
                 }
 
+                if (actor.Skills[skillChoice] is MoveSkill moveSkill)
+                {
+                    return moveSkill.Execute(actor, friendlyTargets);
+                }
+
                 // Display target choices using Spectre.Console
-                var targetChoices = targets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
+                var targetChoices = enemyTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
                 var targetChoiceIndex = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("Choose a target:")
@@ -127,9 +132,9 @@ namespace TurnBasedGame.Main
                 // Convert the choice back to the index
                 int targetChoice = Array.IndexOf(targetChoices, targetChoiceIndex);
 
-                if (targetChoice >= 0 && targetChoice < targets.Count && targets[targetChoice].IsAlive)
+                if (targetChoice >= 0 && targetChoice < enemyTargets.Count && enemyTargets[targetChoice].IsAlive)
                 {
-                    target = targets[targetChoice];
+                    target = enemyTargets[targetChoice];
                 }
                 else
                 {
@@ -140,8 +145,8 @@ namespace TurnBasedGame.Main
             else // mob
             {
                 skillChoice = _random.Next(actor.Skills.Count);
-                var targetIndex = _random.Next(targets.Count);
-                target = targets[targetIndex];
+                var targetIndex = _random.Next(enemyTargets.Count);
+                target = enemyTargets[targetIndex];
             }
 
             var actionCompleted = actor.Skills[skillChoice].Execute(actor, target);

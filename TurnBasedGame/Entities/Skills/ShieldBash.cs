@@ -18,5 +18,10 @@ namespace TurnBasedGame.Main.Entities.Skills
         {
             return PerformAttack(actor, target, actor.BaseMeleeDamage);
         }
+
+        public override bool Execute(Unit actor, List<Unit> targets)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -18,6 +18,11 @@ namespace TurnBasedGame.Entities.Base
         private int _baseCriticalDamage;
         private int _turnPriority;
 
+        public Unit() {
+            Skills.Add(new MoveSkill("Move Left", true));
+            Skills.Add(new MoveSkill("Move Right", false));
+        }
+
         #region Properties
 
         [StringLength(5)] public string Code { get; set; } = "{   }";

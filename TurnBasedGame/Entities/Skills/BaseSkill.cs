@@ -25,6 +25,8 @@ namespace TurnBasedGame.Main.Entities.Skills
         public EnumDamageType SecondaryDamageType { get; set; }
 
         public abstract bool Execute(Unit actor, Unit target);
+        public abstract bool Execute(Unit actor, List<Unit> targets);
+
         protected bool CalculateMana(Unit actor, int manaCost)
         {
             if (actor.MP < ManaCost)
