@@ -2,7 +2,7 @@
 using TurnBasedGame.Entities.Heroes;
 using TurnBasedGame.Entities.Mobs;
 using TurnBasedGame.Main;
-using TurnBasedGame.Main.Skills;
+using TurnBasedGame.Main.Helpers;
 
 namespace TurnBasedGame
 {
@@ -10,11 +10,19 @@ namespace TurnBasedGame
     {
         static void Main(string[] args)
         {
-            Unit knight = new Knight();
-            Unit skeleton = new Skeleton();
+            Unit knight = new Knight() { UnitType = EnumUnitType.Player };
+            Unit skeleton = new Skeleton() { UnitType = EnumUnitType.Mob };
+            Unit skeleton2 = new Skeleton() { UnitType = EnumUnitType.Mob };
+
+            List<Unit> Heroes = new List<Unit>();
+            List<Unit> Mobs = new List<Unit>();
+
+            Heroes.Add(knight); 
+            Mobs.Add(skeleton);
+            Mobs.Add(skeleton2);
 
             BattleHandler battle = new BattleHandler();
-            battle.StartBattle(knight, skeleton);
+            battle.StartBattle(Heroes, Mobs);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using TurnBasedGame.Entities.Base;
 
-namespace TurnBasedGame.Main.Skills
+namespace TurnBasedGame.Main.Entities.Skills
 {
     public class AttackSkill : BaseSkill
     {
@@ -19,15 +19,18 @@ namespace TurnBasedGame.Main.Skills
         }
         public override bool Execute(Unit actor, Unit target)
         {
+            Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
+
             if (AttemptDodge(target))
             {
                 Console.WriteLine($"{target.Name} managed to dodge the attack!");
                 return true;
             }
-            var damageDealt = actor.BaseDamage + random.Next(0 ,3);
+            var damageDealt = actor.BaseDamage + random.Next(0, 3);
             target.HP -= damageDealt;
 
-            Console.WriteLine($"{actor.Name} dealt {damageDealt} DAMAGE to {target.Name} ({target.HP} HP left)");
+            Console.WriteLine($"{actor.Name} dealt {damageDealt} DAMAGE to {target.Name} " +
+                              (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
             return true;
         }
     }

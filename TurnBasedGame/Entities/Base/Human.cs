@@ -1,9 +1,11 @@
-﻿namespace TurnBasedGame.Entities.Base
+﻿using TurnBasedGame.Main.Helpers;
+
+namespace TurnBasedGame.Entities.Base
 {
     public class Human : Unit
     {
         public Human() {
-            UnitType = 0;
+            Race = EnumRace.Human;
         }
     }
 }

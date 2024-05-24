@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TurnBasedGame.Main.Skills;
+using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Helpers;
 
 namespace TurnBasedGame.Entities.Base
 {
@@ -17,6 +18,7 @@ namespace TurnBasedGame.Entities.Base
         private int baseCrit;
 
         #region Properties
+
         [StringLength(5)] public string Code { get; set; } = "{   }";
         public string? Name { get; set; }
         public List<BaseSkill> Skills { get; set; } = new List<BaseSkill>();
@@ -65,12 +67,24 @@ namespace TurnBasedGame.Entities.Base
 
         public bool IsStunned { get; set; } = false;
 
-        public int UnitType { get; set; }
+        public bool IsAlive => HP > 0;
 
-        public bool IsAlive { get; set; } = true;
+        public int TurnPriority
+        {
+            get { return baseDamage; }
+            set { baseDamage = value < 0 ? 0 : value; }
+        }
+
+        public int Order { get; set; }
+
+        public EnumUnitType UnitType { get; set; }
+
+        public EnumRace Race { get; set; }
+
         #endregion
 
         #region Attributes
+
         public int Strength
         {
             get { return strength; }
@@ -88,6 +102,7 @@ namespace TurnBasedGame.Entities.Base
             get { return intelligence; }
             set { intelligence = value < 0 ? 0 : value; }
         }
+
         #endregion
 
     }

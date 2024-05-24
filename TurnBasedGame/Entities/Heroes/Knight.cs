@@ -1,5 +1,5 @@
 ﻿using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Main.Skills;
+using TurnBasedGame.Main.Entities.Skills;
 
 namespace TurnBasedGame.Entities.Heroes
 {

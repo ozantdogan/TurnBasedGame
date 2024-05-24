@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Entities.Base;
+using TurnBasedGame.Main.Helpers;
 
 namespace TurnBasedGame.Main
 {
@@ -13,37 +14,32 @@ namespace TurnBasedGame.Main
         }
 
         // Method to start the battle
-        public void StartBattle(Unit playerUnit, Unit mobUnit)
+        public void StartBattle(List<Unit> playerUnits, List<Unit> mobUnits)
         {
             Console.WriteLine("Battle started!");
-
             // Main battle loop
-            while (playerUnit.HP > 0 && mobUnit.HP > 0)
+            while (playerUnits.Any(unit => unit.IsAlive) && mobUnits.Any(unit => unit.IsAlive))
             {
-                ShowStatus(playerUnit, mobUnit);
+                // Assuming for simplicity that the first alive unit in each list participates in each turn
+                Unit playerUnit = playerUnits.First(unit => unit.IsAlive);
+                Unit mobUnit = mobUnits.First(unit => unit.IsAlive);
+
+                ShowStatus(playerUnits, mobUnits);
                 PerformTurn(playerUnit, mobUnit);
-                if (mobUnit.HP <= 0)
-                {
-                    Console.WriteLine("Monster defeated!");
-                    break;
-                }
+
                 Thread.Sleep(2000);
                 Console.Clear();
 
-                ShowStatus(playerUnit, mobUnit);
-                PerformMonsterTurn(mobUnit, playerUnit);
-                if (playerUnit.HP <= 0)
-                {
-                    Console.WriteLine("Player defeated!");
-                    break;
-                }
+                ShowStatus(playerUnits, mobUnits);
+                PerformTurn(mobUnit, playerUnit);
+
                 Thread.Sleep(2000);
                 Console.Clear();
+
                 PostTurn(playerUnit, mobUnit);
             }
 
             Console.Clear();
-            ShowStatus(playerUnit, mobUnit);
             Console.WriteLine("Battle ended.");
         }
 
@@ -52,73 +48,76 @@ namespace TurnBasedGame.Main
             playerUnit.MP = Math.Min(playerUnit.MP + 2, playerUnit.MaxMP);
         }
 
-        // Method to perform a turn
         private void PerformTurn(Unit actor, Unit target)
         {
             Console.WriteLine($"{actor.Name}'s turn!");
-
-            // Display available actions
-            for (int i = 0; i < actor.Skills.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {actor.Skills[i].Name}");
-            }
-
             while (true)
             {
-                // Let the player choose an action
-                Console.Write("Choose an action: ");
-                int choice = Convert.ToInt32(Console.ReadLine()) - 1;
+                int choice;
+                if (actor.UnitType == EnumUnitType.Player)
+                {
+                    // Display available actions
+                    for (int i = 0; i < actor.Skills.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {actor.Skills[i].Name}  (MP: {actor.Skills[i].ManaCost})");
+                    }
 
-                // Ensure the choice is valid
-                if (choice < 0 || choice >= actor.Skills.Count)
-                    Console.WriteLine("Invalid choice!");
+                    // Let the player choose an action
+                    Console.Write("Choose an action: ");
+                    choice = Convert.ToInt32(Console.ReadLine()) - 1;
+
+                    // Ensure the choice is valid
+                    if (choice < 0 || choice >= actor.Skills.Count)
+                        Console.WriteLine("Invalid choice!");
+                }
                 else
                 {
-                    // Execute the chosen action
-                    var actionCompleted = actor.Skills[choice].Execute(actor, target);
-                    if (actionCompleted)
-                        break;
+                    // Choose a random action for the monster
+                    choice = _random.Next(actor.Skills.Count);
                 }
+
+                var actionCompleted = actor.Skills[choice].Execute(actor, target);
+                if (actionCompleted)
+                    break;
             }
         }
 
-        private void PerformMonsterTurn(Unit mobUnit, Unit playerUnit)
-        {
-            Console.WriteLine($"{mobUnit.Name}'s turn!");
-
-            // Choose a random action for the monster
-            int randomActionIndex = _random.Next(mobUnit.Skills.Count);
-            mobUnit.Skills[randomActionIndex].Execute(mobUnit, playerUnit);
-        }
-
-        private void ShowStatus(Unit playerUnit, Unit mobUnit)
+        private void ShowStatus(List<Unit> playerUnits, List<Unit> mobUnits)
         {
             //https://spectreconsole.net/
 
-            //Console.WriteLine($"{playerUnit.Code}" + new string(' ', 9) + $"{mobUnit.Code}");
-            //Console.WriteLine($"HP: {playerUnit.HP}" + new string(' ', 10-playerUnit.HP.ToString().Length) + $"HP: {mobUnit.HP}");
-            //Console.WriteLine($"MP: {playerUnit.MP}" + new string(' ', 10 - playerUnit.MP.ToString().Length) + $" ");
-            
-            //var layout = new Layout("Root")
-            //    .SplitColumns(
-            //    new Layout("Left"),
-            //    new Layout("Right")).Size(1);
-
-            //layout["Left"].Update(new Panel(Align.Center(new Markup($"{playerUnit.Name}"),VerticalAlignment.Top)).Expand());
-            //layout["Left"].Update(new Panel(Align.Center(new BarChart().Width(playerUnit.HP).AddItem("HP: ", playerUnit.HP, Color.Green), VerticalAlignment.Middle)).Expand());
-
-            //AnsiConsole.Write(layout);
-
             var playerTable = new Table();
-            playerTable.AddColumn(" ");
-            playerTable.AddColumn(playerUnit.Code).LeftAligned();
-            playerTable.AddRow("[bold][seagreen2]HP[/][/]", $"{playerUnit.HP}");
-            playerTable.AddRow("[bold][skyblue2]MP[/][/]", $"{playerUnit.MP}");
+            playerTable.Border = TableBorder.Simple;
+            playerTable.AddColumn(" ").LeftAligned();
+            foreach (Unit unit in playerUnits)
+            {
+                playerTable.AddColumn(unit.Code).LeftAligned();
+            }
+
+            var playerHpRow = new List<string> { "[seagreen2]HP[/]" };
+            var playerMpRow = new List<string> { "[skyblue2]MP[/]" };
+            foreach (Unit unit in playerUnits)
+            {
+                playerHpRow.Add(unit.HP.ToString());
+                playerMpRow.Add(unit.MP.ToString()); // Assuming you have an Mp property
+            }
+
+            playerTable.AddRow(playerHpRow.ToArray());
+            playerTable.AddRow(playerMpRow.ToArray());
 
             var mobTable = new Table();
-            mobTable.AddColumn(" ");
-            mobTable.AddColumn($"[red]{mobUnit.Code}[/]").Centered();
-            mobTable.AddRow("[bold][seagreen2]HP[/][/]", $"{mobUnit.HP}");
+            mobTable.Border = TableBorder.Simple;
+            mobTable.AddColumn(" ").Centered();
+            foreach (Unit unit in mobUnits)
+            {
+                mobTable.AddColumn($"[red]{unit.Code}[/]").Centered();
+            }
+            var mobHpRow = new List<string> { "[seagreen2]HP[/]" };
+            foreach (Unit unit in mobUnits)
+            {
+                mobHpRow.Add(unit.HP.ToString());
+            }
+            mobTable.AddRow(mobHpRow.ToArray());
 
             AnsiConsole.Write(mobTable);
             AnsiConsole.Write(playerTable);

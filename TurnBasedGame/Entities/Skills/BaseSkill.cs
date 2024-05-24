@@ -1,13 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Entities.Base;
 
-namespace TurnBasedGame.Main.Skills
+namespace TurnBasedGame.Main.Entities.Skills
 {
     public abstract class BaseSkill
     {
         private Random _random;
 
-        public BaseSkill() { 
+        public BaseSkill()
+        {
             _random = new Random();
         }
 
@@ -19,7 +20,7 @@ namespace TurnBasedGame.Main.Skills
         public int ResistanceValue { get; set; }
 
         public abstract bool Execute(Unit actor, Unit target);
-        protected bool CalculateMana(Unit actor)
+        protected bool CalculateMana(Unit actor, int manaCost)
         {
             if (actor.MP < ManaCost)
             {
@@ -28,6 +29,7 @@ namespace TurnBasedGame.Main.Skills
             }
             else
             {
+                actor.MP -= manaCost;
                 return true;
             }
         }
@@ -36,6 +38,28 @@ namespace TurnBasedGame.Main.Skills
             int dodgeChance = target.Dexterity * 2;
             int roll = _random.Next(100);
             return roll < dodgeChance;
+        }
+        protected bool PerformAttack(Unit actor, Unit target, int damage, int manaCost = 0)
+        {
+            if(manaCost > 0)
+            {
+                if (!CalculateMana(actor, manaCost))
+                    return false;
+            }
+
+            Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
+
+            if (AttemptDodge(target))
+            {
+                Console.WriteLine($"{target.Name} managed to dodge the attack!");
+                return true;
+            }
+
+            target.HP -= damage;
+
+            Console.WriteLine($"{actor.Name} dealt {damage} DAMAGE to {target.Name} " +
+                              (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
+            return true;
         }
     }
 }
