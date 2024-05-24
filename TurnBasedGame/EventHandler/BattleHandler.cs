@@ -41,7 +41,7 @@ namespace TurnBasedGame.Main
                             Thread.Sleep(1500);
                             break;
                         }
-                        Thread.Sleep(500);
+                        Thread.Sleep(1200);
                     }
                     battleResult = CheckAlives(playerUnits, mobUnits);
                     if (battleResult != 0)
@@ -170,7 +170,7 @@ namespace TurnBasedGame.Main
             }
             else // mob
             {
-                if(friendlyTargets.Count(t => t.IsAlive) > 1 && _random.Next(100) < 100)
+                if(friendlyTargets.Count(t => t.IsAlive) > 1 && _random.Next(100) < 10)
                 {
                     skillChoice = _random.Next(actor.Skills.Count);
                     if (actor.Skills[skillChoice] is MoveSkill moveSkill)
