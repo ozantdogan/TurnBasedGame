@@ -99,13 +99,16 @@ namespace TurnBasedGame.Main
             Unit target;
             if (actor.UnitType == EnumUnitType.Player)
             {
-                for (int i = 0; i < actor.Skills.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {actor.Skills[i].Name}  (MP: {actor.Skills[i].ManaCost})");
-                }
+                // Display skill choices using Spectre.Console
+                var skillChoices = actor.Skills.Select((skill, index) => $"{index + 1}. {skill.Name}  (MP: {skill.ManaCost})").ToArray();
+                var skillChoiceIndex = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Choose an action:")
+                        .AddChoices(skillChoices)
+                );
 
-                Console.Write("Choose an action: ");
-                skillChoice = Convert.ToInt32(Console.ReadLine()) - 1;
+                // Convert the choice back to the index
+                skillChoice = Array.IndexOf(skillChoices, skillChoiceIndex);
 
                 if (skillChoice < 0 || skillChoice >= actor.Skills.Count)
                 {
@@ -113,8 +116,17 @@ namespace TurnBasedGame.Main
                     return false;
                 }
 
-                Console.Write("Choose a target: ");
-                int targetChoice = Convert.ToInt32(Console.ReadLine()) - 1;
+                // Display target choices using Spectre.Console
+                var targetChoices = targets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
+                var targetChoiceIndex = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title("Choose a target:")
+                        .AddChoices(targetChoices)
+                );
+
+                // Convert the choice back to the index
+                int targetChoice = Array.IndexOf(targetChoices, targetChoiceIndex);
+
                 if (targetChoice >= 0 && targetChoice < targets.Count && targets[targetChoice].IsAlive)
                 {
                     target = targets[targetChoice];
