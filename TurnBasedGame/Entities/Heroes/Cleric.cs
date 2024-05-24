@@ -24,7 +24,8 @@ namespace TurnBasedGame.Main.Entities.Heroes
             BaseCriticalDamage = 30;
             CriticalChance = 5;
             TurnPriority = 1;
-            Skills.Add(new Pierce());
+            Skills.Add(new DaggerPierce());
+            Skills.Add(new Heal());
         }
     }
 }

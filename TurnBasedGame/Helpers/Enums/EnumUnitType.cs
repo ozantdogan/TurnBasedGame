@@ -1,4 +1,4 @@
-﻿namespace TurnBasedGame.Main.Helpers
+﻿namespace TurnBasedGame.Main.Helpers.Enums
 {
     public enum EnumUnitType
     {

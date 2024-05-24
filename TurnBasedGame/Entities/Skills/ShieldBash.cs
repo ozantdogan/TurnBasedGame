@@ -1,5 +1,5 @@
 ﻿using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Main.Helpers;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
@@ -17,11 +17,6 @@ namespace TurnBasedGame.Main.Entities.Skills
         public override bool Execute(Unit actor, Unit target)
         {
             return PerformAttack(actor, target, actor.BaseMeleeDamage);
-        }
-
-        public override bool Execute(Unit actor, List<Unit> targets)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -3,7 +3,7 @@ using TurnBasedGame.Entities.Heroes;
 using TurnBasedGame.Entities.Mobs;
 using TurnBasedGame.Main;
 using TurnBasedGame.Main.Entities.Heroes;
-using TurnBasedGame.Main.Helpers;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame
 {

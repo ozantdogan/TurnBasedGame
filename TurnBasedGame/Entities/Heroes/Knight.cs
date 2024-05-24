@@ -24,7 +24,7 @@ namespace TurnBasedGame.Entities.Heroes
             CriticalChance = 5;
             TurnPriority = 1;
             Skills.Add(new ShieldBash());
-            Skills.Add(new Slash());
+            Skills.Add(new SwordSlash());
         }
     }
 }

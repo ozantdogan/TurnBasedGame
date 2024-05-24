@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Main.Helpers;
+using TurnBasedGame.Main.Helpers.Abstract;
+using TurnBasedGame.Main.Helpers.Enums;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public abstract class BaseSkill
+    public abstract class BaseSkill : ISkill
     {
         private Random _random;
 
@@ -18,6 +20,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public bool PassiveFlag { get; set; }
         public int ManaCost { get; set; }
         public int BaseDamageValue { get; set; }
+        public int BaseBuffValue { get; set; }
         public int DamageModifier { get; set; }
         public int ResistanceValue { get; set; }
         public int Accuracy {  get; set; }
@@ -25,8 +28,10 @@ namespace TurnBasedGame.Main.Entities.Skills
         public EnumDamageType SecondaryDamageType { get; set; }
 
         public abstract bool Execute(Unit actor, Unit target);
-        public abstract bool Execute(Unit actor, List<Unit> targets);
-
+        public virtual bool Execute(Unit actor, List<Unit> targets)
+        {
+            throw new NotImplementedException("This skill does not support multiple target execution.");
+        }
         protected bool CalculateMana(Unit actor, int manaCost)
         {
             if (actor.MP < ManaCost)
@@ -97,5 +102,48 @@ namespace TurnBasedGame.Main.Entities.Skills
                               (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
             return true;
         }
+
+        protected bool PerformHeal(Unit actor, Unit target)
+        {
+            if (ManaCost > 0)
+            {
+                if (!CalculateMana(actor, ManaCost))
+                    return false;
+            }
+
+            Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
+
+            int healingValue = (actor.Faith / 4 + BaseBuffValue + _random.Next(actor.Faith));
+            target.HP += healingValue;
+
+            Console.WriteLine($"{actor.Name} healed {target.Name} +{healingValue}HP ");
+            return true;
+        }
+
+        ////(TODO)
+        //protected bool PerformAttack(Unit actor, List<Unit> targets, int damage)
+        //{
+        //    if (ManaCost > 0)
+        //    {
+        //        if (!CalculateMana(actor, ManaCost))
+        //            return false;
+        //    }
+
+        //    Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
+
+        //    if (HasMissed(actor) || HasDodged(target))
+        //        return true;
+
+        //    int damageDealt = ((damage + actor.Strength) + BaseDamageValue) - (target.BaseResistance + (target.Strength / 4));
+        //    if (CalculateCrit(actor))
+        //        damageDealt += actor.BaseCriticalDamage;
+
+        //    target.HP -= damageDealt;
+
+        //    Console.WriteLine($"{actor.Name} dealt {damageDealt} DAMAGE to {target.Name} " +
+        //                      (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
+        //    return true;
+        //}
+
     }
 }

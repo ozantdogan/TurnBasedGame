@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Main.Helpers;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class Pierce : BaseSkill
+    public class DaggerPierce : BaseSkill
     {
-        public Pierce()
+        public DaggerPierce()
         {
             Name = "Pierce";
             ManaCost = 0;
@@ -19,15 +19,9 @@ namespace TurnBasedGame.Main.Entities.Skills
             PrimaryDamageType = EnumDamageType.Pierce;
         }
 
-        //todo:
         public override bool Execute(Unit actor, Unit target)
         {
             return PerformAttack(actor, target, actor.BaseMeleeDamage);
-        }
-
-        public override bool Execute(Unit actor, List<Unit> targets)
-        {
-            throw new NotImplementedException();
         }
     }
 }

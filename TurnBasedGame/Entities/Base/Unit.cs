@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Main.Entities.Skills;
-using TurnBasedGame.Main.Helpers;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Entities.Base
 {

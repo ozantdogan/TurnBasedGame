@@ -1,6 +1,6 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Main.Helpers;
+using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main
@@ -121,30 +121,72 @@ namespace TurnBasedGame.Main
                     return moveSkill.Execute(actor, friendlyTargets);
                 }
 
-                // Display target choices using Spectre.Console
-                var targetChoices = enemyTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
-                var targetChoiceIndex = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title("Choose a target:")
-                        .AddChoices(targetChoices)
-                );
-
-                // Convert the choice back to the index
-                int targetChoice = Array.IndexOf(targetChoices, targetChoiceIndex);
-
-                if (targetChoice >= 0 && targetChoice < enemyTargets.Count && enemyTargets[targetChoice].IsAlive)
+                if (actor.Skills[skillChoice].PassiveFlag)
                 {
-                    target = enemyTargets[targetChoice];
+                    // Display target choices using Spectre.Console
+                    var targetChoices = friendlyTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
+                    var targetChoiceIndex = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("Choose a target:")
+                            .AddChoices(targetChoices)
+                    );
+
+                    // Convert the choice back to the index
+                    int targetChoice = Array.IndexOf(targetChoices, targetChoiceIndex);
+
+                    if (targetChoice >= 0 && targetChoice < friendlyTargets.Count && friendlyTargets[targetChoice].IsAlive)
+                    {
+                        target = friendlyTargets[targetChoice];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid target choice!");
+                        return false;
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Invalid target choice!");
-                    return false;
+                    // Display target choices using Spectre.Console
+                    var targetChoices = enemyTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
+                    var targetChoiceIndex = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title("Choose a target:")
+                            .AddChoices(targetChoices)
+                    );
+
+                    // Convert the choice back to the index
+                    int targetChoice = Array.IndexOf(targetChoices, targetChoiceIndex);
+
+                    if (targetChoice >= 0 && targetChoice < enemyTargets.Count && enemyTargets[targetChoice].IsAlive)
+                    {
+                        target = enemyTargets[targetChoice];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid target choice!");
+                        return false;
+                    }
                 }
             }
             else // mob
             {
-                skillChoice = _random.Next(actor.Skills.Count);
+                if(friendlyTargets.Count(t => t.IsAlive) > 1 && _random.Next(100) < 100)
+                {
+                    skillChoice = _random.Next(actor.Skills.Count);
+                    if (actor.Skills[skillChoice] is MoveSkill moveSkill)
+                    {
+                        bool moveLeft = _random.Next(2) == 0; 
+                        int newIndex = moveLeft ? friendlyTargets.IndexOf(actor) - 1 : friendlyTargets.IndexOf(actor) + 1;
+                        if (newIndex >= 0 && newIndex < friendlyTargets.Count)
+                        {
+                            return moveSkill.Execute(actor, friendlyTargets);
+                        }
+                    }
+                }
+
+                var nonMoveSkills = actor.Skills.Where(skill => !(skill is MoveSkill)).ToList();
+                skillChoice = _random.Next(nonMoveSkills.Count) + 2;
+                
                 var targetIndex = _random.Next(enemyTargets.Count);
                 target = enemyTargets[targetIndex];
             }

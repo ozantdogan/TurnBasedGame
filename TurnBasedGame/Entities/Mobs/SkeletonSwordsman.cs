@@ -10,7 +10,7 @@ namespace TurnBasedGame.Entities.Mobs
             Code = "{SSW}";
             Name = "Skeleton Swordsman";
             DisplayName = $"Skeleton\nSwordsman";
-            Skills.Add(new Slash());
+            Skills.Add(new SwordSlash());
         }
     }
 }

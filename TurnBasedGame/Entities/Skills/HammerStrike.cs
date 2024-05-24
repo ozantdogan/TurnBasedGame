@@ -5,29 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Main.Helpers;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class Slash : BaseSkill
+    public class HammerStrike : BaseSkill
     {
-        public Slash()
+        public HammerStrike()
         {
-            Name = "Slash";
+            Name = "Blunt";
             ManaCost = 0;
             PassiveFlag = false;
-            PrimaryDamageType = EnumDamageType.Slash;
+            PrimaryDamageType = EnumDamageType.Blunt;
         }
 
-        //todo:
         public override bool Execute(Unit actor, Unit target)
         {
             return PerformAttack(actor, target, actor.BaseMeleeDamage);
-        }
-
-        public override bool Execute(Unit actor, List<Unit> targets)
-        {
-            throw new NotImplementedException();
         }
     }
 }

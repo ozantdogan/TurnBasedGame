@@ -10,7 +10,7 @@ namespace TurnBasedGame.Entities.Mobs
             Code = "{SSB}";
             Name = "Skeleton Brute";
             DisplayName = $"Skeleton\nBrute";
-            Skills.Add(new Blunt());
+            Skills.Add(new HammerStrike());
         }
     }
 }
