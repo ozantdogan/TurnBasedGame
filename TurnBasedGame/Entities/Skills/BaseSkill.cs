@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Entities.Base;
+using TurnBasedGame.Main.Helpers;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
@@ -16,8 +17,11 @@ namespace TurnBasedGame.Main.Entities.Skills
         [StringLength(100)] public string Description { get; set; } = "";
         public bool PassiveFlag { get; set; }
         public int ManaCost { get; set; }
-        public int DamageValue { get; set; }
+        public int BaseDamageValue { get; set; }
+        public int DamageModifier { get; set; }
         public int ResistanceValue { get; set; }
+        public int Accuracy {  get; set; }
+        public EnumDamageType DamageType { get; set; }
 
         public abstract bool Execute(Unit actor, Unit target);
         protected bool CalculateMana(Unit actor, int manaCost)
@@ -33,31 +37,60 @@ namespace TurnBasedGame.Main.Entities.Skills
                 return true;
             }
         }
-        protected bool AttemptDodge(Unit target)
+        protected bool CalculateCrit(Unit actor)
+        {
+            if (actor.CriticalChance > _random.Next(101))
+            {
+                Console.WriteLine("Critical Hit!");
+                return true;
+            }
+            return false;
+        }
+
+        protected bool HasDodged(Unit target)
         {
             int dodgeChance = target.Dexterity * 2;
             int roll = _random.Next(100);
-            return roll < dodgeChance;
+            if(roll < dodgeChance)
+            {
+                Console.WriteLine($"{target.Name} managed to dodge the attack!");
+                return true;
+            }
+            return false;
         }
-        protected bool PerformAttack(Unit actor, Unit target, int damage, int manaCost = 0)
+
+        protected bool HasMissed(Unit actor)
+        {
+            int missChance = 100 / (actor.Dexterity + Accuracy);
+            int roll = _random.Next(100);
+            if (roll < missChance)
+            {
+                Console.WriteLine($"{actor.Name} missed the attack!");
+                return true;
+            }
+            return false;
+        }
+
+        protected bool PerformAttack(Unit actor, Unit target, int baseDamage = 0, int manaCost = 0)
         {
             if(manaCost > 0)
             {
-                if (!CalculateMana(actor, manaCost))
+                if (!CalculateMana(actor, ManaCost))
                     return false;
             }
 
             Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
 
-            if (AttemptDodge(target))
-            {
-                Console.WriteLine($"{target.Name} managed to dodge the attack!");
+            if (HasMissed(actor) || HasDodged(target))
                 return true;
-            }
 
-            target.HP -= damage;
+            int damageDealt = ((actor.BaseMeleeDamage + actor.Strength) + baseDamage) - (target.BaseResistance + (target.Strength / 4));
+            if (CalculateCrit(actor))
+                damageDealt += actor.BaseCriticalDamage;
 
-            Console.WriteLine($"{actor.Name} dealt {damage} DAMAGE to {target.Name} " +
+            target.HP -= damageDealt;
+
+            Console.WriteLine($"{actor.Name} dealt {damageDealt} DAMAGE to {target.Name} " +
                               (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
             return true;
         }

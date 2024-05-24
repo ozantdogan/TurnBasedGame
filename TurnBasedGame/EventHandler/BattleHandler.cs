@@ -151,7 +151,7 @@ namespace TurnBasedGame.Main
             playerTable.AddColumn(" ").LeftAligned();
             foreach (Unit unit in playerUnits)
             {
-                playerTable.AddColumn(unit.Name ?? " ").LeftAligned();
+                playerTable.AddColumn(unit.DisplayName ?? " ").LeftAligned();
             }
 
             var playerHpRow = new List<string> { "[seagreen2]HP[/]" };
@@ -170,7 +170,7 @@ namespace TurnBasedGame.Main
             mobTable.AddColumn(" ").Centered();
             foreach (Unit unit in mobUnits)
             {
-                mobTable.AddColumn($"[red]{unit.Name}[/]").Centered();
+                mobTable.AddColumn($"[red]{unit.DisplayName}[/]").Centered();
             }
             var mobHpRow = new List<string> { "[seagreen2]HP[/]" };
             foreach (Unit unit in mobUnits)

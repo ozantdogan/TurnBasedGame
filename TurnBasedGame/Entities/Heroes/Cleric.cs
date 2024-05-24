@@ -1,24 +1,25 @@
 ﻿using TurnBasedGame.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills;
 
-namespace TurnBasedGame.Entities.Heroes
+namespace TurnBasedGame.Main.Entities.Heroes
 {
-    public class Knight : Human
+    public class Cleric : Human
     {
-        public Knight()
+        public Cleric()
         {
-            Code = "{KNT}";
-            Name = "Knight";
+            Code = "{CLE}";
+            Name = "Cleric";
             DisplayName = Name;
-            MaxHP = 120;
+            MaxHP = 90;
             HP = MaxHP;
             MaxMP = 100;
             MP = MaxMP;
-            Strength = 10;
-            Dexterity = 7;
-            Intelligence = 1;
-            Faith = 1;
-            BaseMeleeDamage = 18;
+            Strength = 5;
+            Dexterity = 8;
+            Intelligence = 3;
+            Faith = 11;
+            BaseMeleeDamage = 9;
+            BaseCastDamage = 20;
             BaseResistance = 8;
             BaseCriticalDamage = 30;
             CriticalChance = 5;

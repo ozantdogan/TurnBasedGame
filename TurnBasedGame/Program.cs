@@ -11,8 +11,8 @@ namespace TurnBasedGame
         static void Main(string[] args)
         {
             Unit knight = new Knight() { UnitType = EnumUnitType.Player };
-            Unit skeleton = new Skeleton() { UnitType = EnumUnitType.Mob, Name = "Skeleton (1)" };
-            Unit skeleton2 = new Skeleton() { UnitType = EnumUnitType.Mob, Name = "Skeleton (2)" };
+            Unit skeleton = new Skeleton() { UnitType = EnumUnitType.Mob };
+            Unit skeleton2 = new Skeleton() { UnitType = EnumUnitType.Mob };
 
             List<Unit> Heroes = new List<Unit>();
             List<Unit> Mobs = new List<Unit>();

@@ -8,15 +8,17 @@ namespace TurnBasedGame.Entities.Mobs
         public Skeleton()
         {
             Code = "{SKE}";
-            Name = "Skeleton";
+            Name = "Skeleton Soldier";
+            DisplayName = $"Skeleton\nSoldier";
             MaxHP = 100;
             HP = MaxHP;
             Strength = 6;
             Dexterity = 6;
             Intelligence = 1;
-            BaseDamage = 13;
-            BaseResistance = 4;
-            BaseCrit = 5;
+            BaseMeleeDamage = 15;
+            BaseResistance = 6;
+            BaseCriticalDamage = 20;
+            CriticalChance = 3;
             TurnPriority = 0;
             Skills.Add(new AttackSkill());
         }
