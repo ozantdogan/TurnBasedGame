@@ -2,5 +2,8 @@
 {
     public class Human : Unit
     {
+        public Human() {
+            UnitType = 0;
+        }
     }
 }

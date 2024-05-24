@@ -7,7 +7,7 @@ namespace TurnBasedGame.Entities.Mobs
     {
         public Skeleton()
         {
-            Code = "[SKE]";
+            Code = "{SKE}";
             Name = "Skeleton";
             MaxHP = 10;
             HP = MaxHP;

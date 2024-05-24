@@ -17,7 +17,7 @@ namespace TurnBasedGame.Entities.Base
         private int baseCrit;
 
         #region Properties
-        [StringLength(5)] public string Code { get; set; } = "[   ]";
+        [StringLength(5)] public string Code { get; set; } = "{   }";
         public string? Name { get; set; }
         public List<BaseSkill> Skills { get; set; } = new List<BaseSkill>();
 
@@ -64,6 +64,10 @@ namespace TurnBasedGame.Entities.Base
         }
 
         public bool IsStunned { get; set; } = false;
+
+        public int UnitType { get; set; }
+
+        public bool IsAlive { get; set; } = true;
         #endregion
 
         #region Attributes

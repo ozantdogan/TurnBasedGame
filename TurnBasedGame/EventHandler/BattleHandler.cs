@@ -1,4 +1,5 @@
-﻿using TurnBasedGame.Entities.Base;
+﻿using Spectre.Console;
+using TurnBasedGame.Entities.Base;
 
 namespace TurnBasedGame.Main
 {
@@ -55,7 +56,6 @@ namespace TurnBasedGame.Main
         private void PerformTurn(Unit actor, Unit target)
         {
             Console.WriteLine($"{actor.Name}'s turn!");
-            Console.WriteLine($"\n{actor.Name} | HP: {actor.HP} MP: {actor.MP}");
 
             // Display available actions
             for (int i = 0; i < actor.Skills.Count; i++)
@@ -93,9 +93,36 @@ namespace TurnBasedGame.Main
 
         private void ShowStatus(Unit playerUnit, Unit mobUnit)
         {
-            Console.WriteLine($"{playerUnit.Code}" + new string(' ', 9) + $"{mobUnit.Code}");
-            Console.WriteLine($"HP: {playerUnit.HP}" + new string(' ', 10-playerUnit.HP.ToString().Length) + $"HP: {mobUnit.HP}");
-            Console.WriteLine($"MP: {playerUnit.MP}" + new string(' ', 10 - playerUnit.MP.ToString().Length) + $" ");
+            //https://spectreconsole.net/
+
+            //Console.WriteLine($"{playerUnit.Code}" + new string(' ', 9) + $"{mobUnit.Code}");
+            //Console.WriteLine($"HP: {playerUnit.HP}" + new string(' ', 10-playerUnit.HP.ToString().Length) + $"HP: {mobUnit.HP}");
+            //Console.WriteLine($"MP: {playerUnit.MP}" + new string(' ', 10 - playerUnit.MP.ToString().Length) + $" ");
+            
+            //var layout = new Layout("Root")
+            //    .SplitColumns(
+            //    new Layout("Left"),
+            //    new Layout("Right")).Size(1);
+
+            //layout["Left"].Update(new Panel(Align.Center(new Markup($"{playerUnit.Name}"),VerticalAlignment.Top)).Expand());
+            //layout["Left"].Update(new Panel(Align.Center(new BarChart().Width(playerUnit.HP).AddItem("HP: ", playerUnit.HP, Color.Green), VerticalAlignment.Middle)).Expand());
+
+            //AnsiConsole.Write(layout);
+
+            var playerTable = new Table();
+            playerTable.AddColumn(" ");
+            playerTable.AddColumn(playerUnit.Code).LeftAligned();
+            playerTable.AddRow("[bold][seagreen2]HP[/][/]", $"{playerUnit.HP}");
+            playerTable.AddRow("[bold][skyblue2]MP[/][/]", $"{playerUnit.MP}");
+
+            var mobTable = new Table();
+            mobTable.AddColumn(" ");
+            mobTable.AddColumn($"[red]{mobUnit.Code}[/]").Centered();
+            mobTable.AddRow("[bold][seagreen2]HP[/][/]", $"{mobUnit.HP}");
+
+            AnsiConsole.Write(mobTable);
+            AnsiConsole.Write(playerTable);
+
         }
     }
 }

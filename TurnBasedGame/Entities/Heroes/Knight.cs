@@ -7,7 +7,7 @@ namespace TurnBasedGame.Entities.Heroes
     {
         public Knight()
         {
-            Code = "[KNG]";
+            Code = "{KNG}";
             Name = "Knight";
             MaxHP = 15;
             HP = MaxHP;

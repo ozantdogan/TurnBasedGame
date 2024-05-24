@@ -2,5 +2,8 @@
 {
     public class Undead : Unit
     {
+        public Undead() {
+            UnitType = 1;
+        }
     }
 }
