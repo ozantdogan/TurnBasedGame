@@ -47,11 +47,7 @@ namespace TurnBasedGame.Entities.Base
             set { mp = value < 0 ? 0 : value; }
         }
 
-        public int BaseDamage
-        {
-            get { return baseDamage; }
-            set { baseDamage = value < 0 ? 0 : value; }
-        }
+        public int BaseDamage { get; set; }
 
         public int BaseResistance
         {

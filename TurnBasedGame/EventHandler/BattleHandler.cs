@@ -13,85 +13,145 @@ namespace TurnBasedGame.Main
             _random = new Random();
         }
 
-        // Method to start the battle
         public void StartBattle(List<Unit> playerUnits, List<Unit> mobUnits)
         {
             Console.WriteLine("Battle started!");
-            // Main battle loop
+            var battleResult = 0;
             while (playerUnits.Any(unit => unit.IsAlive) && mobUnits.Any(unit => unit.IsAlive))
             {
-                // Assuming for simplicity that the first alive unit in each list participates in each turn
-                Unit playerUnit = playerUnits.First(unit => unit.IsAlive);
-                Unit mobUnit = mobUnits.First(unit => unit.IsAlive);
-
-                ShowStatus(playerUnits, mobUnits);
-                PerformTurn(playerUnit, mobUnit);
-
-                Thread.Sleep(2000);
-                Console.Clear();
-
-                ShowStatus(playerUnits, mobUnits);
-                PerformTurn(mobUnit, playerUnit);
-
-                Thread.Sleep(2000);
-                Console.Clear();
-
-                PostTurn(playerUnit, mobUnit);
+                var units = ProcessTurns(playerUnits, mobUnits);
+                foreach(var unit in units.Where(p => p.IsAlive)) {
+                    while (true)
+                    {
+                        ShowStatus(playerUnits, mobUnits);
+                        bool actionResult;
+                        if(unit.UnitType == EnumUnitType.Player)
+                        {
+                            actionResult = PerformTurn(unit, mobUnits);
+                        }
+                        else
+                        {
+                            actionResult = PerformTurn(unit, playerUnits.Where(u => u.IsAlive).ToList());
+                        }
+                        if (actionResult)
+                        {
+                            Thread.Sleep(1500);
+                            break;
+                        }
+                        Thread.Sleep(500);
+                    }
+                    battleResult = CheckAlives(playerUnits, mobUnits);
+                    if (battleResult != 0)
+                        break;
+                }
+                PostTurn(units);
             }
 
             Console.Clear();
+            ShowStatus(playerUnits, mobUnits);
             Console.WriteLine("Battle ended.");
+            if (battleResult == 1)
+                Console.WriteLine("Player won!");
+            else if(battleResult == 2)
+                Console.WriteLine("Mobs won!");
         }
 
-        private void PostTurn(Unit playerUnit, Unit mobUnit)
+        private List<Unit> ProcessTurns(List<Unit> playerUnits, List<Unit> mobUnits)
         {
-            playerUnit.MP = Math.Min(playerUnit.MP + 2, playerUnit.MaxMP);
+            var allUnits = playerUnits.Concat(mobUnits).Where(u => u.IsAlive).ToList();
+            var groupedUnits = allUnits.GroupBy(u => u.TurnPriority).OrderByDescending(g => g.Key);
+            var random = new Random();
+            var shuffledUnits = new List<Unit>();
+
+            foreach (var group in groupedUnits)
+            {
+                var units = group.ToList();
+                units = units.OrderBy(u => random.Next()).ToList();
+                shuffledUnits.AddRange(units);
+            }
+
+            return shuffledUnits;
         }
 
-        private void PerformTurn(Unit actor, Unit target)
+        private int CheckAlives (List <Unit> playerUnits, List<Unit> mobUnits)
+        {
+            if(!mobUnits.Any(unit => unit.IsAlive))
+            {
+                return 1;
+            }
+
+            if(!playerUnits.Any(unit => unit.IsAlive))
+            {
+                return 2;
+            }
+
+            return 0;
+        }
+
+        private bool PerformTurn(Unit actor, List<Unit> targets)
         {
             Console.WriteLine($"{actor.Name}'s turn!");
-            while (true)
+
+            int skillChoice; 
+            Unit target;
+            if (actor.UnitType == EnumUnitType.Player)
             {
-                int choice;
-                if (actor.UnitType == EnumUnitType.Player)
+                Console.WriteLine("Choose a target");
+                int targetChoice = Convert.ToInt32(Console.ReadLine()) - 1;
+                if (targetChoice >= 0 && targetChoice < targets.Count && targets[targetChoice].IsAlive)
                 {
-                    // Display available actions
+                    target = targets[targetChoice];
                     for (int i = 0; i < actor.Skills.Count; i++)
                     {
                         Console.WriteLine($"{i + 1}. {actor.Skills[i].Name}  (MP: {actor.Skills[i].ManaCost})");
                     }
 
-                    // Let the player choose an action
                     Console.Write("Choose an action: ");
-                    choice = Convert.ToInt32(Console.ReadLine()) - 1;
+                    skillChoice = Convert.ToInt32(Console.ReadLine()) - 1;
 
-                    // Ensure the choice is valid
-                    if (choice < 0 || choice >= actor.Skills.Count)
+                    if (skillChoice < 0 || skillChoice >= actor.Skills.Count)
+                    {
                         Console.WriteLine("Invalid choice!");
+                        return false;
+                    }
                 }
                 else
                 {
-                    // Choose a random action for the monster
-                    choice = _random.Next(actor.Skills.Count);
+                    Console.WriteLine("Invalid target choice!");
+                    return false;
                 }
-
-                var actionCompleted = actor.Skills[choice].Execute(actor, target);
-                if (actionCompleted)
-                    break;
             }
+            else // mob
+            {
+                var targetIndex = _random.Next(targets.Count);
+                target = targets[targetIndex];
+                skillChoice = _random.Next(actor.Skills.Count);
+            }
+
+            var actionCompleted = actor.Skills[skillChoice].Execute(actor, target);
+            if (actionCompleted)
+                return true;
+
+            return false;
+        }
+
+        private void PostTurn(List<Unit> units)
+        {
+            foreach(var unit in units)
+                unit.MP = Math.Min(unit.MP + 2, unit.MaxMP);
         }
 
         private void ShowStatus(List<Unit> playerUnits, List<Unit> mobUnits)
         {
             //https://spectreconsole.net/
+            Console.Clear();
 
             var playerTable = new Table();
             playerTable.Border = TableBorder.Simple;
             playerTable.AddColumn(" ").LeftAligned();
             foreach (Unit unit in playerUnits)
             {
-                playerTable.AddColumn(unit.Code).LeftAligned();
+                playerTable.AddColumn(unit.Name ?? " ").LeftAligned();
             }
 
             var playerHpRow = new List<string> { "[seagreen2]HP[/]" };
@@ -110,7 +170,7 @@ namespace TurnBasedGame.Main
             mobTable.AddColumn(" ").Centered();
             foreach (Unit unit in mobUnits)
             {
-                mobTable.AddColumn($"[red]{unit.Code}[/]").Centered();
+                mobTable.AddColumn($"[red]{unit.Name}[/]").Centered();
             }
             var mobHpRow = new List<string> { "[seagreen2]HP[/]" };
             foreach (Unit unit in mobUnits)

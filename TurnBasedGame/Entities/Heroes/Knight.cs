@@ -16,9 +16,10 @@ namespace TurnBasedGame.Entities.Heroes
             Strength = 5;
             Dexterity = 2;
             Intelligence = 1;
-            BaseDamage = 2;
+            BaseDamage = 15;
             BaseResistance = 2;
             BaseCrit = 1;
+            TurnPriority = 1;
             Skills.Add(new ShieldBash());
             Skills.Add(new AttackSkill());
         }

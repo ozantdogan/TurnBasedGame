@@ -17,7 +17,7 @@ namespace TurnBasedGame.Entities.Mobs
             BaseDamage = 2;
             BaseResistance = 1;
             BaseCrit = 1;
-
+            TurnPriority = 0;
             Skills.Add(new AttackSkill());
         }
     }
