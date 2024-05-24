@@ -20,7 +20,7 @@ namespace TurnBasedGame.Entities.Mobs
             BaseCriticalDamage = 20;
             CriticalChance = 3;
             TurnPriority = 0;
-            Skills.Add(new AttackSkill());
+            Skills.Add(new Slash());
         }
     }
 }

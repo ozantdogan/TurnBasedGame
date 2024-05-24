@@ -5,23 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TurnBasedGame.Entities.Base;
+using TurnBasedGame.Main.Helpers;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class AttackSkill : BaseSkill
+    public class Pierce : BaseSkill
     {
-        Random random = new Random();
-        public AttackSkill()
+        public Pierce()
         {
-            Name = "Attack";
+            Name = "Pierce";
             ManaCost = 0;
             PassiveFlag = false;
+            PrimaryDamageType = EnumDamageType.Pierce;
         }
 
         //todo:
         public override bool Execute(Unit actor, Unit target)
         {
-            return PerformAttack(actor, target);
+            return PerformAttack(actor, target, actor.BaseMeleeDamage);
         }
     }
 }

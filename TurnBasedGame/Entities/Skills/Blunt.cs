@@ -1,19 +1,25 @@
-﻿using TurnBasedGame.Entities.Base;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using TurnBasedGame.Entities.Base;
 using TurnBasedGame.Main.Helpers;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class ShieldBash : BaseSkill
+    public class Blunt : BaseSkill
     {
-        public ShieldBash()
+        public Blunt()
         {
-            Name = "Shield Bash";
-            BaseDamageValue = 20;
-            ManaCost = 30;
+            Name = "Blunt";
+            ManaCost = 0;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Blunt;
         }
 
+        //todo:
         public override bool Execute(Unit actor, Unit target)
         {
             return PerformAttack(actor, target, actor.BaseMeleeDamage);

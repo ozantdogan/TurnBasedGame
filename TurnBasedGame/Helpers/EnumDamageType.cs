@@ -2,6 +2,7 @@
 {
     public enum EnumDamageType
     {
+        Standard,
         Blunt,
         Slash,
         Pierce,

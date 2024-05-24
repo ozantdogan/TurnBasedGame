@@ -21,7 +21,8 @@ namespace TurnBasedGame.Main.Entities.Skills
         public int DamageModifier { get; set; }
         public int ResistanceValue { get; set; }
         public int Accuracy {  get; set; }
-        public EnumDamageType DamageType { get; set; }
+        public EnumDamageType PrimaryDamageType { get; set; } = EnumDamageType.Standard;
+        public EnumDamageType SecondaryDamageType { get; set; }
 
         public abstract bool Execute(Unit actor, Unit target);
         protected bool CalculateMana(Unit actor, int manaCost)
@@ -71,9 +72,9 @@ namespace TurnBasedGame.Main.Entities.Skills
             return false;
         }
 
-        protected bool PerformAttack(Unit actor, Unit target, int baseDamage = 0, int manaCost = 0)
+        protected bool PerformAttack(Unit actor, Unit target, int damage)
         {
-            if(manaCost > 0)
+            if(ManaCost > 0)
             {
                 if (!CalculateMana(actor, ManaCost))
                     return false;
@@ -84,7 +85,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             if (HasMissed(actor) || HasDodged(target))
                 return true;
 
-            int damageDealt = ((actor.BaseMeleeDamage + actor.Strength) + baseDamage) - (target.BaseResistance + (target.Strength / 4));
+            int damageDealt = ((damage + actor.Strength) + BaseDamageValue) - (target.BaseResistance + (target.Strength / 4));
             if (CalculateCrit(actor))
                 damageDealt += actor.BaseCriticalDamage;
 
