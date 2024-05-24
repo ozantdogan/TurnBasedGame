@@ -9,16 +9,16 @@ namespace TurnBasedGame.Entities.Heroes
         {
             Code = "{KNG}";
             Name = "Knight";
-            MaxHP = 15;
+            MaxHP = 120;
             HP = MaxHP;
-            MaxMP = 10;
+            MaxMP = 100;
             MP = MaxMP;
-            Strength = 5;
-            Dexterity = 2;
-            Intelligence = 1;
-            BaseDamage = 15;
-            BaseResistance = 2;
-            BaseCrit = 1;
+            Strength = 10;
+            Dexterity = 7;
+            Intelligence = 5;
+            BaseDamage = 18;
+            BaseResistance = 8;
+            BaseCrit = 8;
             TurnPriority = 1;
             Skills.Add(new ShieldBash());
             Skills.Add(new AttackSkill());

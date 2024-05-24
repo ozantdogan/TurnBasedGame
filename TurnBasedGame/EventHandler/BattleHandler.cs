@@ -138,7 +138,7 @@ namespace TurnBasedGame.Main
         private void PostTurn(List<Unit> units)
         {
             foreach(var unit in units)
-                unit.MP = Math.Min(unit.MP + 2, unit.MaxMP);
+                unit.MP = Math.Min(unit.MP + 10, unit.MaxMP);
         }
 
         private void ShowStatus(List<Unit> playerUnits, List<Unit> mobUnits)
@@ -155,7 +155,7 @@ namespace TurnBasedGame.Main
             }
 
             var playerHpRow = new List<string> { "[seagreen2]HP[/]" };
-            var playerMpRow = new List<string> { "[skyblue2]MP[/]" };
+            var playerMpRow = new List<string> { "[cyan]MP[/]" };
             foreach (Unit unit in playerUnits)
             {
                 playerHpRow.Add(unit.HP.ToString());

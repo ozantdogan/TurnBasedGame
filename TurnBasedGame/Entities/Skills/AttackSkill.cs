@@ -26,7 +26,7 @@ namespace TurnBasedGame.Main.Entities.Skills
                 Console.WriteLine($"{target.Name} managed to dodge the attack!");
                 return true;
             }
-            var damageDealt = actor.BaseDamage + random.Next(0, 3);
+            var damageDealt = actor.BaseDamage + random.Next(5, 10) - target.BaseResistance;
             target.HP -= damageDealt;
 
             Console.WriteLine($"{actor.Name} dealt {damageDealt} DAMAGE to {target.Name} " +

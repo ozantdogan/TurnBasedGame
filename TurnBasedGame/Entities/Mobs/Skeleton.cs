@@ -9,14 +9,14 @@ namespace TurnBasedGame.Entities.Mobs
         {
             Code = "{SKE}";
             Name = "Skeleton";
-            MaxHP = 10;
+            MaxHP = 100;
             HP = MaxHP;
-            Strength = 3;
-            Dexterity = 5;
+            Strength = 6;
+            Dexterity = 6;
             Intelligence = 1;
-            BaseDamage = 2;
-            BaseResistance = 1;
-            BaseCrit = 1;
+            BaseDamage = 13;
+            BaseResistance = 4;
+            BaseCrit = 5;
             TurnPriority = 0;
             Skills.Add(new AttackSkill());
         }
