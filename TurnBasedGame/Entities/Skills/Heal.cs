@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionName = Name;
             ManaCost = 8;
             PassiveFlag = true;
-            
+            SkillModifier = 1.2;
             PrimaryType = EnumSkillType.Holy;
         }
 

@@ -30,7 +30,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             {
                 Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
 
-                double healingValue = castTypeModifier * BaseBuffValue + _random.Next(actor.Faith / 2);
+                double healingValue = castTypeModifier * SkillModifier * _random.Next((int)(actor.Faith * 0.5));
                 target.HP += (int)healingValue;
 
                 Console.WriteLine($"{actor.Name} healed {target.Name} +{(int)healingValue}HP ");
