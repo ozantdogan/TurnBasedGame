@@ -13,6 +13,18 @@ namespace TurnBasedGame.Main.Entities.Resistance
             { EnumSkillType.Blunt, target => target.BluntResistance },
             { EnumSkillType.Magic, target => target.MagicResistance },
             { EnumSkillType.Holy, target => target.HolyResistance },
+            { EnumSkillType.Fire, target => target.FireResistance },
+            { EnumSkillType.Poison, target => target.PoisonResistance }
+        };
+
+        public static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<EnumResistanceLevel, double>
+        {
+            { EnumResistanceLevel.VeryWeak, 2.0 },
+            { EnumResistanceLevel.Weak, 1.5 },
+            { EnumResistanceLevel.Neutral, 1.0 },
+            { EnumResistanceLevel.Resistant, 0.5 },
+            { EnumResistanceLevel.VeryResistant, 0.25 },
+            { EnumResistanceLevel.Immune, 0.0 }
         };
     }
 }

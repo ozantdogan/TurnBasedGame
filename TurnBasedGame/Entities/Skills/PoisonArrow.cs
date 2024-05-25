@@ -1,5 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Helpers.Concrete;
+using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
@@ -17,14 +17,14 @@ namespace TurnBasedGame.Main.Entities.Skills
             SecondarySkillModifier = 0.2;
             DamagePerTurn = 5;
             Duration = 3;
-            StatReduction = 1.2;
+            DoTModifier = 1.2;
         }
 
         public override int Execute(Unit actor, Unit target)
         {
             var i = base.Execute(actor, target);
-            if(i == 1)
-                target.AddDoTEffect(new PoisonEffect(DamagePerTurn, Duration, StatReduction));
+            if (i == 1)
+                target.AddDoTEffect(new PoisonEffect(DamagePerTurn, DoTModifier, Duration));
 
             return i;
         }

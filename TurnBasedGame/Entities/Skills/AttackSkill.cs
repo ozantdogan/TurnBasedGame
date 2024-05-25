@@ -62,8 +62,8 @@ namespace TurnBasedGame.Main.Entities.Skills
             var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
             var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
 
-            var primaryResistanceModifier = ResistanceLevelModifiers[primaryResistanceLevel];
-            var secondaryResistanceModifier = ResistanceLevelModifiers[secondaryResistanceLevel];
+            var primaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[primaryResistanceLevel];
+            var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
 
             var critModifier = 1.0;
 
@@ -142,8 +142,8 @@ namespace TurnBasedGame.Main.Entities.Skills
                     var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
                     var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
 
-                    var primaryResistanceModifier = ResistanceLevelModifiers[primaryResistanceLevel];
-                    var secondaryResistanceModifier = ResistanceLevelModifiers[secondaryResistanceLevel];
+                    var primaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[primaryResistanceLevel];
+                    var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
 
                     double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
                     double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;

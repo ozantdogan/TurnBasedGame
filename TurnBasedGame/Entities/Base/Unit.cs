@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TurnBasedGame.Main.Entities.Effects;
+using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Entities.Skills;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Base
@@ -95,7 +96,8 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public EnumRace Race { get; set; }
 
-        public List<DoTEffect> ActiveDoTEffects { get; private set; } = new List<DoTEffect>();
+        public List<DamageEffect> ActiveDoTEffects { get; private set; } = new List<DamageEffect>();
+        public List<BuffEffect> ActiveBuffEffects { get; private set; } = new List<BuffEffect>();
 
         #endregion
 
@@ -128,7 +130,6 @@ namespace TurnBasedGame.Main.Entities.Base
         #endregion
 
         #region Resistances
-
         public EnumResistanceLevel StandardResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel SlashResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel PierceResistance { get; set; } = EnumResistanceLevel.Neutral;
@@ -140,24 +141,23 @@ namespace TurnBasedGame.Main.Entities.Base
 
         #endregion
 
-        public void AddDoTEffect(DoTEffect effect)
+        public void AddDoTEffect(DamageEffect effect)
         {
             ActiveDoTEffects.Add(effect);
         }
 
-        public void ApplyDoTEffects()
+        public void AddBuffEffect(BuffEffect effect)
+        {
+            ActiveBuffEffects.Add(effect);
+        }
+
+        public void ApplyStatusEffects()
         {
             foreach(var effect in ActiveDoTEffects.ToList())
             {
-                EnumResistanceLevel resistanceLevel = effect.DamageType switch
-                {
-                    EnumSkillType.Fire => FireResistance,
-                    EnumSkillType.Poison => PoisonResistance,
-                    _ => EnumResistanceLevel.Neutral
-                };
-
-                float resistanceModifier = resistanceLevel.GetResistanceModifier();
-                effect.DamagePerTurn = (int)(effect.DamagePerTurn * (double)resistanceModifier);
+                var resistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(effect.DamageType) ? ResistanceManager.ResistanceLevelSelectors[effect.DamageType](this) : EnumResistanceLevel.Neutral;
+                var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
+                effect.DamagePerTurn = (int)(effect.DamagePerTurn * resistanceModifier);
                 effect.ApplyEffect(this);
                 Console.WriteLine($"{Name} took {effect.DamagePerTurn} DAMAGE from {effect.DamageType} damage");
 

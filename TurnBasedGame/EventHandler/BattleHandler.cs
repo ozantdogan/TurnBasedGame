@@ -35,7 +35,7 @@ namespace TurnBasedGame.Main
                         _ui.ShowStatus(playerUnits, mobUnits, level);
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
-                        unit.ApplyDoTEffects();
+                        unit.ApplyStatusEffects();
                         if(unit.HP <= 0)
                         {
                             Console.WriteLine($"{unit.Name} is dead");
