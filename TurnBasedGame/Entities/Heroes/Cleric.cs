@@ -26,6 +26,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             HolyResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new DaggerPierce());
             Skills.Add(new Heal());
+            Skills.Add(new DivineHeal());
             Skills.Add(new DivineLight());
         }
     }

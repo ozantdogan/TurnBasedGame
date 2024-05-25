@@ -26,15 +26,46 @@ namespace TurnBasedGame.Main.Entities.Skills
 
             var castTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
 
+            Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
             for(int i=0; i<=ExecutionCount-1; i++)
             {
-                Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
-
                 double healingValue = castTypeModifier * SkillModifier * _random.Next((int)(actor.Faith * 0.5));
                 target.HP += (int)healingValue;
 
-                Console.WriteLine($"{actor.Name} healed {target.Name} +{(int)healingValue}HP ");
+                Console.WriteLine($"{actor.Name} healed {target.Name} (+{(int)healingValue}HP) ");
             }
+            return 1;
+        }
+
+        protected int PerformHeal(Unit actor, List<Unit> targets)
+        {
+            if (ManaCost > 0)
+            {
+                if (!CalculateMana(actor, ManaCost))
+                    return -1;
+            }
+
+            var castTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+            Console.WriteLine($"{actor.Name} used {ExecutionName}!");
+
+            for(int i=0; i<=ExecutionCount-1; i++)
+            {
+                foreach(var index in TargetIndexes)
+                {
+                    if (index < 0 || index >= targets.Count)
+                        continue;
+
+                    var target = targets[index];
+                    if (!target.IsAlive)
+                        continue;
+
+                    double healingValue = castTypeModifier * SkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5)); 
+                    target.HP += (int)healingValue;
+
+                    Console.WriteLine($"{actor.Name} healed {target.Name} (+{(int)healingValue}HP) ");
+                }
+            }
+
             return 1;
         }
     }

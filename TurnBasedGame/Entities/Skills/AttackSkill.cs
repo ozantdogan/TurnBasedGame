@@ -55,6 +55,11 @@ namespace TurnBasedGame.Main.Entities.Skills
                     return -1;
             }
 
+            var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+            var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
+            var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
+            var critModifier = 1.0;
+
             for(int i=0; i<=ExecutionCount-1; i++)
             {
                 Console.WriteLine($"\n{actor.Name} used {ExecutionName} on {target.Name}!");
@@ -62,16 +67,10 @@ namespace TurnBasedGame.Main.Entities.Skills
                 if (HasMissed(actor) || HasDodged(target))
                     return 0;
 
-                var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
-
-                var critModifier = 1.0;
                 if (CalculateCrit(actor))
                     critModifier = actor.MaxDamageValue * 1.5;
 
                 double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * SkillModifier;
-
-                var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
-                var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
                 double damageDealt = baseDamage * resistanceModifier;
 
                 if (damageDealt > actor.MaxDamageValue * 3)
@@ -94,38 +93,31 @@ namespace TurnBasedGame.Main.Entities.Skills
                     return -1;
             }
 
-            for(int i = 0; i <= ExecutionCount-1; i++)
-            {
-                Console.WriteLine($"{actor.Name} used {ExecutionName}!");
+            Console.WriteLine($"{actor.Name} used {ExecutionName}!");
 
+            var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+            var critModifier = 1.0;
+
+            for (int i = 0; i <= ExecutionCount-1; i++)
+            {
                 foreach (var index in TargetIndexes)
                 {
                     if (index < 0 || index >= targets.Count)
-                    {
                         continue;
-                    }
 
                     var target = targets[index];
                     if (!target.IsAlive)
-                    {
                         continue;
-                    }
-
-                    Console.WriteLine($"\n{actor.Name} used {Name} on {target.Name}!");
 
                     if (HasMissed(actor) || HasDodged(target))
                         continue;
 
-                    var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
-
-                    var critModifier = 1.0;
                     if (CalculateCrit(actor))
                         critModifier = actor.MaxDamageValue * 1.5;
 
-                    double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * SkillModifier;
-
                     var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
                     var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
+                    double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * SkillModifier;
                     double damageDealt = baseDamage * resistanceModifier;
 
                     if (damageDealt > actor.MaxDamageValue * 3)
