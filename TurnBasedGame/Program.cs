@@ -9,7 +9,8 @@ namespace TurnBasedGame
     {
         static void Main(string[] args)
         {
-            Unit knight = new Knight() { UnitType = EnumUnitType.Player };
+            Unit knight = new Knight() { UnitType = EnumUnitType.Player , DisplayName = "Knight of\nthe Valley" };
+            Unit knight2 = new Knight() { UnitType = EnumUnitType.Player , DisplayName = "Knight of\nthe Old Town" };
             Unit cleric = new Cleric() { UnitType = EnumUnitType.Player };
             Unit hunter = new Hunter() { UnitType = EnumUnitType.Player };
 
@@ -18,16 +19,19 @@ namespace TurnBasedGame
 
             Heroes.Add(cleric);
             Heroes.Add(knight);
+            Heroes.Add(knight2);
             Heroes.Add(hunter);
 
             while (true)
             {
-                LevelHandler.Rest(Heroes);
                 LevelHandler.AddMobs(Mobs);
 
                 BattleHandler battle = new BattleHandler();
-                var i = battle.StartBattle(Heroes, Mobs);
-                if(i)
+                var i = battle.StartBattle(Heroes, Mobs, LevelHandler.Level);
+                LevelHandler.Rest(Heroes);
+                LevelHandler.IncreaseLevel();
+                Mobs.Clear();
+                if (i)
                     break;
             }
         }

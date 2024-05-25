@@ -12,6 +12,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionCount = 2;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Slash;
+            Accuracy = 0.6;
         }
 
         public override bool Execute(Unit actor, Unit target)

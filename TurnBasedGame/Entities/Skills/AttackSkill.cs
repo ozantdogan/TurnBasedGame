@@ -57,7 +57,7 @@ namespace TurnBasedGame.Main.Entities.Skills
 
             for(int i=0; i<=ExecutionCount-1; i++)
             {
-                Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
+                Console.WriteLine($"\n{actor.Name} used {ExecutionName} on {target.Name}!");
 
                 if (HasMissed(actor) || HasDodged(target))
                     return true;
@@ -74,10 +74,13 @@ namespace TurnBasedGame.Main.Entities.Skills
                 var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
                 double damageDealt = baseDamage * resistanceModifier;
 
-                target.HP -= (int)damageDealt;
+                if (damageDealt > actor.MaxDamageValue * 3)
+                    damageDealt = actor.MaxDamageValue * 3;
 
+                target.HP -= (int)damageDealt;
+               
                 Console.WriteLine($"{actor.Name} dealt {(int)damageDealt} DAMAGE to {target.Name} " +
-                                  (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
+                                  (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
             }
 
                 return true;
@@ -108,7 +111,7 @@ namespace TurnBasedGame.Main.Entities.Skills
                         continue;
                     }
 
-                    Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
+                    Console.WriteLine($"\n{actor.Name} used {Name} on {target.Name}!");
 
                     if (HasMissed(actor) || HasDodged(target))
                         continue;
@@ -128,7 +131,7 @@ namespace TurnBasedGame.Main.Entities.Skills
                     target.HP -= (int)damageDealt;
 
                     Console.WriteLine($"{actor.Name} dealt {(int)damageDealt} DAMAGE to {target.Name} " +
-                                      (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
+                                      (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
                 }
             }
 

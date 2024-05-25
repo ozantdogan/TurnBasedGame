@@ -14,11 +14,11 @@ namespace TurnBasedGame.Main.Entities.Heroes
             HP = MaxHP;
             MaxMP = 20;
             MP = MaxMP;
-            Strength = 7;
+            Strength = 8;
             Dexterity = 4;
             Intelligence = 1;
             Faith = 1;
-            MaxDamageValue = 7;
+            MaxDamageValue = 8;
             MinDamageValue = 5;
             CriticalChance = 10;
             Skills.Add(new ShieldBash());

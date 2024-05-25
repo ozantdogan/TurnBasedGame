@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main
             _ui = new UIHandler();
         }
 
-        public bool StartBattle(List<Unit> playerUnits, List<Unit> mobUnits)
+        public bool StartBattle(List<Unit> playerUnits, List<Unit> mobUnits, int level)
         {
             Console.WriteLine("Battle started!");
             var battleResult = 0;
@@ -29,7 +29,7 @@ namespace TurnBasedGame.Main
                 {
                     while (true)
                     {
-                        _ui.ShowStatus(playerUnits, mobUnits);
+                        _ui.ShowStatus(playerUnits, mobUnits, level);
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
                         bool actionResult;
                         if (unit.UnitType == EnumUnitType.Player)
@@ -56,16 +56,16 @@ namespace TurnBasedGame.Main
             }
 
             Console.Clear();
-            _ui.ShowStatus(playerUnits, mobUnits);
+            _ui.ShowStatus(playerUnits, mobUnits, level);
             Console.WriteLine("Battle ended.");
             if (battleResult == 1)
             {
-                Console.WriteLine("Player won!");
+                Console.WriteLine("You won!");
                 Thread.Sleep(1500);
             }
             else if (battleResult == 2)
             {
-                Console.WriteLine("Mobs won!");
+                Console.WriteLine("Game Over");
                 Thread.Sleep(1500);
                 return true;
             }
@@ -117,7 +117,14 @@ namespace TurnBasedGame.Main
             if (actor.UnitType == EnumUnitType.Player)
             {
                 // Display skill choices using Spectre.Console
-                var skillChoices = actor.Skills.Select((skill, index) => $"{index + 1}. {skill.Name}  [cyan]({skill.ManaCost})[/]").ToArray();
+                var skillChoices = actor.Skills.Select((skill, index) =>
+                {
+                    var color = skill.PrimaryDamageType.GetColor();
+                    return $"{index + 1}. {skill.Name} " +
+                           $"{(skill.PrimaryDamageType != EnumDamageType.Standard ? $"[{skill.PrimaryDamageType.GetColor()}]({skill.PrimaryDamageType})[/] " : string.Empty)}" +
+                           $"{(skill.ManaCost > 0 ? $"[cyan]({skill.ManaCost})[/]" : string.Empty)}";
+                }).ToArray(); 
+
                 var skillChoiceIndex = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("Choose an action:")

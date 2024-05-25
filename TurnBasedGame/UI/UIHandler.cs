@@ -5,11 +5,12 @@ namespace TurnBasedGame.Main.UI
 {
     public class UIHandler
     {
-        public void ShowStatus(List<Unit> playerUnits, List<Unit> mobUnits)
+        public void ShowStatus(List<Unit> playerUnits, List<Unit> mobUnits, int level)
         {
             //https://spectreconsole.net/
             Console.Clear();
 
+            AnsiConsole.Write(new Markup($"[lightpink4] == {level} == [/]").Centered());
             var playerTable = new Table();
             playerTable.Border = TableBorder.Simple;
             playerTable.AddColumn(" ").LeftAligned();
@@ -34,7 +35,7 @@ namespace TurnBasedGame.Main.UI
             mobTable.AddColumn(" ").Centered();
             foreach (Unit unit in mobUnits)
             {
-                mobTable.AddColumn($"[red]{unit.DisplayName}[/]").Centered();
+                mobTable.AddColumn($"[red]{unit.DisplayName}[/]").RightAligned();
             }
             var mobHpRow = new List<string> { "[seagreen2]HP[/]" };
             foreach (Unit unit in mobUnits)

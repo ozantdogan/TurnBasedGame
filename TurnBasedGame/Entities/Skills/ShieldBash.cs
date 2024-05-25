@@ -9,7 +9,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         {
             Name = "Shield Bash";
             ExecutionName = Name;
-            DamageModifier = 1.2;
+            DamageModifier = 1.5;
             ManaCost = 20;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Blunt;
