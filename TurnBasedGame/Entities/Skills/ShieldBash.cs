@@ -8,15 +8,15 @@ namespace TurnBasedGame.Main.Entities.Skills
         public ShieldBash()
         {
             Name = "Shield Bash";
-            BaseDamageValue = 20;
-            ManaCost = 30;
+            DamageModifier = 1.2;
+            ManaCost = 20;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Blunt;
         }
 
         public override bool Execute(Unit actor, Unit target)
         {
-            return PerformAttack(actor, target, actor.BaseMeleeDamage);
+            return PerformAttack(actor, target);
         }
     }
 }

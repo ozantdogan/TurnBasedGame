@@ -36,6 +36,7 @@ namespace TurnBasedGame.Main
                         {
                             actionResult = PerformTurn(unit, playerUnits.Where(u => u.IsAlive).ToList(), mobUnits.Where(u => u.IsAlive).ToList());
                         }
+
                         if (actionResult)
                         {
                             Thread.Sleep(1500);
@@ -202,7 +203,7 @@ namespace TurnBasedGame.Main
         private void PostTurn(List<Unit> units)
         {
             foreach(var unit in units)
-                unit.MP = Math.Min(unit.MP + 10, unit.MaxMP);
+                unit.MP = Math.Min(unit.MP + 5, unit.MaxMP);
         }
     }
 }

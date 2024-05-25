@@ -39,7 +39,12 @@ namespace TurnBasedGame.Entities.Base
         public int HP
         {
             get { return _hp; }
-            set { _hp = value < 0 ? 0 : value; }
+            set 
+            { 
+                _hp = Math.Clamp(value, 0, MaxHP); 
+                if (_hp == 0)
+                    _mp = 0;
+            }
         }
 
         public int MaxMP
@@ -51,14 +56,12 @@ namespace TurnBasedGame.Entities.Base
         public int MP
         {
             get { return _mp; }
-            set { _mp = value < 0 ? 0 : value; }
+            set { _mp = Math.Clamp(value, 0, MaxMP); }
         }
 
-        public int BaseMeleeDamage { get; set; }
+        public int MinDamageValue { get; set; }
+        public int MaxDamageValue { get; set; }
 
-        public int BaseRangedDamage { get; set; }
-
-        public int BaseCastDamage { get; set; }
 
         public int BaseResistance
         {
@@ -120,5 +123,14 @@ namespace TurnBasedGame.Entities.Base
 
         #endregion
 
+        public enum ResistanceLevel
+        {
+            VeryWeak,    // 200% damage
+            Weak,        // 150% damage
+            Neutral,     // 100% damage
+            Resistant,   // 50% damage
+            VeryResistant,// 25% damage
+            Immune       // 0% damage
+        }
     }
 }

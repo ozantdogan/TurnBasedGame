@@ -11,9 +11,9 @@ namespace TurnBasedGame.Main.Entities.Skills
     {
         public Heal() {
             Name = "Heal";
-            ManaCost = 15;
+            ManaCost = 8;
             PassiveFlag = true;
-            BaseBuffValue = 10;
+            BaseBuffValue = 4;
         }
 
         public override bool Execute(Unit actor, Unit target)

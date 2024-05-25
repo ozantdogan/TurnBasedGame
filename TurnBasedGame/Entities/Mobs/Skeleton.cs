@@ -10,15 +10,15 @@ namespace TurnBasedGame.Entities.Mobs
             Code = "{SKE}";
             Name = "Skeleton Soldier";
             DisplayName = $"Skeleton\nSoldier";
-            MaxHP = 100;
+            MaxHP = 18;
             HP = MaxHP;
-            Strength = 6;
-            Dexterity = 6;
+            Strength = 4;
+            Dexterity = 4;
             Intelligence = 1;
-            BaseMeleeDamage = 15;
+            MaxDamageValue = 4;
+            MinDamageValue = 1;
             BaseResistance = 6;
-            BaseCriticalDamage = 20;
-            CriticalChance = 3;
+            CriticalChance = 5;
             TurnPriority = 0;
         }
     }

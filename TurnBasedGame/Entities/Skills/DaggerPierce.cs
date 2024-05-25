@@ -21,7 +21,7 @@ namespace TurnBasedGame.Main.Entities.Skills
 
         public override bool Execute(Unit actor, Unit target)
         {
-            return PerformAttack(actor, target, actor.BaseMeleeDamage);
+            return PerformAttack(actor, target);
         }
     }
 }

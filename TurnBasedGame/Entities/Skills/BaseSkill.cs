@@ -20,10 +20,10 @@ namespace TurnBasedGame.Main.Entities.Skills
         public bool PassiveFlag { get; set; }
         public int ManaCost { get; set; }
         public int BaseDamageValue { get; set; }
-        public int BaseBuffValue { get; set; }
-        public int DamageModifier { get; set; }
+        public double BaseBuffValue { get; set; } = 1.0;
+        public double DamageModifier { get; set; } = 1.0;
         public int ResistanceValue { get; set; }
-        public int Accuracy {  get; set; }
+        public double Accuracy { get; set; } = 1.0;
         public EnumDamageType PrimaryDamageType { get; set; } = EnumDamageType.Standard;
         public EnumDamageType SecondaryDamageType { get; set; }
 
@@ -69,7 +69,7 @@ namespace TurnBasedGame.Main.Entities.Skills
 
         protected bool HasMissed(Unit actor)
         {
-            int missChance = 100 / (actor.Dexterity + Accuracy);
+            double missChance = 100 / (actor.Dexterity * Accuracy);
             int roll = _random.Next(100);
             if (roll < missChance)
             {
@@ -79,7 +79,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             return false;
         }
 
-        protected bool PerformAttack(Unit actor, Unit target, int damage)
+        protected bool PerformAttack(Unit actor, Unit target)
         {
             if(ManaCost > 0)
             {
@@ -92,13 +92,33 @@ namespace TurnBasedGame.Main.Entities.Skills
             if (HasMissed(actor) || HasDodged(target))
                 return true;
 
-            int damageDealt = ((damage + actor.Strength) + BaseDamageValue) - (target.BaseResistance + (target.Strength / 4));
+            var damageTypeModifier = 1.0;
+            if(PrimaryDamageType == EnumDamageType.Standard || PrimaryDamageType == EnumDamageType.Slash || PrimaryDamageType == EnumDamageType.Pierce)
+            {
+                damageTypeModifier = ((double)actor.Strength * 0.2 + actor.Dexterity * 0.2);
+            }
+            else if(PrimaryDamageType == EnumDamageType.Blunt)
+            {
+                damageTypeModifier = ((double)actor.Strength * 0.4);
+            }
+            else if(PrimaryDamageType == EnumDamageType.Magic) 
+            {
+                damageTypeModifier = ((double)actor.Intelligence * 0.5);
+            }
+            else if (PrimaryDamageType == EnumDamageType.Holy || PrimaryDamageType == EnumDamageType.Holy)
+            {
+                damageTypeModifier = ((double)actor.Faith * 0.5);
+            }
+
+            var critModifier = 1.0;
             if (CalculateCrit(actor))
-                damageDealt += actor.BaseCriticalDamage;
+                critModifier = actor.MaxDamageValue * 1.5;
 
-            target.HP -= damageDealt;
+            double damageDealt = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * DamageModifier;
 
-            Console.WriteLine($"{actor.Name} dealt {damageDealt} DAMAGE to {target.Name} " +
+            target.HP -= (int)damageDealt;
+
+            Console.WriteLine($"{actor.Name} dealt {(int)damageDealt} DAMAGE to {target.Name} " +
                               (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
             return true;
         }
@@ -113,10 +133,10 @@ namespace TurnBasedGame.Main.Entities.Skills
 
             Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
 
-            int healingValue = (actor.Faith / 4 + BaseBuffValue + _random.Next(actor.Faith));
-            target.HP += healingValue;
+            double healingValue = actor.Faith * 0.25 + BaseBuffValue + _random.Next(actor.Faith / 2);
+            target.HP += (int)healingValue;
 
-            Console.WriteLine($"{actor.Name} healed {target.Name} +{healingValue}HP ");
+            Console.WriteLine($"{actor.Name} healed {target.Name} +{(int)healingValue}HP ");
             return true;
         }
 
