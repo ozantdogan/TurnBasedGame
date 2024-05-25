@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
 
@@ -123,7 +124,6 @@ namespace TurnBasedGame.Main
             Unit target;
             if (actor.UnitType == EnumUnitType.Player)
             {
-                // Display skill choices using Spectre.Console
                 var skillChoices = actor.Skills.Select((skill, index) =>
                 {
                     var color = skill.PrimaryType.GetColor();
@@ -138,7 +138,6 @@ namespace TurnBasedGame.Main
                         .AddChoices(skillChoices)
                 );
 
-                // Convert the choice back to the index
                 skillChoice = Array.IndexOf(skillChoices, skillChoiceIndex);
 
                 if (skillChoice < 0 || skillChoice >= actor.Skills.Count)
@@ -148,9 +147,10 @@ namespace TurnBasedGame.Main
                 }
 
                 if (actor.Skills[skillChoice] is MoveSkill moveSkill)
-                {
                     return moveSkill.Execute(actor, friendlyTargets);
-                }
+
+                if (actor.Skills[skillChoice] is RestSkill restSkill)
+                    return restSkill.Rest(actor);
 
                 if (actor.Skills[skillChoice].TargetIndexes != null && actor.Skills[skillChoice].TargetIndexes.Count() > 0)
                 {
@@ -162,7 +162,6 @@ namespace TurnBasedGame.Main
 
                 if (actor.Skills[skillChoice].PassiveFlag)
                 {
-                    // Display target choices using Spectre.Console
                     var targetChoices = friendlyTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
                     var targetChoiceIndex = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
@@ -222,8 +221,9 @@ namespace TurnBasedGame.Main
                         }
                     }
                 }
-                var nonMoveSkills = actor.Skills.Where(skill => !(skill is MoveSkill)).ToList();
-                skillChoice = _random.Next(nonMoveSkills.Count) + 2;
+                
+                var nonMoveSkills = actor.Skills.Where(skill => !(skill is MoveSkill) && !(skill is RestSkill)).ToList();
+                skillChoice = _random.Next(nonMoveSkills.Count) + 3;
                 if (actor.Skills[skillChoice].TargetIndexes != null && actor.Skills[skillChoice].TargetIndexes.Count() > 0)
                 {
                     if (actor.Skills[skillChoice].PassiveFlag)

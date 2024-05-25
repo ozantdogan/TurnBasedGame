@@ -20,6 +20,7 @@ namespace TurnBasedGame.Main.Entities.Base
         private int _turnPriority;
 
         public Unit() {
+            Skills.Add(new RestSkill());
             Skills.Add(new MoveSkill("Move Left", true));
             Skills.Add(new MoveSkill("Move Right", false));
         }
