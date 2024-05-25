@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [SkillTypeColor("gray")]
         Pierce,
 
-        [SkillTypeColor("blue")]
+        [SkillTypeColor("deepskyblue4_2")]
         Magic,
 
         [SkillTypeColor("yellow")]
