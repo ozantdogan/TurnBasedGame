@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             PassiveFlag = false;
             DamageModifier = 1.5;
             PrimaryDamageType = EnumDamageType.Pierce;
-            TargetIndexes = new List<int>() { 0, 1, 2, 3 };
+            TargetIndexes = new List<int>() { 0, 1 };
         }
 
         public override bool Execute(Unit actor, List<Unit> targets)

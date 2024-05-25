@@ -43,10 +43,10 @@ namespace TurnBasedGame.Main
 
                         if (actionResult)
                         {
-                            Thread.Sleep(1500);
+                            Thread.Sleep(2500);
                             break;
                         }
-                        Thread.Sleep(1500);
+                        Thread.Sleep(2500);
                     }
                     battleResult = CheckAlives(playerUnits, mobUnits);
                     if (battleResult != 0)

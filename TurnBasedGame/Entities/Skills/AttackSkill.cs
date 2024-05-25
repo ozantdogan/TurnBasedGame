@@ -128,6 +128,9 @@ namespace TurnBasedGame.Main.Entities.Skills
                     var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
                     double damageDealt = baseDamage * resistanceModifier;
 
+                    if (damageDealt > actor.MaxDamageValue * 3)
+                        damageDealt = actor.MaxDamageValue * 3;
+
                     target.HP -= (int)damageDealt;
 
                     Console.WriteLine($"{actor.Name} dealt {(int)damageDealt} DAMAGE to {target.Name} " +
