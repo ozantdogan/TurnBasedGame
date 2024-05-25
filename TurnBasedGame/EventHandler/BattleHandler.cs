@@ -127,9 +127,10 @@ namespace TurnBasedGame.Main
                 var skillChoices = actor.Skills.Select((skill, index) =>
                 {
                     var color = skill.PrimaryType.GetColor();
-                    return $"{index + 1}. {skill.Name} " +
-                           $"{(skill.PrimaryType != EnumSkillType.Standard ? $"[{skill.PrimaryType.GetColor()}]({skill.PrimaryType})[/] " : string.Empty)}" +
-                           $"{(skill.ManaCost > 0 ? $"[cyan]({skill.ManaCost})[/]" : string.Empty)}";
+                    string primaryTypeText = (skill.PrimaryType != EnumSkillType.None ? $"[{skill.PrimaryType.GetColor()}]({skill.PrimaryType})[/] " : string.Empty);
+                    string secondaryTypeText = (skill.SecondaryType != EnumSkillType.None ? $"[{skill.SecondaryType.GetColor()}]({skill.SecondaryType})[/] " : string.Empty);
+                    string manaCostText = (skill.ManaCost > 0 ? $"[cyan]({skill.ManaCost})[/]" : string.Empty);
+                    return $"{index + 1}. {skill.Name} {primaryTypeText}{secondaryTypeText}{manaCostText}";
                 }).ToArray(); 
 
                 var skillChoiceIndex = AnsiConsole.Prompt(

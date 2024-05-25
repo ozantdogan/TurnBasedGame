@@ -55,12 +55,18 @@ namespace TurnBasedGame.Main.Entities.Skills
                     return -1;
             }
 
-            var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
-            var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
-            var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
+            var primaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+            var secondaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(SecondaryType) ? SkillTypeModifiers[SecondaryType](actor) : 0.0;
+
+            var primaryResistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
+            var secondaryResistanceLevel = ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
+
+            var primaryResistanceModifier = ResistanceLevelModifiers[primaryResistanceLevel];
+            var secondaryResistanceModifier = ResistanceLevelModifiers[secondaryResistanceLevel];
+
             var critModifier = 1.0;
 
-            for(int i=0; i<=ExecutionCount-1; i++)
+            for (int i = 0; i <= ExecutionCount - 1; i++)
             {
                 Console.WriteLine($"\n{actor.Name} used {ExecutionName} on {target.Name}!");
 
@@ -70,15 +76,25 @@ namespace TurnBasedGame.Main.Entities.Skills
                 if (CalculateCrit(actor))
                     critModifier = actor.MaxDamageValue * 1.5;
 
-                double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * SkillModifier;
-                double damageDealt = baseDamage * resistanceModifier;
+                double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
+                double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
 
-                if (damageDealt > actor.MaxDamageValue * 3)
-                    damageDealt = actor.MaxDamageValue * 3;
+                double secondaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+                double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
 
-                target.HP -= (int)damageDealt;
-               
-                Console.WriteLine($"{actor.Name} dealt {(int)damageDealt} DAMAGE to {target.Name} " +
+                double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
+                if (totalDamageDealt > actor.MaxDamageValue * 3)
+                    totalDamageDealt = actor.MaxDamageValue * 3;
+
+                target.HP -= (int)totalDamageDealt;
+
+                totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
+                if (totalDamageDealt > actor.MaxDamageValue * 3)
+                    totalDamageDealt = actor.MaxDamageValue * 3;
+
+                target.HP -= (int)totalDamageDealt;
+
+                Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                   (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
             }
 
@@ -95,7 +111,8 @@ namespace TurnBasedGame.Main.Entities.Skills
 
             Console.WriteLine($"{actor.Name} used {ExecutionName}!");
 
-            var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+            var primaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+            var secondaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(SecondaryType) ? SkillTypeModifiers[SecondaryType](actor) : 0.0;
             var critModifier = 1.0;
             var targetIndexes = new List<int>();
             if(targets.Count() < TargetIndexes.Count)
@@ -127,17 +144,31 @@ namespace TurnBasedGame.Main.Entities.Skills
                     if (CalculateCrit(actor))
                         critModifier = actor.MaxDamageValue * 1.5;
 
-                    var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
-                    var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
-                    double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * SkillModifier;
-                    double damageDealt = baseDamage * resistanceModifier;
+                    var primaryResistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
+                    var secondaryResistanceLevel = ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
 
-                    if (damageDealt > actor.MaxDamageValue * 3)
-                        damageDealt = actor.MaxDamageValue * 3;
+                    var primaryResistanceModifier = ResistanceLevelModifiers[primaryResistanceLevel];
+                    var secondaryResistanceModifier = ResistanceLevelModifiers[secondaryResistanceLevel];
 
-                    target.HP -= (int)damageDealt;
+                    double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
+                    double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
 
-                    Console.WriteLine($"{actor.Name} dealt {(int)damageDealt} DAMAGE to {target.Name} " +
+                    double secondaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+                    double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.5;
+
+                    double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
+                    if (totalDamageDealt > actor.MaxDamageValue * 3)
+                        totalDamageDealt = actor.MaxDamageValue * 3;
+
+                    target.HP -= (int)totalDamageDealt;
+
+                    totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
+                    if (totalDamageDealt > actor.MaxDamageValue * 3)
+                        totalDamageDealt = actor.MaxDamageValue * 3;
+
+                    target.HP -= (int)totalDamageDealt;
+
+                    Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
                 }
             }

@@ -51,12 +51,13 @@ namespace TurnBasedGame.Main.Entities.Skills
         public int ManaCost { get; set; }
         public int BaseDamageValue { get; set; }
         public double BaseBuffValue { get; set; } = 1.0;
-        public double SkillModifier { get; set; } = 1.0;
+        public double PrimarySkillModifier { get; set; } = 1.0;
+        public double SecondarySkillModifier { get; set; } = 1.0;
         public int ResistanceValue { get; set; }
         public int ExecutionCount { get; set; } = 1;
         public double Accuracy { get; set; } = 1.0;
-        public EnumSkillType PrimaryType { get; set; } = EnumSkillType.Standard;
-        public EnumSkillType SecondaryType { get; set; }
+        public EnumSkillType PrimaryType { get; set; } = EnumSkillType.None;
+        public EnumSkillType SecondaryType { get; set; } = EnumSkillType.None;
         public List<int> TargetIndexes { get; set; } = new List<int>();
 
         public abstract int Execute(Unit actor, Unit target);

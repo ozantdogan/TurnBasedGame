@@ -4,14 +4,16 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class PoisonDart : DoTSkill
+    public class PoisonArrow : DoTSkill
     {
-        public PoisonDart()
+        public PoisonArrow()
         {
-            Name = "Poison Dart";
+            Name = "Poison Arrow";
             ExecutionName = Name;
             ManaCost = 4;
-            PrimaryType = EnumSkillType.Poison;
+            PrimaryType = EnumSkillType.Pierce;
+            SecondaryType = EnumSkillType.Poison;
+            SecondarySkillModifier = 0.3;
             DamagePerTurn = 5;
             Duration = 3;
             StatReduction = 1.2;

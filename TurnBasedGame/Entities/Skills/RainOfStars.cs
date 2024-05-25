@@ -7,11 +7,11 @@ namespace TurnBasedGame.Main.Entities.Skills
     {
         public RainOfStars() {
             Name = "Rain of Stars";
-            SkillModifier = 1.5;
+            PrimarySkillModifier = 1.5;
             ManaCost = 20;
             PassiveFlag = false;
             ExecutionCount = 2;
-            SkillModifier = 0.6;
+            PrimarySkillModifier = 0.6;
             PrimaryType = EnumSkillType.Magic;
             TargetIndexes = new List<int>() { 0 ,1 ,2 ,3, 4};
         }

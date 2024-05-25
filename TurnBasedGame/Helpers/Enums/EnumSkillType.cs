@@ -5,6 +5,9 @@ namespace TurnBasedGame.Main.Helpers.Enums
     public enum EnumSkillType
     {
         [SkillTypeColor("gray")]
+        None,
+
+        [SkillTypeColor("gray")]
         Standard,
 
         [SkillTypeColor("gray")]

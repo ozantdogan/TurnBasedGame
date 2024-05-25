@@ -24,7 +24,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             CriticalChance = 15;
             Skills.Add(new DaggerPierce() { Name = "Knife Pierce", ExecutionName = "Knife Pierce"});
             Skills.Add(new DualKnivesSlash());
-            Skills.Add(new PoisonDart());
+            Skills.Add(new PoisonArrow());
         }
     }
 }

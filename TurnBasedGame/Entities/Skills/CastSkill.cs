@@ -29,7 +29,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
             for(int i=0; i<=ExecutionCount-1; i++)
             {
-                double healingValue = castTypeModifier * SkillModifier * _random.Next((int)(actor.Faith * 0.5));
+                double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.5));
                 target.HP += (int)healingValue;
 
                 Console.WriteLine($"{actor.Name} healed {target.Name} (+{(int)healingValue}HP) ");
@@ -72,7 +72,7 @@ namespace TurnBasedGame.Main.Entities.Skills
                     if (!target.IsAlive)
                         continue;
 
-                    double healingValue = castTypeModifier * SkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5)); 
+                    double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5)); 
                     target.HP += (int)healingValue;
 
                     Console.WriteLine($"{actor.Name} healed {target.Name} (+{(int)healingValue}HP) ");
