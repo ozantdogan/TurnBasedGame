@@ -37,6 +37,7 @@ namespace TurnBasedGame.Main
                         if(unit.HP <= 0)
                         {
                             Console.WriteLine($"{unit.Name} is dead");
+                            break;
                         }
 
                         int actionResult;
