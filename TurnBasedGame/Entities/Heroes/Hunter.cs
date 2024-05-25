@@ -10,7 +10,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{HUN}";
             Name = "Hunter";
             DisplayName = Name;
-            MaxHP = 16;
+            MaxHP = 20;
             HP = MaxHP;
             MaxMP = 20;
             MP = MaxMP;
@@ -24,6 +24,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             CriticalChance = 15;
             Skills.Add(new DaggerPierce() { Name = "Knife Pierce", ExecutionName = "Knife Pierce"});
             Skills.Add(new DualKnivesSlash());
+            Skills.Add(new PoisonDart());
         }
     }
 }

@@ -17,4 +17,18 @@ public static class EnumExtensions
         }
         return "defaultColor"; 
     }
+
+    public static float GetResistanceModifier(this EnumResistanceLevel resistanceLevel)
+    {
+        return resistanceLevel switch
+        {
+            EnumResistanceLevel.VeryWeak => 2.0f,
+            EnumResistanceLevel.Weak => 1.5f,       
+            EnumResistanceLevel.Neutral => 1.0f,    
+            EnumResistanceLevel.Resistant => 0.5f,  
+            EnumResistanceLevel.VeryResistant => 0.25f,  
+            EnumResistanceLevel.Immune => 0.0f,     
+            _ => 1.0f
+        };
+    }
 }

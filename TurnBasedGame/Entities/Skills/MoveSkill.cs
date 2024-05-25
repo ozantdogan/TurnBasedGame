@@ -13,10 +13,10 @@ public class MoveSkill : BaseSkill
         ManaCost = 0;
     }
 
-    public override bool Execute(Unit actor, List<Unit> targets)
+    public override int Execute(Unit actor, List<Unit> targets)
     {
         int currentIndex = targets.IndexOf(actor);
-        if (currentIndex == -1) return false; // Actor not found in the list
+        if (currentIndex == -1) return -1; // Actor not found in the list
 
         int newIndex = MoveLeft ? currentIndex - 1 : currentIndex + 1;
         if (actor.UnitType == EnumUnitType.Mob)
@@ -30,14 +30,14 @@ public class MoveSkill : BaseSkill
             targets[currentIndex] = temp;
 
             Console.WriteLine($"{actor.Name} moved {(MoveLeft ? "left" : "right")}.");
-            return true;
+            return 1;
         }
 
         Console.WriteLine($"Cannot move {(MoveLeft ? "left" : "right")}.");
-        return false;
+        return -1;
     }
 
-    public override bool Execute(Unit actor, Unit target)
+    public override int Execute(Unit actor, Unit target)
     {
         throw new NotImplementedException();
     }

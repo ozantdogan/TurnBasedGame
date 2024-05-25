@@ -23,8 +23,8 @@ namespace TurnBasedGame.Main.UI
             var playerMpRow = new List<string> { "[cyan]MP[/]" };
             foreach (Unit unit in playerUnits)
             {
-                playerHpRow.Add(unit.HP.ToString());
-                playerMpRow.Add(unit.MP.ToString()); // Assuming you have an Mp property
+                playerHpRow.Add(unit.HP.ToString() + "/" + unit.MaxHP.ToString());
+                playerMpRow.Add(unit.MP.ToString() + "/" + unit.MaxMP.ToString()); // Assuming you have an Mp property
             }
 
             playerTable.AddRow(playerHpRow.ToArray());
@@ -40,7 +40,7 @@ namespace TurnBasedGame.Main.UI
             var mobHpRow = new List<string> { "[seagreen2]HP[/]" };
             foreach (Unit unit in mobUnits)
             {
-                mobHpRow.Add(unit.HP.ToString());
+                mobHpRow.Add(unit.HP.ToString() + "/" + unit.MaxHP.ToString());
             }
             mobTable.AddRow(mobHpRow.ToArray());
 

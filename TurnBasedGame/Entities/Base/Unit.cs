@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Base
@@ -93,6 +94,8 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public EnumRace Race { get; set; }
 
+        public List<DoTEffect> ActiveDoTEffects { get; private set; } = new List<DoTEffect>();
+
         #endregion
 
         #region Attributes
@@ -125,15 +128,41 @@ namespace TurnBasedGame.Main.Entities.Base
 
         #region Resistances
 
-        public ResistanceLevel StandardResistance { get; set; } = ResistanceLevel.Neutral;
-        public ResistanceLevel SlashResistance { get; set; } = ResistanceLevel.Neutral;
-        public ResistanceLevel PierceResistance { get; set; } = ResistanceLevel.Neutral;
-        public ResistanceLevel BluntResistance { get; set; } = ResistanceLevel.Neutral;
-        public ResistanceLevel MagicResistance { get; set; } = ResistanceLevel.Neutral;
-        public ResistanceLevel HolyResistance { get; set; } = ResistanceLevel.Neutral;
-        public ResistanceLevel FireResistance { get; set; } = ResistanceLevel.Neutral;
+        public EnumResistanceLevel StandardResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel SlashResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel PierceResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel BluntResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel MagicResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel HolyResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel FireResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel PoisonResistance { get; set; } = EnumResistanceLevel.Neutral;
 
         #endregion
 
+        public void AddDoTEffect(DoTEffect effect)
+        {
+            ActiveDoTEffects.Add(effect);
+        }
+
+        public void ApplyDoTEffects()
+        {
+            foreach(var effect in ActiveDoTEffects.ToList())
+            {
+                EnumResistanceLevel resistanceLevel = effect.DamageType switch
+                {
+                    EnumDamageType.Fire => FireResistance,
+                    EnumDamageType.Poison => PoisonResistance,
+                    _ => EnumResistanceLevel.Neutral
+                };
+
+                float resistanceModifier = resistanceLevel.GetResistanceModifier();
+                effect.DamagePerTurn = (int)(effect.DamagePerTurn * (double)resistanceModifier);
+                effect.ApplyEffect(this);
+                Console.WriteLine($"{Name} took {effect.DamagePerTurn} DAMAGE from {effect.DamageType} damage");
+
+                if(effect.Duration <= 0)
+                    ActiveDoTEffects.Remove(effect);
+            }
+        }
     }
 }

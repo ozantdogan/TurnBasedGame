@@ -1,5 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {
@@ -10,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{KNT}";
             Name = "Knight";
             DisplayName = Name;
-            MaxHP = 20;
+            MaxHP = 25;
             HP = MaxHP;
             MaxMP = 20;
             MP = MaxMP;
@@ -21,6 +22,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             MaxDamageValue = 8;
             MinDamageValue = 5;
             CriticalChance = 10;
+            BluntResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new ShieldBash());
             Skills.Add(new SwordSlash());
         }

@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
         }
 
-        public override bool Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, List<Unit> targets)
         {
             return base.Execute(actor, targets);
         }

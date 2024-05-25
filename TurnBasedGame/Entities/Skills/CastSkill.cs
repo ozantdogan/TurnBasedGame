@@ -6,22 +6,22 @@ namespace TurnBasedGame.Main.Entities.Skills
     {
         public CastSkill() { }
 
-        public override bool Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit target)
         {
             throw new NotImplementedException();
         }
 
-        public override bool Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, List<Unit> targets)
         {
             throw new NotImplementedException();
         }
 
-        protected bool PerformHeal(Unit actor, Unit target)
+        protected int PerformHeal(Unit actor, Unit target)
         {
             if (ManaCost > 0)
             {
                 if (!CalculateMana(actor, ManaCost))
-                    return false;
+                    return -1;
             }
             for(int i=0; i<=ExecutionCount-1; i++)
             {
@@ -32,7 +32,7 @@ namespace TurnBasedGame.Main.Entities.Skills
 
                 Console.WriteLine($"{actor.Name} healed {target.Name} +{(int)healingValue}HP ");
             }
-            return true;
+            return 1;
         }
     }
 }

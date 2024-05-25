@@ -35,7 +35,7 @@ namespace TurnBasedGame
 
             for (int i = 0; i < numberOfMobs; i++)
             {
-                if (random.Next(1, 101) <= 20 && numberOfMobs <= 2 && !(mobList.Any(u => u is Troll)) || (random.Next(1, 101) <= 50 && Level > 2 && numberOfMobs < 4))
+                if (random.Next(1, 101) <= 50 && Level > 2 && numberOfMobs < 4 && !(mobList.Any(u => u is Troll)))
                 {
                     mobList.Add(new Troll() { UnitType = EnumUnitType.Mob });
                 }

@@ -24,5 +24,8 @@ namespace TurnBasedGame.Main.Helpers.Enums
 
         [DamageTypeColor("orange")]
         Fire,
+
+        [DamageTypeColor("green")]
+        Poison
     }
 }

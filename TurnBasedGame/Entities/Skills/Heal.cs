@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             BaseBuffValue = 4;
         }
 
-        public override bool Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit target)
         {
             return PerformHeal(actor, target);
         }

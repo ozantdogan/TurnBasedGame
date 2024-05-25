@@ -47,12 +47,12 @@ namespace TurnBasedGame.Main.Entities.Skills
             return false;
         }
 
-        public override bool Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit target)
         {
             if (ManaCost > 0)
             {
                 if (!CalculateMana(actor, ManaCost))
-                    return false;
+                    return -1;
             }
 
             for(int i=0; i<=ExecutionCount-1; i++)
@@ -60,7 +60,7 @@ namespace TurnBasedGame.Main.Entities.Skills
                 Console.WriteLine($"\n{actor.Name} used {ExecutionName} on {target.Name}!");
 
                 if (HasMissed(actor) || HasDodged(target))
-                    return true;
+                    return 0;
 
                 var damageTypeModifier = DamageTypeModifiers.ContainsKey(PrimaryDamageType) ? DamageTypeModifiers[PrimaryDamageType](actor) : 1.0;
 
@@ -70,7 +70,7 @@ namespace TurnBasedGame.Main.Entities.Skills
 
                 double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * DamageModifier;
 
-                var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryDamageType) ? ResistanceLevelSelectors[PrimaryDamageType](target) : ResistanceLevel.Neutral;
+                var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryDamageType) ? ResistanceLevelSelectors[PrimaryDamageType](target) : EnumResistanceLevel.Neutral;
                 var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
                 double damageDealt = baseDamage * resistanceModifier;
 
@@ -83,15 +83,15 @@ namespace TurnBasedGame.Main.Entities.Skills
                                   (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
             }
 
-                return true;
+            return 1;
         }
 
-        public override bool Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, List<Unit> targets)
         {
             if (ManaCost > 0)
             {
                 if (!CalculateMana(actor, ManaCost))
-                    return false;
+                    return -1;
             }
 
             for(int i = 0; i <= ExecutionCount-1; i++)
@@ -124,7 +124,7 @@ namespace TurnBasedGame.Main.Entities.Skills
 
                     double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * DamageModifier;
 
-                    var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryDamageType) ? ResistanceLevelSelectors[PrimaryDamageType](target) : ResistanceLevel.Neutral;
+                    var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryDamageType) ? ResistanceLevelSelectors[PrimaryDamageType](target) : EnumResistanceLevel.Neutral;
                     var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
                     double damageDealt = baseDamage * resistanceModifier;
 
@@ -138,7 +138,7 @@ namespace TurnBasedGame.Main.Entities.Skills
                 }
             }
 
-            return true;
+            return 1;
         }
     }
 

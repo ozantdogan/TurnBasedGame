@@ -14,7 +14,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             PrimaryDamageType = EnumDamageType.Slash;
         }
 
-        public override bool Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit target)
         {
             return base.Execute(actor, target);
         }

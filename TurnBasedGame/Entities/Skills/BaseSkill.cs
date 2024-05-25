@@ -18,17 +18,17 @@ namespace TurnBasedGame.Main.Entities.Skills
             { EnumDamageType.Holy, actor => actor.Faith * 0.5 },
         };
 
-        protected static readonly Dictionary<ResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<ResistanceLevel, double>
+        protected static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<EnumResistanceLevel, double>
         {
-            { ResistanceLevel.VeryWeak, 2.0 },
-            { ResistanceLevel.Weak, 1.5 },
-            { ResistanceLevel.Neutral, 1.0 },
-            { ResistanceLevel.Resistant, 0.5 },
-            { ResistanceLevel.VeryResistant, 0.25 },
-            { ResistanceLevel.Immune, 0.0 }
+            { EnumResistanceLevel.VeryWeak, 2.0 },
+            { EnumResistanceLevel.Weak, 1.5 },
+            { EnumResistanceLevel.Neutral, 1.0 },
+            { EnumResistanceLevel.Resistant, 0.5 },
+            { EnumResistanceLevel.VeryResistant, 0.25 },
+            { EnumResistanceLevel.Immune, 0.0 }
         };
 
-        protected static readonly Dictionary<EnumDamageType, Func<Unit, ResistanceLevel>> ResistanceLevelSelectors = new Dictionary<EnumDamageType, Func<Unit, ResistanceLevel>>
+        protected static readonly Dictionary<EnumDamageType, Func<Unit, EnumResistanceLevel>> ResistanceLevelSelectors = new Dictionary<EnumDamageType, Func<Unit, EnumResistanceLevel>>
         {
             { EnumDamageType.Standard, target => target.StandardResistance },
             { EnumDamageType.Slash, target => target.SlashResistance },
@@ -59,8 +59,8 @@ namespace TurnBasedGame.Main.Entities.Skills
         public EnumDamageType SecondaryDamageType { get; set; }
         public List<int> TargetIndexes { get; set; } = new List<int>();
 
-        public abstract bool Execute(Unit actor, Unit target);
-        public abstract bool Execute(Unit actor, List<Unit> targets);
+        public abstract int Execute(Unit actor, Unit target);
+        public abstract int Execute(Unit actor, List<Unit> targets);
         protected bool CalculateMana(Unit actor, int manaCost)
         {
             if(actor.UnitType != EnumUnitType.Player) return true;

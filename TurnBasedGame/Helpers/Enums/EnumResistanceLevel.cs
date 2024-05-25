@@ -1,6 +1,6 @@
 ﻿namespace TurnBasedGame.Main.Helpers.Enums
 {
-    public enum ResistanceLevel
+    public enum EnumResistanceLevel
     {
         VeryWeak,       // 200% damage
         Weak,           // 150% damage

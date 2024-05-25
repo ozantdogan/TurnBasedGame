@@ -6,7 +6,8 @@ namespace TurnBasedGame.Main.Entities.Base
     {
         public Undead() {
             Race = EnumRace.Undead;
-            HolyResistance = ResistanceLevel.VeryWeak;
+            HolyResistance = EnumResistanceLevel.VeryWeak;
+            PoisonResistance = EnumResistanceLevel.Resistant;
         }
     }
 }

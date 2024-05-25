@@ -20,10 +20,10 @@ namespace TurnBasedGame.Main.Entities.Mobs
             MaxDamageValue = 8;
             MinDamageValue = 2;
             CriticalChance = 3;
-            BluntResistance = ResistanceLevel.VeryResistant;
-            SlashResistance = ResistanceLevel.VeryResistant;
-            PierceResistance = ResistanceLevel.Weak;
-            FireResistance = ResistanceLevel.VeryWeak;
+            BluntResistance = EnumResistanceLevel.VeryResistant;
+            SlashResistance = EnumResistanceLevel.VeryResistant;
+            PierceResistance = EnumResistanceLevel.Weak;
+            FireResistance = EnumResistanceLevel.VeryWeak;
             Skills.Add(new HandSweep());
             Skills.Add(new SmashGround());
         }

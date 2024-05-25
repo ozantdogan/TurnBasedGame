@@ -13,9 +13,10 @@ namespace TurnBasedGame.Main.Entities.Skills
             ManaCost = 20;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Blunt;
+            Accuracy = 10;
         }
 
-        public override bool Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit target)
         {
             return base.Execute(actor, target);
         }

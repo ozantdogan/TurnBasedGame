@@ -31,7 +31,14 @@ namespace TurnBasedGame.Main
                     {
                         _ui.ShowStatus(playerUnits, mobUnits, level);
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
-                        bool actionResult;
+
+                        unit.ApplyDoTEffects();
+                        if(unit.HP <= 0)
+                        {
+                            Console.WriteLine($"{unit.Name} is dead");
+                        }
+
+                        int actionResult;
                         if (unit.UnitType == EnumUnitType.Player)
                         {
                             actionResult = PerformTurn(unit, mobUnits, playerUnits);
@@ -41,7 +48,7 @@ namespace TurnBasedGame.Main
                             actionResult = PerformTurn(unit, playerUnits.Where(u => u.IsAlive).ToList(), mobUnits.Where(u => u.IsAlive).ToList());
                         }
 
-                        if (actionResult)
+                        if (actionResult > 0)
                         {
                             Thread.Sleep(2500);
                             break;
@@ -108,7 +115,7 @@ namespace TurnBasedGame.Main
             return 0;
         }
 
-        private bool PerformTurn(Unit actor, List<Unit> enemyTargets, List<Unit> friendlyTargets)
+        private int PerformTurn(Unit actor, List<Unit> enemyTargets, List<Unit> friendlyTargets)
         {
             Console.WriteLine($"{actor.Name}'s turn!");
 
@@ -137,7 +144,7 @@ namespace TurnBasedGame.Main
                 if (skillChoice < 0 || skillChoice >= actor.Skills.Count)
                 {
                     Console.WriteLine("Invalid choice!");
-                    return false;
+                    return -1;
                 }
 
                 if (actor.Skills[skillChoice] is MoveSkill moveSkill)
@@ -173,7 +180,7 @@ namespace TurnBasedGame.Main
                     else
                     {
                         Console.WriteLine("Invalid target choice!");
-                        return false;
+                        return -1;
                     }
                 }
                 else
@@ -196,7 +203,7 @@ namespace TurnBasedGame.Main
                     else
                     {
                         Console.WriteLine("Invalid target choice!");
-                        return false;
+                        return -1;
                     }
                 }
             }
@@ -230,10 +237,10 @@ namespace TurnBasedGame.Main
             }
 
             var actionCompleted = actor.Skills[skillChoice].Execute(actor, target);
-            if (actionCompleted)
-                return true;
+            if (actionCompleted != -1)
+                return 1;
 
-            return false;
+            return -1;
         }
 
 

@@ -18,8 +18,8 @@ namespace TurnBasedGame.Main.Entities.Mobs
             MaxDamageValue = 4;
             MinDamageValue = 2;
             CriticalChance = 10;
-            PierceResistance = ResistanceLevel.Resistant;
-            BluntResistance = ResistanceLevel.Weak;
+            PierceResistance = EnumResistanceLevel.Resistant;
+            BluntResistance = EnumResistanceLevel.Weak;
         }
     }
 }

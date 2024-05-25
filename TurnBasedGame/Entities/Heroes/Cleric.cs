@@ -23,7 +23,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             MinDamageValue = 3;
             CriticalChance = 10;
             TurnPriority = 1;
-            HolyResistance = ResistanceLevel.Resistant;
+            HolyResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new DaggerPierce());
             Skills.Add(new Heal());
             Skills.Add(new DivineLight());
