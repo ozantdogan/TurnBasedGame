@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using System.Text;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
@@ -58,8 +59,8 @@ namespace TurnBasedGame.Main.Entities.Skills
             var primaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
             var secondaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(SecondaryType) ? SkillTypeModifiers[SecondaryType](actor) : 0.0;
 
-            var primaryResistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
-            var secondaryResistanceLevel = ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
+            var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
+            var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
 
             var primaryResistanceModifier = ResistanceLevelModifiers[primaryResistanceLevel];
             var secondaryResistanceModifier = ResistanceLevelModifiers[secondaryResistanceLevel];
@@ -138,8 +139,8 @@ namespace TurnBasedGame.Main.Entities.Skills
                     if (CalculateCrit(actor))
                         critModifier = actor.MaxDamageValue * 1.5;
 
-                    var primaryResistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
-                    var secondaryResistanceLevel = ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
+                    var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
+                    var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
 
                     var primaryResistanceModifier = ResistanceLevelModifiers[primaryResistanceLevel];
                     var secondaryResistanceModifier = ResistanceLevelModifiers[secondaryResistanceLevel];

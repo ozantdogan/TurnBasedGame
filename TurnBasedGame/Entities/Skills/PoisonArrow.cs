@@ -13,7 +13,8 @@ namespace TurnBasedGame.Main.Entities.Skills
             ManaCost = 4;
             PrimaryType = EnumSkillType.Pierce;
             SecondaryType = EnumSkillType.Poison;
-            SecondarySkillModifier = 0.3;
+            PrimarySkillModifier = 0.8;
+            SecondarySkillModifier = 0.2;
             DamagePerTurn = 5;
             Duration = 3;
             StatReduction = 1.2;

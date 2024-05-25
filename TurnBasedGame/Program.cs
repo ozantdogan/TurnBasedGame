@@ -10,7 +10,7 @@ namespace TurnBasedGame
         static void Main(string[] args)
         {
             Unit knight = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Valley", DisplayName = "Knight of\nthe Valley" };
-            Unit knight2 = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Old Town", DisplayName = "Knight of\nthe Old Town" };
+            //Unit knight2 = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Old Town", DisplayName = "Knight of\nthe Old Town" };
             Unit cleric = new Cleric() { UnitType = EnumUnitType.Player };
             Unit hunter = new Hunter() { UnitType = EnumUnitType.Player };
             Unit scholar = new Scholar() { UnitType = EnumUnitType.Player };

@@ -1,6 +1,8 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
 
@@ -186,8 +188,24 @@ namespace TurnBasedGame.Main
                 }
                 else
                 {
-                    // Display target choices using Spectre.Console
-                    var targetChoices = enemyTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
+                    var targetChoices = enemyTargets
+                        .Select((target, index) =>
+                        {
+                            var resistanceLevel = EnumResistanceLevel.Neutral; 
+
+                            EnumSkillType primaryType = actor.Skills[skillChoice].PrimaryType;
+                            if (primaryType != EnumSkillType.None && ResistanceManager.ResistanceLevelSelectors.ContainsKey(primaryType))
+                            {
+                                var selector = ResistanceManager.ResistanceLevelSelectors[primaryType];
+                                resistanceLevel = selector(target);
+                            }
+
+                            string resistanceText = resistanceLevel != EnumResistanceLevel.Neutral ? $"[gray] ({resistanceLevel})[/]" : "";
+                            return $"{index + 1}. {target.Name}{resistanceText}";
+                        })
+                        .ToArray();
+
+                    // Prompt the user to choose a target
                     var targetChoiceIndex = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
                             .Title("Choose a target:")
