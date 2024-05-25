@@ -1,4 +1,4 @@
-﻿using TurnBasedGame.Entities.Base;
+﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills

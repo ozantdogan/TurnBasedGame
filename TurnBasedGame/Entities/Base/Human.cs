@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Entities.Base
+namespace TurnBasedGame.Main.Entities.Base
 {
     public class Human : Unit
     {

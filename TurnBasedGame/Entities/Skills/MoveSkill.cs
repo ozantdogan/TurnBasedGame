@@ -1,4 +1,4 @@
-﻿using TurnBasedGame.Entities.Base;
+﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills;
 using TurnBasedGame.Main.Helpers.Enums;
 
@@ -19,7 +19,7 @@ public class MoveSkill : BaseSkill
         if (currentIndex == -1) return false; // Actor not found in the list
 
         int newIndex = MoveLeft ? currentIndex - 1 : currentIndex + 1;
-        if(actor.UnitType == EnumUnitType.Mob)
+        if (actor.UnitType == EnumUnitType.Mob)
             newIndex = MoveLeft ? currentIndex + 1 : currentIndex - 1;
 
         if (newIndex >= 0 && newIndex < targets.Count && targets[newIndex].IsAlive)

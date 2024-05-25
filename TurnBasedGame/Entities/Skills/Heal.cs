@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TurnBasedGame.Entities.Base;
+﻿using TurnBasedGame.Main.Entities.Base;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
     public class Heal : CastSkill
     {
-        public Heal() {
+        public Heal()
+        {
             Name = "Heal";
             ManaCost = 8;
             PassiveFlag = true;

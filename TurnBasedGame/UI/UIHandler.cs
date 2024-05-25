@@ -1,5 +1,5 @@
 ﻿using Spectre.Console;
-using TurnBasedGame.Entities.Base;
+using TurnBasedGame.Main.Entities.Base;
 
 namespace TurnBasedGame.Main.UI
 {

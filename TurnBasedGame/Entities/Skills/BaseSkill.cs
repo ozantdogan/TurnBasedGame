@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TurnBasedGame.Entities.Base;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
 
@@ -54,12 +54,14 @@ namespace TurnBasedGame.Main.Entities.Skills
         public double Accuracy { get; set; } = 1.0;
         public EnumDamageType PrimaryDamageType { get; set; } = EnumDamageType.Standard;
         public EnumDamageType SecondaryDamageType { get; set; }
-        public List<int> TargetIndexes { get; set; }
+        public List<int> TargetIndexes { get; set; } = new List<int>();
 
         public abstract bool Execute(Unit actor, Unit target);
         public abstract bool Execute(Unit actor, List<Unit> targets);
         protected bool CalculateMana(Unit actor, int manaCost)
         {
+            if(actor.UnitType != EnumUnitType.Player) return true;
+
             if (actor.MP < ManaCost)
             {
                 Console.WriteLine($"{actor.Name} does not have enough Mana points to use {Name}");

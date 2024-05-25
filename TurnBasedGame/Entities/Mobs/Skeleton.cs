@@ -1,7 +1,6 @@
-﻿using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills;
+﻿using TurnBasedGame.Main.Entities.Base;
 
-namespace TurnBasedGame.Entities.Mobs
+namespace TurnBasedGame.Main.Entities.Mobs
 {
     public class Skeleton : Undead
     {

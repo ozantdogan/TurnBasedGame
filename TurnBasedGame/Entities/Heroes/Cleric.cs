@@ -1,4 +1,4 @@
-﻿using TurnBasedGame.Entities.Base;
+﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills;
 
 namespace TurnBasedGame.Main.Entities.Heroes
@@ -19,12 +19,13 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Intelligence = 3;
             Faith = 7;
             MaxDamageValue = 5;
-            MinDamageValue = 2; 
+            MinDamageValue = 2;
             BaseResistance = 8;
             CriticalChance = 5;
             TurnPriority = 1;
             Skills.Add(new DaggerPierce());
             Skills.Add(new Heal());
+            Skills.Add(new DivineLight());
         }
     }
 }

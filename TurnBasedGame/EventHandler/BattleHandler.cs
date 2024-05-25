@@ -1,5 +1,5 @@
 ﻿using Spectre.Console;
-using TurnBasedGame.Entities.Base;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
 
@@ -25,13 +25,14 @@ namespace TurnBasedGame.Main
             {
                 var units = ProcessTurns(playerUnits, mobUnits);
                 round++;
-                foreach(var unit in units.Where(p => p.IsAlive)) {
+                foreach (var unit in units.Where(p => p.IsAlive))
+                {
                     while (true)
                     {
                         _ui.ShowStatus(playerUnits, mobUnits);
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
                         bool actionResult;
-                        if(unit.UnitType == EnumUnitType.Player)
+                        if (unit.UnitType == EnumUnitType.Player)
                         {
                             actionResult = PerformTurn(unit, mobUnits, playerUnits);
                         }
@@ -45,7 +46,7 @@ namespace TurnBasedGame.Main
                             Thread.Sleep(1500);
                             break;
                         }
-                        Thread.Sleep(1200);
+                        Thread.Sleep(1500);
                     }
                     battleResult = CheckAlives(playerUnits, mobUnits);
                     if (battleResult != 0)
@@ -59,7 +60,7 @@ namespace TurnBasedGame.Main
             Console.WriteLine("Battle ended.");
             if (battleResult == 1)
                 Console.WriteLine("Player won!");
-            else if(battleResult == 2)
+            else if (battleResult == 2)
                 Console.WriteLine("Mobs won!");
         }
 
@@ -80,14 +81,14 @@ namespace TurnBasedGame.Main
             return shuffledUnits;
         }
 
-        private int CheckAlives (List <Unit> playerUnits, List<Unit> mobUnits)
+        private int CheckAlives(List<Unit> playerUnits, List<Unit> mobUnits)
         {
-            if(!mobUnits.Any(unit => unit.IsAlive))
+            if (!mobUnits.Any(unit => unit.IsAlive))
             {
                 return 1;
             }
 
-            if(!playerUnits.Any(unit => unit.IsAlive))
+            if (!playerUnits.Any(unit => unit.IsAlive))
             {
                 return 2;
             }
@@ -123,6 +124,14 @@ namespace TurnBasedGame.Main
                 if (actor.Skills[skillChoice] is MoveSkill moveSkill)
                 {
                     return moveSkill.Execute(actor, friendlyTargets);
+                }
+
+                if (actor.Skills[skillChoice].TargetIndexes != null && actor.Skills[skillChoice].TargetIndexes.Count() > 0)
+                {
+                    if (actor.Skills[skillChoice].PassiveFlag)
+                        return actor.Skills[skillChoice].Execute(actor, friendlyTargets);
+                    else
+                        return actor.Skills[skillChoice].Execute(actor, enemyTargets);
                 }
 
                 if (actor.Skills[skillChoice].PassiveFlag)
@@ -174,12 +183,12 @@ namespace TurnBasedGame.Main
             }
             else // mob
             {
-                if(friendlyTargets.Count(t => t.IsAlive) > 1 && _random.Next(100) < 10)
+                if (friendlyTargets.Count(t => t.IsAlive) > 1 && _random.Next(100) < 10)
                 {
                     skillChoice = _random.Next(actor.Skills.Count);
                     if (actor.Skills[skillChoice] is MoveSkill moveSkill)
                     {
-                        bool moveLeft = _random.Next(2) == 0; 
+                        bool moveLeft = _random.Next(2) == 0;
                         int newIndex = moveLeft ? friendlyTargets.IndexOf(actor) - 1 : friendlyTargets.IndexOf(actor) + 1;
                         if (newIndex >= 0 && newIndex < friendlyTargets.Count)
                         {
@@ -187,10 +196,16 @@ namespace TurnBasedGame.Main
                         }
                     }
                 }
-
                 var nonMoveSkills = actor.Skills.Where(skill => !(skill is MoveSkill)).ToList();
                 skillChoice = _random.Next(nonMoveSkills.Count) + 2;
-                
+                if (actor.Skills[skillChoice].TargetIndexes != null && actor.Skills[skillChoice].TargetIndexes.Count() > 0)
+                {
+                    if (actor.Skills[skillChoice].PassiveFlag)
+                        return actor.Skills[skillChoice].Execute(actor, friendlyTargets);
+                    else
+                        return actor.Skills[skillChoice].Execute(actor, enemyTargets);
+                }
+
                 var targetIndex = _random.Next(enemyTargets.Count);
                 target = enemyTargets[targetIndex];
             }
@@ -205,7 +220,7 @@ namespace TurnBasedGame.Main
 
         private void PostTurn(List<Unit> units)
         {
-            foreach(var unit in units.Where(u => u.IsAlive))
+            foreach (var unit in units.Where(u => u.IsAlive))
                 unit.MP = Math.Min(unit.MP + 5, unit.MaxMP);
         }
     }

@@ -1,8 +1,7 @@
-﻿using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Entities.Heroes;
-using TurnBasedGame.Entities.Mobs;
-using TurnBasedGame.Main;
+﻿using TurnBasedGame.Main;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Heroes;
+using TurnBasedGame.Main.Entities.Mobs;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame
@@ -15,6 +14,7 @@ namespace TurnBasedGame
             Unit cleric = new Cleric() { UnitType = EnumUnitType.Player };
             Unit skeletonBrute = new SkeletonBrute() { UnitType = EnumUnitType.Mob };
             Unit skeletonSwordsman = new SkeletonSwordsman() { UnitType = EnumUnitType.Mob };
+            Unit skeletonSpearsman = new SkeletonSpearsman() { UnitType = EnumUnitType.Mob };
 
             List<Unit> Heroes = new List<Unit>();
             List<Unit> Mobs = new List<Unit>();
@@ -23,6 +23,7 @@ namespace TurnBasedGame
             Heroes.Add(knight);
             Mobs.Add(skeletonBrute);
             Mobs.Add(skeletonSwordsman);
+            Mobs.Add(skeletonSpearsman);
 
             BattleHandler battle = new BattleHandler();
             battle.StartBattle(Heroes, Mobs);

@@ -3,14 +3,15 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class DivineLight : AttackSkill
+    public class SpearPierce : AttackSkill
     {
-        public DivineLight()
+        public SpearPierce()
         {
-            Name = "Divine Light";
-            ManaCost = 15;
+            Name = "SpearPierce";
+            ManaCost = 8;
             PassiveFlag = false;
-            PrimaryDamageType = EnumDamageType.Holy;
+            DamageModifier = 1.2;
+            PrimaryDamageType = EnumDamageType.Pierce;
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
         }
 

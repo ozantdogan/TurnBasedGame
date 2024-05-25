@@ -1,7 +1,7 @@
-﻿using TurnBasedGame.Entities.Base;
+﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills;
 
-namespace TurnBasedGame.Entities.Heroes
+namespace TurnBasedGame.Main.Entities.Heroes
 {
     public class Knight : Human
     {

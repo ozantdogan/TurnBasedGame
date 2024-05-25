@@ -1,7 +1,6 @@
-﻿using TurnBasedGame.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills;
+﻿using TurnBasedGame.Main.Entities.Skills;
 
-namespace TurnBasedGame.Entities.Mobs
+namespace TurnBasedGame.Main.Entities.Mobs
 {
     public class SkeletonSwordsman : Skeleton
     {
