@@ -13,13 +13,14 @@ namespace TurnBasedGame
             Unit knight2 = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Old Town", DisplayName = "Knight of\nthe Old Town" };
             Unit cleric = new Cleric() { UnitType = EnumUnitType.Player };
             Unit hunter = new Hunter() { UnitType = EnumUnitType.Player };
+            Unit scholar = new Scholar() { UnitType = EnumUnitType.Player };
 
             List<Unit> Heroes = new List<Unit>();
             List<Unit> Mobs = new List<Unit>();
 
             Heroes.Add(cleric);
+            Heroes.Add(scholar);
             Heroes.Add(knight);
-            Heroes.Add(knight2);
             Heroes.Add(hunter);
             foreach(var hero in Heroes)
                 hero.Skills.Reverse();

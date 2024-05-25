@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Heroes
@@ -13,15 +14,17 @@ namespace TurnBasedGame.Main.Entities.Heroes
             HP = MaxHP;
             MaxMP = 30;
             MP = MaxMP;
-            Strength = 3;
+            Strength = 2;
             Dexterity = 5;
-            Intelligence = 8;
+            Intelligence = 7;
             Faith = 2;
             MaxDamageValue = 6;
-            MinDamageValue = 4;
+            MinDamageValue = 3;
             CriticalChance = 10;
             TurnPriority = 1;
             MagicResistance = EnumResistanceLevel.Resistant;
+            Skills.Add(new RainOfStars());
+            Skills.Add(new StarShard());
         }
     }
 }

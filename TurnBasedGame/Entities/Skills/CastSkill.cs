@@ -48,9 +48,22 @@ namespace TurnBasedGame.Main.Entities.Skills
             var castTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
             Console.WriteLine($"{actor.Name} used {ExecutionName}!");
 
-            for(int i=0; i<=ExecutionCount-1; i++)
+            var targetIndexes = new List<int>();
+            if (targets.Count() < TargetIndexes.Count)
             {
-                foreach(var index in TargetIndexes)
+                for (int i = 0; i < targets.Count(); i++)
+                {
+                    targetIndexes.Add(i);
+                }
+            }
+            else
+            {
+                targetIndexes = TargetIndexes;
+            }
+
+            for (int i=0; i<=ExecutionCount-1; i++)
+            {
+                foreach(var index in targetIndexes)
                 {
                     if (index < 0 || index >= targets.Count)
                         continue;

@@ -97,10 +97,22 @@ namespace TurnBasedGame.Main.Entities.Skills
 
             var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
             var critModifier = 1.0;
+            var targetIndexes = new List<int>();
+            if(targets.Count() < TargetIndexes.Count)
+            {
+                for(int i = 0; i < targets.Count(); i++)
+                {
+                    targetIndexes.Add(i);
+                }
+            }
+            else
+            {
+                targetIndexes = TargetIndexes;
+            }
 
             for (int i = 0; i <= ExecutionCount-1; i++)
             {
-                foreach (var index in TargetIndexes)
+                foreach (var index in targetIndexes)
                 {
                     if (index < 0 || index >= targets.Count)
                         continue;
