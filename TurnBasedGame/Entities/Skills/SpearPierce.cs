@@ -10,7 +10,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             Name = "SpearPierce";
             ManaCost = 8;
             PassiveFlag = false;
-            DamageModifier = 1.2;
+            DamageModifier = 1.5;
             PrimaryDamageType = EnumDamageType.Pierce;
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
         }

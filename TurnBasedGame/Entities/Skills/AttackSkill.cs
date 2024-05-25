@@ -97,6 +97,10 @@ namespace TurnBasedGame.Main.Entities.Skills
                 }
 
                 var target = targets[index];
+                if (!target.IsAlive)
+                {
+                    continue;
+                }
 
                 Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
 

@@ -66,6 +66,9 @@ namespace TurnBasedGame.Main
 
         private List<Unit> ProcessTurns(List<Unit> playerUnits, List<Unit> mobUnits)
         {
+            playerUnits.RemoveAll(u => !u.IsAlive);
+            mobUnits.RemoveAll(u => !u.IsAlive);
+
             var allUnits = playerUnits.Concat(mobUnits).Where(u => u.IsAlive).ToList();
             var groupedUnits = allUnits.GroupBy(u => u.TurnPriority).OrderByDescending(g => g.Key);
             var random = new Random();
