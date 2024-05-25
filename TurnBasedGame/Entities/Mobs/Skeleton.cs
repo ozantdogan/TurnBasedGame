@@ -19,7 +19,6 @@ namespace TurnBasedGame.Entities.Mobs
             MinDamageValue = 1;
             BaseResistance = 6;
             CriticalChance = 5;
-            TurnPriority = 0;
         }
     }
 }

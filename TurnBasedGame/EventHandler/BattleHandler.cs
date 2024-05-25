@@ -20,13 +20,16 @@ namespace TurnBasedGame.Main
         {
             Console.WriteLine("Battle started!");
             var battleResult = 0;
+            var round = 0;
             while (playerUnits.Any(unit => unit.IsAlive) && mobUnits.Any(unit => unit.IsAlive))
             {
                 var units = ProcessTurns(playerUnits, mobUnits);
+                round++;
                 foreach(var unit in units.Where(p => p.IsAlive)) {
                     while (true)
                     {
                         _ui.ShowStatus(playerUnits, mobUnits);
+                        AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
                         bool actionResult;
                         if(unit.UnitType == EnumUnitType.Player)
                         {
@@ -202,7 +205,7 @@ namespace TurnBasedGame.Main
 
         private void PostTurn(List<Unit> units)
         {
-            foreach(var unit in units)
+            foreach(var unit in units.Where(u => u.IsAlive))
                 unit.MP = Math.Min(unit.MP + 5, unit.MaxMP);
         }
     }

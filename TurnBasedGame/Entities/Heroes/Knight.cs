@@ -22,7 +22,6 @@ namespace TurnBasedGame.Entities.Heroes
             MinDamageValue = 2;
             BaseResistance = 5;
             CriticalChance = 5;
-            TurnPriority = 1;
             Skills.Add(new ShieldBash());
             Skills.Add(new SwordSlash());
         }
