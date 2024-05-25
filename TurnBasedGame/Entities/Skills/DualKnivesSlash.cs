@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             ManaCost = 8;
             ExecutionCount = 2;
             PassiveFlag = false;
-            PrimaryDamageType = EnumDamageType.Slash;
+            PrimaryType = EnumSkillType.Slash;
             Accuracy = 0.6;
         }
 

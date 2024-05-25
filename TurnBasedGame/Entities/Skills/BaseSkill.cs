@@ -8,14 +8,14 @@ namespace TurnBasedGame.Main.Entities.Skills
     public abstract class BaseSkill : ISkill
     {
         protected Random _random;
-        protected static readonly Dictionary<EnumDamageType, Func<Unit, double>> DamageTypeModifiers = new Dictionary<EnumDamageType, Func<Unit, double>>
+        protected static readonly Dictionary<EnumSkillType, Func<Unit, double>> SkillTypeModifiers = new Dictionary<EnumSkillType, Func<Unit, double>>
         {
-            { EnumDamageType.Standard, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
-            { EnumDamageType.Slash, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
-            { EnumDamageType.Pierce, actor => actor.Strength * 0.1 + actor.Dexterity * 0.4 },
-            { EnumDamageType.Blunt, actor => actor.Strength * 0.4 },
-            { EnumDamageType.Magic, actor => actor.Intelligence * 0.5 },
-            { EnumDamageType.Holy, actor => actor.Faith * 0.5 },
+            { EnumSkillType.Standard, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
+            { EnumSkillType.Slash, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
+            { EnumSkillType.Pierce, actor => actor.Strength * 0.1 + actor.Dexterity * 0.4 },
+            { EnumSkillType.Blunt, actor => actor.Strength * 0.4 },
+            { EnumSkillType.Magic, actor => actor.Intelligence * 0.5 },
+            { EnumSkillType.Holy, actor => actor.Faith * 0.5 },
         };
 
         protected static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<EnumResistanceLevel, double>
@@ -28,14 +28,14 @@ namespace TurnBasedGame.Main.Entities.Skills
             { EnumResistanceLevel.Immune, 0.0 }
         };
 
-        protected static readonly Dictionary<EnumDamageType, Func<Unit, EnumResistanceLevel>> ResistanceLevelSelectors = new Dictionary<EnumDamageType, Func<Unit, EnumResistanceLevel>>
+        protected static readonly Dictionary<EnumSkillType, Func<Unit, EnumResistanceLevel>> ResistanceLevelSelectors = new Dictionary<EnumSkillType, Func<Unit, EnumResistanceLevel>>
         {
-            { EnumDamageType.Standard, target => target.StandardResistance },
-            { EnumDamageType.Slash, target => target.SlashResistance },
-            { EnumDamageType.Pierce, target => target.PierceResistance },
-            { EnumDamageType.Blunt, target => target.BluntResistance },
-            { EnumDamageType.Magic, target => target.MagicResistance },
-            { EnumDamageType.Holy, target => target.HolyResistance },
+            { EnumSkillType.Standard, target => target.StandardResistance },
+            { EnumSkillType.Slash, target => target.SlashResistance },
+            { EnumSkillType.Pierce, target => target.PierceResistance },
+            { EnumSkillType.Blunt, target => target.BluntResistance },
+            { EnumSkillType.Magic, target => target.MagicResistance },
+            { EnumSkillType.Holy, target => target.HolyResistance },
         };
 
         public BaseSkill()
@@ -51,12 +51,12 @@ namespace TurnBasedGame.Main.Entities.Skills
         public int ManaCost { get; set; }
         public int BaseDamageValue { get; set; }
         public double BaseBuffValue { get; set; } = 1.0;
-        public double DamageModifier { get; set; } = 1.0;
+        public double SkillModifier { get; set; } = 1.0;
         public int ResistanceValue { get; set; }
         public int ExecutionCount { get; set; } = 1;
         public double Accuracy { get; set; } = 1.0;
-        public EnumDamageType PrimaryDamageType { get; set; } = EnumDamageType.Standard;
-        public EnumDamageType SecondaryDamageType { get; set; }
+        public EnumSkillType PrimaryType { get; set; } = EnumSkillType.Standard;
+        public EnumSkillType SecondaryType { get; set; }
         public List<int> TargetIndexes { get; set; } = new List<int>();
 
         public abstract int Execute(Unit actor, Unit target);

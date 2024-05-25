@@ -11,8 +11,8 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionName = Name;
             ManaCost = 8;
             PassiveFlag = false;
-            DamageModifier = 1.5;
-            PrimaryDamageType = EnumDamageType.Pierce;
+            SkillModifier = 1.5;
+            PrimaryType = EnumSkillType.Pierce;
             TargetIndexes = new List<int>() { 0, 1 };
         }
 

@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
@@ -10,7 +11,8 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionName = Name;
             ManaCost = 8;
             PassiveFlag = true;
-            BaseBuffValue = 4;
+            
+            PrimaryType = EnumSkillType.Holy;
         }
 
         public override int Execute(Unit actor, Unit target)

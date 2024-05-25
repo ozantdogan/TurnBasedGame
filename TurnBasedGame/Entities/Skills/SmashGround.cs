@@ -11,8 +11,8 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionName = Name;
             ManaCost = 20;
             PassiveFlag = false;
-            DamageModifier = 1.5;
-            PrimaryDamageType = EnumDamageType.Blunt;
+            SkillModifier = 1.5;
+            PrimaryType = EnumSkillType.Blunt;
             TargetIndexes = new List<int>() { 0, 1, 2 };
         }
 

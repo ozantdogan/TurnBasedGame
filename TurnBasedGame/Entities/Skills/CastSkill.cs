@@ -23,11 +23,14 @@ namespace TurnBasedGame.Main.Entities.Skills
                 if (!CalculateMana(actor, ManaCost))
                     return -1;
             }
+
+            var castTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+
             for(int i=0; i<=ExecutionCount-1; i++)
             {
                 Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
 
-                double healingValue = actor.Faith * 0.25 + BaseBuffValue + _random.Next(actor.Faith / 2);
+                double healingValue = castTypeModifier * BaseBuffValue + _random.Next(actor.Faith / 2);
                 target.HP += (int)healingValue;
 
                 Console.WriteLine($"{actor.Name} healed {target.Name} +{(int)healingValue}HP ");

@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionName = Name;
             ManaCost = 0;
             PassiveFlag = false;
-            PrimaryDamageType = EnumDamageType.Slash;
+            PrimaryType = EnumSkillType.Slash;
         }
 
         public override int Execute(Unit actor, Unit target)

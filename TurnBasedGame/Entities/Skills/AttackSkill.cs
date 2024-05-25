@@ -62,15 +62,15 @@ namespace TurnBasedGame.Main.Entities.Skills
                 if (HasMissed(actor) || HasDodged(target))
                     return 0;
 
-                var damageTypeModifier = DamageTypeModifiers.ContainsKey(PrimaryDamageType) ? DamageTypeModifiers[PrimaryDamageType](actor) : 1.0;
+                var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
 
                 var critModifier = 1.0;
                 if (CalculateCrit(actor))
                     critModifier = actor.MaxDamageValue * 1.5;
 
-                double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * DamageModifier;
+                double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * SkillModifier;
 
-                var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryDamageType) ? ResistanceLevelSelectors[PrimaryDamageType](target) : EnumResistanceLevel.Neutral;
+                var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
                 var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
                 double damageDealt = baseDamage * resistanceModifier;
 
@@ -116,15 +116,15 @@ namespace TurnBasedGame.Main.Entities.Skills
                     if (HasMissed(actor) || HasDodged(target))
                         continue;
 
-                    var damageTypeModifier = DamageTypeModifiers.ContainsKey(PrimaryDamageType) ? DamageTypeModifiers[PrimaryDamageType](actor) : 1.0;
+                    var damageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
 
                     var critModifier = 1.0;
                     if (CalculateCrit(actor))
                         critModifier = actor.MaxDamageValue * 1.5;
 
-                    double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * DamageModifier;
+                    double baseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * SkillModifier;
 
-                    var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryDamageType) ? ResistanceLevelSelectors[PrimaryDamageType](target) : EnumResistanceLevel.Neutral;
+                    var resistanceLevel = ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
                     var resistanceModifier = ResistanceLevelModifiers[resistanceLevel];
                     double damageDealt = baseDamage * resistanceModifier;
 

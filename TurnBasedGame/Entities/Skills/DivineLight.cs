@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionName = Name;
             ManaCost = 15;
             PassiveFlag = false;
-            PrimaryDamageType = EnumDamageType.Holy;
+            PrimaryType = EnumSkillType.Holy;
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
         }
 

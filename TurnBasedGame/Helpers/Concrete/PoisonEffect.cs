@@ -7,7 +7,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
     {
 
         public double StatReduction { get; set; } = 1.2;
-        public PoisonEffect(int damagePerTurn, int duration, double statReduction) : base(EnumDamageType.Poison, damagePerTurn, duration)
+        public PoisonEffect(int damagePerTurn, int duration, double statReduction) : base(EnumSkillType.Poison, damagePerTurn, duration)
         {
             StatReduction = statReduction;
         }

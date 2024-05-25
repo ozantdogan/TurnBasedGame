@@ -126,9 +126,9 @@ namespace TurnBasedGame.Main
                 // Display skill choices using Spectre.Console
                 var skillChoices = actor.Skills.Select((skill, index) =>
                 {
-                    var color = skill.PrimaryDamageType.GetColor();
+                    var color = skill.PrimaryType.GetColor();
                     return $"{index + 1}. {skill.Name} " +
-                           $"{(skill.PrimaryDamageType != EnumDamageType.Standard ? $"[{skill.PrimaryDamageType.GetColor()}]({skill.PrimaryDamageType})[/] " : string.Empty)}" +
+                           $"{(skill.PrimaryType != EnumSkillType.Standard ? $"[{skill.PrimaryType.GetColor()}]({skill.PrimaryType})[/] " : string.Empty)}" +
                            $"{(skill.ManaCost > 0 ? $"[cyan]({skill.ManaCost})[/]" : string.Empty)}";
                 }).ToArray(); 
 

@@ -150,8 +150,8 @@ namespace TurnBasedGame.Main.Entities.Base
             {
                 EnumResistanceLevel resistanceLevel = effect.DamageType switch
                 {
-                    EnumDamageType.Fire => FireResistance,
-                    EnumDamageType.Poison => PoisonResistance,
+                    EnumSkillType.Fire => FireResistance,
+                    EnumSkillType.Poison => PoisonResistance,
                     _ => EnumResistanceLevel.Neutral
                 };
 

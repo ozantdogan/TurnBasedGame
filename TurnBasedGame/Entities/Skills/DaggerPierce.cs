@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionName = Name;
             ManaCost = 0;
             PassiveFlag = false;
-            PrimaryDamageType = EnumDamageType.Pierce;
+            PrimaryType = EnumSkillType.Pierce;
         }
 
         public override int Execute(Unit actor, Unit target)

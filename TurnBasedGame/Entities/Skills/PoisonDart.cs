@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             Name = "Poison Dart";
             ExecutionName = Name;
             ManaCost = 4;
-            PrimaryDamageType = EnumDamageType.Poison;
+            PrimaryType = EnumSkillType.Poison;
             DamagePerTurn = 5;
             Duration = 3;
             StatReduction = 1.2;
