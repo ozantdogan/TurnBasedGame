@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Mobs
 {
@@ -18,6 +19,7 @@ namespace TurnBasedGame.Main.Entities.Mobs
             MinDamageValue = 1;
             BaseResistance = 6;
             CriticalChance = 5;
+            PierceResistance = ResistanceLevel.Resistant;
         }
     }
 }
