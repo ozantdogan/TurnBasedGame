@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.UI
             playerTable.AddColumn(" ").LeftAligned();
             foreach (Unit unit in playerUnits)
             {
-                playerTable.AddColumn(unit.DisplayName ?? " ").LeftAligned();
+                playerTable.AddColumn($"[lightcyan1]{unit.DisplayName ?? " "}[/]").LeftAligned();
             }
 
             var playerHpRow = new List<string> { "[seagreen2]HP[/]" };

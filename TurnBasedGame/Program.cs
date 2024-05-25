@@ -12,21 +12,18 @@ namespace TurnBasedGame
         {
             Unit knight = new Knight() { UnitType = EnumUnitType.Player };
             Unit cleric = new Cleric() { UnitType = EnumUnitType.Player };
-            Unit skeletonBrute = new SkeletonBrute() { UnitType = EnumUnitType.Mob };
-            Unit skeletonSwordsman = new SkeletonSwordsman() { UnitType = EnumUnitType.Mob };
-            Unit skeletonSpearsman = new SkeletonSpearsman() { UnitType = EnumUnitType.Mob };
 
             List<Unit> Heroes = new List<Unit>();
             List<Unit> Mobs = new List<Unit>();
 
             Heroes.Add(cleric);
             Heroes.Add(knight);
-            Mobs.Add(skeletonBrute);
-            Mobs.Add(skeletonSwordsman);
-            Mobs.Add(skeletonSpearsman);
+
+            LevelHandler.AddMobs(Mobs);
 
             BattleHandler battle = new BattleHandler();
             battle.StartBattle(Heroes, Mobs);
         }
+
     }
 }

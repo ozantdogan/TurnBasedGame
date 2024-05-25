@@ -131,6 +131,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public ResistanceLevel BluntResistance { get; set; } = ResistanceLevel.Neutral;
         public ResistanceLevel MagicResistance { get; set; } = ResistanceLevel.Neutral;
         public ResistanceLevel HolyResistance { get; set; } = ResistanceLevel.Neutral;
+        public ResistanceLevel FireResistance { get; set; } = ResistanceLevel.Neutral;
 
         #endregion
 

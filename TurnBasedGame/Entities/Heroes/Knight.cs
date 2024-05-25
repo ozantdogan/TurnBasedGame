@@ -20,7 +20,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Faith = 1;
             MaxDamageValue = 7;
             MinDamageValue = 2;
-            CriticalChance = 5;
+            CriticalChance = 10;
             Skills.Add(new ShieldBash());
             Skills.Add(new SwordSlash());
         }

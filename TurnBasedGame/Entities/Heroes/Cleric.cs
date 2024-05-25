@@ -21,7 +21,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Faith = 7;
             MaxDamageValue = 5;
             MinDamageValue = 2;
-            CriticalChance = 5;
+            CriticalChance = 10;
             TurnPriority = 1;
             HolyResistance = ResistanceLevel.Resistant;
             Skills.Add(new DaggerPierce());
