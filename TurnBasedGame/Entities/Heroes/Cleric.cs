@@ -24,10 +24,10 @@ namespace TurnBasedGame.Main.Entities.Heroes
             CriticalChance = 10;
             TurnPriority = 1;
             HolyResistance = EnumResistanceLevel.Resistant;
-            Skills.Add(new DaggerPierce());
-            Skills.Add(new Heal());
-            Skills.Add(new DivineHeal());
             Skills.Add(new DivineLight());
+            Skills.Add(new DivineHeal());
+            Skills.Add(new Heal());
+            Skills.Add(new DaggerPierce());
         }
     }
 }
