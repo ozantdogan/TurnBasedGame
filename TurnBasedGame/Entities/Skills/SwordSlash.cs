@@ -9,11 +9,11 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class SwordSlash : BaseSkill
+    public class SwordSlash : AttackSkill
     {
         public SwordSlash()
         {
-            Name = "Slash";
+            Name = "Sword Slash";
             ManaCost = 0;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Slash;
@@ -21,7 +21,7 @@ namespace TurnBasedGame.Main.Entities.Skills
 
         public override bool Execute(Unit actor, Unit target)
         {
-            return PerformAttack(actor, target);
+            return base.Execute(actor, target);
         }
     }
 }

@@ -123,14 +123,16 @@ namespace TurnBasedGame.Entities.Base
 
         #endregion
 
-        public enum ResistanceLevel
-        {
-            VeryWeak,    // 200% damage
-            Weak,        // 150% damage
-            Neutral,     // 100% damage
-            Resistant,   // 50% damage
-            VeryResistant,// 25% damage
-            Immune       // 0% damage
-        }
+        #region Resistances
+
+        public ResistanceLevel StandardResistance { get; set; } = ResistanceLevel.Neutral;
+        public ResistanceLevel SlashResistance { get; set; } = ResistanceLevel.Neutral;
+        public ResistanceLevel PierceResistance { get; set; } = ResistanceLevel.Neutral;
+        public ResistanceLevel BluntResistance { get; set; } = ResistanceLevel.Neutral;
+        public ResistanceLevel MagicResistance { get; set; } = ResistanceLevel.Neutral;
+        public ResistanceLevel HolyResistance { get; set; } = ResistanceLevel.Neutral;
+
+        #endregion
+
     }
 }

@@ -3,7 +3,7 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class ShieldBash : BaseSkill
+    public class ShieldBash : AttackSkill
     {
         public ShieldBash()
         {
@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.Entities.Skills
 
         public override bool Execute(Unit actor, Unit target)
         {
-            return PerformAttack(actor, target);
+            return base.Execute(actor, target);
         }
     }
 }

@@ -7,7 +7,7 @@ using TurnBasedGame.Entities.Base;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class Heal : BaseSkill
+    public class Heal : CastSkill
     {
         public Heal() {
             Name = "Heal";

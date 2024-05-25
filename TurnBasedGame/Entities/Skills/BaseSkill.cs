@@ -2,13 +2,41 @@
 using TurnBasedGame.Entities.Base;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
     public abstract class BaseSkill : ISkill
     {
-        private Random _random;
+        protected Random _random;
+        protected static readonly Dictionary<EnumDamageType, Func<Unit, double>> DamageTypeModifiers = new Dictionary<EnumDamageType, Func<Unit, double>>
+        {
+            { EnumDamageType.Standard, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
+            { EnumDamageType.Slash, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
+            { EnumDamageType.Pierce, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
+            { EnumDamageType.Blunt, actor => actor.Strength * 0.4 },
+            { EnumDamageType.Magic, actor => actor.Intelligence * 0.5 },
+            { EnumDamageType.Holy, actor => actor.Faith * 0.5 },
+        };
+
+        protected static readonly Dictionary<ResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<ResistanceLevel, double>
+        {
+            { ResistanceLevel.VeryWeak, 2.0 },
+            { ResistanceLevel.Weak, 1.5 },
+            { ResistanceLevel.Neutral, 1.0 },
+            { ResistanceLevel.Resistant, 0.5 },
+            { ResistanceLevel.VeryResistant, 0.25 },
+            { ResistanceLevel.Immune, 0.0 }
+        };
+
+        protected static readonly Dictionary<EnumDamageType, Func<Unit, ResistanceLevel>> ResistanceLevelSelectors = new Dictionary<EnumDamageType, Func<Unit, ResistanceLevel>>
+        {
+            { EnumDamageType.Standard, target => target.StandardResistance },
+            { EnumDamageType.Slash, target => target.SlashResistance },
+            { EnumDamageType.Pierce, target => target.PierceResistance },
+            { EnumDamageType.Blunt, target => target.BluntResistance },
+            { EnumDamageType.Magic, target => target.MagicResistance },
+            { EnumDamageType.Holy, target => target.HolyResistance },
+        };
 
         public BaseSkill()
         {
@@ -26,12 +54,10 @@ namespace TurnBasedGame.Main.Entities.Skills
         public double Accuracy { get; set; } = 1.0;
         public EnumDamageType PrimaryDamageType { get; set; } = EnumDamageType.Standard;
         public EnumDamageType SecondaryDamageType { get; set; }
+        public List<int> TargetIndexes { get; set; }
 
         public abstract bool Execute(Unit actor, Unit target);
-        public virtual bool Execute(Unit actor, List<Unit> targets)
-        {
-            throw new NotImplementedException("This skill does not support multiple target execution.");
-        }
+        public abstract bool Execute(Unit actor, List<Unit> targets);
         protected bool CalculateMana(Unit actor, int manaCost)
         {
             if (actor.MP < ManaCost)
@@ -45,125 +71,5 @@ namespace TurnBasedGame.Main.Entities.Skills
                 return true;
             }
         }
-        protected bool CalculateCrit(Unit actor)
-        {
-            if (actor.CriticalChance > _random.Next(101))
-            {
-                Console.WriteLine("Critical Hit!");
-                return true;
-            }
-            return false;
-        }
-
-        protected bool HasDodged(Unit target)
-        {
-            int dodgeChance = target.Dexterity * 2;
-            int roll = _random.Next(100);
-            if(roll < dodgeChance)
-            {
-                Console.WriteLine($"{target.Name} managed to dodge the attack!");
-                return true;
-            }
-            return false;
-        }
-
-        protected bool HasMissed(Unit actor)
-        {
-            double missChance = 100 / (actor.Dexterity * Accuracy);
-            int roll = _random.Next(100);
-            if (roll < missChance)
-            {
-                Console.WriteLine($"{actor.Name} missed the attack!");
-                return true;
-            }
-            return false;
-        }
-
-        protected bool PerformAttack(Unit actor, Unit target)
-        {
-            if(ManaCost > 0)
-            {
-                if (!CalculateMana(actor, ManaCost))
-                    return false;
-            }
-
-            Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
-
-            if (HasMissed(actor) || HasDodged(target))
-                return true;
-
-            var damageTypeModifier = 1.0;
-            if(PrimaryDamageType == EnumDamageType.Standard || PrimaryDamageType == EnumDamageType.Slash || PrimaryDamageType == EnumDamageType.Pierce)
-            {
-                damageTypeModifier = ((double)actor.Strength * 0.2 + actor.Dexterity * 0.2);
-            }
-            else if(PrimaryDamageType == EnumDamageType.Blunt)
-            {
-                damageTypeModifier = ((double)actor.Strength * 0.4);
-            }
-            else if(PrimaryDamageType == EnumDamageType.Magic) 
-            {
-                damageTypeModifier = ((double)actor.Intelligence * 0.5);
-            }
-            else if (PrimaryDamageType == EnumDamageType.Holy || PrimaryDamageType == EnumDamageType.Holy)
-            {
-                damageTypeModifier = ((double)actor.Faith * 0.5);
-            }
-
-            var critModifier = 1.0;
-            if (CalculateCrit(actor))
-                critModifier = actor.MaxDamageValue * 1.5;
-
-            double damageDealt = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * damageTypeModifier * DamageModifier;
-
-            target.HP -= (int)damageDealt;
-
-            Console.WriteLine($"{actor.Name} dealt {(int)damageDealt} DAMAGE to {target.Name} " +
-                              (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
-            return true;
-        }
-
-        protected bool PerformHeal(Unit actor, Unit target)
-        {
-            if (ManaCost > 0)
-            {
-                if (!CalculateMana(actor, ManaCost))
-                    return false;
-            }
-
-            Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
-
-            double healingValue = actor.Faith * 0.25 + BaseBuffValue + _random.Next(actor.Faith / 2);
-            target.HP += (int)healingValue;
-
-            Console.WriteLine($"{actor.Name} healed {target.Name} +{(int)healingValue}HP ");
-            return true;
-        }
-
-        ////(TODO)
-        //protected bool PerformAttack(Unit actor, List<Unit> targets, int damage)
-        //{
-        //    if (ManaCost > 0)
-        //    {
-        //        if (!CalculateMana(actor, ManaCost))
-        //            return false;
-        //    }
-
-        //    Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
-
-        //    if (HasMissed(actor) || HasDodged(target))
-        //        return true;
-
-        //    int damageDealt = ((damage + actor.Strength) + BaseDamageValue) - (target.BaseResistance + (target.Strength / 4));
-        //    if (CalculateCrit(actor))
-        //        damageDealt += actor.BaseCriticalDamage;
-
-        //    target.HP -= damageDealt;
-
-        //    Console.WriteLine($"{actor.Name} dealt {damageDealt} DAMAGE to {target.Name} " +
-        //                      (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)"));
-        //    return true;
-        //}
-
     }
 }
