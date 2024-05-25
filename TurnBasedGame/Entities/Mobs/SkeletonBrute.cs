@@ -9,6 +9,11 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Code = "{SSB}";
             Name = "Skeleton Brute";
             DisplayName = $"Skeleton\nBrute";
+            MaxHP = 22;
+            HP = MaxHP;
+            Strength = 5;
+            MaxDamageValue = 6;
+            MinDamageValue = 1;
             Skills.Add(new HammerStrike());
         }
     }

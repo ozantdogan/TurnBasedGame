@@ -1,4 +1,6 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using Spectre.Console;
+using System.Text;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
@@ -15,7 +17,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         {
             if (actor.CriticalChance > _random.Next(101))
             {
-                Console.WriteLine("Critical Hit!");
+                AnsiConsole.Write(new Markup($"[khaki3]Critical Hit![/]\n"));
                 return true;
             }
             return false;

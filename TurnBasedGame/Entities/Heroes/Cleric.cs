@@ -1,5 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {
@@ -20,9 +21,9 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Faith = 7;
             MaxDamageValue = 5;
             MinDamageValue = 2;
-            BaseResistance = 8;
             CriticalChance = 5;
             TurnPriority = 1;
+            HolyResistance = ResistanceLevel.Resistant;
             Skills.Add(new DaggerPierce());
             Skills.Add(new Heal());
             Skills.Add(new DivineLight());
