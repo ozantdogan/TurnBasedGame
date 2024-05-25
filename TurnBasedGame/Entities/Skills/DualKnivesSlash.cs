@@ -3,13 +3,13 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
-    public class SwordSlash : AttackSkill
+    public class DualKnivesSlash : AttackSkill
     {
-        public SwordSlash()
-        {
-            Name = "Sword Slash";
-            ExecutionName = Name;
-            ManaCost = 0;
+        public DualKnivesSlash() {
+            Name = "Dual Knives Slash";
+            ExecutionName = "Knife Slash";
+            ManaCost = 8;
+            ExecutionCount = 2;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Slash;
         }

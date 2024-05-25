@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public HammerStrike()
         {
             Name = "Hammer Strike";
+            ExecutionName = Name;
             ManaCost = 0;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Blunt;

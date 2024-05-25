@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main
             _ui = new UIHandler();
         }
 
-        public void StartBattle(List<Unit> playerUnits, List<Unit> mobUnits)
+        public bool StartBattle(List<Unit> playerUnits, List<Unit> mobUnits)
         {
             Console.WriteLine("Battle started!");
             var battleResult = 0;
@@ -59,9 +59,18 @@ namespace TurnBasedGame.Main
             _ui.ShowStatus(playerUnits, mobUnits);
             Console.WriteLine("Battle ended.");
             if (battleResult == 1)
+            {
                 Console.WriteLine("Player won!");
+                Thread.Sleep(1500);
+            }
             else if (battleResult == 2)
+            {
                 Console.WriteLine("Mobs won!");
+                Thread.Sleep(1500);
+                return true;
+            }
+
+            return false;
         }
 
         private List<Unit> ProcessTurns(List<Unit> playerUnits, List<Unit> mobUnits)

@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public DaggerPierce()
         {
             Name = "Dagger Pierce";
+            ExecutionName = Name;
             ManaCost = 0;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Pierce;

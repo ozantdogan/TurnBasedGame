@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Entities.Mobs
             DisplayName = Name;
             MaxHP = 40;
             HP = MaxHP;
-            Strength = 8;
+            Strength = 9;
             Dexterity = 2;
             Intelligence = 1;
             Faith = 1;

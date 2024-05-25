@@ -23,13 +23,15 @@ namespace TurnBasedGame.Main.Entities.Skills
                 if (!CalculateMana(actor, ManaCost))
                     return false;
             }
+            for(int i=0; i<=ExecutionCount-1; i++)
+            {
+                Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
 
-            Console.WriteLine($"{actor.Name} used {Name} on {target.Name}!");
+                double healingValue = actor.Faith * 0.25 + BaseBuffValue + _random.Next(actor.Faith / 2);
+                target.HP += (int)healingValue;
 
-            double healingValue = actor.Faith * 0.25 + BaseBuffValue + _random.Next(actor.Faith / 2);
-            target.HP += (int)healingValue;
-
-            Console.WriteLine($"{actor.Name} healed {target.Name} +{(int)healingValue}HP ");
+                Console.WriteLine($"{actor.Name} healed {target.Name} +{(int)healingValue}HP ");
+            }
             return true;
         }
     }

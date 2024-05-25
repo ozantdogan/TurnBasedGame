@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public SmashGround()
         {
             Name = "Smash Ground";
+            ExecutionName = Name;
             ManaCost = 20;
             PassiveFlag = false;
             DamageModifier = 1.5;

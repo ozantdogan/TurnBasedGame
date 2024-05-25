@@ -14,7 +14,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             HP = MaxHP;
             MaxMP = 20;
             MP = MaxMP;
-            Strength = 5;
+            Strength = 7;
             Dexterity = 4;
             Intelligence = 1;
             Faith = 1;

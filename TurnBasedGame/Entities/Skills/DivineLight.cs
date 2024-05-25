@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public DivineLight()
         {
             Name = "Divine Light";
+            ExecutionName = Name;
             ManaCost = 15;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Holy;

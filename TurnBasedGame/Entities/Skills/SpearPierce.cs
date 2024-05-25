@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public SpearPierce()
         {
             Name = "Spear Pierce";
+            ExecutionName = Name;
             ManaCost = 8;
             PassiveFlag = false;
             DamageModifier = 1.5;

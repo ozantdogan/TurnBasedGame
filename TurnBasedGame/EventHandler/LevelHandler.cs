@@ -6,6 +6,14 @@ namespace TurnBasedGame
 {
     public class LevelHandler
     {
+        public static void Rest(List<Unit> units)
+        {
+            foreach (Unit unit in units)
+            {
+                unit.HP = unit.MaxHP;
+                unit.MP = unit.MaxMP;
+            }
+        }
         public static void AddMobs(List<Unit> mobList)
         {
             Random random = new Random();

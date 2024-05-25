@@ -12,7 +12,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         {
             { EnumDamageType.Standard, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
             { EnumDamageType.Slash, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
-            { EnumDamageType.Pierce, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
+            { EnumDamageType.Pierce, actor => actor.Strength * 0.1 + actor.Dexterity * 0.4 },
             { EnumDamageType.Blunt, actor => actor.Strength * 0.4 },
             { EnumDamageType.Magic, actor => actor.Intelligence * 0.5 },
             { EnumDamageType.Holy, actor => actor.Faith * 0.5 },
@@ -41,9 +41,11 @@ namespace TurnBasedGame.Main.Entities.Skills
         public BaseSkill()
         {
             _random = new Random();
+            ExecutionName = Name;
         }
 
         public string Name { get; set; } = "Skill";
+        public string ExecutionName { get; set; }
         [StringLength(100)] public string Description { get; set; } = "";
         public bool PassiveFlag { get; set; }
         public int ManaCost { get; set; }
@@ -51,6 +53,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public double BaseBuffValue { get; set; } = 1.0;
         public double DamageModifier { get; set; } = 1.0;
         public int ResistanceValue { get; set; }
+        public int ExecutionCount { get; set; } = 1;
         public double Accuracy { get; set; } = 1.0;
         public EnumDamageType PrimaryDamageType { get; set; } = EnumDamageType.Standard;
         public EnumDamageType SecondaryDamageType { get; set; }

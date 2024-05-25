@@ -7,6 +7,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public Heal()
         {
             Name = "Heal";
+            ExecutionName = Name;
             ManaCost = 8;
             PassiveFlag = true;
             BaseBuffValue = 4;

@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public HandSweep()
         {
             Name = "Hand Sweep";
+            ExecutionName = Name;
             ManaCost = 10;
             PassiveFlag = false;
             PrimaryDamageType = EnumDamageType.Blunt;

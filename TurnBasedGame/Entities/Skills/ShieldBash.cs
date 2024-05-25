@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public ShieldBash()
         {
             Name = "Shield Bash";
+            ExecutionName = Name;
             DamageModifier = 1.2;
             ManaCost = 20;
             PassiveFlag = false;
