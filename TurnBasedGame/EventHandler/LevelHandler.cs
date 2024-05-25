@@ -13,13 +13,18 @@ namespace TurnBasedGame
 
             for (int i = 0; i < numberOfMobs; i++)
             {
-                if (random.Next(1, 101) <= 20 && numberOfMobs <= 2 && !(mobList.Any(u => u is Troll)))
+                if (random.Next(1, 101) <= 40 && numberOfMobs <= 2 && !(mobList.Any(u => u is Troll)))
                 {
                     mobList.Add(new Troll() { UnitType = EnumUnitType.Mob });
                 }
                 else
                 {
-                    int skeletonType = random.Next(3);
+                    int skeletonType;
+                    do
+                    {
+                        skeletonType = random.Next(3);
+                    }
+                    while (skeletonType == 0 && mobList.Where(u => u is SkeletonBrute).Count() >= 2);
                     switch (skeletonType)
                     {
                         case 0:

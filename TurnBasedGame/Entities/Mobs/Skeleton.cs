@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Dexterity = 4;
             Intelligence = 1;
             MaxDamageValue = 4;
-            MinDamageValue = 1;
+            MinDamageValue = 2;
             CriticalChance = 10;
             PierceResistance = ResistanceLevel.Resistant;
         }

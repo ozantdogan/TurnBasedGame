@@ -20,7 +20,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Intelligence = 3;
             Faith = 7;
             MaxDamageValue = 5;
-            MinDamageValue = 2;
+            MinDamageValue = 3;
             CriticalChance = 10;
             TurnPriority = 1;
             HolyResistance = ResistanceLevel.Resistant;

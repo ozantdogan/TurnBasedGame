@@ -17,8 +17,8 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Dexterity = 2;
             Intelligence = 1;
             Faith = 1;
-            MaxDamageValue = 9;
-            MinDamageValue = 5;
+            MaxDamageValue = 8;
+            MinDamageValue = 2;
             CriticalChance = 3;
             BluntResistance = ResistanceLevel.VeryResistant;
             SlashResistance = ResistanceLevel.VeryResistant;
