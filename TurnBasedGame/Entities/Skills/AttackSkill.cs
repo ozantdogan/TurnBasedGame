@@ -88,12 +88,6 @@ namespace TurnBasedGame.Main.Entities.Skills
 
                 target.HP -= (int)totalDamageDealt;
 
-                totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
-                if (totalDamageDealt > actor.MaxDamageValue * 3)
-                    totalDamageDealt = actor.MaxDamageValue * 3;
-
-                target.HP -= (int)totalDamageDealt;
-
                 Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                   (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
             }
@@ -157,12 +151,6 @@ namespace TurnBasedGame.Main.Entities.Skills
                     double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.5;
 
                     double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
-                    if (totalDamageDealt > actor.MaxDamageValue * 3)
-                        totalDamageDealt = actor.MaxDamageValue * 3;
-
-                    target.HP -= (int)totalDamageDealt;
-
-                    totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
                     if (totalDamageDealt > actor.MaxDamageValue * 3)
                         totalDamageDealt = actor.MaxDamageValue * 3;
 
