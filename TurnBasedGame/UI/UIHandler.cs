@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Effects;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.UI
 {
@@ -28,10 +29,17 @@ namespace TurnBasedGame.Main.UI
                 activeStatusEffects.AddRange(unit.ActiveDoTEffects);
                 activeStatusEffects.AddRange(unit.ActiveBuffEffects);
 
-                if (activeStatusEffects.Any()) // Check if the list is not empty
+                if (activeStatusEffects.Any() || unit.IsStunned) // Check if the list is not empty
                 {
                     var combinedEffects = string.Join(" ", activeStatusEffects.Select(effect =>
-                        $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetCode()}{(effect.Duration == 0 ? "" : $"({effect.Duration})")}[/]")); 
+                        $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetCode()}{(effect.Duration == 0 ? "" : $"({effect.Duration})")}[/]"));
+
+                    if (unit.IsStunned)
+                    {
+                        var stunnedEffect = EnumEffectType.STUNNED;
+                        combinedEffects += $" [{stunnedEffect.GetColor()}]{stunnedEffect.GetCode()}{(unit.StunDuration == 0 ? "" : $"({unit.StunDuration})")}[/]";
+                    }
+
                     playerEffectRow.Add(combinedEffects);
                 }
                 else
@@ -71,10 +79,17 @@ namespace TurnBasedGame.Main.UI
                 activeStatusEffects.AddRange(unit.ActiveDoTEffects);
                 activeStatusEffects.AddRange(unit.ActiveBuffEffects);
 
-                if (activeStatusEffects.Any()) // Check if the list is not empty
+                if (activeStatusEffects.Any() || unit.IsStunned) // Check if the list is not empty
                 {
                     var combinedEffects = string.Join(" ", activeStatusEffects.Select(effect =>
-                        $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetCode()}{(effect.Duration == 0 ? "" : $"({effect.Duration})")}[/]")); 
+                        $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetCode()}{(effect.Duration == 0 ? "" : $"({effect.Duration})")}[/]"));
+
+                    if (unit.IsStunned)
+                    {
+                        var stunnedEffect = EnumEffectType.STUNNED;
+                        combinedEffects += $" [{stunnedEffect.GetColor()}]{stunnedEffect.GetCode()}{(unit.StunDuration == 0 ? "" : $"({unit.StunDuration})")}[/]";
+                    }
+
                     mobEffectRow.Add(combinedEffects);
                 }
                 else

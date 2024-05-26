@@ -8,7 +8,6 @@ namespace TurnBasedGame.Main.Entities.Base
             Race = EnumRace.Human;
             FireResistance = EnumResistanceLevel.Weak;
             PoisonResistance = EnumResistanceLevel.Weak;
-            CurseResistance = EnumResistanceLevel.Weak;
         }
     }
 }

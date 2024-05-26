@@ -48,6 +48,20 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             return false;
         }
 
+        protected bool TryStun(Unit target)
+        {
+            if (StunChance <= 0 || !target.CanBeStunned || target.IsStunned)
+                return false;
+
+            int roll = _random.Next(100);
+            if(roll < StunChance)
+            {
+                Console.WriteLine($"{target.Name} is stunned!");
+                return true;
+            }
+            return false;
+        }
+
         public override int Execute(Unit actor, Unit target)
         {
             if (ManaCost > 0)
@@ -91,6 +105,12 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                 Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                   (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
+
+                if (TryStun(target))
+                {
+                    target.IsStunned = true;
+                    target.StunDuration = StunDuration;
+                }
             }
 
             return 1;
@@ -162,6 +182,9 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                     Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
+
+                    if (TryStun(target))
+                        target.IsStunned = true;
                 }
             }
 

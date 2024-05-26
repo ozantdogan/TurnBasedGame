@@ -4,16 +4,16 @@ namespace TurnBasedGame.Main.Helpers.Enums
 {
     public enum EnumEffectType
     {
-        [TypeColor("green", "p")]
+        [TypeColor("green", "P")]
         POISONED,
 
-        [TypeColor("darkorange3", "b")]
+        [TypeColor("darkorange3", "B")]
         BURN,
 
-        [TypeColor("deeppink4_1", "c")]
+        [TypeColor("deeppink4_1", "C")]
         CURSED,
 
-        [TypeColor("gray", "s")]
+        [TypeColor("grey50", "#")]
         STUNNED,
 
         [TypeColor("skyblue3", "+")]

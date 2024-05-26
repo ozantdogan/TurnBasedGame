@@ -31,6 +31,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
         public EnumSkillType SecondaryType { get; set; } = EnumSkillType.None;
         public List<int> TargetIndexes { get; set; } = new List<int>();
         public bool SelfTarget { get; set; } = false;
+        public int StunChance { get; set; } = 0;
+        public int StunDuration { get; set; }
 
         public abstract int Execute(Unit actor);
         public abstract int Execute(Unit actor, Unit target);

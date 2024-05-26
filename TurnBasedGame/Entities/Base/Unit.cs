@@ -87,13 +87,6 @@ namespace TurnBasedGame.Main.Entities.Base
         public int MinDamageValue { get; set; }
         public int MaxDamageValue { get; set; }
 
-
-        public int BaseResistance
-        {
-            get { return _baseResistance; }
-            set { _baseResistance = value < 0 ? 0 : value; }
-        }
-
         public int BaseCriticalDamage
         {
             get { return _baseCriticalDamage; }
@@ -102,7 +95,9 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public int CriticalChance { get; set; }
 
+        public bool CanBeStunned { get; set; } = true;
         public bool IsStunned { get; set; } = false;
+        public int StunDuration { get; set; } = 0;
 
         public bool IsAlive => HP > 0;
 

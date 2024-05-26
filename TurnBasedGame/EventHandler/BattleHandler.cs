@@ -38,9 +38,19 @@ namespace TurnBasedGame.Main
 
                     while (true)
                     {
+                        if(unit.IsStunned)
+                        {
+                            Console.WriteLine($"{unit.Name} is stunned!");
+                            Thread.Sleep(2000);
+                            unit.StunDuration--;
+                            if(unit.StunDuration < 0)
+                                unit.IsStunned = false;
+                            break;
+                        }
+
                         if(unit.HP <= 0)
                         {
-                            Console.WriteLine($"{unit.Name} is dead");
+                            Console.WriteLine($"{unit.Name} is dead!");
                             break;
                         }
 
@@ -236,22 +246,22 @@ namespace TurnBasedGame.Main
             }
             else // mob
             {
-                if (friendlyTargets.Count(t => t.IsAlive) > 1 && _random.Next(100) < 10)
-                {
-                    skillChoice = _random.Next(actor.Skills.Count);
-                    if (actor.Skills[skillChoice] is MoveSkill moveSkill)
-                    {
-                        bool moveLeft = _random.Next(2) == 0;
-                        int newIndex = moveLeft ? friendlyTargets.IndexOf(actor) - 1 : friendlyTargets.IndexOf(actor) + 1;
-                        if (newIndex >= 0 && newIndex < friendlyTargets.Count)
-                        {
-                            return moveSkill.Execute(actor, friendlyTargets);
-                        }
-                    }
-                }
+                //if (friendlyTargets.Count(t => t.IsAlive) > 1 && _random.Next(100) < 10)
+                //{
+                //    skillChoice = _random.Next(actor.Skills.Count);
+                //    if (actor.Skills[skillChoice] is MoveSkill moveSkill)
+                //    {
+                //        bool moveLeft = _random.Next(2) == 0;
+                //        int newIndex = moveLeft ? friendlyTargets.IndexOf(actor) - 1 : friendlyTargets.IndexOf(actor) + 1;
+                //        if (newIndex >= 0 && newIndex < friendlyTargets.Count)
+                //        {
+                //            return moveSkill.Execute(actor, friendlyTargets);
+                //        }
+                //    }
+                //}
                 
-                var nonMoveSkills = actor.Skills.Where(skill => !(skill is MoveSkill) && !(skill is RestSkill)).ToList();
-                skillChoice = _random.Next(nonMoveSkills.Count) + 3;
+                var remainingSkills = actor.Skills.Where(skill => !(skill is MoveSkill) && !(skill is RestSkill)).ToList();
+                skillChoice = _random.Next(remainingSkills.Count) + 3;
                 if (actor.Skills[skillChoice].TargetIndexes != null && actor.Skills[skillChoice].TargetIndexes.Count() > 0)
                 {
                     if (actor.Skills[skillChoice].PassiveFlag)

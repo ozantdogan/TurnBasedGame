@@ -27,6 +27,7 @@ namespace TurnBasedGame.Main.Entities.Bosses
             MagicResistance = EnumResistanceLevel.Sturdy;
             PoisonResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Immune;
+            CanBeStunned = false;
 
             Skills.Add(new CursedSwordSlash());
             Skills.Add(new Curse());

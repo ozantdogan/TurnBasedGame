@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Entities.Skills.KnightSkills
             PrimaryType = EnumSkillType.Standard;
             BuffModifier = 1;
             SelfTarget = true;
-            Duration = 1;
+            Duration = 3;
         }
 
         public override int Execute(Unit actor)

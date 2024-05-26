@@ -14,8 +14,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BossSkills
             PrimaryType = EnumSkillType.Curse;
             ManaCost = 30;
             DamagePerTurn = 3;
-            Duration = 3;
-            DoTModifier = 3;
+            Duration = 2;
+            DoTModifier = 1;
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
             DamageEffect = new CurseEffect(DamagePerTurn, DoTModifier, Duration);
         }

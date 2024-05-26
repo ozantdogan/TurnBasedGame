@@ -15,6 +15,8 @@ namespace TurnBasedGame.Main.Entities.Skills.KnightSkills
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Blunt;
             Accuracy = 10;
+            StunChance = 60;
+            StunDuration = 0;
         }
 
         public override int Execute(Unit actor, Unit target)

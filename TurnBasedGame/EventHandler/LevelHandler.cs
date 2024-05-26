@@ -14,8 +14,8 @@ namespace TurnBasedGame
         {
             foreach (Unit unit in units)
             {
-                unit.HP += (int)(unit.MaxHP * 0.2);
-                unit.MP += (int)(unit.MaxHP * 0.2);
+                unit.HP += (int)(unit.MaxHP * 0.3);
+                unit.MP += (int)(unit.MaxHP * 0.3);
             }
         }
         public static void AddMobs(List<Unit> mobList)
