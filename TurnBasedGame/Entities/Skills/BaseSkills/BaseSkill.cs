@@ -16,6 +16,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             { EnumSkillType.Blunt, actor => actor.Strength * 0.4 },
             { EnumSkillType.Magic, actor => actor.Intelligence * 0.5 },
             { EnumSkillType.Holy, actor => actor.Faith * 0.5 },
+            { EnumSkillType.Curse, actor => actor.Faith * 0.5 },
         };
 
         public BaseSkill()

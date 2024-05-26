@@ -19,13 +19,14 @@ namespace TurnBasedGame.Main.Entities.Skills.HunterSkills
             DamagePerTurn = 5;
             Duration = 2;
             DoTModifier = 1.2;
+            DamageEffect = new PoisonEffect(DamagePerTurn, DoTModifier, Duration);
         }
 
         public override int Execute(Unit actor, Unit target)
         {
             var i = base.Execute(actor, target);
             if (i == 1)
-                target.AddDoTEffect(new PoisonEffect(DamagePerTurn, DoTModifier, Duration));
+                target.AddDoTEffect(DamageEffect);
 
             return i;
         }

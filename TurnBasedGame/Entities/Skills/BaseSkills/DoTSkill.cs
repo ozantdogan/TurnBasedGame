@@ -10,8 +10,14 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
         public int DamagePerTurn { get; set; }
         public int Duration { get; set; }
         public double DoTModifier { get; set; }
+        public DamageEffect DamageEffect { get; set; } = new DamageEffect();
 
-        public int Execute(Unit actor, List<Unit> targets, DamageEffect damageEffect)
+        public DoTSkill()
+        {
+            PrimaryType = DamageEffect.DamageType;
+        }
+
+        public override int Execute(Unit actor, List<Unit> targets)
         {
             if (ManaCost > 0)
             {
@@ -48,7 +54,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     if (HasMissed(actor) || HasDodged(target))
                         continue;
 
-                    target.AddDoTEffect(damageEffect);
+                    target.AddDoTEffect(DamageEffect);
 
                 }
             }

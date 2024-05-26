@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BossSkills
             ExecutionName = "Cursed Sword";
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Slash;
-            SecondaryType = EnumSkillType.Magic;
+            SecondaryType = EnumSkillType.Curse;
             SecondarySkillModifier = 1.0;
         }
 

@@ -8,8 +8,7 @@ namespace TurnBasedGame.Main.Entities.Effects
         public CurseEffect(int damagePerTurn, double modifier, int duration) 
         {
             Name = "Curse";
-            Name = "Poison";
-            DamageType = EnumSkillType.Poison;
+            DamageType = EnumSkillType.Curse;
             EffectType = EnumEffectType.CURSE;
             DamagePerTurn = damagePerTurn;
             Modifier = modifier;

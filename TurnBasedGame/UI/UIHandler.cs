@@ -96,6 +96,7 @@ namespace TurnBasedGame.Main.UI
 
             AnsiConsole.Write(mobTable);
             AnsiConsole.Write(playerTable);
+
         }
     }
 }

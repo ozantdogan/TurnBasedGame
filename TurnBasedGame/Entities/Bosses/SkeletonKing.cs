@@ -15,8 +15,8 @@ namespace TurnBasedGame.Main.Entities.Bosses
             MP = MaxMP;
             Strength = 8;
             Dexterity = 6;
-            Intelligence = 9;
-            Faith = 2;
+            Intelligence = 2;
+            Faith = 8;
             MinDamageValue = 7;
             MaxDamageValue = 11;
             CriticalChance = 0;

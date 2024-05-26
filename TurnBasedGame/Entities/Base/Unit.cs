@@ -40,6 +40,7 @@ namespace TurnBasedGame.Main.Entities.Base
         private EnumResistanceLevel _originalHolyResistance;
         private EnumResistanceLevel _originalFireResistance;
         private EnumResistanceLevel _originalPoisonResistance;
+        private EnumResistanceLevel _originalCurseResistance;
 
         public Unit() {
             Skills.Add(new RestSkill());
@@ -159,6 +160,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumResistanceLevel HolyResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel FireResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel PoisonResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel CurseResistance { get; set; } = EnumResistanceLevel.Neutral;
 
         #endregion
 
@@ -216,7 +218,7 @@ namespace TurnBasedGame.Main.Entities.Base
                 effect.ApplyDamage(this);
 
                 string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.EffectType})[/]";
-                AnsiConsole.MarkupLine($"{effectNameText} {Name} took {effect.DamagePerTurn} DAMAGE ({HP} HP left)");
+                AnsiConsole.MarkupLine($"{effectNameText} {Name} took {effect.DamagePerTurn} DAMAGE");
                 
                 if(HP <= 0)
                 {
@@ -267,6 +269,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalSlashResistance = SlashResistance;
             _originalMagicResistance = MagicResistance;
             _originalPierceResistance = PierceResistance;
+            _originalCurseResistance = CurseResistance;
         }
 
         public void RestoreOriginalAttributes()
@@ -285,6 +288,7 @@ namespace TurnBasedGame.Main.Entities.Base
             PoisonResistance = _originalPoisonResistance;
             SlashResistance = _originalSlashResistance;
             PierceResistance = _originalPierceResistance;
+            CurseResistance = _originalCurseResistance;
         }
     }
 }

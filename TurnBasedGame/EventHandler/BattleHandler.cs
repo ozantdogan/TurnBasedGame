@@ -30,14 +30,14 @@ namespace TurnBasedGame.Main
                 round++;
                 foreach (var unit in units.Where(p => p.IsAlive))
                 {
+                    _ui.ShowStatus(playerUnits, mobUnits, level);
+                    Console.WriteLine($"{unit.Name}'s turn!");
+                    AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
+                    unit.ApplyBuffEffects();
+                    unit.ApplyDoTEffects();
+
                     while (true)
                     {
-                        unit.ApplyBuffEffects();
-                        unit.ApplyDoTEffects();
-
-                        _ui.ShowStatus(playerUnits, mobUnits, level);
-                        AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
-
                         if(unit.HP <= 0)
                         {
                             Console.WriteLine($"{unit.Name} is dead");
@@ -56,10 +56,15 @@ namespace TurnBasedGame.Main
 
                         if (actionResult > 0)
                         {
-                            Thread.Sleep(2500);
+                            Thread.Sleep(2000);
                             break;
                         }
-                        Thread.Sleep(2500);
+                        Thread.Sleep(2000);
+                       
+                        _ui.ShowStatus(playerUnits, mobUnits, level);
+                        Console.WriteLine($"{unit.Name}'s turn!");
+                        AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
+
                     }
                     battleResult = CheckAlives(playerUnits, mobUnits);
                     if (battleResult != 0)
@@ -123,8 +128,6 @@ namespace TurnBasedGame.Main
 
         private int PerformTurn(Unit actor, List<Unit> enemyTargets, List<Unit> friendlyTargets)
         {
-            Console.WriteLine($"{actor.Name}'s turn!");
-
             int skillChoice;
             Unit target;
             if (actor.UnitType == EnumUnitType.Player)

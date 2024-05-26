@@ -29,6 +29,9 @@ namespace TurnBasedGame.Main.Helpers.Enums
         Fire,
 
         [TypeColor("green", "POISON")]
-        Poison
+        Poison,
+
+        [TypeColor("deeppink4_1", "CURSE")]
+        Curse
     }
 }
