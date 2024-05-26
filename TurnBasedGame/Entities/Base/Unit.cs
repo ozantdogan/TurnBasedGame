@@ -18,7 +18,6 @@ namespace TurnBasedGame.Main.Entities.Base
         private int _originalMaxHP;
         private int _originalMaxMP;
 
-        private int _baseResistance;
         private int _baseCriticalDamage;
         private int _turnPriority;
 
