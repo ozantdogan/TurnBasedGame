@@ -13,16 +13,16 @@ namespace TurnBasedGame.Main.Entities.Skills.BossSkills
             ExecutionName = Name;
             PrimaryType = EnumSkillType.Curse;
             ManaCost = 30;
-            DamagePerTurn = 2;
+            DamagePerTurn = 3;
             Duration = 3;
             DoTModifier = 3;
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
-            DamageEffect = new CurseEffect(2, 3 ,3);
+            DamageEffect = new CurseEffect(DamagePerTurn, DoTModifier, Duration);
         }
 
         public override int Execute(Unit actor, List<Unit> targets)
         {
-            return base.Execute(actor, targets);
+            return CastDoT(actor, targets);
         }
     }
 }

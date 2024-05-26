@@ -1,5 +1,6 @@
 ﻿using TurnBasedGame.Main;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Bosses;
 using TurnBasedGame.Main.Entities.Heroes;
 using TurnBasedGame.Main.Helpers.Enums;
 
@@ -14,6 +15,7 @@ namespace TurnBasedGame
             Unit cleric = new Cleric() { UnitType = EnumUnitType.Player };
             Unit hunter = new Hunter() { UnitType = EnumUnitType.Player };
             Unit scholar = new Scholar() { UnitType = EnumUnitType.Player };
+            //Unit skeletonKing = new SkeletonKing() { UnitType = EnumUnitType.Player };
 
             List<Unit> Heroes = new List<Unit>();
             List<Unit> Mobs = new List<Unit>();
@@ -34,7 +36,7 @@ namespace TurnBasedGame
                 LevelHandler.Rest(Heroes);
                 LevelHandler.IncreaseLevel();
                 Mobs.Clear();
-                if (i)
+                if (i || LevelHandler.Level > 6)
                     break;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Bosses;
+using TurnBasedGame.Main.Entities.Heroes;
 using TurnBasedGame.Main.Entities.Mobs;
 using TurnBasedGame.Main.Helpers.Enums;
 
@@ -24,16 +25,15 @@ namespace TurnBasedGame
 
             if (Level <= 2)
             {
-                mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
-                //numberOfMobs = random.Next(2, 3); 
+                numberOfMobs = random.Next(2, 3);
             }
             else if (Level >= 3 && Level <= 5)
             {
                 numberOfMobs = random.Next(3, 4);
             }
-            else
+            else 
             {
-                numberOfMobs = random.Next(4, 6);
+                mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
             }
 
             for (int i = 0; i < numberOfMobs; i++)

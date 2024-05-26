@@ -17,8 +17,10 @@ namespace TurnBasedGame.Main.Entities.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            unit.MaxHP = (int)(unit.MaxHP * 0.75);
-            Duration--;
+            if(unit.CurseResistance != EnumResistanceLevel.Immune)
+            {
+                unit.MaxHP = (int)(unit.MaxHP * 0.75);
+            }
         }
     }
 }

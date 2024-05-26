@@ -21,7 +21,6 @@ namespace TurnBasedGame.Main.Entities.Bosses
             MinDamageValue = 7;
             MaxDamageValue = 11;
             CriticalChance = 0;
-
             SlashResistance = EnumResistanceLevel.Resistant;
             PierceResistance = EnumResistanceLevel.Resistant;
             BluntResistance = EnumResistanceLevel.Resistant;
