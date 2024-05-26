@@ -1,5 +1,4 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills;
 using TurnBasedGame.Main.Entities.Skills.ClericSkills;
 using TurnBasedGame.Main.Entities.Skills.HunterSkills;
 
@@ -12,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{HUN}";
             Name = "Hunter";
             DisplayName = Name;
-            MaxHP = 20;
+            MaxHP = 500;
             HP = MaxHP;
             MaxMP = 20;
             MP = MaxMP;
@@ -24,7 +23,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             MaxDamageValue = 7;
             MinDamageValue = 5;
             CriticalChance = 15;
-            Skills.Add(new DaggerPierce() { Name = "Knife Pierce", ExecutionName = "Knife Pierce"});
+            Skills.Add(new DaggerPierce() { Name = "Knife Pierce", ExecutionName = "Knife Pierce" });
             Skills.Add(new DualKnivesSlash());
             Skills.Add(new PoisonArrow());
         }

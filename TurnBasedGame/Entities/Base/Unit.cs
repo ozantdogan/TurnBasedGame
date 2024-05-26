@@ -14,6 +14,10 @@ namespace TurnBasedGame.Main.Entities.Base
         private int _hp;
         private int _maxMP;
         private int _mp;
+
+        private int _originalMaxHP;
+        private int _originalMaxMP;
+
         private int _baseResistance;
         private int _baseCriticalDamage;
         private int _turnPriority;
@@ -174,9 +178,10 @@ namespace TurnBasedGame.Main.Entities.Base
             else
             {
                 ActiveDoTEffects.Add(effect);
-                ApplyDoTEffects();
-                effect.Duration++;
+                effect.ApplyEffect(this);
             }
+            ApplyDoTEffects();
+            effect.Duration++;
         }
 
         public void AddBuffEffect(BuffEffect effect)
@@ -247,6 +252,8 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public void SaveOriginalAttributes()
         {
+            _originalMaxHP = MaxHP;
+            _originalMaxMP = MaxMP;
             _originalStrength = Strength;
             _originalDexterity = Dexterity;
             _originalIntelligence = Intelligence;
@@ -264,6 +271,8 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public void RestoreOriginalAttributes()
         {
+            MaxHP = _originalMaxHP;
+            MaxMP = _originalMaxMP;
             Strength = _originalStrength;
             Dexterity = _originalDexterity;
             Intelligence = _originalIntelligence;

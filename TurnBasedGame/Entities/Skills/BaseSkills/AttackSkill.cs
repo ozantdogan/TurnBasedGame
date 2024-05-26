@@ -24,7 +24,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             return false;
         }
 
-        private bool HasDodged(Unit target)
+        protected bool HasDodged(Unit target)
         {
             int dodgeChance = target.Dexterity * 2;
             int roll = _random.Next(100);
@@ -36,7 +36,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             return false;
         }
 
-        private bool HasMissed(Unit actor)
+        protected bool HasMissed(Unit actor)
         {
             double missChance = 100 / (actor.Dexterity * Accuracy);
             int roll = _random.Next(100);

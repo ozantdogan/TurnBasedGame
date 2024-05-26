@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.UI
             playerTable.AddColumn(" ");
             foreach (Unit unit in playerUnits)
             {
-                playerTable.AddColumn($"[lightcyan1]{unit.DisplayName ?? " "}[/]");
+                playerTable.AddColumn($"[{unit.UnitType.GetColor()}]{unit.DisplayName ?? " "}[/]");
             }
 
             #region Player effects
@@ -30,7 +30,8 @@ namespace TurnBasedGame.Main.UI
 
                 if (activeStatusEffects.Any()) // Check if the list is not empty
                 {
-                    var combinedEffects = string.Join(" ", activeStatusEffects.Select(effect => $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetCode()}({effect.Duration})[/]"));
+                    var combinedEffects = string.Join(" ", activeStatusEffects.Select(effect =>
+                        $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetCode()}{(effect.Duration == 0 ? "" : $"({effect.Duration})")}[/]")); 
                     playerEffectRow.Add(combinedEffects);
                 }
                 else
@@ -58,7 +59,7 @@ namespace TurnBasedGame.Main.UI
             mobTable.AddColumn(" ");
             foreach (Unit unit in mobUnits)
             {
-                mobTable.AddColumn($"[red]{unit.DisplayName}[/]");
+                mobTable.AddColumn($"[{unit.UnitType.GetColor()}]{unit.DisplayName}[/]");
             }
 
             #region Mob effects

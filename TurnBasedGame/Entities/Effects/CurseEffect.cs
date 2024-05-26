@@ -3,13 +3,14 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Effects
 {
-    public class PoisonEffect : DamageEffect
+    public class CurseEffect : DamageEffect
     {
-        public PoisonEffect(int damagePerTurn, double modifier, int duration) 
+        public CurseEffect(int damagePerTurn, double modifier, int duration) 
         {
+            Name = "Curse";
             Name = "Poison";
             DamageType = EnumSkillType.Poison;
-            EffectType = EnumEffectType.POISON;
+            EffectType = EnumEffectType.CURSE;
             DamagePerTurn = damagePerTurn;
             Modifier = modifier;
             Duration = duration;
@@ -17,10 +18,8 @@ namespace TurnBasedGame.Main.Entities.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            unit.Strength = (int)(unit.Strength / Modifier);
-            unit.Dexterity = (int)(unit.Dexterity / Modifier);
-            unit.Faith = (int)(unit.Faith / Modifier);
-            unit.Intelligence = (int)(unit.Intelligence / Modifier);
+            unit.MaxHP = (int)(unit.MaxHP * 0.75);
+            Duration--;
         }
     }
 }
