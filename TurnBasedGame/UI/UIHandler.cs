@@ -72,7 +72,8 @@ namespace TurnBasedGame.Main.UI
 
                 if (activeStatusEffects.Any()) // Check if the list is not empty
                 {
-                    var combinedEffects = string.Join(" ", activeStatusEffects.Select(effect => $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetCode()}({effect.Duration})[/]"));
+                    var combinedEffects = string.Join(" ", activeStatusEffects.Select(effect =>
+                        $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetCode()}{(effect.Duration == 0 ? "" : $"({effect.Duration})")}[/]")); 
                     mobEffectRow.Add(combinedEffects);
                 }
                 else

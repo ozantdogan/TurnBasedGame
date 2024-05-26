@@ -214,7 +214,7 @@ namespace TurnBasedGame.Main.Entities.Base
                 
                 if(HP <= 0)
                 {
-                    Console.WriteLine($"{Name} has died due to {effectNameText}");
+                    AnsiConsole.MarkupLine($"{Name} has died due to {effectNameText}");
                     effect.Duration = 0;
                 }
 
