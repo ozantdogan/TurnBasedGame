@@ -235,8 +235,6 @@ namespace TurnBasedGame.Main.Entities.Base
                 {
                     effect.Duration--;
                 }
-
-                Console.WriteLine(effect.DamagePerTurn);
             }
         }
 
