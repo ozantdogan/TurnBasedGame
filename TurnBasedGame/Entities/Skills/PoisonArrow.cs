@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             PrimarySkillModifier = 0.8;
             SecondarySkillModifier = 0.2;
             DamagePerTurn = 5;
-            Duration = 3;
+            Duration = 2;
             DoTModifier = 1.2;
         }
 
