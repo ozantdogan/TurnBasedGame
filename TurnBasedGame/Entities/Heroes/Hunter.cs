@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{HUN}";
             Name = "Hunter";
             DisplayName = Name;
-            MaxHP = 500;
+            MaxHP = 24;
             HP = MaxHP;
             MaxMP = 20;
             MP = MaxMP;
