@@ -13,11 +13,12 @@ namespace TurnBasedGame.Main.Entities.Skills
             PrimaryType = EnumSkillType.Standard;
             BuffModifier = 1;
             SelfTarget = true;
+            Duration = 2;
         }
 
         public override int Execute(Unit actor)
         {
-            return PerformProtection(actor, BuffModifier);
+            return PerformProtection(actor, BuffModifier, Duration);
         }
     }
 }

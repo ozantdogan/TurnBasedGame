@@ -5,11 +5,12 @@ namespace TurnBasedGame.Main.Entities.Effects
 {
     public class ProtectionEffect : BuffEffect
     {
-        public ProtectionEffect(double modifier = 0) 
+        public ProtectionEffect(double modifier = 0, int duration = 1) 
         {
             Name = "Protection";
             EffectType = EnumEffectType.PROTECTION;
             Modifier = modifier;
+            Duration = duration;
         }
 
         public override void ApplyEffect(Unit unit)

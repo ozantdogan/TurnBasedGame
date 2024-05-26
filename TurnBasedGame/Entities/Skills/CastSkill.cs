@@ -89,7 +89,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             return 1;
         }
 
-        protected int PerformProtection(Unit actor, int buffModifier)
+        protected int PerformProtection(Unit actor, int buffModifier, int duration)
         {
             if (ManaCost > 0)
             {
@@ -98,7 +98,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             }
 
             Console.WriteLine($"{actor.Name} used {ExecutionName} on self");
-            actor.AddBuffEffect(new ProtectionEffect(buffModifier));
+            actor.AddBuffEffect(new ProtectionEffect(buffModifier, duration));
             return 1;
         }
 

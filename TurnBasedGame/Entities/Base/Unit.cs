@@ -27,6 +27,15 @@ namespace TurnBasedGame.Main.Entities.Base
         private int _originalIntelligence;
         private int _originalFaith;
 
+        private EnumResistanceLevel _originalStandardResistance;
+        private EnumResistanceLevel _originalSlashResistance;
+        private EnumResistanceLevel _originalPierceResistance;
+        private EnumResistanceLevel _originalBluntResistance;
+        private EnumResistanceLevel _originalMagicResistance;
+        private EnumResistanceLevel _originalHolyResistance;
+        private EnumResistanceLevel _originalFireResistance;
+        private EnumResistanceLevel _originalPoisonResistance;
+
         public Unit() {
             Skills.Add(new RestSkill());
             Skills.Add(new MoveSkill("Move Right", false));
@@ -200,7 +209,13 @@ namespace TurnBasedGame.Main.Entities.Base
                 effect.ApplyDamage(this);
 
                 string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.EffectType})[/]";
-                AnsiConsole.MarkupLine($"{effectNameText} {Name} took {effect.DamagePerTurn} DAMAGE");
+                AnsiConsole.MarkupLine($"{effectNameText} {Name} took {effect.DamagePerTurn} DAMAGE ({HP} HP LEFT)");
+                
+                if(HP <= 0)
+                {
+                    Console.WriteLine($"{Name} has died due to {effectNameText}");
+                    effect.Duration = 0;
+                }
 
                 if (effect.Duration <= 0)
                 {
@@ -229,6 +244,14 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalDexterity = Dexterity;
             _originalIntelligence = Intelligence;
             _originalFaith = Faith;
+            _originalBluntResistance = BluntResistance;
+            _originalFireResistance = FireResistance;
+            _originalHolyResistance = HolyResistance;
+            _originalMagicResistance = MagicResistance;
+            _originalPoisonResistance = PoisonResistance;
+            _originalSlashResistance = SlashResistance;
+            _originalMagicResistance = MagicResistance;
+            _originalPierceResistance = PierceResistance;
         }
 
         public void RestoreOriginalAttributes()
@@ -237,6 +260,13 @@ namespace TurnBasedGame.Main.Entities.Base
             Dexterity = _originalDexterity;
             Intelligence = _originalIntelligence;
             Faith = _originalFaith;
+            BluntResistance = _originalBluntResistance;
+            FireResistance = _originalFireResistance;
+            HolyResistance = _originalHolyResistance;
+            MagicResistance = _originalMagicResistance;
+            PoisonResistance = _originalPoisonResistance;
+            SlashResistance = _originalSlashResistance;
+            PierceResistance = _originalPierceResistance;
         }
     }
 }
