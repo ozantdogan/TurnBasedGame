@@ -22,7 +22,7 @@ namespace TurnBasedGame
             Heroes.Add(scholar);
             Heroes.Add(knight);
             Heroes.Add(hunter);
-            foreach(var hero in Heroes)
+            foreach (var hero in Heroes)
                 hero.Skills.Reverse();
 
             while (true)

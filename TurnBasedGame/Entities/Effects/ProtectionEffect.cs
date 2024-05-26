@@ -48,7 +48,6 @@ namespace TurnBasedGame.Main.Entities.Effects
                     unit.PoisonResistance = EnumResistanceLevel.Immune;
                     break;
             }
-            Duration--;
         }
     }
 }

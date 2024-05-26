@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             PrimaryType = EnumSkillType.Standard;
             BuffModifier = 1;
             SelfTarget = true;
-            Duration = 2;
+            Duration = 1;
         }
 
         public override int Execute(Unit actor)

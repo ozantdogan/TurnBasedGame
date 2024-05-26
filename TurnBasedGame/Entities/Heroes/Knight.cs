@@ -22,7 +22,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             MaxDamageValue = 8;
             MinDamageValue = 5;
             CriticalChance = 10;
-            TurnPriority = 3;
+            TurnPriority = 1;
             BluntResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new KnightsShield());
             Skills.Add(new ShieldBash());

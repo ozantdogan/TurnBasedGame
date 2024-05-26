@@ -32,11 +32,12 @@ namespace TurnBasedGame.Main
                 {
                     while (true)
                     {
+                        unit.ApplyBuffEffects();
+                        unit.ApplyDoTEffects();
+
                         _ui.ShowStatus(playerUnits, mobUnits, level);
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
-                        unit.ApplyBuffEffects();
-                        unit.ApplyDoTEffects();
                         if(unit.HP <= 0)
                         {
                             Console.WriteLine($"{unit.Name} is dead");

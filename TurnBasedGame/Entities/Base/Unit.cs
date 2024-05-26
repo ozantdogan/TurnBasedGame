@@ -174,6 +174,7 @@ namespace TurnBasedGame.Main.Entities.Base
             {
                 ActiveDoTEffects.Add(effect);
                 ApplyDoTEffects();
+                effect.Duration++;
             }
         }
 
@@ -209,7 +210,7 @@ namespace TurnBasedGame.Main.Entities.Base
                 effect.ApplyDamage(this);
 
                 string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.EffectType})[/]";
-                AnsiConsole.MarkupLine($"{effectNameText} {Name} took {effect.DamagePerTurn} DAMAGE ({HP} HP LEFT)");
+                AnsiConsole.MarkupLine($"{effectNameText} {Name} took {effect.DamagePerTurn} DAMAGE ({HP} HP left)");
                 
                 if(HP <= 0)
                 {
@@ -221,6 +222,10 @@ namespace TurnBasedGame.Main.Entities.Base
                 {
                     ActiveDoTEffects.Remove(effect);
                     RestoreOriginalAttributes();
+                }
+                else
+                {
+                    effect.Duration--;
                 }
             }
         }
@@ -235,6 +240,7 @@ namespace TurnBasedGame.Main.Entities.Base
                     ActiveBuffEffects.Remove(effect);
                     RestoreOriginalAttributes();
                 }
+                effect.Duration--;
             }
         }
 
@@ -244,6 +250,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalDexterity = Dexterity;
             _originalIntelligence = Intelligence;
             _originalFaith = Faith;
+            _originalStandardResistance = StandardResistance;
             _originalBluntResistance = BluntResistance;
             _originalFireResistance = FireResistance;
             _originalHolyResistance = HolyResistance;
@@ -260,6 +267,7 @@ namespace TurnBasedGame.Main.Entities.Base
             Dexterity = _originalDexterity;
             Intelligence = _originalIntelligence;
             Faith = _originalFaith;
+            StandardResistance = _originalStandardResistance;
             BluntResistance = _originalBluntResistance;
             FireResistance = _originalFireResistance;
             HolyResistance = _originalHolyResistance;

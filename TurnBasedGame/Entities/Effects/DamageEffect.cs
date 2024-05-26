@@ -20,7 +20,6 @@ namespace TurnBasedGame.Main.Entities.Effects
         public void ApplyDamage(Unit unit)
         {
             unit.HP -= DamagePerTurn * (int)Modifier;
-            Duration--;
         }
     }
 }
