@@ -28,14 +28,14 @@ namespace TurnBasedGame.Main.Entities.Effects
                     unit.PoisonResistance = EnumResistanceLevel.Resistant;
                     break;
                 case 1:
-                    unit.StandardResistance = EnumResistanceLevel.VeryResistant;
-                    unit.SlashResistance = EnumResistanceLevel.VeryResistant;
-                    unit.BluntResistance = EnumResistanceLevel.VeryResistant;
-                    unit.PierceResistance = EnumResistanceLevel.VeryResistant;
-                    unit.HolyResistance = EnumResistanceLevel.VeryResistant;
-                    unit.MagicResistance = EnumResistanceLevel.VeryResistant;
-                    unit.FireResistance = EnumResistanceLevel.VeryResistant;
-                    unit.PoisonResistance = EnumResistanceLevel.VeryResistant;
+                    unit.StandardResistance = EnumResistanceLevel.Sturdy;
+                    unit.SlashResistance = EnumResistanceLevel.Sturdy;
+                    unit.BluntResistance = EnumResistanceLevel.Sturdy;
+                    unit.PierceResistance = EnumResistanceLevel.Sturdy;
+                    unit.HolyResistance = EnumResistanceLevel.Sturdy;
+                    unit.MagicResistance = EnumResistanceLevel.Sturdy;
+                    unit.FireResistance = EnumResistanceLevel.Sturdy;
+                    unit.PoisonResistance = EnumResistanceLevel.Sturdy;
                     break;
                 case 2:
                     unit.StandardResistance = EnumResistanceLevel.Immune;

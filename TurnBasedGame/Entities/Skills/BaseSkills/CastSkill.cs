@@ -1,5 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Effects;
+using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
@@ -31,7 +32,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     return -1;
             }
 
-            var castTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+            var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
 
             Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
             for (int i = 0; i <= ExecutionCount - 1; i++)
@@ -52,7 +53,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     return -1;
             }
 
-            var castTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
+            var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
             Console.WriteLine($"{actor.Name} used {ExecutionName}!");
 
             var targetIndexes = new List<int>();

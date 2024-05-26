@@ -2,11 +2,11 @@
 {
     public enum EnumResistanceLevel
     {
-        VeryWeak,       // 200% damage
-        Weak,           // 150% damage
-        Neutral,        // 100% damage
-        Resistant,      // 50% damage
-        VeryResistant,  // 25% damage
-        Immune          // 0% damage
+        Fragile,     // 200% damage
+        Weak,         // 150% damage
+        Neutral,      // 100% damage
+        Resistant,    // 50% damage
+        Sturdy,       // 25% damage
+        Immune        // 0% damage
     }
 }

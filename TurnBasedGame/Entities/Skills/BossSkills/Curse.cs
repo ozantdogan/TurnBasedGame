@@ -12,6 +12,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BossSkills
             Name = "Curse";
             ExecutionName = Name;
             PrimaryType = EnumSkillType.Curse;
+            ManaCost = 30;
             DamagePerTurn = 2;
             Duration = 3;
             DoTModifier = 3;

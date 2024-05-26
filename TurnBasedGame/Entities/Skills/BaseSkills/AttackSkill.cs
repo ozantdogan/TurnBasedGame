@@ -56,8 +56,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     return -1;
             }
 
-            var primaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
-            var secondaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(SecondaryType) ? SkillTypeModifiers[SecondaryType](actor) : 0.0;
+            var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
+            var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
 
             var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
             var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
@@ -106,8 +106,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
             Console.WriteLine($"{actor.Name} used {ExecutionName}!");
 
-            var primaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
-            var secondaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(SecondaryType) ? SkillTypeModifiers[SecondaryType](actor) : 0.0;
+            var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
+            var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
             var critModifier = 1.0;
             var targetIndexes = new List<int>();
             if (targets.Count() < TargetIndexes.Count)

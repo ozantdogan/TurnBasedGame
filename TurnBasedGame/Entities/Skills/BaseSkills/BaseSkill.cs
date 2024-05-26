@@ -8,16 +8,6 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
     public abstract class BaseSkill : ISkill
     {
         protected Random _random;
-        protected static readonly Dictionary<EnumSkillType, Func<Unit, double>> SkillTypeModifiers = new Dictionary<EnumSkillType, Func<Unit, double>>
-        {
-            { EnumSkillType.Standard, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
-            { EnumSkillType.Slash, actor => actor.Strength * 0.2 + actor.Dexterity * 0.2 },
-            { EnumSkillType.Pierce, actor => actor.Strength * 0.1 + actor.Dexterity * 0.4 },
-            { EnumSkillType.Blunt, actor => actor.Strength * 0.4 },
-            { EnumSkillType.Magic, actor => actor.Intelligence * 0.5 },
-            { EnumSkillType.Holy, actor => actor.Faith * 0.5 },
-            { EnumSkillType.Curse, actor => actor.Faith * 0.5 },
-        };
 
         public BaseSkill()
         {
