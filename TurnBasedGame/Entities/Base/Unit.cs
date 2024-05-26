@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Spectre.Console;
+using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Entities.Skills;
@@ -12,13 +13,19 @@ namespace TurnBasedGame.Main.Entities.Base
         private int _hp;
         private int _maxMP;
         private int _mp;
+        private int _baseResistance;
+        private int _baseCriticalDamage;
+        private int _turnPriority;
+
         private int _strength;
         private int _dexterity;
         private int _intelligence;
         private int _faith;
-        private int _baseResistance;
-        private int _baseCriticalDamage;
-        private int _turnPriority;
+
+        private int _originalStrength;
+        private int _originalDexterity;
+        private int _originalIntelligence;
+        private int _originalFaith;
 
         public Unit() {
             Skills.Add(new RestSkill());
@@ -143,27 +150,93 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public void AddDoTEffect(DamageEffect effect)
         {
-            ActiveDoTEffects.Add(effect);
+            SaveOriginalAttributes();
+            var existingEffect = ActiveDoTEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
+
+            if (existingEffect != null)
+            {
+                existingEffect.Duration = effect.Duration;
+                if(existingEffect.DamagePerTurn < effect.DamagePerTurn)
+                {
+                    existingEffect.DamagePerTurn = effect.DamagePerTurn;
+                }
+            }
+            else
+            {
+                ActiveDoTEffects.Add(effect);
+                ApplyDoTEffects();
+            }
         }
 
         public void AddBuffEffect(BuffEffect effect)
         {
-            ActiveBuffEffects.Add(effect);
+            SaveOriginalAttributes();
+            var existingEffect = ActiveBuffEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
+            if(existingEffect != null) 
+            {
+                existingEffect.Duration = effect.Duration;
+                if(existingEffect.Modifier < effect.Modifier)
+                {
+                    existingEffect.Modifier = effect.Modifier;
+                }
+            }
+            else
+            {
+                ActiveBuffEffects.Add(effect);
+                ApplyBuffEffects();
+            }
+
+            string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.Name})[/]";
+            AnsiConsole.MarkupLine($"{Name} has {effectNameText}!");
         }
 
-        public void ApplyStatusEffects()
+        public void ApplyDoTEffects()
         {
             foreach(var effect in ActiveDoTEffects.ToList())
             {
                 var resistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(effect.DamageType) ? ResistanceManager.ResistanceLevelSelectors[effect.DamageType](this) : EnumResistanceLevel.Neutral;
                 var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
                 effect.DamagePerTurn = (int)(effect.DamagePerTurn * resistanceModifier);
-                effect.ApplyEffect(this);
-                Console.WriteLine($"{Name} took {effect.DamagePerTurn} DAMAGE from {effect.DamageType} damage");
+                effect.ApplyDamage(this);
 
-                if(effect.Duration <= 0)
+                string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.EffectType})[/]";
+                AnsiConsole.MarkupLine($"{effectNameText} {Name} took {effect.DamagePerTurn} DAMAGE");
+
+                if (effect.Duration <= 0)
+                {
                     ActiveDoTEffects.Remove(effect);
+                    RestoreOriginalAttributes();
+                }
             }
+        }
+
+        public void ApplyBuffEffects()
+        {
+            foreach (var effect in ActiveBuffEffects.ToList())
+            {
+                effect.ApplyEffect(this);
+                if (effect.Duration <= 0)
+                {
+                    ActiveBuffEffects.Remove(effect);
+                    RestoreOriginalAttributes();
+                }
+            }
+        }
+
+        public void SaveOriginalAttributes()
+        {
+            _originalStrength = Strength;
+            _originalDexterity = Dexterity;
+            _originalIntelligence = Intelligence;
+            _originalFaith = Faith;
+        }
+
+        public void RestoreOriginalAttributes()
+        {
+            Strength = _originalStrength;
+            Dexterity = _originalDexterity;
+            Intelligence = _originalIntelligence;
+            Faith = _originalFaith;
         }
     }
 }

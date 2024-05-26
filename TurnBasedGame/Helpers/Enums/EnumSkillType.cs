@@ -4,31 +4,31 @@ namespace TurnBasedGame.Main.Helpers.Enums
 {
     public enum EnumSkillType
     {
-        [SkillTypeColor("gray")]
+        [TypeColor("gray", "NONE")]
         None,
 
-        [SkillTypeColor("gray")]
+        [TypeColor("gray", "STANDARD")]
         Standard,
 
-        [SkillTypeColor("gray")]
+        [TypeColor("gray", "BLUNT")]
         Blunt,
 
-        [SkillTypeColor("gray")]
+        [TypeColor("gray", "SLASH")]
         Slash,
 
-        [SkillTypeColor("gray")]
+        [TypeColor("gray", "PIERCE")]
         Pierce,
 
-        [SkillTypeColor("deepskyblue4_2")]
+        [TypeColor("deepskyblue4_2", "MAGIC")]
         Magic,
 
-        [SkillTypeColor("yellow")]
+        [TypeColor("yellow", "HOLY")]
         Holy,
 
-        [SkillTypeColor("orange")]
+        [TypeColor("orange", "FIRE")]
         Fire,
 
-        [SkillTypeColor("green")]
+        [TypeColor("green", "POISON")]
         Poison
     }
 }

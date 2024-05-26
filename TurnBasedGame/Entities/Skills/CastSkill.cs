@@ -1,10 +1,16 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Effects;
 
 namespace TurnBasedGame.Main.Entities.Skills
 {
     public class CastSkill : BaseSkill
     {
         public CastSkill() { }
+
+        public override int Execute(Unit actor)
+        {
+            throw new NotImplementedException();
+        }
 
         public override int Execute(Unit actor, Unit target)
         {
@@ -15,6 +21,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         {
             throw new NotImplementedException();
         }
+
 
         protected int PerformHeal(Unit actor, Unit target)
         {
@@ -81,5 +88,21 @@ namespace TurnBasedGame.Main.Entities.Skills
 
             return 1;
         }
+
+        protected int PerformProtection(Unit actor, int buffModifier)
+        {
+            if (ManaCost > 0)
+            {
+                if (!CalculateMana(actor, ManaCost))
+                    return -1;
+            }
+
+            Console.WriteLine($"{actor.Name} used {ExecutionName} on self");
+            actor.AddBuffEffect(new ProtectionEffect(buffModifier));
+            return 1;
+        }
+
+        //todo:
+        //PerformProtection(Unit actor, List<Unit> targets)
     }
 }

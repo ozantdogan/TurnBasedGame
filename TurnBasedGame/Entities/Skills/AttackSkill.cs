@@ -164,6 +164,11 @@ namespace TurnBasedGame.Main.Entities.Skills
 
             return 1;
         }
+
+        public override int Execute(Unit actor)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

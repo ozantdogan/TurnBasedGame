@@ -39,7 +39,9 @@ namespace TurnBasedGame.Main.Entities.Skills
         public EnumSkillType PrimaryType { get; set; } = EnumSkillType.None;
         public EnumSkillType SecondaryType { get; set; } = EnumSkillType.None;
         public List<int> TargetIndexes { get; set; } = new List<int>();
+        public bool SelfTarget { get; set; } = false;
 
+        public abstract int Execute(Unit actor);
         public abstract int Execute(Unit actor, Unit target);
         public abstract int Execute(Unit actor, List<Unit> targets);
         protected bool CalculateMana(Unit actor, int manaCost)

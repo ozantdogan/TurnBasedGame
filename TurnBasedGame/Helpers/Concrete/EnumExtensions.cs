@@ -1,20 +1,34 @@
 ﻿using TurnBasedGame.Main.Helpers.Attributes;
-using TurnBasedGame.Main.Helpers.Enums;
 
 public static class EnumExtensions
 {
-    public static string GetColor(this EnumSkillType damageType)
+    public static string GetColor<T>(this T attributeType) where T : Enum
     {
-        var type = damageType.GetType();
-        var memberInfo = type.GetMember(damageType.ToString());
+        var type = attributeType.GetType();
+        var memberInfo = type.GetMember(attributeType.ToString());
         if (memberInfo != null && memberInfo.Length > 0)
         {
-            var attrs = memberInfo[0].GetCustomAttributes(typeof(SkillTypeColorAttribute), false);
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeColor), false);
             if (attrs != null && attrs.Length > 0)
             {
-                return ((SkillTypeColorAttribute)attrs[0]).Color;
+                return ((TypeColor)attrs[0]).Color;
             }
         }
-        return "defaultColor"; 
+        return "white";
+    }
+
+    public static string GetCode<T>(this T attributeType) where T : Enum
+    {
+        var type = attributeType.GetType();
+        var memberInfo = type.GetMember(attributeType.ToString());
+        if (memberInfo != null && memberInfo.Length > 0)
+        {
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeColor), false);
+            if (attrs != null && attrs.Length > 0)
+            {
+                return ((TypeColor)attrs[0]).TypeCode;
+            }
+        }
+        return "";
     }
 }

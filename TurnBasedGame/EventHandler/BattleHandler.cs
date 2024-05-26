@@ -35,7 +35,8 @@ namespace TurnBasedGame.Main
                         _ui.ShowStatus(playerUnits, mobUnits, level);
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
-                        unit.ApplyStatusEffects();
+                        unit.ApplyBuffEffects();
+                        unit.ApplyDoTEffects();
                         if(unit.HP <= 0)
                         {
                             Console.WriteLine($"{unit.Name} is dead");
@@ -130,8 +131,8 @@ namespace TurnBasedGame.Main
                 var skillChoices = actor.Skills.Select((skill, index) =>
                 {
                     var color = skill.PrimaryType.GetColor();
-                    string primaryTypeText = (skill.PrimaryType != EnumSkillType.None ? $"[{skill.PrimaryType.GetColor()}]({skill.PrimaryType})[/] " : string.Empty);
-                    string secondaryTypeText = (skill.SecondaryType != EnumSkillType.None ? $"[{skill.SecondaryType.GetColor()}]({skill.SecondaryType})[/] " : string.Empty);
+                    string primaryTypeText = (skill.PrimaryType != EnumSkillType.None ? $"[{skill.PrimaryType.GetColor()}]({skill.PrimaryType.GetCode()})[/] " : string.Empty);
+                    string secondaryTypeText = (skill.SecondaryType != EnumSkillType.None ? $"[{skill.SecondaryType.GetColor()}]({skill.SecondaryType.GetCode()})[/] " : string.Empty);
                     string manaCostText = (skill.ManaCost > 0 ? $"[cyan]({skill.ManaCost})[/]" : string.Empty);
                     return $"{index + 1}. {skill.Name} {primaryTypeText}{secondaryTypeText}{manaCostText}";
                 }).ToArray(); 
@@ -154,7 +155,10 @@ namespace TurnBasedGame.Main
                     return moveSkill.Execute(actor, friendlyTargets);
 
                 if (actor.Skills[skillChoice] is RestSkill restSkill)
-                    return restSkill.Rest(actor);
+                    return restSkill.Execute(actor);
+
+                if (actor.Skills[skillChoice].SelfTarget)
+                    return actor.Skills[skillChoice].Execute(actor);
 
                 if (actor.Skills[skillChoice].TargetIndexes != null && actor.Skills[skillChoice].TargetIndexes.Count() > 0)
                 {

@@ -1,11 +1,10 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Effects
 {
     public class BuffEffect : StatusEffect
     {
-        public int BuffAmount { get; set; } 
+        public int BuffAmount { get; set; }
 
         public BuffEffect()
         {
@@ -14,7 +13,6 @@ namespace TurnBasedGame.Main.Entities.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            
         }
     }
 }

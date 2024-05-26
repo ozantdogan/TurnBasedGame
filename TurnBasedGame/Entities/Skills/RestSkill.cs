@@ -24,10 +24,11 @@ namespace TurnBasedGame.Main.Entities.Skills
             throw new NotImplementedException();
         }
 
-        public int Rest(Unit target) 
+        public override int Execute(Unit actor)
         {
-            Console.WriteLine($"{target.Name} chose to rest for this round");
+            Console.WriteLine($"{actor.Name} chose to rest for this round");
             return 1;
+
         }
     }
 }

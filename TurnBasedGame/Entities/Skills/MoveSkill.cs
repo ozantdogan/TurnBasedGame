@@ -41,4 +41,9 @@ public class MoveSkill : BaseSkill
     {
         throw new NotImplementedException();
     }
+
+    public override int Execute(Unit actor)
+    {
+        throw new NotImplementedException();
+    }
 }
