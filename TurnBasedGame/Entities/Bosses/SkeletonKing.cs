@@ -17,7 +17,6 @@ namespace TurnBasedGame.Main.Entities.Bosses
             Dexterity = 6;
             Intelligence = 9;
             Faith = 2;
-            TurnPriority = 20;
             MinDamageValue = 7;
             MaxDamageValue = 11;
             CriticalChance = 0;
