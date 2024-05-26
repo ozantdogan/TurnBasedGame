@@ -50,5 +50,10 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 return true;
             }
         }
+
+        protected List<int> AdjustTargetIndexes(List<int> targetIndexes)
+        {
+            return targetIndexes.Select(index => 3 - index).ToList();
+        }   
     }
 }

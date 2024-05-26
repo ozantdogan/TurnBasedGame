@@ -122,6 +122,9 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 targetIndexes = TargetIndexes;
             }
 
+            if(actor.UnitType != EnumUnitType.Player)
+                targetIndexes = AdjustTargetIndexes(targetIndexes);
+
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
                 foreach (var index in targetIndexes)

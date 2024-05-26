@@ -3,13 +3,13 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Mobs
 {
-    public class Skeleton : Undead
+    public class UndeadBase : Undead
     {
-        public Skeleton()
+        public UndeadBase()
         {
-            Code = "{SKE}";
-            Name = "Skeleton Soldier";
-            DisplayName = $"Skeleton\nSoldier";
+            Code = "{USE}";
+            Name = "Undead Soldier";
+            DisplayName = $"Undead\nSoldier";
             MaxHP = 18;
             HP = MaxHP;
             Strength = 4;

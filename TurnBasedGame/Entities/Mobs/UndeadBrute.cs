@@ -2,13 +2,13 @@
 
 namespace TurnBasedGame.Main.Entities.Mobs
 {
-    public class SkeletonBrute : Skeleton
+    public class UndeadBrute : UndeadBase
     {
-        public SkeletonBrute()
+        public UndeadBrute()
         {
-            Code = "{SSB}";
-            Name = "Skeleton Brute";
-            DisplayName = $"Skeleton\nBrute";
+            Code = "{UBR}";
+            Name = "Undead Brute";
+            DisplayName = $"Undead\nBrute";
             MaxHP = 22;
             HP = MaxHP;
             Strength = 5;

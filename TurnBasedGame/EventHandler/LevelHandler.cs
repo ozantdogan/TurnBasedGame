@@ -49,17 +49,17 @@ namespace TurnBasedGame
                     {
                         skeletonType = random.Next(3);
                     }
-                    while (skeletonType == 0 && mobList.Where(u => u is SkeletonBrute).Count() >= 2);
+                    while (skeletonType == 0 && mobList.Where(u => u is UndeadBrute).Count() >= 2);
                     switch (skeletonType)
                     {
                         case 0:
-                            mobList.Add(new SkeletonBrute() { UnitType = EnumUnitType.Mob });
+                            mobList.Add(new UndeadBrute() { UnitType = EnumUnitType.Mob });
                             break;
                         case 1:
-                            mobList.Add(new SkeletonSwordsman() { UnitType = EnumUnitType.Mob });
+                            mobList.Add(new UndeadSwordsman() { UnitType = EnumUnitType.Mob });
                             break;
                         case 2:
-                            mobList.Add(new SkeletonSpearsman() { UnitType = EnumUnitType.Mob });
+                            mobList.Add(new UndeadSpearsman() { UnitType = EnumUnitType.Mob });
                             break;
                     }
 

@@ -5,13 +5,13 @@ namespace TurnBasedGame.Main.Helpers.Enums
     public enum EnumEffectType
     {
         [TypeColor("green", "p")]
-        POISON,
+        POISONED,
 
         [TypeColor("darkorange3", "b")]
         BURN,
 
         [TypeColor("deeppink4_1", "c")]
-        CURSE,
+        CURSED,
 
         [TypeColor("gray", "s")]
         STUNNED,

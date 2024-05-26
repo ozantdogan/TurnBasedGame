@@ -9,7 +9,7 @@ namespace TurnBasedGame.Main.Entities.Effects
         {
             Name = "Curse";
             DamageType = EnumSkillType.Curse;
-            EffectType = EnumEffectType.CURSE;
+            EffectType = EnumEffectType.CURSED;
             DamagePerTurn = damagePerTurn;
             Modifier = modifier;
             Duration = duration;

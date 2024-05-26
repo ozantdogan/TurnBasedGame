@@ -9,7 +9,7 @@ namespace TurnBasedGame.Main.Entities.Effects
         {
             Name = "Poison";
             DamageType = EnumSkillType.Poison;
-            EffectType = EnumEffectType.POISON;
+            EffectType = EnumEffectType.POISONED;
             DamagePerTurn = damagePerTurn;
             Modifier = modifier;
             Duration = duration;
