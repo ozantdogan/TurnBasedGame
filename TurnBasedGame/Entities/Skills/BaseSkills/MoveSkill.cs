@@ -1,5 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
 public class MoveSkill : BaseSkill

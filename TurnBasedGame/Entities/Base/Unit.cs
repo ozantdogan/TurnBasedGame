@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Base

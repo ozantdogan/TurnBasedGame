@@ -1,17 +1,20 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.KnightSkills
 {
-    public class HandSweep : AttackSkill
+    public class ShieldBash : AttackSkill
     {
-        public HandSweep()
+        public ShieldBash()
         {
-            Name = "Hand Sweep";
+            Name = "Shield Bash";
             ExecutionName = Name;
-            ManaCost = 10;
+            PrimarySkillModifier = 1.5;
+            ManaCost = 20;
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Blunt;
+            Accuracy = 10;
         }
 
         public override int Execute(Unit actor, Unit target)

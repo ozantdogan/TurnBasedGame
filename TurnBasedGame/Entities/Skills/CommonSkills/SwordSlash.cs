@@ -1,19 +1,18 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
 {
-    public class ShieldBash : AttackSkill
+    public class SwordSlash : AttackSkill
     {
-        public ShieldBash()
+        public SwordSlash()
         {
-            Name = "Shield Bash";
+            Name = "Sword Slash";
             ExecutionName = Name;
-            PrimarySkillModifier = 1.5;
-            ManaCost = 20;
+            ManaCost = 0;
             PassiveFlag = false;
-            PrimaryType = EnumSkillType.Blunt;
-            Accuracy = 10;
+            PrimaryType = EnumSkillType.Slash;
         }
 
         public override int Execute(Unit actor, Unit target)

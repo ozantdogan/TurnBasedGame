@@ -1,7 +1,7 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Effects;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
     public class CastSkill : BaseSkill
     {
@@ -34,7 +34,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             var castTypeModifier = SkillTypeModifiers.ContainsKey(PrimaryType) ? SkillTypeModifiers[PrimaryType](actor) : 1.0;
 
             Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
-            for(int i=0; i<=ExecutionCount-1; i++)
+            for (int i = 0; i <= ExecutionCount - 1; i++)
             {
                 double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
                 target.HP += (int)healingValue;
@@ -68,9 +68,9 @@ namespace TurnBasedGame.Main.Entities.Skills
                 targetIndexes = TargetIndexes;
             }
 
-            for (int i=0; i<=ExecutionCount-1; i++)
+            for (int i = 0; i <= ExecutionCount - 1; i++)
             {
-                foreach(var index in targetIndexes)
+                foreach (var index in targetIndexes)
                 {
                     if (index < 0 || index >= targets.Count)
                         continue;
@@ -79,7 +79,7 @@ namespace TurnBasedGame.Main.Entities.Skills
                     if (!target.IsAlive)
                         continue;
 
-                    double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5)); 
+                    double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
                     target.HP += (int)healingValue;
 
                     Console.WriteLine($"{actor.Name} healed {target.Name} (+{(int)healingValue}HP) ");

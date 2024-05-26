@@ -1,4 +1,4 @@
-﻿namespace TurnBasedGame.Main.Entities.Skills
+﻿namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
     public class BuffSkill : CastSkill
     {

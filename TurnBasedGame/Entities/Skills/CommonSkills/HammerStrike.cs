@@ -1,7 +1,8 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
 {
     public class HammerStrike : AttackSkill
     {

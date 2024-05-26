@@ -1,17 +1,18 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.ScholarSkills
 {
-    public class SwordSlash : AttackSkill
+    public class StarShard : AttackSkill
     {
-        public SwordSlash()
+        public StarShard()
         {
-            Name = "Sword Slash";
+            Name = "Star Shard";
             ExecutionName = Name;
-            ManaCost = 0;
+            ManaCost = 4;
             PassiveFlag = false;
-            PrimaryType = EnumSkillType.Slash;
+            PrimaryType = EnumSkillType.Magic;
         }
 
         public override int Execute(Unit actor, Unit target)

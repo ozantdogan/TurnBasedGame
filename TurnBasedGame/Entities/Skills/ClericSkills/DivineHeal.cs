@@ -1,7 +1,8 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.ClericSkills
 {
     public class DivineHeal : CastSkill
     {
@@ -13,7 +14,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             PassiveFlag = true;
             PrimarySkillModifier = 1.2;
             PrimaryType = EnumSkillType.Holy;
-            TargetIndexes = new List<int>() { 0, 1, 2, 3};
+            TargetIndexes = new List<int>() { 0, 1, 2, 3 };
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

@@ -3,7 +3,7 @@ using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
     public abstract class BaseSkill : ISkill
     {
@@ -46,7 +46,7 @@ namespace TurnBasedGame.Main.Entities.Skills
         public abstract int Execute(Unit actor, List<Unit> targets);
         protected bool CalculateMana(Unit actor, int manaCost)
         {
-            if(actor.UnitType != EnumUnitType.Player) return true;
+            if (actor.UnitType != EnumUnitType.Player) return true;
 
             if (actor.MP < ManaCost)
             {

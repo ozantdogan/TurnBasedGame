@@ -1,11 +1,13 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.HunterSkills
 {
     public class DualKnivesSlash : AttackSkill
     {
-        public DualKnivesSlash() {
+        public DualKnivesSlash()
+        {
             Name = "Dual Knives Slash";
             ExecutionName = "Knife Slash";
             ManaCost = 8;

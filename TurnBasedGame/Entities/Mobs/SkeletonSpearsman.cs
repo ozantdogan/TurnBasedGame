@@ -1,6 +1,6 @@
-﻿using TurnBasedGame.Main.Entities.Skills;
+﻿using TurnBasedGame.Main.Entities.Skills.CommonSkills;
 
-namespace TurnBasedGame.Main.Entities.Mobs  
+namespace TurnBasedGame.Main.Entities.Mobs
 {
     public class SkeletonSpearsman : Skeleton
     {

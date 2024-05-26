@@ -1,5 +1,7 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Entities.Skills.ClericSkills;
+using TurnBasedGame.Main.Entities.Skills.HunterSkills;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {

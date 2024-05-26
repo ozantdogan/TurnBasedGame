@@ -1,7 +1,7 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Resistance;
-using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;

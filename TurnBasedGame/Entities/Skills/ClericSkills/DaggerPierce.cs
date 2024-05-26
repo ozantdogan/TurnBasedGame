@@ -1,16 +1,18 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.ClericSkills
 {
-    public class StarShard : AttackSkill
+    public class DaggerPierce : AttackSkill
     {
-        public StarShard() {
-            Name = "Star Shard";
+        public DaggerPierce()
+        {
+            Name = "Dagger Pierce";
             ExecutionName = Name;
-            ManaCost = 4;
+            ManaCost = 0;
             PassiveFlag = false;
-            PrimaryType = EnumSkillType.Magic;
+            PrimaryType = EnumSkillType.Pierce;
         }
 
         public override int Execute(Unit actor, Unit target)

@@ -4,7 +4,7 @@ using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
     public class AttackSkill : BaseSkill
     {
@@ -110,9 +110,9 @@ namespace TurnBasedGame.Main.Entities.Skills
             var secondaryDamageTypeModifier = SkillTypeModifiers.ContainsKey(SecondaryType) ? SkillTypeModifiers[SecondaryType](actor) : 0.0;
             var critModifier = 1.0;
             var targetIndexes = new List<int>();
-            if(targets.Count() < TargetIndexes.Count)
+            if (targets.Count() < TargetIndexes.Count)
             {
-                for(int i = 0; i < targets.Count(); i++)
+                for (int i = 0; i < targets.Count(); i++)
                 {
                     targetIndexes.Add(i);
                 }
@@ -122,7 +122,7 @@ namespace TurnBasedGame.Main.Entities.Skills
                 targetIndexes = TargetIndexes;
             }
 
-            for (int i = 0; i <= ExecutionCount-1; i++)
+            for (int i = 0; i <= ExecutionCount - 1; i++)
             {
                 foreach (var index in targetIndexes)
                 {

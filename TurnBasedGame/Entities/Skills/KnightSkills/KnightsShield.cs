@@ -1,11 +1,13 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.KnightSkills
 {
     public class KnightsShield : BuffSkill
     {
-        public KnightsShield() {
+        public KnightsShield()
+        {
             Name = "Knight's Shield";
             ExecutionName = Name;
             ManaCost = 8;

@@ -1,17 +1,18 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.TrollSkills
 {
-    public class DaggerPierce : AttackSkill
+    public class HandSweep : AttackSkill
     {
-        public DaggerPierce()
+        public HandSweep()
         {
-            Name = "Dagger Pierce";
+            Name = "Hand Sweep";
             ExecutionName = Name;
-            ManaCost = 0;
+            ManaCost = 10;
             PassiveFlag = false;
-            PrimaryType = EnumSkillType.Pierce;
+            PrimaryType = EnumSkillType.Blunt;
         }
 
         public override int Execute(Unit actor, Unit target)

@@ -1,11 +1,13 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.ScholarSkills
 {
     public class RainOfStars : AttackSkill
     {
-        public RainOfStars() {
+        public RainOfStars()
+        {
             Name = "Rain of Stars";
             PrimarySkillModifier = 1.5;
             ManaCost = 20;
@@ -13,7 +15,7 @@ namespace TurnBasedGame.Main.Entities.Skills
             ExecutionCount = 2;
             PrimarySkillModifier = 0.6;
             PrimaryType = EnumSkillType.Magic;
-            TargetIndexes = new List<int>() { 0 ,1 ,2 ,3, 4};
+            TargetIndexes = new List<int>() { 0, 1, 2, 3, 4 };
         }
         public override int Execute(Unit actor, List<Unit> targets)
         {

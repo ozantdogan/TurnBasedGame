@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TurnBasedGame.Main.Entities.Base;
 
-namespace TurnBasedGame.Main.Entities.Skills
+namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
     public class RestSkill : BaseSkill
     {
