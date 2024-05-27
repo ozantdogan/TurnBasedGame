@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Effects
@@ -17,11 +18,11 @@ namespace TurnBasedGame.Main.Entities.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            if (unit.ColdResistance != EnumResistanceLevel.Immune)
-            {
-                unit.Strength = (int)(unit.Strength * Modifier);
-                unit.Dexterity = (int)(unit.Strength * Modifier);
-            }
+            var resistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(DamageType) ? ResistanceManager.ResistanceLevelSelectors[DamageType](unit) : EnumResistanceLevel.Neutral;
+            var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
+
+            unit.Strength = Math.Max(1, (int)(unit.Strength - Modifier * resistanceModifier));
+            unit.Dexterity = Math.Max(1, (int)(unit.Dexterity - Modifier * resistanceModifier));
         }
     }
 }

@@ -20,9 +20,9 @@ namespace TurnBasedGame
             List<Unit> Heroes = new List<Unit>();
             List<Unit> Mobs = new List<Unit>();
 
-            //Heroes.Add(cleric);
+            Heroes.Add(cleric);
             Heroes.Add(scholar);
-            //Heroes.Add(knight);
+            Heroes.Add(knight);
             Heroes.Add(hunter);
             foreach (var hero in Heroes)
                 hero.Skills.Reverse();

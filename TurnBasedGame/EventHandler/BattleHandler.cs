@@ -34,11 +34,9 @@ namespace TurnBasedGame.Main
                     Console.WriteLine($"{unit.Name}'s turn!");
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
-                    if(unit.UnitType == EnumUnitType.Dummy)
-                    {
-                        unit.ApplyBuffEffects();
-                        unit.ApplyDoTEffects();
-                    }
+                    unit.ApplyBuffEffects();
+                    unit.ApplyDoTEffects();
+
                     Thread.Sleep(LevelHandler.Pace);
 
                     _ui.ShowStatus(playerUnits, mobUnits, level);

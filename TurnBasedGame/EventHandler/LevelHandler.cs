@@ -9,7 +9,8 @@ namespace TurnBasedGame
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = true;
+        public static bool DummyLevel { get; set; } = false;
+        public static bool BossLevel { get; set; } = true;
         public static int DummyCount { get; set; } = 1;
         public static int Pace { get; set; } = 1500;
 
@@ -33,6 +34,12 @@ namespace TurnBasedGame
                 {
                     mobList.Add(new Dummy());
                 }
+            }
+            else if(BossLevel)
+            {
+                Level = 0;
+                Pace = 1000;
+                mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
             }
 
             if (Level <= 2 && Level > 0)

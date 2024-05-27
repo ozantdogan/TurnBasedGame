@@ -3,6 +3,7 @@ using System.Text;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Entities.Resistance;
+using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
@@ -203,13 +204,13 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
 
-                    if (EffectSelector.ContainsKey(PrimaryType))
+                    if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
                     {
                         effect = EffectSelector[PrimaryType](this);
                         target.AddDoTEffect(effect);
                     }
 
-                    if (EffectSelector.ContainsKey(SecondaryType))
+                    if (EffectManager.EffectSelector.ContainsKey(SecondaryType))
                     {
                         effect = EffectSelector[SecondaryType](this);
                         target.AddDoTEffect(effect);

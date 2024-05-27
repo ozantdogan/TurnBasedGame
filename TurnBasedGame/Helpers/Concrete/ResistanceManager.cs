@@ -16,6 +16,7 @@ namespace TurnBasedGame.Main.Entities.Resistance
             { EnumSkillType.Fire, target => target.FireResistance },
             { EnumSkillType.Poison, target => target.PoisonResistance },
             { EnumSkillType.Curse, target => target.CurseResistance },
+            { EnumSkillType.Cold, target => target.ColdResistance },
         };
 
         public static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<EnumResistanceLevel, double>

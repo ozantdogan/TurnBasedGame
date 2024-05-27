@@ -16,6 +16,7 @@ namespace TurnBasedGame.Main.Entities.Skills.ColdSkills
             DamagePerTurn = 3;
             Duration = 3;
             DoTModifier = 0.6;
+            PrimarySkillModifier = 0.2;
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
         }
 
