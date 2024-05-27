@@ -10,7 +10,6 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Name = "Undead Brute";
             DisplayName = $"Undead\nBrute";
             MaxHP = 22;
-            HP = MaxHP;
             Strength = 5;
             MaxDamageValue = 6;
             MinDamageValue = 1;

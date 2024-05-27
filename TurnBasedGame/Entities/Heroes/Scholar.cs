@@ -13,9 +13,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Name = "Scholar";
             DisplayName = Name;
             MaxHP = 20;
-            HP = MaxHP;
             MaxMP = 30;
-            MP = MaxMP;
             Strength = 2;
             Dexterity = 5;
             Intelligence = 7;

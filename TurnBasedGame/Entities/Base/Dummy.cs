@@ -10,9 +10,7 @@ namespace TurnBasedGame.Main.Entities.Base
             Name = "Dummy";
             DisplayName = Name;
             MaxHP = 100;
-            HP = MaxHP;
             MaxMP = 100;
-            MP = MaxMP;
             UnitType = EnumUnitType.Dummy;
             Strength = 10;
             Dexterity = 10;

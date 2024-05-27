@@ -12,9 +12,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{KNT}";
             Name = "Knight";
             MaxHP = 30;
-            HP = MaxHP;
             MaxMP = 20;
-            MP = MaxMP;
             Strength = 8;
             Dexterity = 4;
             Intelligence = 1;

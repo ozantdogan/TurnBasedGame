@@ -36,6 +36,8 @@ namespace TurnBasedGame.Main
 
                     unit.ApplyBuffEffects();
                     unit.ApplyDoTEffects();
+                    if(!unit.IsAlive) 
+                        continue;
 
                     Thread.Sleep(LevelHandler.Pace);
 
@@ -45,6 +47,12 @@ namespace TurnBasedGame.Main
 
                     while (true)
                     {
+                        if(unit.HP <= 0)
+                        {
+                            Console.WriteLine($"{unit.Name} is dead!");
+                            break;
+                        }
+
                         if(unit.IsStunned)
                         {
                             Console.WriteLine($"{unit.Name} is stunned!");
@@ -52,12 +60,6 @@ namespace TurnBasedGame.Main
                             unit.StunDuration--;
                             if(unit.StunDuration < 0)
                                 unit.IsStunned = false;
-                            break;
-                        }
-
-                        if(unit.HP <= 0)
-                        {
-                            Console.WriteLine($"{unit.Name} is dead!");
                             break;
                         }
 

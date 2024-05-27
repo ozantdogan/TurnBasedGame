@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [TypeAttribute("paleturquoise1", "&")]
         COLD,
 
-        [TypeAttribute("red3", "&")]
+        [TypeAttribute("red3_1", "&")]
         BLEED,
 
         [TypeAttribute("grey50", "#")]

@@ -195,7 +195,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                     Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
-
+                    
                     if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
                     {
                         effect = EffectManager.EffectSelector[PrimaryType](this);

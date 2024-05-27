@@ -12,9 +12,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Name = "Hunter";
             DisplayName = Name;
             MaxHP = 24;
-            HP = MaxHP;
             MaxMP = 20;
-            MP = MaxMP;
             Strength = 5;
             Dexterity = 8;
             Intelligence = 4;

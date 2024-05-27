@@ -51,6 +51,7 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public Unit() 
         {
+            _hp = MaxHP;
             DisplayName = Name;
             Level = new UnitLevel();
             Skills.Add(new RestSkill());
@@ -85,7 +86,7 @@ namespace TurnBasedGame.Main.Entities.Base
             set
             {
                 _maxHP = value < 0 ? 0 : value;
-                if (_hp > _maxHP)
+                if (_hp > _maxHP || _hp == 0)
                 {
                     _hp = _maxHP;
                 }
@@ -97,16 +98,30 @@ namespace TurnBasedGame.Main.Entities.Base
             get { return _hp; }
             set
             {
-                _hp = Math.Clamp(value, 0, _maxHP); // Set _hp to the passed value and ensure it's within bounds
+                _hp = Math.Clamp(value, 0, _maxHP);
                 if (_hp == 0)
+                {
                     _mp = 0;
+                    if (!IsAlive)
+                    {
+                        ActiveBuffEffects.Clear();
+                        ActiveDoTEffects.Clear();
+                    }
+                }
             }
         }
 
         public int MaxMP
         {
             get { return _maxMP; }
-            set { _maxMP = value < 0 ? 0 : value; }
+            set 
+            { 
+                _maxMP = value < 0 ? 0 : value; 
+                if (_mp > _maxMP)
+                {
+                    _mp = _maxMP;
+                }
+            }
         }
 
         public int MP
@@ -263,20 +278,21 @@ namespace TurnBasedGame.Main.Entities.Base
                 
                 if(HP <= 0)
                 {
-                    AnsiConsole.MarkupLine($"{Name} has died due to {effectNameText}");
-                    effect.Duration = 0;
-                }
-
-                if (effect.Duration <= 0)
-                {
-                    ActiveDoTEffects.Remove(effect);
-                    RestoreAttributes();
+                    ActiveDoTEffects.Clear();
                 }
                 else
                 {
-                    effect.Duration--;
-                    if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
-                        ResetAttributes();
+                    if (effect.Duration <= 0)
+                    {
+                        ActiveDoTEffects.Remove(effect);
+                        RestoreAttributes();
+                    }
+                    else
+                    {
+                        effect.Duration--;
+                        if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
+                            ResetAttributes();
+                    }
                 }
             }
         }
