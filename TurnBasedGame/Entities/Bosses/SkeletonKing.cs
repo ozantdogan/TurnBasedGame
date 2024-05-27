@@ -23,8 +23,7 @@ namespace TurnBasedGame.Main.Entities.Bosses
             CriticalChance = 0;
             SlashResistance = EnumResistanceLevel.Resistant;
             PierceResistance = EnumResistanceLevel.Resistant;
-            BluntResistance = EnumResistanceLevel.Resistant;
-            MagicResistance = EnumResistanceLevel.Sturdy;
+            MagicResistance = EnumResistanceLevel.Resistant;
             PoisonResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Immune;
             CanBeStunned = false;

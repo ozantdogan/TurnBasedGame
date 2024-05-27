@@ -17,10 +17,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
         private bool CalculateCrit(Unit actor)
         {
             if (actor.CriticalChance > _random.Next(101))
-            {
-                AnsiConsole.Write(new Markup($"[khaki3]Critical Hit![/]\n"));
                 return true;
-            }
+
             return false;
         }
 
@@ -50,7 +48,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
         protected bool TryStun(Unit target)
         {
-            if (StunChance <= 0 || !target.CanBeStunned || target.IsStunned)
+            if (StunChance <= 0 || !target.CanBeStunned || target.IsStunned || !target.IsAlive)
                 return false;
 
             int roll = _random.Next(100);
@@ -83,7 +81,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
-                Console.WriteLine($"\n{actor.Name} used {ExecutionName} on {target.Name}!");
+                Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
 
                 if (HasMissed(actor) || HasDodged(target))
                     return 0;
@@ -103,8 +101,14 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                 target.HP -= (int)totalDamageDealt;
 
-                Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
-                                  (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
+                string damageMessage = $"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
+                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n");
+
+
+                if (critModifier > 1.0)
+                    AnsiConsole.MarkupLine($"[khaki3]{damageMessage}[/]");
+                else
+                    Console.WriteLine(damageMessage);
 
                 if (TryStun(target))
                 {

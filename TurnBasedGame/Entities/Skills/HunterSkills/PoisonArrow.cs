@@ -18,7 +18,7 @@ namespace TurnBasedGame.Main.Entities.Skills.HunterSkills
             SecondarySkillModifier = 0.2;
             DamagePerTurn = 5;
             Duration = 2;
-            DoTModifier = 1.2;
+            DoTModifier = 0.5;
             DamageEffect = new PoisonEffect(DamagePerTurn, DoTModifier, Duration);
         }
 

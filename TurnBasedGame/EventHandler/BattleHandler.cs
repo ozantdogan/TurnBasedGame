@@ -33,8 +33,14 @@ namespace TurnBasedGame.Main
                     _ui.ShowStatus(playerUnits, mobUnits, level);
                     Console.WriteLine($"{unit.Name}'s turn!");
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
+
                     unit.ApplyBuffEffects();
                     unit.ApplyDoTEffects();
+                    Thread.Sleep(1500);
+
+                    _ui.ShowStatus(playerUnits, mobUnits, level);
+                    Console.WriteLine($"{unit.Name}'s turn!");
+                    AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
                     while (true)
                     {

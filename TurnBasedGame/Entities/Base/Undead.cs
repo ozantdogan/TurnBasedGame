@@ -9,6 +9,8 @@ namespace TurnBasedGame.Main.Entities.Base
             HolyResistance = EnumResistanceLevel.Fragile;
             PoisonResistance = EnumResistanceLevel.Resistant;
             CurseResistance = EnumResistanceLevel.Immune;
+            FireResistance = EnumResistanceLevel.Weak;
+            ColdResistance = EnumResistanceLevel.Sturdy;
         }
     }
 }

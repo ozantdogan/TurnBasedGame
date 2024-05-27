@@ -17,10 +17,10 @@ namespace TurnBasedGame.Main.Entities.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            unit.Strength = (int)(unit.Strength / Modifier);
-            unit.Dexterity = (int)(unit.Dexterity / Modifier);
-            unit.Faith = (int)(unit.Faith / Modifier);
-            unit.Intelligence = (int)(unit.Intelligence / Modifier);
+            unit.Strength = (int)(unit.Strength * Modifier);
+            unit.Dexterity = (int)(unit.Dexterity * Modifier);
+            unit.Faith = (int)(unit.Faith * Modifier);
+            unit.Intelligence = (int)(unit.Intelligence * Modifier);
         }
     }
 }

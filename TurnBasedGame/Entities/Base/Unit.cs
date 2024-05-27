@@ -40,6 +40,7 @@ namespace TurnBasedGame.Main.Entities.Base
         private EnumResistanceLevel _originalFireResistance;
         private EnumResistanceLevel _originalPoisonResistance;
         private EnumResistanceLevel _originalCurseResistance;
+        private EnumResistanceLevel _originalColdResistance;
 
         public Unit() {
             Skills.Add(new RestSkill());
@@ -65,7 +66,7 @@ namespace TurnBasedGame.Main.Entities.Base
             get { return _hp; }
             set 
             { 
-                _hp = Math.Clamp(value, 0, MaxHP); 
+                _hp = Math.Clamp(value, 0, _maxHP); 
                 if (_hp == 0)
                     _mp = 0;
             }
@@ -80,7 +81,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public int MP
         {
             get { return _mp; }
-            set { _mp = Math.Clamp(value, 0, MaxMP); }
+            set { _mp = Math.Clamp(value, 0, _maxMP); }
         }
 
         public int MinDamageValue { get; set; }
@@ -155,6 +156,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumResistanceLevel FireResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel PoisonResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel CurseResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel ColdResistance { get; set; } = EnumResistanceLevel.Neutral;
 
         #endregion
 
@@ -176,8 +178,6 @@ namespace TurnBasedGame.Main.Entities.Base
                 ActiveDoTEffects.Add(effect);
                 effect.ApplyEffect(this);
             }
-            ApplyDoTEffects();
-            effect.Duration++;
         }
 
         public void AddBuffEffect(BuffEffect effect)
@@ -264,6 +264,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalMagicResistance = MagicResistance;
             _originalPierceResistance = PierceResistance;
             _originalCurseResistance = CurseResistance;
+            _originalColdResistance = ColdResistance;
         }
 
         public void RestoreOriginalAttributes()
@@ -283,6 +284,7 @@ namespace TurnBasedGame.Main.Entities.Base
             SlashResistance = _originalSlashResistance;
             PierceResistance = _originalPierceResistance;
             CurseResistance = _originalCurseResistance;
+            ColdResistance = _originalColdResistance;
         }
     }
 }
