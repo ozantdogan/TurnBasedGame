@@ -10,7 +10,7 @@ namespace TurnBasedGame
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = true;
+        public static bool DummyLevel { get; set; } = false;
         public static bool BossLevel { get; set; } = false;
         public static int DummyCount { get; set; } = 1;
         public static int Pace { get; set; } = 1500;
@@ -83,22 +83,10 @@ namespace TurnBasedGame
                             break;
                     }
 
-                    if(Level >= 3)
-                        ScaleMob(mobList[i]);
+                    if (Level >= 3)
+                        mobList[i].LevelUp();
                 }
             }
-        }
-
-        private static void ScaleMob(Unit mob)
-        {
-            double scalingFactor = 1 + (Level * 0.1);
-
-            mob.MaxHP = (int)(mob.MaxHP * scalingFactor);
-            mob.Strength = (int)(mob.Strength * scalingFactor);
-            mob.Dexterity = (int)(mob.Dexterity * scalingFactor);
-            mob.Faith = (int)(mob.Faith * scalingFactor);
-            mob.Intelligence = (int)(mob.Intelligence * scalingFactor);
-            mob.HP = mob.MaxHP; 
         }
 
         public static void IncreaseLevel()

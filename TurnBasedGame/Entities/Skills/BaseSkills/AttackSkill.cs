@@ -28,6 +28,9 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
         protected bool HasDodged(Unit target)
         {
+            if(!target.CanDodge)
+                return false;
+
             int dodgeChance = target.Dexterity * 2;
             int roll = _random.Next(100);
             if (roll < dodgeChance)
@@ -38,8 +41,11 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             return false;
         }
 
-        protected bool HasMissed(Unit actor)
+        protected bool HasMissed(Unit actor, Unit target)
         {
+            if (!target.IsMissable)
+                return false;
+
             double missChance = 100 / (actor.Dexterity * Accuracy);
             int roll = _random.Next(100);
             if (roll < missChance)
@@ -88,7 +94,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             {
                 Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
 
-                if (HasMissed(actor) || HasDodged(target))
+                if (HasMissed(actor, target) || HasDodged(target))
                     return 0;
 
                 if (CalculateCrit(actor))
@@ -149,21 +155,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
             var critModifier = 1.0;
-            var targetIndexes = new List<int>();
-            if (targets.Count() < TargetIndexes.Count)
-            {
-                for (int i = 0; i < targets.Count(); i++)
-                {
-                    targetIndexes.Add(i);
-                }
-            }
-            else
-            {
-                targetIndexes = TargetIndexes;
-            }
-
-            if(actor.UnitType != EnumUnitType.Player)
-                targetIndexes = AdjustTargetIndexes(targetIndexes);
+            var targetIndexes = TargetIndexes;
 
             DamageEffect? effect = null;
             for (int i = 0; i <= ExecutionCount - 1; i++)
@@ -177,7 +169,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     if (!target.IsAlive)
                         continue;
 
-                    if (HasMissed(actor) || HasDodged(target))
+                    if (HasMissed(actor, target) || HasDodged(target))
                         continue;
 
                     if (CalculateCrit(actor))

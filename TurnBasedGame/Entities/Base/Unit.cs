@@ -146,6 +146,8 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public List<DamageEffect> ActiveDoTEffects { get; private set; } = new List<DamageEffect>();
         public List<BuffEffect> ActiveBuffEffects { get; private set; } = new List<BuffEffect>();
+        public bool IsMissable { get; set; } = true;
+        public bool CanDodge { get; set; } = true;
 
         #endregion
 

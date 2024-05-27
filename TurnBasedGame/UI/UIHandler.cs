@@ -15,16 +15,22 @@ namespace TurnBasedGame.Main.UI
 
             var playerTable = new Table().Border(TableBorder.Simple).LeftAligned();
             playerTable.AddColumn(" ");
-            foreach (Unit unit in playerUnits)
+
+            // Add columns for each player unit, in reverse order
+            for (int i = playerUnits.Count - 1; i >= 0; i--)
             {
-                playerTable.AddColumn($"[{unit.UnitType.GetColor()}]{unit.DisplayName ?? " "}[/]");
+                Unit unit = playerUnits[i];
+                playerTable.AddColumn($"[{unit.UnitType.GetColor()}]{unit.DisplayName ?? " "}  {unit.Level.CurrentLevel}[/]");
             }
 
             #region Player effects
 
             var playerEffectRow = new List<string> { " " };
-            foreach (Unit unit in playerUnits)
+
+            // Add player effects for each unit, in reverse order
+            for (int i = playerUnits.Count - 1; i >= 0; i--)
             {
+                Unit unit = playerUnits[i];
                 var activeStatusEffects = new List<StatusEffect>();
                 activeStatusEffects.AddRange(unit.ActiveDoTEffects);
                 activeStatusEffects.AddRange(unit.ActiveBuffEffects);
@@ -47,15 +53,17 @@ namespace TurnBasedGame.Main.UI
                     playerEffectRow.Add(" ");
                 }
             }
+
             playerTable.AddRow(playerEffectRow.ToArray());
 
             #endregion
 
-            // Add HP and MP rows
+            // Add HP and MP rows, in reverse order
             var playerHpRow = new List<string> { "[seagreen2]HP[/]" };
             var playerMpRow = new List<string> { "[cyan]MP[/]" };
-            foreach (Unit unit in playerUnits)
+            for (int i = playerUnits.Count - 1; i >= 0; i--)
             {
+                Unit unit = playerUnits[i];
                 playerHpRow.Add($"{unit.HP}/{unit.MaxHP}");
                 playerMpRow.Add($"{unit.MP}/{unit.MaxMP}"); // Assuming you have an Mp property
             }
@@ -67,7 +75,7 @@ namespace TurnBasedGame.Main.UI
             mobTable.AddColumn(" ");
             foreach (Unit unit in mobUnits)
             {
-                mobTable.AddColumn($"[{unit.UnitType.GetColor()}]{unit.DisplayName}[/]");
+                mobTable.AddColumn($"[{unit.UnitType.GetColor()}]{unit.DisplayName}  {unit.Level.CurrentLevel}[/]");
             }
 
             #region Mob effects
