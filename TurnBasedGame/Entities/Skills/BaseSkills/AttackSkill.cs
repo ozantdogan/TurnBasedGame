@@ -72,7 +72,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     return -1;
             }
 
-            var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
+            var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 0.0;
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
 
             var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
@@ -109,15 +109,15 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 string damageMessage = $"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                        (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n");
 
-                if (EffectSelector.ContainsKey(PrimaryType))
+                if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
                 {
-                    effect = EffectSelector[PrimaryType](this);
+                    effect = EffectManager.EffectSelector[PrimaryType](this);
                     target.AddDoTEffect(effect);
                 }
 
-                if (EffectSelector.ContainsKey(SecondaryType))
+                if (EffectManager.EffectSelector.ContainsKey(SecondaryType))
                 {
-                    effect = EffectSelector[SecondaryType](this);
+                    effect = EffectManager.EffectSelector[SecondaryType](this);
                     target.AddDoTEffect(effect);
                 }
 
@@ -206,13 +206,13 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                     if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
                     {
-                        effect = EffectSelector[PrimaryType](this);
+                        effect = EffectManager.EffectSelector[PrimaryType](this);
                         target.AddDoTEffect(effect);
                     }
 
                     if (EffectManager.EffectSelector.ContainsKey(SecondaryType))
                     {
-                        effect = EffectSelector[SecondaryType](this);
+                        effect = EffectManager.EffectSelector[SecondaryType](this);
                         target.AddDoTEffect(effect);
                     }
 
@@ -229,12 +229,6 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             throw new NotImplementedException();
         }
 
-        public Dictionary<EnumSkillType, Func<AttackSkill, DamageEffect>> EffectSelector = new Dictionary<EnumSkillType, Func<AttackSkill, DamageEffect>>
-        {
-            { EnumSkillType.Poison, skill => new PoisonEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) },
-            { EnumSkillType.Curse, skill => new CurseEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) },
-            { EnumSkillType.Cold, skill => new ColdEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) }
-        };
     }
 
 }

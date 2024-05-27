@@ -9,8 +9,8 @@ namespace TurnBasedGame
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = false;
-        public static bool BossLevel { get; set; } = true;
+        public static bool DummyLevel { get; set; } = true;
+        public static bool BossLevel { get; set; } = false;
         public static int DummyCount { get; set; } = 1;
         public static int Pace { get; set; } = 1500;
 

@@ -11,6 +11,7 @@ namespace TurnBasedGame.Main.Entities.Base
             CurseResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Weak;
             ColdResistance = EnumResistanceLevel.Sturdy;
+            BleedResistance = EnumResistanceLevel.Sturdy;
         }
     }
 }

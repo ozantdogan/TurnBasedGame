@@ -1,6 +1,5 @@
 ﻿using TurnBasedGame.Main;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Bosses;
 using TurnBasedGame.Main.Entities.Heroes;
 using TurnBasedGame.Main.Helpers.Enums;
 
@@ -20,10 +19,10 @@ namespace TurnBasedGame
             List<Unit> Heroes = new List<Unit>();
             List<Unit> Mobs = new List<Unit>();
 
-            Heroes.Add(cleric);
-            Heroes.Add(scholar);
+            //Heroes.Add(cleric);
+            //Heroes.Add(scholar);
             Heroes.Add(knight);
-            Heroes.Add(hunter);
+            //Heroes.Add(hunter);
             foreach (var hero in Heroes)
                 hero.Skills.Reverse();
 

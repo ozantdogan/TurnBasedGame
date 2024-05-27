@@ -13,6 +13,10 @@ namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
             ManaCost = 0;
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Slash;
+            SecondaryType = EnumSkillType.Bleed;
+            DamagePerTurn = 2;
+            Duration = 1;
+            DoTModifier = 1;
         }
 
         public override int Execute(Unit actor, Unit target)

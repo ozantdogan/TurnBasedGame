@@ -1,9 +1,11 @@
 ﻿using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection.Emit;
 using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Entities.Skills;
 using TurnBasedGame.Main.Entities.Skills.BaseSkills;
+using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Base
@@ -41,8 +43,11 @@ namespace TurnBasedGame.Main.Entities.Base
         private EnumResistanceLevel _originalPoisonResistance;
         private EnumResistanceLevel _originalCurseResistance;
         private EnumResistanceLevel _originalColdResistance;
+        private EnumResistanceLevel _originalBleedResistance;
 
-        public Unit() {
+        public Unit() 
+        {
+            Level = new UnitLevel();
             Skills.Add(new RestSkill());
             Skills.Add(new MoveSkill("Move Right", false));
             Skills.Add(new MoveSkill("Move Left", true));
@@ -57,6 +62,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public string? Name { get; set; }
         public string? DisplayName { get; set; }
         public List<BaseSkill> Skills { get; set; } = new List<BaseSkill>();
+        public UnitLevel Level {  get; set; }
 
         public int MaxHP
         {
@@ -160,6 +166,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumResistanceLevel PoisonResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel CurseResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel ColdResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel BleedResistance { get; set; } = EnumResistanceLevel.Neutral;
 
         #endregion
 
@@ -273,6 +280,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalPierceResistance = PierceResistance;
             _originalCurseResistance = CurseResistance;
             _originalColdResistance = ColdResistance;
+            _originalBleedResistance = BleedResistance;
         }
 
         public void RestoreAttributes()
@@ -293,6 +301,7 @@ namespace TurnBasedGame.Main.Entities.Base
             PierceResistance = _originalPierceResistance;
             CurseResistance = _originalCurseResistance;
             ColdResistance = _originalColdResistance;
+            BleedResistance = _originalBleedResistance;
         }
 
         public void SetInitialAttributes()
@@ -313,6 +322,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalAttributes[nameof(PoisonResistance)] = PoisonResistance;
             _originalAttributes[nameof(CurseResistance)] = CurseResistance;
             _originalAttributes[nameof(ColdResistance)] = ColdResistance;
+            _originalAttributes[nameof(BleedResistance)] = BleedResistance;
         }
 
         public void ResetAttributes()
@@ -333,6 +343,7 @@ namespace TurnBasedGame.Main.Entities.Base
             PoisonResistance = (EnumResistanceLevel)_originalAttributes[nameof(PoisonResistance)];
             CurseResistance = (EnumResistanceLevel)_originalAttributes[nameof(CurseResistance)];
             ColdResistance = (EnumResistanceLevel)_originalAttributes[nameof(ColdResistance)];
+            BleedResistance = (EnumResistanceLevel)_originalAttributes[nameof(BleedResistance)];
         }
     }
 }

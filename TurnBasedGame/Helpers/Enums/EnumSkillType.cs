@@ -36,7 +36,10 @@ namespace TurnBasedGame.Main.Helpers.Enums
         Curse,
 
         [TypeAttribute("paleturquoise1", "COLD")]
-        Cold
+        Cold,
+
+        [TypeAttribute("red3", "BLEED")]
+        Bleed,
     }
 
     public static class SkillTypeModifier
