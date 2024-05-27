@@ -9,16 +9,16 @@ namespace TurnBasedGame.Main.Entities.Base
             Code = "{000}";
             Name = "Dummy";
             DisplayName = Name;
-            MaxHP = 1000;
+            MaxHP = 100;
             HP = MaxHP;
-            MaxMP = 1000;
+            MaxMP = 100;
             MP = MaxMP;
             UnitType = EnumUnitType.Dummy;
             Strength = 10;
             Dexterity = 10;
             Intelligence = 10;
             Faith = 10;
-            TurnPriority = -1;
+            TurnPriority = 0;
         }
     }
 }

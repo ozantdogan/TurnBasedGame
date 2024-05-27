@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using System.Reflection.Emit;
 using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Entities.Resistance;
@@ -12,6 +13,9 @@ namespace TurnBasedGame.Main.Entities.Base
 {
     public class Unit
     {
+        private string? _name;
+        private string? _displayName;
+
         private int _maxHP;
         private int _hp;
         private int _maxMP;
@@ -47,11 +51,12 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public Unit() 
         {
+            DisplayName = Name;
             Level = new UnitLevel();
             Skills.Add(new RestSkill());
             Skills.Add(new MoveSkill("Move Right", false));
             Skills.Add(new MoveSkill("Move Left", true));
-            SetInitialAttributes(); 
+            SetInitialAttributes();
         }
 
         private Dictionary<string, object> _originalAttributes = new Dictionary<string, object>();
@@ -59,23 +64,40 @@ namespace TurnBasedGame.Main.Entities.Base
         #region Properties
 
         [StringLength(5)] public string Code { get; set; } = "{   }";
-        public string? Name { get; set; }
-        public string? DisplayName { get; set; }
+        public string? Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
+        public string? DisplayName
+        {
+            get { return string.IsNullOrEmpty(_displayName) ? _name : _displayName; }
+            set { _displayName = value; }
+        }
+
         public List<BaseSkill> Skills { get; set; } = new List<BaseSkill>();
         public UnitLevel Level {  get; set; }
 
         public int MaxHP
         {
             get { return _maxHP; }
-            set { _maxHP = value < 0 ? 0 : value; }
+            set
+            {
+                _maxHP = value < 0 ? 0 : value;
+                if (_hp > _maxHP)
+                {
+                    _hp = _maxHP;
+                }
+            }
         }
 
         public int HP
         {
             get { return _hp; }
-            set 
-            { 
-                _hp = Math.Clamp(value, 0, _maxHP); 
+            set
+            {
+                _hp = Math.Clamp(value, 0, _maxHP); // Set _hp to the passed value and ensure it's within bounds
                 if (_hp == 0)
                     _mp = 0;
             }
@@ -170,6 +192,20 @@ namespace TurnBasedGame.Main.Entities.Base
 
         #endregion
 
+        public void LevelUp()
+        {
+            Level.LevelUp(this);
+        }
+
+        public Unit SetLevel(int level)
+        {
+            for(int i = 0; i<level; i++)
+            {
+                Level.LevelUp(this);
+            }
+            return this;
+        }
+
         public void AddDoTEffect(DamageEffect effect)
         {
             SaveAttributes();
@@ -237,11 +273,10 @@ namespace TurnBasedGame.Main.Entities.Base
                 else
                 {
                     effect.Duration--;
+                    if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
+                        ResetAttributes();
                 }
             }
-
-            if(!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
-                ResetAttributes();
         }
 
         public void ApplyBuffEffects()
@@ -255,10 +290,9 @@ namespace TurnBasedGame.Main.Entities.Base
                     RestoreAttributes();
                 }
                 effect.Duration--;
+                if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
+                    ResetAttributes();
             }
-
-            if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
-                ResetAttributes();
         }
 
         public void SaveAttributes()
