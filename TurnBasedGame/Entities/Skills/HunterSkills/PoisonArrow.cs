@@ -5,7 +5,7 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.HunterSkills
 {
-    public class PoisonArrow : DoTSkill
+    public class PoisonArrow : AttackSkill
     {
         public PoisonArrow()
         {
@@ -19,16 +19,11 @@ namespace TurnBasedGame.Main.Entities.Skills.HunterSkills
             DamagePerTurn = 5;
             Duration = 2;
             DoTModifier = 0.5;
-            DamageEffect = new PoisonEffect(DamagePerTurn, DoTModifier, Duration);
         }
 
         public override int Execute(Unit actor, Unit target)
         {
-            var i = base.Execute(actor, target);
-            if (i == 1)
-                target.AddDoTEffect(DamageEffect);
-
-            return i;
+            return base.Execute(actor, target);
         }
 
     }

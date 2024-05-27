@@ -1,6 +1,7 @@
 ﻿using Spectre.Console;
 using System.Text;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Enums;
 
@@ -8,10 +9,12 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
     public class AttackSkill : BaseSkill
     {
+        public int DamagePerTurn { get; set; } = 0;
+        public int Duration { get; set; } = 0;
+        public double DoTModifier { get; set; } = 1.0;
 
         public AttackSkill()
         {
-
         }
 
         private bool CalculateCrit(Unit actor)
@@ -78,6 +81,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
 
             var critModifier = 1.0;
+            DamageEffect? effect = null;
 
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
@@ -104,6 +108,17 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 string damageMessage = $"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                        (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n");
 
+                if (EffectSelector.ContainsKey(PrimaryType))
+                {
+                    effect = EffectSelector[PrimaryType](this);
+                    target.AddDoTEffect(effect);
+                }
+
+                if (EffectSelector.ContainsKey(SecondaryType))
+                {
+                    effect = EffectSelector[SecondaryType](this);
+                    target.AddDoTEffect(effect);
+                }
 
                 if (critModifier > 1.0)
                     AnsiConsole.MarkupLine($"[khaki3]{damageMessage}[/]");
@@ -149,6 +164,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             if(actor.UnitType != EnumUnitType.Player)
                 targetIndexes = AdjustTargetIndexes(targetIndexes);
 
+            DamageEffect? effect = null;
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
                 foreach (var index in targetIndexes)
@@ -187,6 +203,18 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
 
+                    if (EffectSelector.ContainsKey(PrimaryType))
+                    {
+                        effect = EffectSelector[PrimaryType](this);
+                        target.AddDoTEffect(effect);
+                    }
+
+                    if (EffectSelector.ContainsKey(SecondaryType))
+                    {
+                        effect = EffectSelector[SecondaryType](this);
+                        target.AddDoTEffect(effect);
+                    }
+
                     if (TryStun(target))
                         target.IsStunned = true;
                 }
@@ -199,6 +227,13 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
         {
             throw new NotImplementedException();
         }
+
+        public Dictionary<EnumSkillType, Func<AttackSkill, DamageEffect>> EffectSelector = new Dictionary<EnumSkillType, Func<AttackSkill, DamageEffect>>
+        {
+            { EnumSkillType.Poison, skill => new PoisonEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) },
+            { EnumSkillType.Curse, skill => new CurseEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) },
+            { EnumSkillType.Cold, skill => new ColdEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) }
+        };
     }
 
 }

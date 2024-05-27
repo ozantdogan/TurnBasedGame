@@ -46,7 +46,10 @@ namespace TurnBasedGame.Main.Entities.Base
             Skills.Add(new RestSkill());
             Skills.Add(new MoveSkill("Move Right", false));
             Skills.Add(new MoveSkill("Move Left", true));
+            SetInitialAttributes(); 
         }
+
+        private Dictionary<string, object> _originalAttributes = new Dictionary<string, object>();
 
         #region Properties
 
@@ -162,9 +165,8 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public void AddDoTEffect(DamageEffect effect)
         {
-            SaveOriginalAttributes();
+            SaveAttributes();
             var existingEffect = ActiveDoTEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
-
             if (existingEffect != null)
             {
                 existingEffect.Duration = effect.Duration;
@@ -182,7 +184,7 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public void AddBuffEffect(BuffEffect effect)
         {
-            SaveOriginalAttributes();
+            SaveAttributes();
             var existingEffect = ActiveBuffEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
             if(existingEffect != null) 
             {
@@ -223,13 +225,16 @@ namespace TurnBasedGame.Main.Entities.Base
                 if (effect.Duration <= 0)
                 {
                     ActiveDoTEffects.Remove(effect);
-                    RestoreOriginalAttributes();
+                    RestoreAttributes();
                 }
                 else
                 {
                     effect.Duration--;
                 }
             }
+
+            if(!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
+                ResetAttributes();
         }
 
         public void ApplyBuffEffects()
@@ -240,13 +245,16 @@ namespace TurnBasedGame.Main.Entities.Base
                 if (effect.Duration <= 0)
                 {
                     ActiveBuffEffects.Remove(effect);
-                    RestoreOriginalAttributes();
+                    RestoreAttributes();
                 }
                 effect.Duration--;
             }
+
+            if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
+                ResetAttributes();
         }
 
-        public void SaveOriginalAttributes()
+        public void SaveAttributes()
         {
             _originalMaxHP = MaxHP;
             _originalMaxMP = MaxMP;
@@ -267,7 +275,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalColdResistance = ColdResistance;
         }
 
-        public void RestoreOriginalAttributes()
+        public void RestoreAttributes()
         {
             MaxHP = _originalMaxHP;
             MaxMP = _originalMaxMP;
@@ -285,6 +293,46 @@ namespace TurnBasedGame.Main.Entities.Base
             PierceResistance = _originalPierceResistance;
             CurseResistance = _originalCurseResistance;
             ColdResistance = _originalColdResistance;
+        }
+
+        public void SetInitialAttributes()
+        {
+            _originalAttributes[nameof(MaxHP)] = MaxHP;
+            _originalAttributes[nameof(MaxMP)] = MaxMP;
+            _originalAttributes[nameof(Strength)] = Strength;
+            _originalAttributes[nameof(Dexterity)] = Dexterity;
+            _originalAttributes[nameof(Intelligence)] = Intelligence;
+            _originalAttributes[nameof(Faith)] = Faith;
+            _originalAttributes[nameof(StandardResistance)] = StandardResistance;
+            _originalAttributes[nameof(SlashResistance)] = SlashResistance;
+            _originalAttributes[nameof(PierceResistance)] = PierceResistance;
+            _originalAttributes[nameof(BluntResistance)] = BluntResistance;
+            _originalAttributes[nameof(MagicResistance)] = MagicResistance;
+            _originalAttributes[nameof(HolyResistance)] = HolyResistance;
+            _originalAttributes[nameof(FireResistance)] = FireResistance;
+            _originalAttributes[nameof(PoisonResistance)] = PoisonResistance;
+            _originalAttributes[nameof(CurseResistance)] = CurseResistance;
+            _originalAttributes[nameof(ColdResistance)] = ColdResistance;
+        }
+
+        public void ResetAttributes()
+        {
+            MaxHP = (int)_originalAttributes[nameof(MaxHP)];
+            MaxMP = (int)_originalAttributes[nameof(MaxMP)];
+            Strength = (int)_originalAttributes[nameof(Strength)];
+            Dexterity = (int)_originalAttributes[nameof(Dexterity)];
+            Intelligence = (int)_originalAttributes[nameof(Intelligence)];
+            Faith = (int)_originalAttributes[nameof(Faith)];
+            StandardResistance = (EnumResistanceLevel)_originalAttributes[nameof(StandardResistance)];
+            SlashResistance = (EnumResistanceLevel)_originalAttributes[nameof(SlashResistance)];
+            PierceResistance = (EnumResistanceLevel)_originalAttributes[nameof(PierceResistance)];
+            BluntResistance = (EnumResistanceLevel)_originalAttributes[nameof(BluntResistance)];
+            MagicResistance = (EnumResistanceLevel)_originalAttributes[nameof(MagicResistance)];
+            HolyResistance = (EnumResistanceLevel)_originalAttributes[nameof(HolyResistance)];
+            FireResistance = (EnumResistanceLevel)_originalAttributes[nameof(FireResistance)];
+            PoisonResistance = (EnumResistanceLevel)_originalAttributes[nameof(PoisonResistance)];
+            CurseResistance = (EnumResistanceLevel)_originalAttributes[nameof(CurseResistance)];
+            ColdResistance = (EnumResistanceLevel)_originalAttributes[nameof(ColdResistance)];
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills;
+using TurnBasedGame.Main.Entities.Skills.ColdSkills;
 using TurnBasedGame.Main.Entities.Skills.MagicSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
@@ -24,6 +25,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             CriticalChance = 10;
             TurnPriority = 1;
             MagicResistance = EnumResistanceLevel.Resistant;
+            Skills.Add(new FreezingMist());
             Skills.Add(new RainOfStars());
             Skills.Add(new StarShard());
         }

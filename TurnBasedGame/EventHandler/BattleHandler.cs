@@ -34,9 +34,12 @@ namespace TurnBasedGame.Main
                     Console.WriteLine($"{unit.Name}'s turn!");
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
-                    unit.ApplyBuffEffects();
-                    unit.ApplyDoTEffects();
-                    Thread.Sleep(1500);
+                    if(unit.UnitType == EnumUnitType.Dummy)
+                    {
+                        unit.ApplyBuffEffects();
+                        unit.ApplyDoTEffects();
+                    }
+                    Thread.Sleep(LevelHandler.Pace);
 
                     _ui.ShowStatus(playerUnits, mobUnits, level);
                     Console.WriteLine($"{unit.Name}'s turn!");
@@ -47,7 +50,7 @@ namespace TurnBasedGame.Main
                         if(unit.IsStunned)
                         {
                             Console.WriteLine($"{unit.Name} is stunned!");
-                            Thread.Sleep(2000);
+                            Thread.Sleep(LevelHandler.Pace);
                             unit.StunDuration--;
                             if(unit.StunDuration < 0)
                                 unit.IsStunned = false;
@@ -72,10 +75,10 @@ namespace TurnBasedGame.Main
 
                         if (actionResult > 0)
                         {
-                            Thread.Sleep(2000);
+                            Thread.Sleep(LevelHandler.Pace);
                             break;
                         }
-                        Thread.Sleep(2000);
+                        Thread.Sleep(LevelHandler.Pace);
                        
                         _ui.ShowStatus(playerUnits, mobUnits, level);
                         Console.WriteLine($"{unit.Name}'s turn!");
@@ -95,12 +98,12 @@ namespace TurnBasedGame.Main
             if (battleResult == 1)
             {
                 Console.WriteLine("You won!");
-                Thread.Sleep(1500);
+                Thread.Sleep(LevelHandler.Pace);
             }
             else if (battleResult == 2)
             {
                 Console.WriteLine("Game Over");
-                Thread.Sleep(1500);
+                Thread.Sleep(LevelHandler.Pace);
                 return true;
             }
 
@@ -249,6 +252,10 @@ namespace TurnBasedGame.Main
                         return -1;
                     }
                 }
+            }
+            else if(actor.UnitType == EnumUnitType.Dummy)// dummy
+            {
+                return new RestSkill().Execute(actor);
             }
             else // mob
             {

@@ -5,7 +5,7 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.BossSkills
 {
-    public class Curse : DoTSkill
+    public class Curse : AttackSkill
     {
         public Curse()
         {
@@ -17,12 +17,11 @@ namespace TurnBasedGame.Main.Entities.Skills.BossSkills
             Duration = 2;
             DoTModifier = 1;
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
-            DamageEffect = new CurseEffect(DamagePerTurn, DoTModifier, Duration);
         }
 
         public override int Execute(Unit actor, List<Unit> targets)
         {
-            return CastDoT(actor, targets);
+            return base.Execute(actor, targets);
         }
     }
 }

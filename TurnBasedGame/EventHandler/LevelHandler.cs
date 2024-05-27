@@ -9,6 +9,9 @@ namespace TurnBasedGame
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
+        public static bool DummyLevel { get; set; } = true;
+        public static int DummyCount { get; set; } = 1;
+        public static int Pace { get; set; } = 1500;
 
         public static void Rest(List<Unit> units)
         {
@@ -22,8 +25,17 @@ namespace TurnBasedGame
         {
             Random random = new Random();
             int numberOfMobs = 0;
+            if (DummyLevel)
+            {
+                Level = 0;
+                Pace = 1000;
+                for(int i = 0; i <= DummyCount - 1; i++)
+                {
+                    mobList.Add(new Dummy());
+                }
+            }
 
-            if (Level <= 2)
+            if (Level <= 2 && Level > 0)
             {
                 numberOfMobs = random.Next(2, 3);
             }
@@ -31,7 +43,7 @@ namespace TurnBasedGame
             {
                 numberOfMobs = random.Next(3, 4);
             }
-            else 
+            else if (Level == 6)
             {
                 mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
             }
@@ -84,6 +96,18 @@ namespace TurnBasedGame
         public static void IncreaseLevel()
         {
             Level++;
+        }
+
+        public static void SetInitialValues(List<Unit> Heroes, List<Unit> Mobs)
+        {
+            // Combine the lists
+            var allUnits = Heroes.Concat(Mobs).ToList();
+
+            // Set initial values for each unit
+            foreach (var unit in allUnits)
+            {
+                unit.SetInitialAttributes();
+            }
         }
     }
 }

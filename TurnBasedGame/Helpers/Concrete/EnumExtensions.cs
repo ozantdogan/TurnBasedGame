@@ -8,10 +8,10 @@ public static class EnumExtensions
         var memberInfo = type.GetMember(attributeType.ToString());
         if (memberInfo != null && memberInfo.Length > 0)
         {
-            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeColor), false);
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeAttribute), false);
             if (attrs != null && attrs.Length > 0)
             {
-                return ((TypeColor)attrs[0]).Color;
+                return ((TypeAttribute)attrs[0]).Color;
             }
         }
         return "white";
@@ -23,10 +23,10 @@ public static class EnumExtensions
         var memberInfo = type.GetMember(attributeType.ToString());
         if (memberInfo != null && memberInfo.Length > 0)
         {
-            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeColor), false);
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeAttribute), false);
             if (attrs != null && attrs.Length > 0)
             {
-                return ((TypeColor)attrs[0]).TypeCode;
+                return ((TypeAttribute)attrs[0]).TypeCode;
             }
         }
         return "";

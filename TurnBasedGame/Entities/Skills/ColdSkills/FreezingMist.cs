@@ -5,7 +5,7 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.ColdSkills
 {
-    public class FreezingMist : DoTSkill
+    public class FreezingMist : AttackSkill
     {
         public FreezingMist()
         {
@@ -17,12 +17,11 @@ namespace TurnBasedGame.Main.Entities.Skills.ColdSkills
             Duration = 3;
             DoTModifier = 0.6;
             TargetIndexes = new List<int>() { 0, 1, 2, 3 };
-            DamageEffect = new ColdEffect(DamagePerTurn, DoTModifier, Duration);
         }
 
         public override int Execute(Unit actor, List<Unit> targets)
         {
-            return CastDoT(actor, targets);
+            return base.Execute(actor, targets);
         }
     }
 }
