@@ -118,8 +118,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 string damageColor = critModifier > 1.0 ? "khaki3" : "white";
                 string damageText = $"[{damageColor}]{(int)totalDamageDealt} DAMAGE[/]";
 
-                AnsiConsole.MarkupLine($"{actor.Name} dealt {damageText} to {target.Name} " +
-                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
+                AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] dealt {damageText} to [{targetColor}]{target.Name}[/] " +
+                                       (target.HP <= 0 ? $"([{targetColor}]{target.Name}[/] is dead.)" : $"({target.HP} HP left)\n"));
 
                 int effectDamage;
                 if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
@@ -207,8 +207,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     string damageColor = critModifier > 1.0 ? "khaki3" : "white";
                     string damageText = $"[{damageColor}]{(int)totalDamageDealt} DAMAGE[/]";
 
-                    AnsiConsole.MarkupLine($"{actor.Name} dealt {damageText} to {target.Name} " +
-                                           (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
+                    AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] dealt {damageText} to [{targetColor}]{target.Name}[/] " +
+                                           (target.HP <= 0 ? $"([{targetColor}]{target.Name}[/] is dead.)" : $"({target.HP} HP left)\n"));
 
                     int effectDamage;
                     if (EffectManager.EffectSelector.ContainsKey(PrimaryType))

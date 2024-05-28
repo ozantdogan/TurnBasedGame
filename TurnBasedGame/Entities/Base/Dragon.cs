@@ -29,8 +29,8 @@ namespace TurnBasedGame.Main.Entities.Base
             Race = EnumRace.Dragon;
             TurnPriority = 2;
 
-            //Skills.Add(new TailToss());
-            //Skills.Add(new DragonsClaw());
+            Skills.Add(new TailToss());
+            Skills.Add(new DragonsClaw());
         }
     }
 }
