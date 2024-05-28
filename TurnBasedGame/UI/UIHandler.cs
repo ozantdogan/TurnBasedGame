@@ -45,7 +45,7 @@ namespace TurnBasedGame.Main.UI
                     if (unit.IsStunned)
                     {
                         var stunnedEffect = EnumEffectType.STUNNED;
-                        combinedEffects += $" [{stunnedEffect.GetColor()}]{stunnedEffect.GetCode()}{(unit.StunDuration == 0 ? "" : $"({unit.StunDuration})")}[/]";
+                        combinedEffects += $"[{stunnedEffect.GetColor()}]{stunnedEffect.GetCode()}{(unit.StunDuration == 0 ? "" : $"({unit.StunDuration})")}[/]";
                     }
 
                     playerEffectRow.Add(combinedEffects);
@@ -103,7 +103,7 @@ namespace TurnBasedGame.Main.UI
                     if (unit.IsStunned)
                     {
                         var stunnedEffect = EnumEffectType.STUNNED;
-                        combinedEffects += $" [{stunnedEffect.GetColor()}]{stunnedEffect.GetCode()}{(unit.StunDuration == 0 ? "" : $"({unit.StunDuration})")}[/]";
+                        combinedEffects += $"[{stunnedEffect.GetColor()}]{stunnedEffect.GetCode()}{(unit.StunDuration == 0 ? "" : $"({unit.StunDuration})")}[/]";
                     }
 
                     mobEffectRow.Add(combinedEffects);

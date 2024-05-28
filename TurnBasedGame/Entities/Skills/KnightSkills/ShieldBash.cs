@@ -10,7 +10,7 @@ namespace TurnBasedGame.Main.Entities.Skills.KnightSkills
         {
             Name = "Shield Bash";
             ExecutionName = Name;
-            PrimarySkillModifier = 1.5;
+            PrimarySkillModifier = 1.2;
             ManaCost = 20;
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Blunt;

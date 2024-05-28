@@ -27,6 +27,7 @@ namespace TurnBasedGame.Main.Entities.Base
             ColdResistance = EnumResistanceLevel.Immune;
             CanBeStunned = false;
             Race = EnumRace.Dragon;
+            TurnPriority = 2;
 
             Skills.Add(new TailToss());
             Skills.Add(new DragonsClaw());

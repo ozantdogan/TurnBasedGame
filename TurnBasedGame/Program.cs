@@ -10,37 +10,37 @@ namespace TurnBasedGame
     {
         static void Main(string[] args)
         {
-            Unit knight = new Knight() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender" }.SetLevel(2);
+            Unit knight = new Knight() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender" }.SetLevel(8);
             //Unit knight2 = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Old Town", DisplayName = "Knight of\nthe Old Town" };
-            //Unit cleric = new Cleric() { UnitType = EnumUnitType.Player, Name = "Isma", DisplayName = "Isma,\nthe Cleric" };
-            //Unit hunter = new Hunter() { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" };
-            Unit scholar = new Scholar() { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(2);
+            Unit cleric = new Cleric() { UnitType = EnumUnitType.Player, Name = "Isma", DisplayName = "Isma,\nthe Cleric" }.SetLevel(8);
+            Unit hunter = new Hunter() { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(8);
+            Unit scholar = new Scholar() { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(8);
             //Unit skeletonKing = new SkeletonKing() { UnitType = EnumUnitType.Player };
-            Unit dragon = new RedDragon() { UnitType = EnumUnitType.Player, Name = "Green Dragon" };
+            //Unit dragon = new RedDragon() { UnitType = EnumUnitType.Player, Name = "Green Dragon" }.SetLevel(9);
 
-            List<Unit> PlayerUnits = new List<Unit>();
-            List<Unit> Mobs = new List<Unit>();
+            List<Unit> playerUnits = new List<Unit>();
+            List<Unit> mobUnits = new List<Unit>();
 
-            //Heroes.Add(hunter);
-            //Heroes.Add(knight);
-            //Heroes.Add(scholar);
-            //Heroes.Add(cleric);
+            playerUnits.Add(hunter);
+            playerUnits.Add(knight);
+            playerUnits.Add(scholar);
+            playerUnits.Add(cleric);
 
-            PlayerUnits.Add(dragon);
+            //PlayerUnits.Add(dragon);
 
-            foreach (var playerUnit in PlayerUnits)
+            foreach (var playerUnit in playerUnits)
                 playerUnit.Skills.Reverse();
-            LevelHandler.SetInitialValues(PlayerUnits);
+            LevelHandler.SetInitialValues(playerUnits);
             
             while (true)
             {
-                LevelHandler.AddMobs(Mobs);
-                LevelHandler.SetInitialValues(Mobs);
+                LevelHandler.AddMobs(mobUnits);
+                LevelHandler.SetInitialValues(mobUnits);
                 BattleHandler battle = new BattleHandler();
-                var i = battle.StartBattle(PlayerUnits, Mobs, LevelHandler.Level);
-                LevelHandler.Rest(PlayerUnits);
+                var i = battle.StartBattle(playerUnits, mobUnits, LevelHandler.Level);
+                LevelHandler.Rest(playerUnits);
                 LevelHandler.IncreaseLevel();
-                Mobs.Clear();
+                mobUnits.Clear();
                 if (i || LevelHandler.Level > 6)
                     break;
             }

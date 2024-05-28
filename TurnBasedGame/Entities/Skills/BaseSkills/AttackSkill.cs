@@ -107,8 +107,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
 
                 double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
-                if (totalDamageDealt > actor.MaxDamageValue * 3)
-                    totalDamageDealt = actor.MaxDamageValue * 3;
+                //if (totalDamageDealt > actor.MaxDamageValue * 3)
+                //    totalDamageDealt = actor.MaxDamageValue * 3;
 
                 target.HP -= (int)totalDamageDealt;
 
@@ -193,8 +193,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.5;
 
                     double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
-                    if (totalDamageDealt > actor.MaxDamageValue * 3)
-                        totalDamageDealt = actor.MaxDamageValue * 3;
+                    //if (totalDamageDealt > actor.MaxDamageValue * 3)
+                    //    totalDamageDealt = actor.MaxDamageValue * 3;
 
                     target.HP -= (int)totalDamageDealt;
 
