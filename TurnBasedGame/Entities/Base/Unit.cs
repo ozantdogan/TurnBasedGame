@@ -52,6 +52,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public Unit() 
         {
             _hp = MaxHP;
+            _mp = MaxMP;
             DisplayName = Name;
             Level = new UnitLevel();
             Skills.Add(new RestSkill());
@@ -117,7 +118,7 @@ namespace TurnBasedGame.Main.Entities.Base
             set 
             { 
                 _maxMP = value < 0 ? 0 : value; 
-                if (_mp > _maxMP)
+                if (_mp > _maxMP || _mp == 0)
                 {
                     _mp = _maxMP;
                 }

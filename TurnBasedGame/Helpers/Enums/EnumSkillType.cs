@@ -26,7 +26,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [TypeAttribute("yellow", "HOLY")]
         Holy,
 
-        [TypeAttribute("orange", "FIRE")]
+        [TypeAttribute("darkorange3", "FIRE")]
         Fire,
 
         [TypeAttribute("green", "POISON")]
