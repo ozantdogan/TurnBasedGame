@@ -27,8 +27,13 @@ namespace TurnBasedGame.Main.Entities.Effects
             var oldHp = unit.HP;
             unit.HP = (int)(unit.HP - (DamagePerTurn * resistanceModifier * Modifier));
 
-            string effectNameText = $"[{EffectType.GetColor()}]({EffectType})[/]";
-            AnsiConsole.MarkupLine($"{effectNameText} {unit.Name} took {oldHp - unit.HP} DAMAGE");
+            string effectNameColor = EffectType.GetColor();
+            string unitColor = unit.UnitType.GetColor();
+
+            string effectNameText = $"[{effectNameColor}]({EffectType})[/]";
+            string unitNameText = $"[{unitColor}]{unit.Name}[/]";
+
+            AnsiConsole.MarkupLine($"{effectNameText} {unitNameText} took {oldHp - unit.HP} DAMAGE");
         }
     }
 }

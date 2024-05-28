@@ -35,7 +35,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             int roll = _random.Next(100);
             if (roll < dodgeChance)
             {
-                Console.WriteLine($"{target.Name} managed to dodge the attack!");
+                AnsiConsole.MarkupLine($"[{target.UnitType.GetColor()}]{target.Name}[/] managed to dodge the attack!"); 
                 return true;
             }
             return false;
@@ -50,8 +50,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             int roll = _random.Next(100);
             if (roll < missChance)
             {
-                Console.WriteLine($"{actor.Name} missed the attack!");
-                return true;
+                AnsiConsole.MarkupLine($"[{actor.UnitType.GetColor()}]{actor.Name}[/] missed the attack!"); return true;
             }
             return false;
         }
@@ -64,7 +63,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             int roll = _random.Next(100);
             if(roll < StunChance)
             {
-                Console.WriteLine($"{target.Name} is stunned!");
+                AnsiConsole.MarkupLine($"[{target.UnitType.GetColor()}]{target.Name}[/] is stunned!"); 
                 return true;
             }
             return false;
@@ -77,6 +76,10 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 if (!CalculateMana(actor, ManaCost))
                     return -1;
             }
+
+            string actorColor = actor.UnitType.GetColor();
+            string targetColor = target.UnitType.GetColor();
+            string skillColor = PrimaryType.GetColor();
 
             var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 1.0;
@@ -92,7 +95,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
-                Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
+                AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] used [{skillColor}]{ExecutionName}[/] on [{targetColor}]{target.Name}[/]!");
 
                 if (HasMissed(actor, target) || HasDodged(target))
                     return 0;
@@ -112,8 +115,11 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                 target.HP -= (int)totalDamageDealt;
 
-                string damageMessage = $"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
-                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n");
+                string damageColor = critModifier > 1.0 ? "khaki3" : "white";
+                string damageText = $"[{damageColor}]{(int)totalDamageDealt} DAMAGE[/]";
+
+                AnsiConsole.MarkupLine($"{actor.Name} dealt {damageText} to {target.Name} " +
+                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
 
                 int effectDamage;
                 if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
@@ -131,11 +137,6 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     effect.DamagePerTurn = effectDamage;
                     target.AddDoTEffect(effect);
                 }
-
-                if (critModifier > 1.0)
-                    AnsiConsole.MarkupLine($"[khaki3]{damageMessage}[/]");
-                else
-                    Console.WriteLine(damageMessage);
 
                 if (TryStun(target))
                 {
@@ -155,7 +156,10 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     return -1;
             }
 
-            Console.WriteLine($"{actor.Name} used {ExecutionName}!");
+            string actorColor = actor.UnitType.GetColor();
+            string skillColor = PrimaryType.GetColor();
+
+            AnsiConsole.MarkupLine($"[{actor.UnitType.GetColor()}]{actor.Name}[/] used [{PrimaryType.GetColor()}]{ExecutionName}[/]!");
 
             var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
@@ -171,6 +175,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                         continue;
 
                     var target = targets[index];
+                    string targetColor = target.UnitType.GetColor();
+
                     if (!target.IsAlive)
                         continue;
 
@@ -198,8 +204,11 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                     target.HP -= (int)totalDamageDealt;
 
-                    Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
-                                      (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
+                    string damageColor = critModifier > 1.0 ? "khaki3" : "white";
+                    string damageText = $"[{damageColor}]{(int)totalDamageDealt} DAMAGE[/]";
+
+                    AnsiConsole.MarkupLine($"{actor.Name} dealt {damageText} to {target.Name} " +
+                                           (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
 
                     int effectDamage;
                     if (EffectManager.EffectSelector.ContainsKey(PrimaryType))

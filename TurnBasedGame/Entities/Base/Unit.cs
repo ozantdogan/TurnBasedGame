@@ -275,13 +275,13 @@ namespace TurnBasedGame.Main.Entities.Base
         {
             foreach(var effect in ActiveDoTEffects.ToList())
             {
-                string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.EffectType})[/]";
+                string effectNameText = $"[{effect.EffectType.GetColor()}]{effect.EffectType}[/]";
                 effect.ApplyDamage(this);
                 
                 if(HP <= 0)
                 {
                     ActiveDoTEffects.Clear();
-                    AnsiConsole.MarkupLine($"{Name} has died due to {effectNameText}");
+                    AnsiConsole.MarkupLine($"[{UnitType.GetColor()}]{Name}[/] has died due to {effectNameText}");
                 }
                 else
                 {

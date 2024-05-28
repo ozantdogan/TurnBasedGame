@@ -31,7 +31,7 @@ namespace TurnBasedGame.Main
                 foreach (var unit in units.Where(p => p.IsAlive))
                 {
                     _ui.ShowStatus(playerUnits, mobUnits, level);
-                    Console.WriteLine($"{unit.Name}'s turn!");
+                    AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
                     unit.ApplyBuffEffects();
@@ -43,7 +43,7 @@ namespace TurnBasedGame.Main
                     Thread.Sleep(LevelHandler.Pace);
 
                     _ui.ShowStatus(playerUnits, mobUnits, level);
-                    Console.WriteLine($"{unit.Name}'s turn!");
+                    AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
                     while (true)
@@ -82,7 +82,7 @@ namespace TurnBasedGame.Main
                         Thread.Sleep(LevelHandler.Pace);
                        
                         _ui.ShowStatus(playerUnits, mobUnits, level);
-                        Console.WriteLine($"{unit.Name}'s turn!");
+                        AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
                     }

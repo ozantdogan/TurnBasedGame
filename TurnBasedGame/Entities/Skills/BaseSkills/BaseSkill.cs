@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
@@ -8,15 +9,36 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
     public abstract class BaseSkill : ISkill
     {
         protected Random _random;
+        private string _executionName;
+        private string _name;
 
         public BaseSkill()
         {
             _random = new Random();
-            ExecutionName = Name;
+            _name = "Skill"; 
+            _executionName = string.Empty;
+            Description = string.Empty;
         }
 
-        public string Name { get; set; } = "Skill";
-        public string ExecutionName { get; set; }
+        public string ExecutionName
+        {
+            get { return _executionName; }
+            set { _executionName = value; }
+        }
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                if (string.IsNullOrEmpty(_executionName))
+                {
+                    _executionName = _name;
+                }
+            }
+        }
+
         [StringLength(100)] public string Description { get; set; } = "";
         public bool PassiveFlag { get; set; }
         public int ManaCost { get; set; }
