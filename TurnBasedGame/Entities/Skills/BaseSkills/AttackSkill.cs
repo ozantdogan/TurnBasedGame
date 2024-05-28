@@ -219,7 +219,10 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     }
 
                     if (TryStun(target))
+                    {
                         target.IsStunned = true;
+                        target.StunDuration = StunDuration;
+                    }
                 }
             }
 
