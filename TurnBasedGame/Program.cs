@@ -10,11 +10,11 @@ namespace TurnBasedGame
     {
         static void Main(string[] args)
         {
-            Unit knight = new Knight() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender" }.SetLevel(8);
-            //Unit knight2 = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Old Town", DisplayName = "Knight of\nthe Old Town" };
-            Unit cleric = new Cleric() { UnitType = EnumUnitType.Player, Name = "Isma", DisplayName = "Isma,\nthe Cleric" }.SetLevel(8);
-            Unit hunter = new Hunter() { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(8);
-            Unit scholar = new Scholar() { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(8);
+            //Unit knight = new Knight() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender" }.SetLevel(8);
+            ////Unit knight2 = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Old Town", DisplayName = "Knight of\nthe Old Town" };
+            Unit cleric = new Cleric() { UnitType = EnumUnitType.Player, Name = "Isma", DisplayName = "Isma,\nthe Cleric", Position = 1}.SetLevel(1);
+            Unit hunter = new Hunter() { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter", Position = 0}.SetLevel(1);
+            //Unit scholar = new Scholar() { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(8);
             //Unit skeletonKing = new SkeletonKing() { UnitType = EnumUnitType.Player };
             //Unit dragon = new RedDragon() { UnitType = EnumUnitType.Player, Name = "Green Dragon" }.SetLevel(9);
 
@@ -22,9 +22,10 @@ namespace TurnBasedGame
             List<Unit> mobUnits = new List<Unit>();
 
             playerUnits.Add(hunter);
-            playerUnits.Add(knight);
-            playerUnits.Add(scholar);
+            //playerUnits.Add(knight);
+            //playerUnits.Add(scholar);
             playerUnits.Add(cleric);
+            playerUnits = playerUnits.OrderBy(p => p.Position).ToList();
 
             //PlayerUnits.Add(dragon);
 

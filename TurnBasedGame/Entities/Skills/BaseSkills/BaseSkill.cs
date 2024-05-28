@@ -18,6 +18,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             _name = "Skill"; 
             _executionName = string.Empty;
             Description = string.Empty;
+            ValidUserPositions = new List<int>();
+            ValidTargetPositions = new List<int>();
         }
 
         public string ExecutionName
@@ -38,6 +40,9 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 }
             }
         }
+
+        public List<int> ValidUserPositions { get; set; }
+        public List<int> ValidTargetPositions { get; set; }
 
         [StringLength(100)] public string Description { get; set; } = "";
         public bool PassiveFlag { get; set; }

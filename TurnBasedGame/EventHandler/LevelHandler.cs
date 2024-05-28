@@ -10,9 +10,9 @@ namespace TurnBasedGame
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = false;
-        public static bool BossLevel { get; set; } = true;
-        public static int DummyCount { get; set; } = 1;
+        public static bool DummyLevel { get; set; } = true;
+        public static bool BossLevel { get; set; } = false;
+        public static int DummyCount { get; set; } = 4;
         public static int Pace { get; set; } = 1500;
 
         public static void Rest(List<Unit> units)
@@ -30,16 +30,16 @@ namespace TurnBasedGame
             if (DummyLevel)
             {
                 Level = 0;
-                Pace = 1000;
+                Pace = 2000;
                 for(int i = 0; i <= DummyCount - 1; i++)
                 {
-                    mobList.Add(new Dummy());
+                    mobList.Add(new Dummy() { Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i });
                 }
             }
             else if(BossLevel)
             {
                 Level = 0;
-                Pace = 2000;
+                Pace = 1200;
                 //mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
                 mobList.Add(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(8));
             }
@@ -91,6 +91,8 @@ namespace TurnBasedGame
                         mobList[i].LevelUp();
                 }
             }
+
+            mobList = mobList.OrderBy(p => p.Position).ToList();
         }
 
         public static void IncreaseLevel()

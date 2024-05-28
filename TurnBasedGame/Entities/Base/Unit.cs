@@ -54,10 +54,9 @@ namespace TurnBasedGame.Main.Entities.Base
             _hp = MaxHP;
             _mp = MaxMP;
             DisplayName = Name;
-            Level = new UnitLevel();
+            Level = new UnitLevel(); 
             Skills.Add(new RestSkill());
-            Skills.Add(new MoveSkill("Move Right", false));
-            Skills.Add(new MoveSkill("Move Left", true));
+            Skills.Add(new MoveSkill());
             SetInitialAttributes();
         }
 
@@ -81,6 +80,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public List<BaseSkill> Skills { get; set; } = new List<BaseSkill>();
         public UnitLevel Level {  get; set; }
 
+        public int Position { get; set; }
         public int MaxHP
         {
             get { return _maxHP; }

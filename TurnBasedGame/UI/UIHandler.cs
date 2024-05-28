@@ -17,12 +17,11 @@ namespace TurnBasedGame.Main.UI
 
             var playerTable = new Table().Border(TableBorder.Simple).LeftAligned();
             playerTable.AddColumn(" ");
-
+            playerUnits = playerUnits.OrderByDescending(p => p.Position).ToList();
             // Add columns for each player unit, in reverse order
-            for (int i = playerUnits.Count - 1; i >= 0; i--)
+            foreach (var unit in playerUnits)
             {
-                Unit unit = playerUnits[i];
-                playerTable.AddColumn($"[{(unit.IsAlive ? unit.UnitType.GetColor() : "grey19")}]{unit.DisplayName ?? " "}[/]");
+                playerTable.AddColumn($"[{(unit.IsAlive ? unit.UnitType.GetColor() : "grey19")}]{unit.DisplayName ?? " "} {unit.Position}[/]");
             }
 
             #region Player effects
@@ -30,9 +29,8 @@ namespace TurnBasedGame.Main.UI
             var playerEffectRow = new List<string> { " " };
 
             // Add player effects for each unit, in reverse order
-            for (int i = playerUnits.Count - 1; i >= 0; i--)
+            foreach(var unit in playerUnits)
             {
-                Unit unit = playerUnits[i];
                 var activeStatusEffects = new List<StatusEffect>();
                 activeStatusEffects.AddRange(unit.ActiveDoTEffects);
                 activeStatusEffects.AddRange(unit.ActiveBuffEffects);
@@ -63,9 +61,8 @@ namespace TurnBasedGame.Main.UI
             var playerLevelRow = new List<string> { "[lightsteelblue1] Lv[/]" };
             var playerHpRow = new List<string> { "[seagreen2] HP[/]" };
             var playerMpRow = new List<string> { "[cyan] MP[/]" };
-            for (int i = playerUnits.Count - 1; i >= 0; i--)
+            foreach (var unit in playerUnits)
             {
-                Unit unit = playerUnits[i];
                 playerLevelRow.Add($"{unit.Level.CurrentLevel}");
                 playerHpRow.Add($"{unit.HP}/{unit.MaxHP}");
                 playerMpRow.Add($"{unit.MP}/{unit.MaxMP}"); 
@@ -81,6 +78,7 @@ namespace TurnBasedGame.Main.UI
 
             var mobTable = new Table().Border(TableBorder.Simple).RightAligned();
             mobTable.AddColumn(" ");
+            mobUnits = mobUnits.OrderBy(p => p.Position).ToList();
             foreach (Unit unit in mobUnits)
             {
                 mobTable.AddColumn($"[{(unit.IsAlive ? unit.UnitType.GetColor() : "grey19")}]{unit.DisplayName ?? " "}[/]");

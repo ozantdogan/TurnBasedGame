@@ -259,7 +259,8 @@ namespace TurnBasedGame.Main
             }
             else if(actor.UnitType == EnumUnitType.Dummy)// dummy
             {
-                return new RestSkill().Execute(actor);
+                //return new RestSkill().Execute(actor);
+                return new MoveSkill().Execute(actor, friendlyTargets);
             }
             else // mob
             {
