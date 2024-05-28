@@ -56,6 +56,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
             { EnumSkillType.Fire, actor => actor.Faith * 0.4 + actor.Intelligence * 0.1 },
             { EnumSkillType.Cold, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
             { EnumSkillType.Poison, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
+            { EnumSkillType.Bleed, actor => actor.Strength * 0.3 + actor.Dexterity * 0.2 },
         };
     }
 }

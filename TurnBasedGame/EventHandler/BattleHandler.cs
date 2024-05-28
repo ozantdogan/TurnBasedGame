@@ -36,8 +36,9 @@ namespace TurnBasedGame.Main
 
                     unit.ApplyBuffEffects();
                     unit.ApplyDoTEffects();
-                    if(!unit.IsAlive) 
-                        continue;
+                    battleResult = CheckAlives(playerUnits, mobUnits);
+                    if (battleResult != 0)
+                        break;
 
                     Thread.Sleep(LevelHandler.Pace);
 
@@ -63,7 +64,7 @@ namespace TurnBasedGame.Main
                             break;
                         }
 
-                        int actionResult;
+                        int actionResult = 1;
                         if (unit.UnitType == EnumUnitType.Player)
                         {
                             actionResult = PerformTurn(unit, mobUnits, playerUnits);
@@ -90,6 +91,9 @@ namespace TurnBasedGame.Main
                         break;
                 }
                 PostTurn(units);
+                battleResult = CheckAlives(playerUnits, mobUnits);
+                if (battleResult != 0)
+                    break;
             }
 
             Console.Clear();
@@ -293,7 +297,6 @@ namespace TurnBasedGame.Main
 
             return -1;
         }
-
 
         private void PostTurn(List<Unit> units)
         {

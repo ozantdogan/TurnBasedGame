@@ -26,6 +26,7 @@ namespace TurnBasedGame.Main.Entities.Mobs
             FireResistance = EnumResistanceLevel.Fragile;
             Skills.Add(new HandSweep());
             Skills.Add(new SmashGround());
+            Race = EnumRace.Giant;
         }
     }
 }

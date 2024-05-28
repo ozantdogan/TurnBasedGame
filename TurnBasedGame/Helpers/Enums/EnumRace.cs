@@ -3,6 +3,8 @@
     public enum EnumRace
     {
         Human,
-        Undead
+        Undead,
+        Giant,
+        Dragon
     }
 }

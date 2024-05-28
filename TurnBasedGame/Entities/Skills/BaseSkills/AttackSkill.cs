@@ -78,8 +78,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     return -1;
             }
 
-            var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 0.0;
-            var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
+            var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
+            var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 1.0;
 
             var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
             var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
@@ -115,15 +115,20 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 string damageMessage = $"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                        (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n");
 
+                int effectDamage;
                 if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
                 {
+                    effectDamage = (int)(DamagePerTurn * primaryDamageTypeModifier * 0.5);
                     effect = EffectManager.EffectSelector[PrimaryType](this);
+                    effect.DamagePerTurn = effectDamage;
                     target.AddDoTEffect(effect);
                 }
 
                 if (EffectManager.EffectSelector.ContainsKey(SecondaryType))
                 {
+                    effectDamage = (int)(DamagePerTurn * secondaryDamageTypeModifier * 0.5);
                     effect = EffectManager.EffectSelector[SecondaryType](this);
+                    effect.DamagePerTurn = effectDamage;
                     target.AddDoTEffect(effect);
                 }
 
@@ -195,16 +200,21 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                     Console.WriteLine($"{actor.Name} dealt {(int)totalDamageDealt} DAMAGE to {target.Name} " +
                                       (target.HP <= 0 ? $"({target.Name} is dead.)" : $"({target.HP} HP left)\n"));
-                    
+
+                    int effectDamage;
                     if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
                     {
+                        effectDamage = (int)(DamagePerTurn * primaryDamageTypeModifier * 0.5);
                         effect = EffectManager.EffectSelector[PrimaryType](this);
+                        effect.DamagePerTurn = effectDamage;
                         target.AddDoTEffect(effect);
                     }
 
                     if (EffectManager.EffectSelector.ContainsKey(SecondaryType))
                     {
+                        effectDamage = (int)(DamagePerTurn * secondaryDamageTypeModifier * 0.5);
                         effect = EffectManager.EffectSelector[SecondaryType](this);
+                        effect.DamagePerTurn = effectDamage;
                         target.AddDoTEffect(effect);
                     }
 

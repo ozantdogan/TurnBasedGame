@@ -216,7 +216,7 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public Unit SetLevel(int level)
         {
-            for(int i = 0; i<level; i++)
+            for(int i = 0; i<level-1; i++)
             {
                 Level.LevelUp(this);
             }
@@ -226,70 +226,72 @@ namespace TurnBasedGame.Main.Entities.Base
         public void AddDoTEffect(DamageEffect effect)
         {
             SaveAttributes();
-            var existingEffect = ActiveDoTEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
-            if (existingEffect != null)
+            if(IsAlive)
             {
-                existingEffect.Duration = effect.Duration;
-                if(existingEffect.DamagePerTurn < effect.DamagePerTurn)
+                var existingEffect = ActiveDoTEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
+                if (existingEffect != null)
                 {
-                    existingEffect.DamagePerTurn = effect.DamagePerTurn;
+                    existingEffect.Duration = effect.Duration;
+                    if(existingEffect.DamagePerTurn < effect.DamagePerTurn)
+                    {
+                        existingEffect.DamagePerTurn = effect.DamagePerTurn;
+                    }
                 }
-            }
-            else
-            {
-                ActiveDoTEffects.Add(effect);
-                effect.ApplyEffect(this);
+                else
+                {
+                    ActiveDoTEffects.Add(effect);
+                    effect.ApplyEffect(this);
+                }
             }
         }
 
         public void AddBuffEffect(BuffEffect effect)
         {
             SaveAttributes();
-            var existingEffect = ActiveBuffEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
-            if(existingEffect != null) 
+            if(IsAlive)
             {
-                existingEffect.Duration = effect.Duration;
-                if(existingEffect.Modifier < effect.Modifier)
+                var existingEffect = ActiveBuffEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
+                if(existingEffect != null) 
                 {
-                    existingEffect.Modifier = effect.Modifier;
+                    existingEffect.Duration = effect.Duration;
+                    if(existingEffect.Modifier < effect.Modifier)
+                    {
+                        existingEffect.Modifier = effect.Modifier;
+                    }
                 }
-            }
-            else
-            {
-                ActiveBuffEffects.Add(effect);
-                ApplyBuffEffects();
-            }
+                else
+                {
+                    ActiveBuffEffects.Add(effect);
+                    ApplyBuffEffects();
+                }
 
-            string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.Name})[/]";
-            AnsiConsole.MarkupLine($"{Name} has {effectNameText}!");
+                string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.Name})[/]";
+                AnsiConsole.MarkupLine($"{Name} has {effectNameText}!");
+            }
         }
 
         public void ApplyDoTEffects()
         {
             foreach(var effect in ActiveDoTEffects.ToList())
             {
-                var resistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(effect.DamageType) ? ResistanceManager.ResistanceLevelSelectors[effect.DamageType](this) : EnumResistanceLevel.Neutral;
-                var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
-                effect.DamagePerTurn = (int)(effect.DamagePerTurn * resistanceModifier);
-                effect.ApplyDamage(this);
-
                 string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.EffectType})[/]";
-                AnsiConsole.MarkupLine($"{effectNameText} {Name} took {effect.DamagePerTurn} DAMAGE");
+                effect.ApplyDamage(this);
                 
                 if(HP <= 0)
                 {
                     ActiveDoTEffects.Clear();
+                    AnsiConsole.MarkupLine($"{Name} has died due to {effectNameText}");
                 }
                 else
                 {
-                    if (effect.Duration <= 0)
+                    effect.Duration--;
+                    if (effect.Duration < 0)
                     {
                         ActiveDoTEffects.Remove(effect);
                         RestoreAttributes();
                     }
                     else
                     {
-                        effect.Duration--;
                         if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
                             ResetAttributes();
                     }
@@ -302,12 +304,12 @@ namespace TurnBasedGame.Main.Entities.Base
             foreach (var effect in ActiveBuffEffects.ToList())
             {
                 effect.ApplyEffect(this);
-                if (effect.Duration <= 0)
+                effect.Duration--;
+                if (effect.Duration < 0)
                 {
                     ActiveBuffEffects.Remove(effect);
                     RestoreAttributes();
                 }
-                effect.Duration--;
                 if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
                     ResetAttributes();
             }

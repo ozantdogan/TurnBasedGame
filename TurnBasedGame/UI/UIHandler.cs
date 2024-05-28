@@ -13,6 +13,8 @@ namespace TurnBasedGame.Main.UI
 
             AnsiConsole.Write(new Markup($"[lightpink4] == {level} == [/]").Centered());
 
+            #region Players
+
             var playerTable = new Table().Border(TableBorder.Simple).LeftAligned();
             playerTable.AddColumn(" ");
 
@@ -20,7 +22,7 @@ namespace TurnBasedGame.Main.UI
             for (int i = playerUnits.Count - 1; i >= 0; i--)
             {
                 Unit unit = playerUnits[i];
-                playerTable.AddColumn($"[{unit.UnitType.GetColor()}]{unit.DisplayName ?? " "}  {unit.Level.CurrentLevel}[/]");
+                playerTable.AddColumn($"[{(unit.IsAlive ? unit.UnitType.GetColor() : "grey19")}]{unit.DisplayName ?? " "}[/]");
             }
 
             #region Player effects
@@ -58,24 +60,30 @@ namespace TurnBasedGame.Main.UI
 
             #endregion
 
-            // Add HP and MP rows, in reverse order
-            var playerHpRow = new List<string> { "[seagreen2]HP[/]" };
-            var playerMpRow = new List<string> { "[cyan]MP[/]" };
+            var playerLevelRow = new List<string> { "[lightsteelblue1] Lv[/]" };
+            var playerHpRow = new List<string> { "[seagreen2] HP[/]" };
+            var playerMpRow = new List<string> { "[cyan] MP[/]" };
             for (int i = playerUnits.Count - 1; i >= 0; i--)
             {
                 Unit unit = playerUnits[i];
+                playerLevelRow.Add($"{unit.Level.CurrentLevel}");
                 playerHpRow.Add($"{unit.HP}/{unit.MaxHP}");
-                playerMpRow.Add($"{unit.MP}/{unit.MaxMP}"); // Assuming you have an Mp property
+                playerMpRow.Add($"{unit.MP}/{unit.MaxMP}"); 
             }
 
+            playerTable.AddRow(playerLevelRow.ToArray());
             playerTable.AddRow(playerHpRow.ToArray());
             playerTable.AddRow(playerMpRow.ToArray());
+
+            #endregion
+
+            #region Mobs
 
             var mobTable = new Table().Border(TableBorder.Simple).RightAligned();
             mobTable.AddColumn(" ");
             foreach (Unit unit in mobUnits)
             {
-                mobTable.AddColumn($"[{unit.UnitType.GetColor()}]{unit.DisplayName}  {unit.Level.CurrentLevel}[/]");
+                mobTable.AddColumn($"[{(unit.IsAlive ? unit.UnitType.GetColor() : "grey19")}]{unit.DisplayName ?? " "}[/]");
             }
 
             #region Mob effects
@@ -110,12 +118,18 @@ namespace TurnBasedGame.Main.UI
             #endregion
 
             // Add HP rows for mobs
-            var mobHpRow = new List<string> { "[seagreen2]HP[/]" };
+            var mobLevelRow = new List<string> { "[lightsteelblue1] Lv[/]" };
+            var mobHpRow = new List<string> { "[seagreen2] HP[/]" };
             foreach (Unit unit in mobUnits)
             {
+                mobLevelRow.Add($"{unit.Level.CurrentLevel}");
                 mobHpRow.Add($"{unit.HP}/{unit.MaxHP}");
             }
+
+            mobTable.AddRow(mobLevelRow.ToArray());
             mobTable.AddRow(mobHpRow.ToArray());
+
+            #endregion
 
             AnsiConsole.Write(mobTable);
             AnsiConsole.Write(playerTable);

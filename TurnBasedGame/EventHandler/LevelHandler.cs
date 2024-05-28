@@ -10,14 +10,14 @@ namespace TurnBasedGame
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = true;
-        public static bool BossLevel { get; set; } = false;
+        public static bool DummyLevel { get; set; } = false;
+        public static bool BossLevel { get; set; } = true;
         public static int DummyCount { get; set; } = 1;
         public static int Pace { get; set; } = 1500;
 
         public static void Rest(List<Unit> units)
         {
-            foreach (Unit unit in units)
+            foreach (Unit unit in units.Where(u => u.HP > 0))
             {
                 unit.HP += (int)(unit.MaxHP * 0.3);
                 unit.MP += (int)(unit.MaxHP * 0.3);
@@ -39,8 +39,9 @@ namespace TurnBasedGame
             else if(BossLevel)
             {
                 Level = 0;
-                Pace = 1000;
-                mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
+                Pace = 2000;
+                //mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
+                mobList.Add(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(3));
             }
 
             if (Level <= 2 && Level > 0)
@@ -94,13 +95,9 @@ namespace TurnBasedGame
             Level++;
         }
 
-        public static void SetInitialValues(List<Unit> Heroes, List<Unit> Mobs)
+        public static void SetInitialValues(List<Unit> Units)
         {
-            // Combine the lists
-            var allUnits = Heroes.Concat(Mobs).ToList();
-
-            // Set initial values for each unit
-            foreach (var unit in allUnits)
+            foreach (var unit in Units)
             {
                 unit.SetInitialAttributes();
             }
