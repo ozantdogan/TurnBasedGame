@@ -4,10 +4,12 @@
     {
         public string Color { get; }
         public string TypeCode { get; }
-        public TypeAttribute(string color, string typeCode)
+        public string DisplayName { get; }
+        public TypeAttribute(string color, string typeCode, string displayName = "")
         {
             Color = color;
             TypeCode = typeCode;
+            DisplayName = displayName;
         }
     }
 }

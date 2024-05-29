@@ -34,9 +34,15 @@ namespace TurnBasedGame.Main.UI
                     AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
-                    unit.ApplyBuffEffects();
-                    unit.ApplyDoTEffects();
+                    var effectResult = unit.ApplyStatusEffects();
                     battleResult = CheckAlives(playerUnits, mobUnits);
+
+                    if (effectResult == 0)
+                    {
+                        Thread.Sleep(LevelHandler.Pace);
+                        continue;
+                    }
+
                     if (battleResult != 0)
                         break;
 
@@ -48,22 +54,6 @@ namespace TurnBasedGame.Main.UI
 
                     while (true)
                     {
-                        if (unit.HP <= 0)
-                        {
-                            Console.WriteLine($"{unit.Name} is dead!");
-                            break;
-                        }
-
-                        if (unit.IsStunned)
-                        {
-                            Console.WriteLine($"{unit.Name} is stunned!");
-                            Thread.Sleep(LevelHandler.Pace);
-                            unit.StunDuration--;
-                            if (unit.StunDuration < 0)
-                                unit.IsStunned = false;
-                            break;
-                        }
-
                         int actionResult = 1;
                         if (unit.UnitType == EnumUnitType.Player)
                         {

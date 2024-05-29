@@ -91,7 +91,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
 
             var critModifier = 1.0;
-            DamageEffect? effect = null;
+            StatusEffect? effect = null;
 
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
@@ -122,27 +122,24 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                                        (target.HP <= 0 ? $"([{targetColor}]{target.Name}[/] is dead.)" : $"({target.HP} HP left)\n"));
 
                 int effectDamage;
-                if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
+                if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType))
                 {
                     effectDamage = (int)(DamagePerTurn * primaryDamageTypeModifier * 0.5);
-                    effect = EffectManager.EffectSelector[PrimaryType](this);
+                    effect = EffectManager.DamageEffectSelector[PrimaryType](this);
                     effect.DamagePerTurn = effectDamage;
-                    target.AddDoTEffect(effect);
+                    target.AddStatusEffect(effect);
                 }
 
-                if (EffectManager.EffectSelector.ContainsKey(SecondaryType))
+                if (EffectManager.DamageEffectSelector.ContainsKey(SecondaryType))
                 {
                     effectDamage = (int)(DamagePerTurn * secondaryDamageTypeModifier * 0.5);
-                    effect = EffectManager.EffectSelector[SecondaryType](this);
+                    effect = EffectManager.DamageEffectSelector[SecondaryType](this);
                     effect.DamagePerTurn = effectDamage;
-                    target.AddDoTEffect(effect);
+                    target.AddStatusEffect(effect);
                 }
 
                 if (TryStun(target))
-                {
-                    target.IsStunned = true;
-                    target.StunDuration = StunDuration;
-                }
+                    target.AddStatusEffect(new StunEffect(StunDuration));
             }
 
             return 1;
@@ -166,7 +163,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             var critModifier = 1.0;
             var targetIndexes = TargetIndexes;
 
-            DamageEffect? effect = null;
+            StatusEffect? effect = null;
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
                 foreach (var index in targetIndexes)
@@ -211,20 +208,20 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                                            (target.HP <= 0 ? $"([{targetColor}]{target.Name}[/] is dead.)" : $"({target.HP} HP left)\n"));
 
                     int effectDamage;
-                    if (EffectManager.EffectSelector.ContainsKey(PrimaryType))
+                    if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType))
                     {
                         effectDamage = (int)(DamagePerTurn * primaryDamageTypeModifier * 0.5);
-                        effect = EffectManager.EffectSelector[PrimaryType](this);
+                        effect = EffectManager.DamageEffectSelector[PrimaryType](this);
                         effect.DamagePerTurn = effectDamage;
-                        target.AddDoTEffect(effect);
+                        target.AddStatusEffect(effect);
                     }
 
-                    if (EffectManager.EffectSelector.ContainsKey(SecondaryType))
+                    if (EffectManager.DamageEffectSelector.ContainsKey(SecondaryType))
                     {
                         effectDamage = (int)(DamagePerTurn * secondaryDamageTypeModifier * 0.5);
-                        effect = EffectManager.EffectSelector[SecondaryType](this);
+                        effect = EffectManager.DamageEffectSelector[SecondaryType](this);
                         effect.DamagePerTurn = effectDamage;
-                        target.AddDoTEffect(effect);
+                        target.AddStatusEffect(effect);
                     }
 
                     if (TryStun(target))

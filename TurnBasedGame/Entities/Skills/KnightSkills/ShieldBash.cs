@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Entities.Skills.KnightSkills
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Blunt;
             Accuracy = 10;
-            StunChance = 60;
+            StunChance = 100;
             StunDuration = 0;
         }
 

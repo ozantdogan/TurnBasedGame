@@ -1,28 +1,16 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using Spectre.Console;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Effects;
+using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
     public class CastSkill : BaseSkill
     {
+        public double BuffModifier { get; set; } = 1.0;
+        public int Duration { get; set; } = 0;
         public CastSkill() { }
-
-        public override int Execute(Unit actor)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int Execute(Unit actor, Unit target)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int Execute(Unit actor, List<Unit> targets)
-        {
-            throw new NotImplementedException();
-        }
-
 
         protected int PerformHeal(Unit actor, Unit target)
         {
@@ -80,7 +68,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     if (!target.IsAlive)
                         continue;
 
-                    double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
+                    double healingValue = _random.Next((int)(castTypeModifier * 0.25), (int)castTypeModifier) * PrimarySkillModifier;
                     target.HP += (int)healingValue;
 
                     Console.WriteLine($"{actor.Name} healed {target.Name} (+{(int)healingValue}HP) ");
@@ -90,7 +78,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             return 1;
         }
 
-        protected int PerformProtection(Unit actor, int buffModifier, int duration)
+        protected int PerformProtection(Unit actor)
         {
             if (ManaCost > 0)
             {
@@ -98,12 +86,31 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     return -1;
             }
 
-            Console.WriteLine($"{actor.Name} used {ExecutionName} on self");
-            actor.AddBuffEffect(new ProtectionEffect(buffModifier, duration));
+            string actorColor = actor.UnitType.GetColor();
+            string skillColor = PrimaryType.GetColor();
+
+            AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] used {$"[{skillColor}]{ExecutionName}[/]"} on self");
+
+            var effect = EffectManager.ProtectionEffectSelector[PrimaryType](this);
+            actor.AddStatusEffect(effect);
             return 1;
         }
 
         //todo:
         //PerformProtection(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int Execute(Unit actor, Unit target)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int Execute(Unit actor, List<Unit> targets)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

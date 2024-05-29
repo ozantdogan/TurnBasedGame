@@ -4,25 +4,28 @@ namespace TurnBasedGame.Main.Helpers.Enums
 {
     public enum EnumEffectType
     {
-        [Type("green", "&")]
-        POISONED,
+        [Type("green", "&", "Poison")]
+        POISON,
 
-        [Type("darkorange3", "&")]
+        [Type("darkorange3", "&", "Burn")]
         BURN,
 
-        [Type("deeppink4_1", "&")]
-        CURSED,
+        [Type("deeppink4_1", "&", "Curse")]
+        CURSE,
 
-        [Type("paleturquoise1", "&")]
+        [Type("paleturquoise1", "&", "Cold")]
         COLD,
 
-        [Type("red3_1", "&")]
+        [Type("red3_1", "&", "Bleed")]
         BLEED,
 
-        [Type("grey50", "#")]
-        STUNNED,
+        [Type("grey50", "~", "Stun")]
+        STUN,
 
-        [Type("skyblue3", "+")]
+        [Type("white", "#", "Protection")]
         PROTECTION,
+
+        [Type("skyblue3", "#", "Holy Protection")]
+        HOLY_PROTECTION,
     }
 }

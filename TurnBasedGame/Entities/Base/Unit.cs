@@ -49,6 +49,8 @@ namespace TurnBasedGame.Main.Entities.Base
         private EnumResistanceLevel _originalColdResistance;
         private EnumResistanceLevel _originalBleedResistance;
 
+        private bool _originalIsStunned;
+
         public Unit() 
         {
             _hp = MaxHP;
@@ -105,8 +107,7 @@ namespace TurnBasedGame.Main.Entities.Base
                     _mp = 0;
                     if (!IsAlive)
                     {
-                        ActiveBuffEffects.Clear();
-                        ActiveDoTEffects.Clear();
+                        StatusEffects.Clear();
                     }
                 }
             }
@@ -160,8 +161,9 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public EnumRace Race { get; set; }
 
-        public List<DamageEffect> ActiveDoTEffects { get; private set; } = new List<DamageEffect>();
-        public List<BuffEffect> ActiveBuffEffects { get; private set; } = new List<BuffEffect>();
+        //public List<DamageEffect> ActiveDoTEffects { get; private set; } = new List<DamageEffect>();
+        //public List<BuffEffect> ActiveBuffEffects { get; private set; } = new List<BuffEffect>();
+        public List<StatusEffect> StatusEffects { get; private set; } = new List<StatusEffect>();
         public bool IsMissable { get; set; } = true;
         public bool CanDodge { get; set; } = true;
 
@@ -226,96 +228,80 @@ namespace TurnBasedGame.Main.Entities.Base
             return this;
         }
 
-        public void AddDoTEffect(DamageEffect effect)
+        public void AddStatusEffect(StatusEffect effect)
         {
             SaveAttributes();
-            if(IsAlive)
+            if (IsAlive)
             {
-                var existingEffect = ActiveDoTEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
+                var existingEffect = StatusEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
                 if (existingEffect != null)
                 {
                     existingEffect.Duration = effect.Duration;
-                    if(existingEffect.DamagePerTurn < effect.DamagePerTurn)
+                    if (existingEffect.DamagePerTurn < effect.DamagePerTurn)
                     {
                         existingEffect.DamagePerTurn = effect.DamagePerTurn;
                     }
-                }
-                else
-                {
-                    ActiveDoTEffects.Add(effect);
-                    effect.ApplyEffect(this);
-                }
-            }
-        }
 
-        public void AddBuffEffect(BuffEffect effect)
-        {
-            SaveAttributes();
-            if(IsAlive)
-            {
-                var existingEffect = ActiveBuffEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
-                if(existingEffect != null) 
-                {
-                    existingEffect.Duration = effect.Duration;
-                    if(existingEffect.Modifier < effect.Modifier)
+                    if (existingEffect.Modifier < effect.Modifier)
                     {
                         existingEffect.Modifier = effect.Modifier;
                     }
                 }
                 else
                 {
-                    ActiveBuffEffects.Add(effect);
-                    ApplyBuffEffects();
+                    StatusEffects.Add(effect);
+                    effect.ApplyEffect(this);
                 }
 
-                string effectNameText = $"[{effect.EffectType.GetColor()}]({effect.Name})[/]";
-                AnsiConsole.MarkupLine($"{Name} has {effectNameText}!");
+                string effectNameText = $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetDisplayName()}[/]";
+                AnsiConsole.MarkupLine($"[{UnitType.GetColor()}]{Name}[/] has {effectNameText} effect!");
             }
         }
 
-        public void ApplyDoTEffects()
+        public int ApplyStatusEffects()
         {
-            foreach(var effect in ActiveDoTEffects.ToList())
+            var result = 1;
+
+            var orderedEffects = StatusEffects
+                .Where(e => !(e is StunEffect))
+                .Concat(StatusEffects.Where(e => e is StunEffect))
+                .ToList();
+
+            foreach (var effect in orderedEffects)
             {
                 string effectNameText = $"[{effect.EffectType.GetColor()}]{effect.EffectType}[/]";
-                effect.ApplyDamage(this);
-                
-                if(HP <= 0)
+                if(effect.DamagePerTurn > 0)
+                    effect.ApplyDamage(this);
+
+                if (HP <= 0)
                 {
-                    ActiveDoTEffects.Clear();
+                    StatusEffects.Clear();
                     AnsiConsole.MarkupLine($"[{UnitType.GetColor()}]{Name}[/] has died due to {effectNameText}");
+                    return 0;
                 }
                 else
                 {
+                    if (IsStunned == true)
+                    {
+                        AnsiConsole.MarkupLine($"[{UnitType.GetColor()}]{Name}[/] is stunned!");
+                        result = 0;
+                    }
+
                     effect.Duration--;
                     if (effect.Duration < 0)
                     {
-                        ActiveDoTEffects.Remove(effect);
+                        StatusEffects.Remove(effect);
                         RestoreAttributes();
                     }
                     else
                     {
-                        if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
+                        if (!StatusEffects.Any())
                             ResetAttributes();
                     }
                 }
             }
-        }
 
-        public void ApplyBuffEffects()
-        {
-            foreach (var effect in ActiveBuffEffects.ToList())
-            {
-                effect.ApplyEffect(this);
-                effect.Duration--;
-                if (effect.Duration < 0)
-                {
-                    ActiveBuffEffects.Remove(effect);
-                    RestoreAttributes();
-                }
-                if (!(ActiveDoTEffects.Any() || ActiveBuffEffects.Any()))
-                    ResetAttributes();
-            }
+            return result;
         }
 
         public void SaveAttributes()
@@ -338,6 +324,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalCurseResistance = CurseResistance;
             _originalColdResistance = ColdResistance;
             _originalBleedResistance = BleedResistance;
+            _originalIsStunned = IsStunned;
         }
 
         public void RestoreAttributes()
@@ -359,6 +346,7 @@ namespace TurnBasedGame.Main.Entities.Base
             CurseResistance = _originalCurseResistance;
             ColdResistance = _originalColdResistance;
             BleedResistance = _originalBleedResistance;
+            IsStunned = _originalIsStunned;
         }
 
         public void SetInitialAttributes()
@@ -380,6 +368,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalAttributes[nameof(CurseResistance)] = CurseResistance;
             _originalAttributes[nameof(ColdResistance)] = ColdResistance;
             _originalAttributes[nameof(BleedResistance)] = BleedResistance;
+            _originalAttributes[nameof(IsStunned)] = IsStunned;
         }
 
         public void ResetAttributes()
@@ -401,6 +390,7 @@ namespace TurnBasedGame.Main.Entities.Base
             CurseResistance = (EnumResistanceLevel)_originalAttributes[nameof(CurseResistance)];
             ColdResistance = (EnumResistanceLevel)_originalAttributes[nameof(ColdResistance)];
             BleedResistance = (EnumResistanceLevel)_originalAttributes[nameof(BleedResistance)];
+            IsStunned = (bool)_originalAttributes[nameof(IsStunned)];
         }
     }
 }

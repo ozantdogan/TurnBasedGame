@@ -11,8 +11,9 @@ namespace TurnBasedGame.Main.UI
     {
         public static int Level { get; private set; } = 1;
         public static bool DummyLevel { get; set; } = true;
-        public static bool BossLevel { get; set; } = false;
         public static int DummyCount { get; set; } = 4;
+        public static int DummyMaxHP { get; set; } = 30;
+        public static bool BossLevel { get; set; } = false;
         public static int Pace { get; set; } = 1500;
 
         public static void Rest(List<Unit> units)
@@ -33,7 +34,7 @@ namespace TurnBasedGame.Main.UI
                 Pace = 1000;
                 for (int i = 0; i <= DummyCount - 1; i++)
                 {
-                    mobList.Add(new Dummy() { Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i });
+                    mobList.Add(new Dummy() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i });
                 }
             }
             else if (BossLevel)
@@ -41,7 +42,7 @@ namespace TurnBasedGame.Main.UI
                 Level = 0;
                 Pace = 1200;
                 //mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
-                mobList.Add(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(8));
+                mobList.Add(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(2));
             }
 
             if (Level <= 2 && Level > 0)

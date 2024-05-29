@@ -4,7 +4,7 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.KnightSkills
 {
-    public class KnightsShield : BuffSkill
+    public class KnightsShield : CastSkill
     {
         public KnightsShield()
         {
@@ -13,14 +13,14 @@ namespace TurnBasedGame.Main.Entities.Skills.KnightSkills
             ManaCost = 8;
             PassiveFlag = true;
             PrimaryType = EnumSkillType.Standard;
-            BuffModifier = 1;
+            BuffModifier = 1.0;
             SelfTarget = true;
             Duration = 3;
         }
 
         public override int Execute(Unit actor)
         {
-            return PerformProtection(actor, BuffModifier, Duration);
+            return PerformProtection(actor);
         }
     }
 }

@@ -3,13 +3,13 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Effects
 {
-    public class PoisonEffect : DamageEffect
+    public class PoisonEffect : StatusEffect
     {
         public PoisonEffect(int damagePerTurn, double modifier, int duration) 
         {
             Name = "Poison";
-            DamageType = EnumSkillType.Poison;
-            EffectType = EnumEffectType.POISONED;
+            SkillType = EnumSkillType.Poison;
+            EffectType = EnumEffectType.POISON;
             DamagePerTurn = damagePerTurn;
             Modifier = modifier;
             Duration = duration;
