@@ -21,7 +21,7 @@ namespace TurnBasedGame.Main.UI
             // Add columns for each player unit, in reverse order
             foreach (var unit in playerUnits)
             {
-                playerTable.AddColumn($"[{(unit.IsAlive ? unit.UnitType.GetColor() : "grey19")}]{unit.DisplayName ?? " "} {unit.Position}[/]");
+                playerTable.AddColumn($"[{(unit.IsAlive ? unit.UnitType.GetColor() : "grey19")}]{unit.DisplayName ?? " "}[/]");
             }
 
             #region Player effects

@@ -284,6 +284,8 @@ namespace TurnBasedGame.Main.UI
             return -1;
         }
 
+
+        //todo positionların setlenmesi + ölenlerin kaldırılması
         private void PostTurn(List<Unit> units)
         {
             foreach (var unit in units.Where(u => u.IsAlive))
