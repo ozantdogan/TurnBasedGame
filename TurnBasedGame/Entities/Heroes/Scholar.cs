@@ -1,14 +1,14 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills;
-using TurnBasedGame.Main.Entities.Skills.ColdSkills;
-using TurnBasedGame.Main.Entities.Skills.MagicSkills;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.ColdSkills;
+using TurnBasedGame.Main.Skills.MagicSkills;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {
     public class Scholar : Human
     {
-        public Scholar() { 
+        public Scholar()
+        {
             Code = "{SCH}";
             Name = "Scholar";
             DisplayName = Name;

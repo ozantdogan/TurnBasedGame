@@ -1,8 +1,8 @@
 ﻿using Spectre.Console;
 using System.Xml.Linq;
+using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Effects;
-using TurnBasedGame.Main.Entities.Skills.BaseSkills;
+using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.UI
 {

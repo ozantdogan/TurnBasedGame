@@ -1,12 +1,12 @@
-﻿using TurnBasedGame.Main.Entities.Skills.DragonSkills;
-using TurnBasedGame.Main.Helpers.Enums;
+﻿using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.DragonSkills;
 
 namespace TurnBasedGame.Main.Entities.Base
 {
     public class Dragon : Unit
     {
-        public Dragon() 
-        { 
+        public Dragon()
+        {
             Code = "{DRG}";
             Name = "Dragon";
             MaxHP = 60;

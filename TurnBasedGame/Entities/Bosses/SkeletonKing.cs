@@ -1,12 +1,13 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills.BossSkills;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.BossSkills;
 
 namespace TurnBasedGame.Main.Entities.Bosses
 {
     public class SkeletonKing : Undead
     {
-        public SkeletonKing() {
+        public SkeletonKing()
+        {
             Code = "{KIN}";
             Name = "Gaiseric";
             DisplayName = "Gaiseric,\nthe Skeleton King";

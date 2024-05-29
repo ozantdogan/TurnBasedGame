@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills.BaseSkills;
+using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Helpers.Concrete
 {

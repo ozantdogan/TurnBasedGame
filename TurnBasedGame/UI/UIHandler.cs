@@ -1,6 +1,6 @@
 ﻿using Spectre.Console;
+using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.UI

@@ -1,13 +1,8 @@
-﻿using Spectre.Console;
-using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using System.Reflection.Emit;
-using TurnBasedGame.Main.Entities.Effects;
-using TurnBasedGame.Main.Entities.Resistance;
-using TurnBasedGame.Main.Entities.Skills;
-using TurnBasedGame.Main.Entities.Skills.BaseSkills;
+﻿using System.ComponentModel.DataAnnotations;
+using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.BaseSkills;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Base
@@ -30,12 +25,12 @@ namespace TurnBasedGame.Main.Entities.Base
         private int _intelligence;
         private int _faith;
 
-        public Unit() 
+        public Unit()
         {
             _hp = MaxHP;
             _mp = MaxMP;
             DisplayName = Name;
-            Level = new UnitLevel(); 
+            Level = new UnitLevel();
             Skills.Add(new RestSkill() { ValidUserPositions = new List<int> { 0, 1, 2, 3 } });
             Skills.Add(new MoveSkill() { ValidUserPositions = new List<int> { 0, 1, 2, 3 } });
         }
@@ -58,7 +53,7 @@ namespace TurnBasedGame.Main.Entities.Base
         }
 
         public List<BaseSkill> Skills { get; set; } = new List<BaseSkill>();
-        public UnitLevel Level {  get; set; }
+        public UnitLevel Level { get; set; }
 
         public int Position { get; set; } = 0;
         public int MaxHP
@@ -94,9 +89,9 @@ namespace TurnBasedGame.Main.Entities.Base
         public int MaxMP
         {
             get { return _maxMP; }
-            set 
-            { 
-                _maxMP = value < 0 ? 0 : value; 
+            set
+            {
+                _maxMP = value < 0 ? 0 : value;
                 if (_mp > _maxMP || _mp == 0)
                 {
                     _mp = _maxMP;
@@ -195,7 +190,7 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public Unit SetLevel(int level)
         {
-            for(int i = 0; i<level-1; i++)
+            for (int i = 0; i < level - 1; i++)
             {
                 Level.LevelUp(this);
             }
@@ -241,7 +236,7 @@ namespace TurnBasedGame.Main.Entities.Base
 
             foreach (var effect in orderedEffects)
             {
-                if(effect.DamagePerTurn > 0)
+                if (effect.DamagePerTurn > 0)
                 {
                     effect.ApplyDamage(this);
                 }

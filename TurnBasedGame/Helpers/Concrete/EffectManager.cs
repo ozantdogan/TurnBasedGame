@@ -1,6 +1,6 @@
-﻿using TurnBasedGame.Main.Entities.Effects;
-using TurnBasedGame.Main.Entities.Skills.BaseSkills;
+﻿using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Helpers.Concrete
 {

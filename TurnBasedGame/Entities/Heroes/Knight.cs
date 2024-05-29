@@ -1,7 +1,7 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills.CommonSkills;
-using TurnBasedGame.Main.Entities.Skills.KnightSkills;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.CommonSkills;
+using TurnBasedGame.Main.Skills.KnightSkills;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {

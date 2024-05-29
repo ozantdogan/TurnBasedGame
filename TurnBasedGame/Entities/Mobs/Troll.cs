@@ -1,7 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills;
-using TurnBasedGame.Main.Entities.Skills.TrollSkills;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.TrollSkills;
 
 namespace TurnBasedGame.Main.Entities.Mobs
 {

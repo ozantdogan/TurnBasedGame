@@ -1,4 +1,4 @@
-﻿using TurnBasedGame.Main.Entities.Skills.CommonSkills;
+﻿using TurnBasedGame.Main.Skills.CommonSkills;
 
 namespace TurnBasedGame.Main.Entities.Mobs
 {

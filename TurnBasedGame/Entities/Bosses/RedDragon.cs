@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Skills.DragonSkills;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.DragonSkills;
 
 namespace TurnBasedGame.Main.Entities.Bosses
 {
