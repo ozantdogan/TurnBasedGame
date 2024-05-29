@@ -25,7 +25,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Skills.Add(new DivineLight());
             Skills.Add(new DivineHeal());
             Skills.Add(new Heal());
-            Skills.Add(new DaggerPierce());
+            Skills.Add(new KnifePierce());
         }
     }
 }

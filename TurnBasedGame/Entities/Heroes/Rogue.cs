@@ -4,12 +4,12 @@ using TurnBasedGame.Main.Entities.Skills.HunterSkills;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {
-    public class Hunter : Human
+    public class Rogue : Human
     {
-        public Hunter()
+        public Rogue()
         {
-            Code = "{HUN}";
-            Name = "Hunter";
+            Code = "{ROG}";
+            Name = "Rogue";
             DisplayName = Name;
             MaxHP = 24;
             MaxMP = 20;
@@ -21,9 +21,9 @@ namespace TurnBasedGame.Main.Entities.Heroes
             MaxDamageValue = 7;
             MinDamageValue = 5;
             CriticalChance = 15;
-            Skills.Add(new DaggerPierce() { Name = "Knife Pierce", ExecutionName = "Knife Pierce" });
+            Skills.Add(new KnifePierce());
             Skills.Add(new DualKnivesSlash());
-            Skills.Add(new PoisonArrow());
+            Skills.Add(new PoisonDart());
         }
     }
 }

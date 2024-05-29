@@ -67,7 +67,7 @@ namespace TurnBasedGame.Main.UI
                         int actionResult = 1;
                         if (unit.UnitType == EnumUnitType.Player)
                         {
-                            actionResult = PerformTurn(unit, mobUnits, playerUnits);
+                            actionResult = PerformTurn(unit, mobUnits.Where(u => u.IsAlive).ToList(), playerUnits.Where(u => u.IsAlive).ToList());
                         }
                         else
                         {
@@ -90,7 +90,7 @@ namespace TurnBasedGame.Main.UI
                     if (battleResult != 0)
                         break;
                 }
-                PostTurn(units);
+                PostTurn(playerUnits, mobUnits);
                 battleResult = CheckAlives(playerUnits, mobUnits);
                 if (battleResult != 0)
                     break;
@@ -153,6 +153,8 @@ namespace TurnBasedGame.Main.UI
         {
             int skillChoice;
             Unit target;
+            BaseSkill selectedSkill;
+
             if (actor.UnitType == EnumUnitType.Player)
             {
                 var availableSkills = actor.Skills.
@@ -189,7 +191,7 @@ namespace TurnBasedGame.Main.UI
                     return -1;
                 }
 
-                var selectedSkill = availableSkills[skillChoice];
+                selectedSkill = availableSkills[skillChoice];
 
                 if (skillChoice < 0 || skillChoice >= actor.Skills.Count)
                 {
@@ -223,7 +225,6 @@ namespace TurnBasedGame.Main.UI
                             .AddChoices(targetChoices)
                     );
 
-                    // Convert the choice back to the index
                     int targetChoice = Array.IndexOf(targetChoices, targetChoiceIndex);
 
                     if (targetChoice >= 0 && targetChoice < friendlyTargets.Count && friendlyTargets[targetChoice].IsAlive)
@@ -268,8 +269,8 @@ namespace TurnBasedGame.Main.UI
             }
             else if (actor.UnitType == EnumUnitType.Dummy)// dummy
             {
-                //return new RestSkill().Execute(actor);
-                return new MoveSkill().Execute(actor, friendlyTargets);
+                return new RestSkill().Execute(actor);
+                //return new MoveSkill().Execute(actor, friendlyTargets);
             }
             else // Mob units
             {
@@ -277,7 +278,7 @@ namespace TurnBasedGame.Main.UI
                 return mobLogic.ExecuteMobTurn(actor, enemyTargets, friendlyTargets);
             }
 
-            var actionCompleted = actor.Skills[skillChoice].Execute(actor, target);
+            var actionCompleted = selectedSkill.Execute(actor, target);
             if (actionCompleted != -1)
                 return 1;
 
@@ -286,12 +287,26 @@ namespace TurnBasedGame.Main.UI
 
 
         //todo positionların setlenmesi + ölenlerin kaldırılması
-        private void PostTurn(List<Unit> units)
+        private void PostTurn(List<Unit> playerUnits, List<Unit> mobUnits)
         {
-            foreach (var unit in units.Where(u => u.IsAlive))
+            var alivePlayerUnits = playerUnits.Where(u => u.IsAlive).OrderBy(p => p.Position).ToList();
+            var aliveMobUnits = mobUnits.Where(u => u.IsAlive).OrderBy(p => p.Position).ToList();
+            var allAliveUnits = alivePlayerUnits.Concat(aliveMobUnits).ToList();
+
+            foreach (var unit in allAliveUnits)
             {
                 unit.MP = Math.Min(unit.MP + 5, unit.MaxMP);
                 unit.HasMoved = false;
+            }
+
+            for (int i = 0; i < alivePlayerUnits.Count; i++)
+            {
+                alivePlayerUnits[i].Position = i; 
+            }
+
+            for (int i = 0; i < aliveMobUnits.Count; i++)
+            {
+                aliveMobUnits[i].Position = i;
             }
         }
     }

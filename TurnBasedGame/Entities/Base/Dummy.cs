@@ -9,7 +9,7 @@ namespace TurnBasedGame.Main.Entities.Base
             Code = "{000}";
             Name = "Dummy";
             DisplayName = Name;
-            MaxHP = 500;
+            MaxHP = 200;
             MaxMP = 100;
             UnitType = EnumUnitType.Dummy;
             Strength = 10;

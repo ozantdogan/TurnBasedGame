@@ -98,7 +98,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] used [{skillColor}]{ExecutionName}[/] on [{targetColor}]{target.Name}[/]!");
 
                 if (HasMissed(actor, target) || HasDodged(target))
-                    return 0;
+                    return 1;
 
                 if (CalculateCrit(actor))
                     critModifier = actor.MaxDamageValue * 1.5;

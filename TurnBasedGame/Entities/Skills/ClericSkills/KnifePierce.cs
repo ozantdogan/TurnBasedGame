@@ -4,16 +4,15 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.ClericSkills
 {
-    public class DaggerPierce : AttackSkill
+    public class KnifePierce : AttackSkill
     {
-        public DaggerPierce()
+        public KnifePierce()
         {
-            Name = "Dagger Pierce";
-            ExecutionName = Name;
+            Name = "Knife Pierce";
             ManaCost = 0;
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Pierce;
-            ValidUserPositions = new List<int>() { 0, 1};
+            ValidUserPositions = new List<int>() { 0 };
             ValidTargetPositions = new List<int>() { 0, 1};
         }
 
