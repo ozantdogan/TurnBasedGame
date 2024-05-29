@@ -140,6 +140,9 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     target.AddStatusEffect(new StunEffect(StunDuration));
             }
 
+            if(!target.IsAlive)
+                Logger.LogDeath(target);
+
             return 1;
         }
 
@@ -220,6 +223,9 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                     if (TryStun(target))
                         target.AddStatusEffect(new StunEffect(StunDuration));
+
+                    if (!target.IsAlive)
+                        Logger.LogDeath(target);
                 }
             }
 

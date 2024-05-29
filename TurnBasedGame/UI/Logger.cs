@@ -49,7 +49,12 @@ namespace TurnBasedGame.Main.UI
         public static void LogDamage(Unit actor, Unit target, double totalDamageDealt, double critModifier)
         {
             AnsiConsole.MarkupLine($"{FormatUnit(actor)} dealt {FormatDamage(totalDamageDealt, critModifier)} to {FormatUnit(target)} " +
-                                   (target.HP <= 0 ? $"({FormatUnit(target)} is dead.)" : $"({target.HP} HP left)\n"));
+                                   $"({target.HP} HP left)");
+        }
+
+        public static void LogDeath(Unit unit)
+        {
+            AnsiConsole.MarkupLine($"{FormatUnit(unit)} is dead");
         }
 
         public static void LogEffectDamage(Unit unit, StatusEffect effect, int damageDealt)
