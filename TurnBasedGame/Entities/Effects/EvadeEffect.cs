@@ -3,11 +3,11 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Effects
 {
-    public class StanceEffect : StatusEffect
+    public class EvadeEffect : StatusEffect
     {
-        public StanceEffect(int duration, double modifier) 
+        public EvadeEffect(int duration, double modifier) 
         {
-            EffectType = EnumEffectType.STANCE;
+            EffectType = EnumEffectType.EVADE;
             Duration = duration;
             Modifier = modifier;
         }
@@ -15,6 +15,11 @@ namespace TurnBasedGame.Main.Entities.Effects
         public override void ApplyEffect(Unit unit)
         {
             unit.DodgeModifier = unit.DodgeModifier * Modifier;
+        }
+
+        public override void RestoreEffect(Unit unit) 
+        {
+            unit.DodgeModifier = unit.DodgeModifier / Modifier;
         }
     }
 }

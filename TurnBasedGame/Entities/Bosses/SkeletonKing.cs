@@ -16,8 +16,8 @@ namespace TurnBasedGame.Main.Entities.Bosses
             Dexterity = 6;
             Intelligence = 6;
             Faith = 8;
-            MinDamageValue = 7;
-            MaxDamageValue = 11;
+            MinDamageValue = 6;
+            MaxDamageValue = 8;
             CriticalChance = 0;
             SlashResistance = EnumResistanceLevel.Resistant;
             PierceResistance = EnumResistanceLevel.Resistant;

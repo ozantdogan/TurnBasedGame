@@ -14,6 +14,7 @@ namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Slash;
             SecondaryType = EnumSkillType.Bleed;
+            EffectChance = 20;
             DamagePerTurn = 2;
             Duration = 1;
             DoTModifier = 1;

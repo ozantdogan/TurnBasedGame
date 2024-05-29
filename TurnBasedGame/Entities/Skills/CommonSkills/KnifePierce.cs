@@ -12,8 +12,12 @@ namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
             ManaCost = 0;
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Pierce;
+            SecondaryType = EnumSkillType.Bleed;
             ValidUserPositions = new List<int>() { 0 };
             ValidTargetPositions = new List<int>() { 0, 1 };
+            EffectChance = 8;
+            DamagePerTurn = 2;
+            Duration = 0;
         }
 
         public override int Execute(Unit actor, Unit target)

@@ -61,7 +61,6 @@ namespace TurnBasedGame.Main.Entities.Base
             Level = new UnitLevel(); 
             Skills.Add(new RestSkill() { ValidUserPositions = new List<int> { 0, 1, 2, 3 } });
             Skills.Add(new MoveSkill() { ValidUserPositions = new List<int> { 0, 1, 2, 3 } });
-            SetInitialAttributes();
         }
 
         private Dictionary<string, object> _originalAttributes = new Dictionary<string, object>();
@@ -144,7 +143,6 @@ namespace TurnBasedGame.Main.Entities.Base
         }
 
         public int CriticalChance { get; set; }
-
         public bool CanBeStunned { get; set; } = true;
         public bool IsStunned { get; set; } = false;
         public int StunDuration { get; set; } = 0;
@@ -173,25 +171,25 @@ namespace TurnBasedGame.Main.Entities.Base
         public int Strength
         {
             get { return _strength; }
-            set { _strength = value < 0 ? 0 : value; }
+            set { _strength = value <= 0 ? 1 : value; }
         }
 
         public int Dexterity
         {
             get { return _dexterity; }
-            set { _dexterity = value < 0 ? 0 : value; }
+            set { _dexterity = value <= 0 ? 1 : value; }
         }
 
         public int Intelligence
         {
             get { return _intelligence; }
-            set { _intelligence = value < 0 ? 0 : value; }
+            set { _intelligence = value <= 0 ? 1 : value; }
         }
 
         public int Faith
         {
             get { return _faith; }
-            set { _faith = value < 0 ? 0 : value; }
+            set { _faith = value <= 0 ? 1 : value; }
         }
 
         #endregion
@@ -229,7 +227,6 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public void AddStatusEffect(StatusEffect effect)
         {
-            SaveAttributes();
             if (IsAlive)
             {
                 var existingEffect = StatusEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
@@ -268,7 +265,14 @@ namespace TurnBasedGame.Main.Entities.Base
             foreach (var effect in orderedEffects)
             {
                 if(effect.DamagePerTurn > 0)
+                {
                     effect.ApplyDamage(this);
+                }
+                else if (effect is StunEffect)
+                {
+                    Logger.LogStun(this);
+                    result = 0;
+                }
 
                 if (HP <= 0)
                 {
@@ -278,22 +282,11 @@ namespace TurnBasedGame.Main.Entities.Base
                 }
                 else
                 {
-                    if (IsStunned == true)
-                    {
-                        Logger.LogStun(this);
-                        result = 0;
-                    }
-
                     effect.Duration--;
                     if (effect.Duration < 0)
                     {
+                        effect.RestoreEffect(this);
                         StatusEffects.Remove(effect);
-                        RestoreAttributes();
-                    }
-                    else
-                    {
-                        if (!StatusEffects.Any())
-                            ResetAttributes();
                     }
                 }
             }
@@ -301,97 +294,97 @@ namespace TurnBasedGame.Main.Entities.Base
             return result;
         }
 
-        public void SaveAttributes()
-        {
-            _originalMaxHP = MaxHP;
-            _originalMaxMP = MaxMP;
-            _originalStrength = Strength;
-            _originalDexterity = Dexterity;
-            _originalIntelligence = Intelligence;
-            _originalFaith = Faith;
-            _originalStandardResistance = StandardResistance;
-            _originalBluntResistance = BluntResistance;
-            _originalFireResistance = FireResistance;
-            _originalHolyResistance = HolyResistance;
-            _originalMagicResistance = MagicResistance;
-            _originalPoisonResistance = PoisonResistance;
-            _originalSlashResistance = SlashResistance;
-            _originalMagicResistance = MagicResistance;
-            _originalPierceResistance = PierceResistance;
-            _originalCurseResistance = CurseResistance;
-            _originalColdResistance = ColdResistance;
-            _originalBleedResistance = BleedResistance;
-            _originalIsStunned = IsStunned;
-            _originalDodgeModifier = DodgeModifier;
-        }
+        //public void SaveAttributes()
+        //{
+        //    _originalMaxHP = MaxHP;
+        //    _originalMaxMP = MaxMP;
+        //    _originalStrength = Strength;
+        //    _originalDexterity = Dexterity;
+        //    _originalIntelligence = Intelligence;
+        //    _originalFaith = Faith;
+        //    _originalStandardResistance = StandardResistance;
+        //    _originalBluntResistance = BluntResistance;
+        //    _originalFireResistance = FireResistance;
+        //    _originalHolyResistance = HolyResistance;
+        //    _originalMagicResistance = MagicResistance;
+        //    _originalPoisonResistance = PoisonResistance;
+        //    _originalSlashResistance = SlashResistance;
+        //    _originalMagicResistance = MagicResistance;
+        //    _originalPierceResistance = PierceResistance;
+        //    _originalCurseResistance = CurseResistance;
+        //    _originalColdResistance = ColdResistance;
+        //    _originalBleedResistance = BleedResistance;
+        //    _originalIsStunned = IsStunned;
+        //    _originalDodgeModifier = DodgeModifier;
+        //}
 
-        public void RestoreAttributes()
-        {
-            MaxHP = _originalMaxHP;
-            MaxMP = _originalMaxMP;
-            Strength = _originalStrength;
-            Dexterity = _originalDexterity;
-            Intelligence = _originalIntelligence;
-            Faith = _originalFaith;
-            StandardResistance = _originalStandardResistance;
-            BluntResistance = _originalBluntResistance;
-            FireResistance = _originalFireResistance;
-            HolyResistance = _originalHolyResistance;
-            MagicResistance = _originalMagicResistance;
-            PoisonResistance = _originalPoisonResistance;
-            SlashResistance = _originalSlashResistance;
-            PierceResistance = _originalPierceResistance;
-            CurseResistance = _originalCurseResistance;
-            ColdResistance = _originalColdResistance;
-            BleedResistance = _originalBleedResistance;
-            IsStunned = _originalIsStunned;
-            DodgeModifier = _originalDodgeModifier;
-        }
+        //public void RestoreAttributes()
+        //{
+        //    MaxHP = _originalMaxHP;
+        //    MaxMP = _originalMaxMP;
+        //    Strength = _originalStrength;
+        //    Dexterity = _originalDexterity;
+        //    Intelligence = _originalIntelligence;
+        //    Faith = _originalFaith;
+        //    StandardResistance = _originalStandardResistance;
+        //    BluntResistance = _originalBluntResistance;
+        //    FireResistance = _originalFireResistance;
+        //    HolyResistance = _originalHolyResistance;
+        //    MagicResistance = _originalMagicResistance;
+        //    PoisonResistance = _originalPoisonResistance;
+        //    SlashResistance = _originalSlashResistance;
+        //    PierceResistance = _originalPierceResistance;
+        //    CurseResistance = _originalCurseResistance;
+        //    ColdResistance = _originalColdResistance;
+        //    BleedResistance = _originalBleedResistance;
+        //    IsStunned = _originalIsStunned;
+        //    DodgeModifier = _originalDodgeModifier;
+        //}
 
-        public void SetInitialAttributes()
-        {
-            _originalAttributes[nameof(MaxHP)] = MaxHP;
-            _originalAttributes[nameof(MaxMP)] = MaxMP;
-            _originalAttributes[nameof(Strength)] = Strength;
-            _originalAttributes[nameof(Dexterity)] = Dexterity;
-            _originalAttributes[nameof(Intelligence)] = Intelligence;
-            _originalAttributes[nameof(Faith)] = Faith;
-            _originalAttributes[nameof(StandardResistance)] = StandardResistance;
-            _originalAttributes[nameof(SlashResistance)] = SlashResistance;
-            _originalAttributes[nameof(PierceResistance)] = PierceResistance;
-            _originalAttributes[nameof(BluntResistance)] = BluntResistance;
-            _originalAttributes[nameof(MagicResistance)] = MagicResistance;
-            _originalAttributes[nameof(HolyResistance)] = HolyResistance;
-            _originalAttributes[nameof(FireResistance)] = FireResistance;
-            _originalAttributes[nameof(PoisonResistance)] = PoisonResistance;
-            _originalAttributes[nameof(CurseResistance)] = CurseResistance;
-            _originalAttributes[nameof(ColdResistance)] = ColdResistance;
-            _originalAttributes[nameof(BleedResistance)] = BleedResistance;
-            _originalAttributes[nameof(IsStunned)] = IsStunned;
-            _originalAttributes[nameof(DodgeModifier)] = DodgeModifier;
-        }
+        //public void SetInitialAttributes()
+        //{
+        //    _originalAttributes[nameof(MaxHP)] = MaxHP;
+        //    _originalAttributes[nameof(MaxMP)] = MaxMP;
+        //    _originalAttributes[nameof(Strength)] = Strength;
+        //    _originalAttributes[nameof(Dexterity)] = Dexterity;
+        //    _originalAttributes[nameof(Intelligence)] = Intelligence;
+        //    _originalAttributes[nameof(Faith)] = Faith;
+        //    _originalAttributes[nameof(StandardResistance)] = StandardResistance;
+        //    _originalAttributes[nameof(SlashResistance)] = SlashResistance;
+        //    _originalAttributes[nameof(PierceResistance)] = PierceResistance;
+        //    _originalAttributes[nameof(BluntResistance)] = BluntResistance;
+        //    _originalAttributes[nameof(MagicResistance)] = MagicResistance;
+        //    _originalAttributes[nameof(HolyResistance)] = HolyResistance;
+        //    _originalAttributes[nameof(FireResistance)] = FireResistance;
+        //    _originalAttributes[nameof(PoisonResistance)] = PoisonResistance;
+        //    _originalAttributes[nameof(CurseResistance)] = CurseResistance;
+        //    _originalAttributes[nameof(ColdResistance)] = ColdResistance;
+        //    _originalAttributes[nameof(BleedResistance)] = BleedResistance;
+        //    _originalAttributes[nameof(IsStunned)] = IsStunned;
+        //    _originalAttributes[nameof(DodgeModifier)] = DodgeModifier;
+        //}
 
-        public void ResetAttributes()
-        {
-            MaxHP = (int)_originalAttributes[nameof(MaxHP)];
-            MaxMP = (int)_originalAttributes[nameof(MaxMP)];
-            Strength = (int)_originalAttributes[nameof(Strength)];
-            Dexterity = (int)_originalAttributes[nameof(Dexterity)];
-            Intelligence = (int)_originalAttributes[nameof(Intelligence)];
-            Faith = (int)_originalAttributes[nameof(Faith)];
-            StandardResistance = (EnumResistanceLevel)_originalAttributes[nameof(StandardResistance)];
-            SlashResistance = (EnumResistanceLevel)_originalAttributes[nameof(SlashResistance)];
-            PierceResistance = (EnumResistanceLevel)_originalAttributes[nameof(PierceResistance)];
-            BluntResistance = (EnumResistanceLevel)_originalAttributes[nameof(BluntResistance)];
-            MagicResistance = (EnumResistanceLevel)_originalAttributes[nameof(MagicResistance)];
-            HolyResistance = (EnumResistanceLevel)_originalAttributes[nameof(HolyResistance)];
-            FireResistance = (EnumResistanceLevel)_originalAttributes[nameof(FireResistance)];
-            PoisonResistance = (EnumResistanceLevel)_originalAttributes[nameof(PoisonResistance)];
-            CurseResistance = (EnumResistanceLevel)_originalAttributes[nameof(CurseResistance)];
-            ColdResistance = (EnumResistanceLevel)_originalAttributes[nameof(ColdResistance)];
-            BleedResistance = (EnumResistanceLevel)_originalAttributes[nameof(BleedResistance)];
-            IsStunned = (bool)_originalAttributes[nameof(IsStunned)];
-            DodgeModifier = (double)_originalAttributes[nameof(DodgeModifier)];
-        }
+        //public void ResetAttributes()
+        //{
+        //    MaxHP = (int)_originalAttributes[nameof(MaxHP)];
+        //    MaxMP = (int)_originalAttributes[nameof(MaxMP)];
+        //    Strength = (int)_originalAttributes[nameof(Strength)];
+        //    Dexterity = (int)_originalAttributes[nameof(Dexterity)];
+        //    Intelligence = (int)_originalAttributes[nameof(Intelligence)];
+        //    Faith = (int)_originalAttributes[nameof(Faith)];
+        //    StandardResistance = (EnumResistanceLevel)_originalAttributes[nameof(StandardResistance)];
+        //    SlashResistance = (EnumResistanceLevel)_originalAttributes[nameof(SlashResistance)];
+        //    PierceResistance = (EnumResistanceLevel)_originalAttributes[nameof(PierceResistance)];
+        //    BluntResistance = (EnumResistanceLevel)_originalAttributes[nameof(BluntResistance)];
+        //    MagicResistance = (EnumResistanceLevel)_originalAttributes[nameof(MagicResistance)];
+        //    HolyResistance = (EnumResistanceLevel)_originalAttributes[nameof(HolyResistance)];
+        //    FireResistance = (EnumResistanceLevel)_originalAttributes[nameof(FireResistance)];
+        //    PoisonResistance = (EnumResistanceLevel)_originalAttributes[nameof(PoisonResistance)];
+        //    CurseResistance = (EnumResistanceLevel)_originalAttributes[nameof(CurseResistance)];
+        //    ColdResistance = (EnumResistanceLevel)_originalAttributes[nameof(ColdResistance)];
+        //    BleedResistance = (EnumResistanceLevel)_originalAttributes[nameof(BleedResistance)];
+        //    IsStunned = (bool)_originalAttributes[nameof(IsStunned)];
+        //    DodgeModifier = (double)_originalAttributes[nameof(DodgeModifier)];
+        //}
     }
 }

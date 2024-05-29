@@ -22,8 +22,8 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Type("grey50", "~", "Stun")]
         STUN,
 
-        [Type("cyan", "+", "Stance")]
-        STANCE,
+        [Type("cyan", "+", "Evade")]
+        EVADE,
 
         [Type("white", "#", "Protection")]
         PROTECTION,

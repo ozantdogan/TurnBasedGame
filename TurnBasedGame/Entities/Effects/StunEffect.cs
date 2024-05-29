@@ -15,5 +15,10 @@ namespace TurnBasedGame.Main.Entities.Effects
         {
             unit.IsStunned = true;
         }
+
+        public override void RestoreEffect(Unit unit)
+        {
+            unit.IsStunned = false;
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace TurnBasedGame.Main.Entities.Skills.TrollSkills
             ManaCost = 10;
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Blunt;
+            StunChance = 30;
         }
 
         public override int Execute(Unit actor, Unit target)

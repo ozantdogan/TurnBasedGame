@@ -58,8 +58,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
         public List<int> TargetIndexes { get; set; } = new List<int>();
         public bool SelfTarget { get; set; } = false;
         public int StunChance { get; set; } = 0;
-        public int StunDuration { get; set; }
-
+        public int StunDuration { get; set; } = 0;
+        public int EffectChance { get; set; } = 100;
         public abstract int Execute(Unit actor);
         public abstract int Execute(Unit actor, Unit target);
         public abstract int Execute(Unit actor, List<Unit> targets);

@@ -18,11 +18,32 @@ namespace TurnBasedGame.Main.Entities.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            var resistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SkillType) ? ResistanceManager.ResistanceLevelSelectors[SkillType](unit) : EnumResistanceLevel.Neutral;
-            var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
+            for(int i = 0; i <= 1; i++)
+            {
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Standard, false);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Pierce, false);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Slash, false);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Blunt, false);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Magic, false);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Holy, false);
+            }
 
-            unit.Strength = Math.Max(1, (int)(unit.Strength - Modifier * resistanceModifier));
-            unit.Dexterity = Math.Max(1, (int)(unit.Dexterity - Modifier * resistanceModifier));
+            unit.DodgeModifier = unit.DodgeModifier * 0.4;
+        }
+
+        public override void RestoreEffect(Unit unit)
+        {
+            for (int i = 0; i <= 1; i++)
+            {
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Standard, true);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Pierce, true);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Slash, true);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Blunt, true);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Magic, true);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Holy, true);
+            }
+
+            unit.DodgeModifier = unit.DodgeModifier / 0.4;
         }
     }
 }

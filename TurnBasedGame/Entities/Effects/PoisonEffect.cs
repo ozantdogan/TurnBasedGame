@@ -22,5 +22,13 @@ namespace TurnBasedGame.Main.Entities.Effects
             unit.Faith = (int)(unit.Faith * Modifier);
             unit.Intelligence = (int)(unit.Intelligence * Modifier);
         }
+
+        public override void RestoreEffect(Unit unit)
+        {
+            unit.Strength = (int)(unit.Strength / Modifier);
+            unit.Dexterity = (int)(unit.Dexterity / Modifier);
+            unit.Faith = (int)(unit.Faith / Modifier);
+            unit.Intelligence = (int)(unit.Intelligence / Modifier);
+        }
     }
 }

@@ -11,9 +11,9 @@ namespace TurnBasedGame.Main.UI
     {
         public static int Level { get; private set; } = 1;
         public static bool DummyLevel { get; set; } = false;
-        public static bool BossLevel { get; set; } = false;
+        public static bool BossLevel { get; set; } = true;
         public static int DummyMaxHP { get; set; } = 500;
-        public static int DummyCount { get; set; } = 4;
+        public static int DummyCount { get; set; } = 1;
         public static int Pace { get; set; } = 1500;
 
         public static void Rest(List<Unit> units)
@@ -34,14 +34,17 @@ namespace TurnBasedGame.Main.UI
                 Pace = 1000;
                 for (int i = 0; i <= DummyCount - 1; i++)
                 {
-                    mobList.Add(new Dummy() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5));
+                    UnitHelper.AddUnit(new Dummy() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5), mobList);
+
                 }
             }
             else if (BossLevel)
             {
                 Level = 0;
                 Pace = 1200;
-                mobList.Add(new RedDragon() { UnitType = EnumUnitType.Boss });
+                //UnitHelper.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }, mobList);
+                UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }, mobList);
+                //UnitHelper.AddUnit(new Rogue() { UnitType = EnumUnitType.Mob, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(5), mobList);
             }
 
             if (Level <= 2 && Level > 0)
@@ -54,14 +57,14 @@ namespace TurnBasedGame.Main.UI
             }
             else if (Level == 6)
             {
-                mobList.Add(new SkeletonKing() { UnitType = EnumUnitType.Boss });
+                UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }, mobList);
             }
 
             for (int i = 0; i < numberOfMobs; i++)
             {
                 if (random.Next(1, 101) <= 50 && Level > 2 && numberOfMobs < 4 && !mobList.Any(u => u is Troll))
                 {
-                    mobList.Add(new Troll() { UnitType = EnumUnitType.Mob, Position = i });
+                    UnitHelper.AddUnit(new Troll() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                 }
                 else
                 {
@@ -74,13 +77,13 @@ namespace TurnBasedGame.Main.UI
                     switch (skeletonType)
                     {
                         case 0:
-                            mobList.Add(new UndeadBrute() { UnitType = EnumUnitType.Mob, Position = i });
+                            UnitHelper.AddUnit(new UndeadBrute() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                             break;
                         case 1:
-                            mobList.Add(new UndeadSwordsman() { UnitType = EnumUnitType.Mob, Position = i });
+                            UnitHelper.AddUnit(new UndeadSwordsman() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                             break;
                         case 2:
-                            mobList.Add(new UndeadSpearsman() { UnitType = EnumUnitType.Mob, Position = i });
+                            UnitHelper.AddUnit(new UndeadSpearsman() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                             break;
                     }
 
@@ -98,14 +101,6 @@ namespace TurnBasedGame.Main.UI
         public static void IncreaseLevel()
         {
             Level++;
-        }
-
-        public static void SetInitialValues(List<Unit> Units)
-        {
-            foreach (var unit in Units)
-            {
-                unit.SetInitialAttributes();
-            }
         }
     }
 }

@@ -19,58 +19,6 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
         {
         }
 
-        private bool CalculateCrit(Unit actor)
-        {
-            if (actor.CriticalChance > _random.Next(101))
-                return true;
-
-            return false;
-        }
-
-        protected bool HasDodged(Unit target)
-        {
-            if(!target.CanDodge)
-                return false;
-
-            int dodgeChance = (int)(target.Dexterity * 2 * target.DodgeModifier);
-            int roll = _random.Next(100);
-            if (roll < dodgeChance)
-            {
-                Logger.LogDodge(target);
-                return true;
-            }
-            return false;
-        }
-
-        protected bool HasMissed(Unit actor, Unit target)
-        {
-            if (!target.IsMissable)
-                return false;
-
-            double missChance = 100 / (actor.Dexterity * Accuracy);
-            int roll = _random.Next(100);
-            if (roll < missChance)
-            {
-                Logger.LogMiss(actor);
-                return true;
-            }
-            return false;
-        }
-
-        protected bool TryStun(Unit target)
-        {
-            if (StunChance <= 0 || !target.CanBeStunned || target.IsStunned || !target.IsAlive)
-                return false;
-
-            int roll = _random.Next(100);
-            if(roll < StunChance)
-            {
-                Logger.LogStun(target);
-                return true;
-            }
-            return false;
-        }
-
         public override int Execute(Unit actor, Unit target)
         {
             if (ManaCost > 0)
@@ -120,7 +68,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 Logger.LogDamage(actor, target, totalDamageDealt, critModifier);
 
                 int effectDamage;
-                if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType))
+                if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType) && TryEffect())
                 {
                     effectDamage = (int)(DamagePerTurn * primaryDamageTypeModifier * 0.5);
                     effect = EffectManager.DamageEffectSelector[PrimaryType](this);
@@ -128,7 +76,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     target.AddStatusEffect(effect);
                 }
 
-                if (EffectManager.DamageEffectSelector.ContainsKey(SecondaryType))
+                if (EffectManager.DamageEffectSelector.ContainsKey(SecondaryType) && TryEffect())
                 {
                     effectDamage = (int)(DamagePerTurn * secondaryDamageTypeModifier * 0.5);
                     effect = EffectManager.DamageEffectSelector[SecondaryType](this);
@@ -138,10 +86,13 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                 if (TryStun(target))
                     target.AddStatusEffect(new StunEffect(StunDuration));
-            }
 
-            if(!target.IsAlive)
-                Logger.LogDeath(target);
+                if (!target.IsAlive)
+                {
+                    Logger.LogDeath(target);
+                    break;
+                }
+            }
 
             return 1;
         }
@@ -176,7 +127,10 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     string targetColor = target.UnitType.GetColor();
 
                     if (!target.IsAlive)
+                    {
+                        Logger.LogDeath(target);
                         continue;
+                    }
 
                     if (HasMissed(actor, target) || HasDodged(target))
                         continue;
@@ -205,7 +159,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     Logger.LogDamage(actor, target, totalDamageDealt, critModifier);
 
                     int effectDamage;
-                    if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType))
+                    if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType) && TryEffect())
                     {
                         effectDamage = (int)(DamagePerTurn * primaryDamageTypeModifier * 0.5);
                         effect = EffectManager.DamageEffectSelector[PrimaryType](this);
@@ -213,7 +167,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                         target.AddStatusEffect(effect);
                     }
 
-                    if (EffectManager.DamageEffectSelector.ContainsKey(SecondaryType))
+                    if (EffectManager.DamageEffectSelector.ContainsKey(SecondaryType) && TryEffect())
                     {
                         effectDamage = (int)(DamagePerTurn * secondaryDamageTypeModifier * 0.5);
                         effect = EffectManager.DamageEffectSelector[SecondaryType](this);
@@ -224,8 +178,6 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     if (TryStun(target))
                         target.AddStatusEffect(new StunEffect(StunDuration));
 
-                    if (!target.IsAlive)
-                        Logger.LogDeath(target);
                 }
             }
 
@@ -237,6 +189,69 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             throw new NotImplementedException();
         }
 
+        private bool CalculateCrit(Unit actor)
+        {
+            if (actor.CriticalChance > _random.Next(101))
+                return true;
+
+            return false;
+        }
+
+        private bool HasDodged(Unit target)
+        {
+            if (!target.CanDodge)
+                return false;
+
+            int dodgeChance = (int)(target.Dexterity * 2 * target.DodgeModifier);
+            int roll = _random.Next(100);
+            if (roll < dodgeChance)
+            {
+                Logger.LogDodge(target);
+                return true;
+            }
+            return false;
+        }
+
+        private bool HasMissed(Unit actor, Unit target)
+        {
+            if (!target.IsMissable)
+                return false;
+
+            double missChance = 100 / (actor.Dexterity * 0.5 * Accuracy);
+            int roll = _random.Next(100);
+            if (roll < missChance)
+            {
+                Logger.LogMiss(actor);
+                return true;
+            }
+            return false;
+        }
+
+        private bool TryStun(Unit target)
+        {
+            if (StunChance <= 0 || !target.CanBeStunned || target.IsStunned || !target.IsAlive)
+                return false;
+
+            int roll = _random.Next(100);
+            if (roll < StunChance)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool TryEffect()
+        {
+            if(EffectChance <= 0 || DamagePerTurn == 0)
+                return false;
+
+            int roll = _random.Next(100);
+            if (roll < EffectChance)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
 }

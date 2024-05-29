@@ -28,5 +28,66 @@ namespace TurnBasedGame.Main.Entities.Resistance
             { EnumResistanceLevel.Sturdy, 0.25 },
             { EnumResistanceLevel.Immune, 0.0 }
         };
+
+        private static readonly List<EnumResistanceLevel> ResistanceLevels = new List<EnumResistanceLevel>
+        {
+            EnumResistanceLevel.Fragile,
+            EnumResistanceLevel.Weak,
+            EnumResistanceLevel.Neutral,
+            EnumResistanceLevel.Resistant,
+            EnumResistanceLevel.Sturdy,
+            EnumResistanceLevel.Immune
+        };
+
+        public static void AdjustResistance(Unit target, EnumSkillType skillType, bool increase)
+        {
+            EnumResistanceLevel currentLevel = ResistanceLevelSelectors[skillType](target);
+            int currentIndex = ResistanceLevels.IndexOf(currentLevel);
+
+            int newIndex = increase ? currentIndex - 1 : currentIndex + 1;
+
+            if (newIndex >= 0 && newIndex < ResistanceLevels.Count)
+            {
+                EnumResistanceLevel newLevel = ResistanceLevels[newIndex];
+                SetResistance(target, skillType, newLevel);
+            }
+        }
+
+        private static void SetResistance(Unit target, EnumSkillType skillType, EnumResistanceLevel newLevel)
+        {
+            switch (skillType)
+            {
+                case EnumSkillType.Standard:
+                    target.StandardResistance = newLevel;
+                    break;
+                case EnumSkillType.Slash:
+                    target.SlashResistance = newLevel;
+                    break;
+                case EnumSkillType.Pierce:
+                    target.PierceResistance = newLevel;
+                    break;
+                case EnumSkillType.Blunt:
+                    target.BluntResistance = newLevel;
+                    break;
+                case EnumSkillType.Magic:
+                    target.MagicResistance = newLevel;
+                    break;
+                case EnumSkillType.Holy:
+                    target.HolyResistance = newLevel;
+                    break;
+                case EnumSkillType.Fire:
+                    target.FireResistance = newLevel;
+                    break;
+                case EnumSkillType.Poison:
+                    target.PoisonResistance = newLevel;
+                    break;
+                case EnumSkillType.Curse:
+                    target.CurseResistance = newLevel;
+                    break;
+                case EnumSkillType.Cold:
+                    target.ColdResistance = newLevel;
+                    break;
+            }
+        }
     }
 }

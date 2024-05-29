@@ -25,7 +25,7 @@ namespace TurnBasedGame.Main.Entities.Skills.HunterSkills
                 return -1;
 
             Logger.LogAction(actor, this);
-            var effect = new StanceEffect(Duration, BuffModifier);
+            var effect = new EvadeEffect(Duration, BuffModifier);
             actor.AddStatusEffect(effect);
             return 1;
         }

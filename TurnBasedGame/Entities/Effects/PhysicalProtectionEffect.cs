@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Effects
@@ -15,26 +16,23 @@ namespace TurnBasedGame.Main.Entities.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            switch (Modifier)
+            for(int i = 0; i <= (int)Modifier; i++)
             {
-                case 0.0:
-                    unit.StandardResistance = EnumResistanceLevel.Resistant;
-                    unit.SlashResistance = EnumResistanceLevel.Resistant;
-                    unit.BluntResistance = EnumResistanceLevel.Resistant;
-                    unit.PierceResistance = EnumResistanceLevel.Resistant;
-                    break;
-                case 1.0:
-                    unit.StandardResistance = EnumResistanceLevel.Sturdy;
-                    unit.SlashResistance = EnumResistanceLevel.Sturdy;
-                    unit.BluntResistance = EnumResistanceLevel.Sturdy;
-                    unit.PierceResistance = EnumResistanceLevel.Sturdy;
-                    break;
-                case 2.0:
-                    unit.StandardResistance = EnumResistanceLevel.Immune;
-                    unit.SlashResistance = EnumResistanceLevel.Immune;
-                    unit.BluntResistance = EnumResistanceLevel.Immune;
-                    unit.PierceResistance = EnumResistanceLevel.Immune;
-                    break;
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Standard, true);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Pierce, true);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Slash, true);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Blunt, true);
+            }
+        }
+
+        public override void RestoreEffect(Unit unit)
+        {
+            for (int i = 0; i <= (int)Modifier; i++)
+            {
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Standard, false);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Pierce, false);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Slash, false);
+                ResistanceManager.AdjustResistance(unit, EnumSkillType.Blunt, false);
             }
         }
     }

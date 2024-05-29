@@ -1,12 +1,13 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Resistance;
+using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Effects
 {
-    public abstract class StatusEffect
+    public abstract class StatusEffect : IStatusEffect
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
@@ -24,6 +25,8 @@ namespace TurnBasedGame.Main.Entities.Effects
         }
 
         public abstract void ApplyEffect(Unit unit);
+
+        public abstract void RestoreEffect(Unit unit);
 
         public void ApplyDamage(Unit unit)
         {

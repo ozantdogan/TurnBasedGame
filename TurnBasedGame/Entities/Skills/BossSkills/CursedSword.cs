@@ -13,6 +13,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BossSkills
             PrimaryType = EnumSkillType.Slash;
             SecondaryType = EnumSkillType.Curse;
             SecondarySkillModifier = 1.0;
+            EffectChance = 30;
         }
 
         public override int Execute(Unit actor, Unit target)

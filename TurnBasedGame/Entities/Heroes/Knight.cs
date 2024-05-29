@@ -17,7 +17,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Dexterity = 4;
             Intelligence = 1;
             Faith = 1;
-            MaxDamageValue = 8;
+            MaxDamageValue = 7;
             MinDamageValue = 5;
             CriticalChance = 10;
             BluntResistance = EnumResistanceLevel.Resistant;

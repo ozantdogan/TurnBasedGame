@@ -16,5 +16,7 @@ namespace TurnBasedGame.Main.Entities.Effects
         }
 
         public override void ApplyEffect(Unit unit) { }
+
+        public override void RestoreEffect(Unit unit) { }
     }
 }
