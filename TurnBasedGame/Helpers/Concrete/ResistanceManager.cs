@@ -44,7 +44,7 @@ namespace TurnBasedGame.Main.Entities.Resistance
             EnumResistanceLevel currentLevel = ResistanceLevelSelectors[skillType](target);
             int currentIndex = ResistanceLevels.IndexOf(currentLevel);
 
-            int newIndex = increase ? currentIndex - 1 : currentIndex + 1;
+            int newIndex = increase ? currentIndex + 1 : currentIndex - 1;
 
             if (newIndex >= 0 && newIndex < ResistanceLevels.Count)
             {

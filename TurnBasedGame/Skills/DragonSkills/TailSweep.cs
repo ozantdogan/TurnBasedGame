@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             PrimaryType = EnumSkillType.Blunt;
             PrimarySkillModifier = 1.2;
             TargetIndexes = new List<int>() { 0, 1, 2 };
-            StunChance = 100;
+            StunChance = 60;
             StunDuration = 0;
         }
 
