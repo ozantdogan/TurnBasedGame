@@ -208,7 +208,11 @@ namespace TurnBasedGame.Main.UI
 
                 if (selectedSkill.PassiveFlag)
                 {
-                    var targetChoices = friendlyTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
+                    var targetChoices = friendlyTargets
+                        .OrderBy(target => target.Position)
+                        .Select((target, index) => $"{index + 1}. {target.Name}")
+                        .ToArray(); 
+                    
                     var targetChoiceIndex = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
                             .Title("Choose a target:")
@@ -237,8 +241,10 @@ namespace TurnBasedGame.Main.UI
                         return -1;
                     }
 
-                    var targetChoices = validTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
-                    var targetChoiceText = AnsiConsole.Prompt(
+                    var targetChoices = validTargets
+                        .OrderBy(target => target.Position)
+                        .Select((target, index) => $"{index + 1}. {target.Name}")
+                        .ToArray(); var targetChoiceText = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
                             .Title("Choose a target:")
                             .AddChoices(targetChoices)

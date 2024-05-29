@@ -1,12 +1,11 @@
-﻿using Spectre.Console;
-using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Effects;
+﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
+    public delegate int? BuffModifierCalculator(Unit actor);
     public class CastSkill : BaseSkill
     {
         public double BuffModifier { get; set; } = 1.0;
@@ -44,7 +43,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             }
 
             var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
-            
+
             Logger.LogAction(actor, this);
 
             var targetIndexes = new List<int>();
@@ -89,9 +88,6 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                 if (!CalculateMana(actor, ManaCost))
                     return -1;
             }
-
-            string actorColor = actor.UnitType.GetColor();
-            string skillColor = PrimaryType.GetColor();
 
             Logger.LogAction(actor, actor, this);
 

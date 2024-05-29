@@ -2,7 +2,7 @@
 using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills.HunterSkills
+namespace TurnBasedGame.Main.Entities.Skills.RogueSkills
 {
     public class PoisonDart : AttackSkill
     {

@@ -2,7 +2,7 @@
 using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Skills.ClericSkills
+namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
 {
     public class KnifePierce : AttackSkill
     {
@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Entities.Skills.ClericSkills
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Pierce;
             ValidUserPositions = new List<int>() { 0 };
-            ValidTargetPositions = new List<int>() { 0, 1};
+            ValidTargetPositions = new List<int>() { 0, 1 };
         }
 
         public override int Execute(Unit actor, Unit target)

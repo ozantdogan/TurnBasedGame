@@ -6,8 +6,6 @@ using TurnBasedGame.Main.UI;
 
 public class MoveSkill : BaseSkill
 {
-    public bool MoveLeft { get; set; }
-
     public MoveSkill()
     {
         Name = "Move";

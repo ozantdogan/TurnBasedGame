@@ -32,7 +32,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             if(!target.CanDodge)
                 return false;
 
-            int dodgeChance = target.Dexterity * 2;
+            int dodgeChance = (int)(target.Dexterity * 2 * target.DodgeModifier);
             int roll = _random.Next(100);
             if (roll < dodgeChance)
             {
@@ -51,7 +51,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             int roll = _random.Next(100);
             if (roll < missChance)
             {
-                Logger.LogMiss(target);
+                Logger.LogMiss(actor);
                 return true;
             }
             return false;

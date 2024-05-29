@@ -1,6 +1,8 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills.ClericSkills;
+using TurnBasedGame.Main.Entities.Skills.CommonSkills;
 using TurnBasedGame.Main.Entities.Skills.HunterSkills;
+using TurnBasedGame.Main.Entities.Skills.RogueSkills;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {
@@ -21,6 +23,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             MaxDamageValue = 7;
             MinDamageValue = 5;
             CriticalChance = 15;
+            Skills.Add(new Evade());   
             Skills.Add(new KnifePierce());
             Skills.Add(new DualKnivesSlash());
             Skills.Add(new PoisonDart());

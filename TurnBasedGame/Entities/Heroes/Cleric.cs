@@ -1,5 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills.ClericSkills;
+using TurnBasedGame.Main.Entities.Skills.CommonSkills;
 using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Heroes

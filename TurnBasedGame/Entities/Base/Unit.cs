@@ -51,6 +51,7 @@ namespace TurnBasedGame.Main.Entities.Base
         private EnumResistanceLevel _originalBleedResistance;
 
         private bool _originalIsStunned;
+        private double _originalDodgeModifier;
 
         public Unit() 
         {
@@ -147,7 +148,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public bool CanBeStunned { get; set; } = true;
         public bool IsStunned { get; set; } = false;
         public int StunDuration { get; set; } = 0;
-
+        public double DodgeModifier { get; set; } = 1.0;
         public bool IsAlive => HP > 0;
 
         public int TurnPriority
@@ -321,6 +322,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalColdResistance = ColdResistance;
             _originalBleedResistance = BleedResistance;
             _originalIsStunned = IsStunned;
+            _originalDodgeModifier = DodgeModifier;
         }
 
         public void RestoreAttributes()
@@ -343,6 +345,7 @@ namespace TurnBasedGame.Main.Entities.Base
             ColdResistance = _originalColdResistance;
             BleedResistance = _originalBleedResistance;
             IsStunned = _originalIsStunned;
+            DodgeModifier = _originalDodgeModifier;
         }
 
         public void SetInitialAttributes()
@@ -365,6 +368,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _originalAttributes[nameof(ColdResistance)] = ColdResistance;
             _originalAttributes[nameof(BleedResistance)] = BleedResistance;
             _originalAttributes[nameof(IsStunned)] = IsStunned;
+            _originalAttributes[nameof(DodgeModifier)] = DodgeModifier;
         }
 
         public void ResetAttributes()
@@ -387,6 +391,7 @@ namespace TurnBasedGame.Main.Entities.Base
             ColdResistance = (EnumResistanceLevel)_originalAttributes[nameof(ColdResistance)];
             BleedResistance = (EnumResistanceLevel)_originalAttributes[nameof(BleedResistance)];
             IsStunned = (bool)_originalAttributes[nameof(IsStunned)];
+            DodgeModifier = (double)_originalAttributes[nameof(DodgeModifier)];
         }
     }
 }
