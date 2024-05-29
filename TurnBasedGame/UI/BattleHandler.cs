@@ -243,13 +243,18 @@ namespace TurnBasedGame.Main.UI
 
                     var targetChoices = validTargets
                         .OrderBy(target => target.Position)
-                        .Select((target, index) => $"{index + 1}. {target.Name}")
-                        .ToArray(); var targetChoiceText = AnsiConsole.Prompt(
+                        .Select((target, index) =>
+                        {
+                            var resistanceLevel = ResistanceManager.ResistanceLevelSelectors[selectedSkill.PrimaryType](target);
+                            return $"{index + 1}. {target.Name} {(resistanceLevel == EnumResistanceLevel.Neutral ? "" : "(" + resistanceLevel + ")")}";
+                        })
+                        .ToArray();
+                        
+                    var targetChoiceText = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
                             .Title("Choose a target:")
                             .AddChoices(targetChoices)
                     );
-
 
                     var targetChoiceIndex = Array.IndexOf(targetChoices, targetChoiceText);
                     if (targetChoiceIndex < 0 || targetChoiceIndex >= validTargets.Count)
