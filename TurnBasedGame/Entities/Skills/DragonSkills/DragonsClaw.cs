@@ -11,6 +11,7 @@ namespace TurnBasedGame.Main.Entities.Skills.DragonSkills
             Name = "Dragon's Claw";
             ExecutionName = Name;
             PrimaryType = EnumSkillType.Slash;
+            ValidTargetPositions = new List<int>() { 0, 1 };
         }    
 
         public override int Execute(Unit actor, Unit target)

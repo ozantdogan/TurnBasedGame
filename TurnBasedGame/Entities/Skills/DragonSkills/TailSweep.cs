@@ -4,9 +4,9 @@ using TurnBasedGame.Main.Helpers.Enums;
 
 namespace TurnBasedGame.Main.Entities.Skills.DragonSkills
 {
-    public class TailToss : AttackSkill
+    public class TailSweep : AttackSkill
     {
-        public TailToss() 
+        public TailSweep() 
         {
             Name = "Tail Toss";
             ExecutionName = Name;

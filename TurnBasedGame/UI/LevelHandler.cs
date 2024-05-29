@@ -10,9 +10,9 @@ namespace TurnBasedGame.Main.UI
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = false;
+        public static bool DummyLevel { get; set; } = true;
         public static bool BossLevel { get; set; } = false;
-        public static int DummyMaxHP { get; set; } = 30;
+        public static int DummyMaxHP { get; set; } = 500;
         public static int DummyCount { get; set; } = 4;
         public static int Pace { get; set; } = 1500;
 
@@ -34,7 +34,7 @@ namespace TurnBasedGame.Main.UI
                 Pace = 1000;
                 for (int i = 0; i <= DummyCount - 1; i++)
                 {
-                    mobList.Add(new Dummy() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i });
+                    mobList.Add(new Dummy() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5));
                 }
             }
             else if (BossLevel)
