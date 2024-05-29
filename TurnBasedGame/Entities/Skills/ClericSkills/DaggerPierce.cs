@@ -13,6 +13,8 @@ namespace TurnBasedGame.Main.Entities.Skills.ClericSkills
             ManaCost = 0;
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Pierce;
+            ValidUserPositions = new List<int>() { 0, 1};
+            ValidTargetPositions = new List<int>() { 0, 1};
         }
 
         public override int Execute(Unit actor, Unit target)

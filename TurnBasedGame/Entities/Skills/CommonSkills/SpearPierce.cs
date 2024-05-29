@@ -16,9 +16,10 @@ namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
             PrimaryType = EnumSkillType.Pierce;
             TargetIndexes = ValidTargetPositions;
             ValidTargetPositions = new List<int> { 0, 1 };
-            ValidUserPositions = new List<int> { 0 };
+            ValidUserPositions = new List<int> { 0, 1, 2 };
         }
 
+        //todo: kullanıldığı zaman kullanıcıyı 1 index ileri atsın
         public override int Execute(Unit actor, List<Unit> targets)
         {
             return base.Execute(actor, targets);

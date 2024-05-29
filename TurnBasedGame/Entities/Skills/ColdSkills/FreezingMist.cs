@@ -17,7 +17,9 @@ namespace TurnBasedGame.Main.Entities.Skills.ColdSkills
             Duration = 3;
             DoTModifier = 0.6;
             PrimarySkillModifier = 0.2;
-            TargetIndexes = new List<int>() { 0, 1, 2, 3 };
+            TargetIndexes = ValidTargetPositions;
+            ValidTargetPositions = new List<int> { 0, 1, 2, 3 };
+            ValidUserPositions = new List<int> { 1, 2 };
         }
 
         public override int Execute(Unit actor, List<Unit> targets)
