@@ -23,8 +23,8 @@ namespace TurnBasedGame
             List<Unit> mobUnits = new List<Unit>();
 
             UnitHelper.AddUnitToList(knight, playerUnits);
-            //UnitHelper.AddUnitToList(hunter, playerUnits);
-            //UnitHelper.AddUnitToList(cleric, playerUnits);
+            UnitHelper.AddUnitToList(hunter, playerUnits);
+            UnitHelper.AddUnitToList(cleric, playerUnits);
 
             //PlayerUnits.Add(dragon);
 

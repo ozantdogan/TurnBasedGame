@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using System.Xml.Linq;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Entities.Skills.BaseSkills;
@@ -40,9 +41,9 @@ namespace TurnBasedGame.Main.UI
             AnsiConsole.MarkupLine($"{FormatUnit(actor)} missed the attack!");
         }
 
-        public static void LogStun(Unit target)
+        public static void LogStun(Unit unit)
         {
-            AnsiConsole.MarkupLine($"{FormatUnit(target)} is stunned!");
+            AnsiConsole.MarkupLine($"{FormatUnit(unit)} is stunned!");
         }
 
         public static void LogDamage(Unit actor, Unit target, double totalDamageDealt, double critModifier)
@@ -54,6 +55,11 @@ namespace TurnBasedGame.Main.UI
         public static void LogEffectDamage(Unit unit, StatusEffect effect, int damageDealt)
         {
             AnsiConsole.MarkupLine($"({FormatEffect(effect)}) {FormatUnit(unit)} took {FormatDamage(damageDealt)}");
+        }
+
+        public static void LogEffectDeath(Unit unit, StatusEffect effect)
+        {
+            AnsiConsole.MarkupLine($"{FormatUnit(unit)} has died due to {FormatEffect(effect)}");
         }
 
         public static void LogRest(Unit actor)
@@ -69,6 +75,11 @@ namespace TurnBasedGame.Main.UI
         public static void LogMoveFail(Unit actor, bool moveFront)
         {
             AnsiConsole.MarkupLine($"{FormatUnit(actor)} cannot move {(moveFront ? "front" : "back")}.");
+        }
+
+        public static void NotEnoughMana(Unit actor, BaseSkill skill)
+        {
+            AnsiConsole.MarkupLine($"{FormatUnit(actor)} does not have enough mana to use {FormatSkill(skill)}!");
         }
 
         private static string FormatUnit(Unit unit)

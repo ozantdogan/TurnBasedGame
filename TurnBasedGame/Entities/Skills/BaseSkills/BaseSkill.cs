@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
@@ -68,7 +69,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
             if (actor.MP < ManaCost)
             {
-                Console.WriteLine($"{actor.Name} does not have enough Mana points to use {Name}");
+                Logger.NotEnoughMana(actor, this);
                 return false;
             }
             else
@@ -78,9 +79,9 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             }
         }
 
-        protected List<int> AdjustTargetIndexes(List<int> targetIndexes)
-        {
-            return targetIndexes.Select(index => 3 - index).ToList();
-        }   
+        //protected List<int> AdjustTargetIndexes(List<int> targetIndexes)
+        //{
+        //    return targetIndexes.Select(index => 3 - index).ToList();
+        //}   
     }
 }

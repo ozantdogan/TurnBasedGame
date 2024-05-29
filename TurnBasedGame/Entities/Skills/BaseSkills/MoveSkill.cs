@@ -54,12 +54,12 @@ public class MoveSkill : BaseSkill
                 targetUnit.Position = currentPosition;
                 actor.Position = newIndex;
 
-                Console.WriteLine($"{actor.Name} moved {(moveBack ? "back" : "front")}.");
+                Logger.LogMove(actor, newIndex < currentPosition);
                 actor.HasMoved = true;
                 return 0;
             }
 
-            Console.WriteLine($"Cannot move {(moveBack ? "front" : "back")}.");
+            Logger.LogMoveFail(actor, newIndex < currentPosition);
             return -1;
         }
         else
@@ -68,15 +68,14 @@ public class MoveSkill : BaseSkill
             int newIndex;
             if (currentPosition == 0)
             {
-                newIndex = currentPosition + 1; // If mob is at the front, move towards the back
+                newIndex = currentPosition + 1; 
             }
             else if (currentPosition == targets.Max(t => t.Position))
             {
-                newIndex = currentPosition - 1; // If mob is at the back, move towards the front
+                newIndex = currentPosition - 1; 
             }
             else
             {
-                // Randomly choose to move forward or backward
                 newIndex = _random.Next(2) == 0 ? currentPosition - 1 : currentPosition + 1;
             }
 
@@ -91,7 +90,6 @@ public class MoveSkill : BaseSkill
 
 
                 Logger.LogMove(actor, newIndex < currentPosition);
-                //Console.WriteLine($"{actor.Name} moved {(newIndex < currentPosition ? "front" : "back")}.");
                 actor.HasMoved = true;
                 return 0;
             }

@@ -161,9 +161,6 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumUnitType UnitType { get; set; }
 
         public EnumRace Race { get; set; }
-
-        //public List<DamageEffect> ActiveDoTEffects { get; private set; } = new List<DamageEffect>();
-        //public List<BuffEffect> ActiveBuffEffects { get; private set; } = new List<BuffEffect>();
         public List<StatusEffect> StatusEffects { get; private set; } = new List<StatusEffect>();
         public bool IsMissable { get; set; } = true;
         public bool CanDodge { get; set; } = true;
@@ -269,21 +266,20 @@ namespace TurnBasedGame.Main.Entities.Base
 
             foreach (var effect in orderedEffects)
             {
-                string effectNameText = $"[{effect.EffectType.GetColor()}]{effect.EffectType}[/]";
                 if(effect.DamagePerTurn > 0)
                     effect.ApplyDamage(this);
 
                 if (HP <= 0)
                 {
                     StatusEffects.Clear();
-                    AnsiConsole.MarkupLine($"[{UnitType.GetColor()}]{Name}[/] has died due to {effectNameText}");
+                    Logger.LogEffectDeath(this, effect);
                     return 0;
                 }
                 else
                 {
                     if (IsStunned == true)
                     {
-                        AnsiConsole.MarkupLine($"[{UnitType.GetColor()}]{Name}[/] is stunned!");
+                        Logger.LogStun(this);
                         result = 0;
                     }
 
