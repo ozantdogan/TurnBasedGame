@@ -2,6 +2,7 @@
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.UI;
 
 public class MoveSkill : BaseSkill
 {
@@ -88,7 +89,9 @@ public class MoveSkill : BaseSkill
                 targetUnit.Position = currentPosition;
                 actor.Position = newIndex;
 
-                Console.WriteLine($"{actor.Name} moved {(newIndex < currentPosition ? "front" : "back")}.");
+
+                Logger.LogMove(actor, newIndex < currentPosition);
+                //Console.WriteLine($"{actor.Name} moved {(newIndex < currentPosition ? "front" : "back")}.");
                 actor.HasMoved = true;
                 return 0;
             }

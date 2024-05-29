@@ -3,6 +3,7 @@ using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
@@ -22,13 +23,14 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
             var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
 
-            Console.WriteLine($"{actor.Name} used {ExecutionName} on {target.Name}!");
+            Logger.LogAction(actor, target, this);
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
+                var targetOldHP = target.HP;
                 double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
                 target.HP += (int)healingValue;
 
-                Console.WriteLine($"{actor.Name} healed {target.Name} (+{(int)healingValue}HP) ");
+                Logger.LogHeal(target, target.HP - targetOldHP);
             }
             return 1;
         }
@@ -42,7 +44,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             }
 
             var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
-            Console.WriteLine($"{actor.Name} used {ExecutionName}!");
+            
+            Logger.LogAction(actor, this);
 
             var targetIndexes = new List<int>();
             if (targets.Count() < TargetIndexes.Count)
@@ -68,10 +71,11 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     if (!target.IsAlive)
                         continue;
 
+                    var targetOldHP = target.HP;
                     double healingValue = _random.Next((int)(castTypeModifier * 0.25), (int)castTypeModifier) * PrimarySkillModifier;
                     target.HP += (int)healingValue;
 
-                    Console.WriteLine($"{actor.Name} healed {target.Name} (+{(int)healingValue}HP) ");
+                    Logger.LogHeal(target, target.HP - targetOldHP);
                 }
             }
 
@@ -89,7 +93,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             string actorColor = actor.UnitType.GetColor();
             string skillColor = PrimaryType.GetColor();
 
-            AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] used {$"[{skillColor}]{ExecutionName}[/]"} on self");
+            Logger.LogAction(actor, actor, this);
 
             var effect = EffectManager.ProtectionEffectSelector[PrimaryType](this);
             actor.AddStatusEffect(effect);
@@ -97,7 +101,11 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
         }
 
         //todo:
+        //PerformProtection(Unit actor, Unit target)
+
+        //todo:
         //PerformProtection(Unit actor, List<Unit> targets)
+
         public override int Execute(Unit actor)
         {
             throw new NotImplementedException();

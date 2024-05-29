@@ -2,6 +2,7 @@
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Effects
 {
@@ -32,13 +33,8 @@ namespace TurnBasedGame.Main.Entities.Effects
             var oldHp = unit.HP;
             unit.HP = (int)(unit.HP - (DamagePerTurn * resistanceModifier * Modifier));
 
-            string effectNameColor = EffectType.GetColor();
-            string unitColor = unit.UnitType.GetColor();
-
-            string effectNameText = $"[{effectNameColor}]({EffectType})[/]";
-            string unitNameText = $"[{unitColor}]{unit.Name}[/]";
-
-            AnsiConsole.MarkupLine($"{effectNameText} {unitNameText} took {oldHp - unit.HP} DAMAGE");
+            int damageDealt = oldHp - unit.HP;
+            Logger.LogEffectDamage(unit, this, damageDealt);
         }
     }
 }

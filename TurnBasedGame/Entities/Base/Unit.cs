@@ -8,6 +8,7 @@ using TurnBasedGame.Main.Entities.Skills;
 using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Base
 {
@@ -253,8 +254,7 @@ namespace TurnBasedGame.Main.Entities.Base
                     effect.ApplyEffect(this);
                 }
 
-                string effectNameText = $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetDisplayName()}[/]";
-                AnsiConsole.MarkupLine($"[{UnitType.GetColor()}]{Name}[/] has {effectNameText} effect!");
+                Logger.LogStatusEffectApplied(this, effect);
             }
         }
 

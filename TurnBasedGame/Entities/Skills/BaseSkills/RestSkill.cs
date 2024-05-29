@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
@@ -26,9 +27,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
         public override int Execute(Unit actor)
         {
-            Console.WriteLine($"{actor.Name} chose to rest for this round");
+            Logger.LogRest(actor);
             return 1;
-
         }
     }
 }

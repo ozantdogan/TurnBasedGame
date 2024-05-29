@@ -5,6 +5,7 @@ using TurnBasedGame.Main.Entities.Effects;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 {
@@ -35,7 +36,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             int roll = _random.Next(100);
             if (roll < dodgeChance)
             {
-                AnsiConsole.MarkupLine($"[{target.UnitType.GetColor()}]{target.Name}[/] managed to dodge the attack!"); 
+                Logger.LogDodge(target);
                 return true;
             }
             return false;
@@ -50,7 +51,8 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             int roll = _random.Next(100);
             if (roll < missChance)
             {
-                AnsiConsole.MarkupLine($"[{actor.UnitType.GetColor()}]{actor.Name}[/] missed the attack!"); return true;
+                Logger.LogMiss(target);
+                return true;
             }
             return false;
         }
@@ -63,7 +65,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             int roll = _random.Next(100);
             if(roll < StunChance)
             {
-                AnsiConsole.MarkupLine($"[{target.UnitType.GetColor()}]{target.Name}[/] is stunned!"); 
+                Logger.LogStun(target);
                 return true;
             }
             return false;
@@ -95,7 +97,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
-                AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] used [{skillColor}]{ExecutionName}[/] on [{targetColor}]{target.Name}[/]!");
+                Logger.LogAction(actor, target, this);
 
                 if (HasMissed(actor, target) || HasDodged(target))
                     return 1;
@@ -115,11 +117,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                 target.HP -= (int)totalDamageDealt;
 
-                string damageColor = critModifier > 1.0 ? "khaki3" : "white";
-                string damageText = $"[{damageColor}]{(int)totalDamageDealt} DAMAGE[/]";
-
-                AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] dealt {damageText} to [{targetColor}]{target.Name}[/] " +
-                                       (target.HP <= 0 ? $"([{targetColor}]{target.Name}[/] is dead.)" : $"({target.HP} HP left)\n"));
+                Logger.LogDamage(actor, target, totalDamageDealt, critModifier);
 
                 int effectDamage;
                 if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType))
@@ -156,7 +154,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             string actorColor = actor.UnitType.GetColor();
             string skillColor = PrimaryType.GetColor();
 
-            AnsiConsole.MarkupLine($"[{actor.UnitType.GetColor()}]{actor.Name}[/] used [{PrimaryType.GetColor()}]{ExecutionName}[/]!");
+            Logger.LogAction(actor, this);
 
             var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
@@ -201,11 +199,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
 
                     target.HP -= (int)totalDamageDealt;
 
-                    string damageColor = critModifier > 1.0 ? "khaki3" : "white";
-                    string damageText = $"[{damageColor}]{(int)totalDamageDealt} DAMAGE[/]";
-
-                    AnsiConsole.MarkupLine($"[{actorColor}]{actor.Name}[/] dealt {damageText} to [{targetColor}]{target.Name}[/] " +
-                                           (target.HP <= 0 ? $"([{targetColor}]{target.Name}[/] is dead.)" : $"({target.HP} HP left)\n"));
+                    Logger.LogDamage(actor, target, totalDamageDealt, critModifier);
 
                     int effectDamage;
                     if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType))
@@ -225,10 +219,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
                     }
 
                     if (TryStun(target))
-                    {
-                        target.IsStunned = true;
-                        target.StunDuration = StunDuration;
-                    }
+                        target.AddStatusEffect(new StunEffect(StunDuration));
                 }
             }
 

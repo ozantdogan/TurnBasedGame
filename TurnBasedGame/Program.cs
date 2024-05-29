@@ -26,7 +26,6 @@ namespace TurnBasedGame
             //UnitHelper.AddUnitToList(hunter, playerUnits);
             //UnitHelper.AddUnitToList(cleric, playerUnits);
 
-
             //PlayerUnits.Add(dragon);
 
             foreach (var playerUnit in playerUnits)
