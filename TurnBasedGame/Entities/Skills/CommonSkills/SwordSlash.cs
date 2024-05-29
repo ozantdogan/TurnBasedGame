@@ -17,6 +17,8 @@ namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
             DamagePerTurn = 2;
             Duration = 1;
             DoTModifier = 1;
+            ValidUserPositions = new List<int> { 0 };
+            ValidTargetPositions = new List<int> { 0 };
         }
 
         public override int Execute(Unit actor, Unit target)

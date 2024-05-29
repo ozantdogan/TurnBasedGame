@@ -15,6 +15,8 @@ namespace TurnBasedGame.Main.Entities.Skills.HunterSkills
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Slash;
             Accuracy = 0.6;
+            ValidUserPositions = new List<int> { 0 };
+            ValidTargetPositions = new List<int> { 0, 1 };
         }
 
         public override int Execute(Unit actor, Unit target)

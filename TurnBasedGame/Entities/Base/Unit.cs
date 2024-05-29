@@ -55,8 +55,8 @@ namespace TurnBasedGame.Main.Entities.Base
             _mp = MaxMP;
             DisplayName = Name;
             Level = new UnitLevel(); 
-            Skills.Add(new RestSkill());
-            Skills.Add(new MoveSkill());
+            Skills.Add(new RestSkill() { ValidUserPositions = new List<int> { 0, 1, 2, 3 } });
+            Skills.Add(new MoveSkill() { ValidUserPositions = new List<int> { 0, 1, 2, 3 } });
             SetInitialAttributes();
         }
 
@@ -80,7 +80,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public List<BaseSkill> Skills { get; set; } = new List<BaseSkill>();
         public UnitLevel Level {  get; set; }
 
-        public int Position { get; set; }
+        public int Position { get; set; } = 0;
         public int MaxHP
         {
             get { return _maxHP; }
@@ -209,6 +209,8 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumResistanceLevel BleedResistance { get; set; } = EnumResistanceLevel.Neutral;
 
         #endregion
+
+        public bool HasMoved { get; set; } = false;
 
         public void LevelUp()
         {

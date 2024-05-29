@@ -13,6 +13,8 @@ namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
             ManaCost = 0;
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Blunt;
+            ValidTargetPositions = new List<int> { 0 ,1};
+            ValidUserPositions = new List<int> { 0};
         }
 
         public override int Execute(Unit actor, Unit target)

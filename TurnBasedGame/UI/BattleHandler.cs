@@ -3,10 +3,10 @@ using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Entities.Skills.BaseSkills;
 using TurnBasedGame.Main.Helpers.Abstract;
+using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
-using TurnBasedGame.Main.UI;
 
-namespace TurnBasedGame.Main
+namespace TurnBasedGame.Main.UI
 {
     public class BattleHandler
     {
@@ -48,18 +48,18 @@ namespace TurnBasedGame.Main
 
                     while (true)
                     {
-                        if(unit.HP <= 0)
+                        if (unit.HP <= 0)
                         {
                             Console.WriteLine($"{unit.Name} is dead!");
                             break;
                         }
 
-                        if(unit.IsStunned)
+                        if (unit.IsStunned)
                         {
                             Console.WriteLine($"{unit.Name} is stunned!");
                             Thread.Sleep(LevelHandler.Pace);
                             unit.StunDuration--;
-                            if(unit.StunDuration < 0)
+                            if (unit.StunDuration < 0)
                                 unit.IsStunned = false;
                             break;
                         }
@@ -80,7 +80,7 @@ namespace TurnBasedGame.Main
                             break;
                         }
                         Thread.Sleep(LevelHandler.Pace);
-                       
+
                         _ui.ShowStatus(playerUnits, mobUnits, level);
                         AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
@@ -155,22 +155,41 @@ namespace TurnBasedGame.Main
             Unit target;
             if (actor.UnitType == EnumUnitType.Player)
             {
-                var skillChoices = actor.Skills.Select((skill, index) =>
+                var availableSkills = actor.Skills.
+                    Where(skill => skill.ValidUserPositions.Contains(actor.Position))
+                    .Where(skill => !(skill is MoveSkill) || !actor.HasMoved)
+                    .ToList();
+
+                if (availableSkills.Count == 0)
+                {
+                    Console.WriteLine("No available skills for this position.");
+                    return -1;
+                }
+
+                var skillChoices = availableSkills.Select((skill, index) =>
                 {
                     var color = skill.PrimaryType.GetColor();
                     string primaryTypeText = (skill.PrimaryType != EnumSkillType.None ? $"[{skill.PrimaryType.GetColor()}]({skill.PrimaryType.GetCode()})[/] " : string.Empty);
                     string secondaryTypeText = (skill.SecondaryType != EnumSkillType.None ? $"[{skill.SecondaryType.GetColor()}]({skill.SecondaryType.GetCode()})[/] " : string.Empty);
                     string manaCostText = (skill.ManaCost > 0 ? $"[cyan]({skill.ManaCost})[/]" : string.Empty);
                     return $"{index + 1}. {skill.Name} {primaryTypeText}{secondaryTypeText}{manaCostText}";
-                }).ToArray(); 
+                }).ToArray();
 
-                var skillChoiceIndex = AnsiConsole.Prompt(
+                var skillChoiceText = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
                         .Title("Choose an action:")
                         .AddChoices(skillChoices)
                 );
 
-                skillChoice = Array.IndexOf(skillChoices, skillChoiceIndex);
+                skillChoice = Array.IndexOf(skillChoices, skillChoiceText);
+
+                if (skillChoice < 0 || skillChoice >= availableSkills.Count)
+                {
+                    Console.WriteLine("Invalid choice!");
+                    return -1;
+                }
+
+                var selectedSkill = availableSkills[skillChoice];
 
                 if (skillChoice < 0 || skillChoice >= actor.Skills.Count)
                 {
@@ -178,24 +197,24 @@ namespace TurnBasedGame.Main
                     return -1;
                 }
 
-                if (actor.Skills[skillChoice] is MoveSkill moveSkill)
+                if (selectedSkill is MoveSkill moveSkill && !actor.HasMoved)
                     return moveSkill.Execute(actor, friendlyTargets);
 
-                if (actor.Skills[skillChoice] is RestSkill restSkill)
+                if (selectedSkill is RestSkill restSkill)
                     return restSkill.Execute(actor);
 
-                if (actor.Skills[skillChoice].SelfTarget)
-                    return actor.Skills[skillChoice].Execute(actor);
+                if (selectedSkill.SelfTarget)
+                    return selectedSkill.Execute(actor);
 
-                if (actor.Skills[skillChoice].TargetIndexes != null && actor.Skills[skillChoice].TargetIndexes.Count() > 0)
+                if (selectedSkill.TargetIndexes != null && selectedSkill.TargetIndexes.Count() > 0)
                 {
-                    if (actor.Skills[skillChoice].PassiveFlag)
-                        return actor.Skills[skillChoice].Execute(actor, friendlyTargets);
+                    if (selectedSkill.PassiveFlag)
+                        return selectedSkill.Execute(actor, friendlyTargets);
                     else
-                        return actor.Skills[skillChoice].Execute(actor, enemyTargets);
+                        return selectedSkill.Execute(actor, enemyTargets);
                 }
 
-                if (actor.Skills[skillChoice].PassiveFlag)
+                if (selectedSkill.PassiveFlag)
                 {
                     var targetChoices = friendlyTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
                     var targetChoiceIndex = AnsiConsole.Prompt(
@@ -219,77 +238,43 @@ namespace TurnBasedGame.Main
                 }
                 else
                 {
-                    var targetChoices = enemyTargets
-                        .Select((target, index) =>
-                        {
-                            var resistanceLevel = EnumResistanceLevel.Neutral; 
+                    var validTargets = enemyTargets.Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position)).ToList();
 
-                            EnumSkillType primaryType = actor.Skills[skillChoice].PrimaryType;
-                            if (primaryType != EnumSkillType.None && ResistanceManager.ResistanceLevelSelectors.ContainsKey(primaryType))
-                            {
-                                var selector = ResistanceManager.ResistanceLevelSelectors[primaryType];
-                                resistanceLevel = selector(target);
-                            }
+                    if (validTargets.Count == 0)
+                    {
+                        Console.WriteLine("No valid targets available for this skill.");
+                        return -1;
+                    }
 
-                            string resistanceText = resistanceLevel != EnumResistanceLevel.Neutral ? $"[gray] ({resistanceLevel})[/]" : "";
-                            return $"{index + 1}. {target.Name}{resistanceText}";
-                        })
-                        .ToArray();
-
-                    // Prompt the user to choose a target
-                    var targetChoiceIndex = AnsiConsole.Prompt(
+                    var targetChoices = validTargets.Select((target, index) => $"{index + 1}. {target.Name}").ToArray();
+                    var targetChoiceText = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
                             .Title("Choose a target:")
                             .AddChoices(targetChoices)
                     );
 
-                    // Convert the choice back to the index
-                    int targetChoice = Array.IndexOf(targetChoices, targetChoiceIndex);
 
-                    if (targetChoice >= 0 && targetChoice < enemyTargets.Count && enemyTargets[targetChoice].IsAlive)
-                    {
-                        target = enemyTargets[targetChoice];
-                    }
-                    else
+                    var targetChoiceIndex = Array.IndexOf(targetChoices, targetChoiceText);
+                    if (targetChoiceIndex < 0 || targetChoiceIndex >= validTargets.Count)
                     {
                         Console.WriteLine("Invalid target choice!");
                         return -1;
                     }
+
+                    // Convert the choice back to the index
+                    target = validTargets[targetChoiceIndex];
+                    return selectedSkill.Execute(actor, target);
                 }
             }
-            else if(actor.UnitType == EnumUnitType.Dummy)// dummy
+            else if (actor.UnitType == EnumUnitType.Dummy)// dummy
             {
                 //return new RestSkill().Execute(actor);
                 return new MoveSkill().Execute(actor, friendlyTargets);
             }
-            else // mob
+            else // Mob units
             {
-                //if (friendlyTargets.Count(t => t.IsAlive) > 1 && _random.Next(100) < 10)
-                //{
-                //    skillChoice = _random.Next(actor.Skills.Count);
-                //    if (actor.Skills[skillChoice] is MoveSkill moveSkill)
-                //    {
-                //        bool moveLeft = _random.Next(2) == 0;
-                //        int newIndex = moveLeft ? friendlyTargets.IndexOf(actor) - 1 : friendlyTargets.IndexOf(actor) + 1;
-                //        if (newIndex >= 0 && newIndex < friendlyTargets.Count)
-                //        {
-                //            return moveSkill.Execute(actor, friendlyTargets);
-                //        }
-                //    }
-                //}
-                
-                var remainingSkills = actor.Skills.Where(skill => !(skill is MoveSkill) && !(skill is RestSkill)).ToList();
-                skillChoice = _random.Next(remainingSkills.Count) + 3;
-                if (actor.Skills[skillChoice].TargetIndexes != null && actor.Skills[skillChoice].TargetIndexes.Count() > 0)
-                {
-                    if (actor.Skills[skillChoice].PassiveFlag)
-                        return actor.Skills[skillChoice].Execute(actor, friendlyTargets);
-                    else
-                        return actor.Skills[skillChoice].Execute(actor, enemyTargets);
-                }
-
-                var targetIndex = _random.Next(enemyTargets.Count);
-                target = enemyTargets[targetIndex];
+                var mobLogic = new MobLogic();
+                return mobLogic.ExecuteMobTurn(actor, enemyTargets, friendlyTargets);
             }
 
             var actionCompleted = actor.Skills[skillChoice].Execute(actor, target);
@@ -302,7 +287,10 @@ namespace TurnBasedGame.Main
         private void PostTurn(List<Unit> units)
         {
             foreach (var unit in units.Where(u => u.IsAlive))
+            {
                 unit.MP = Math.Min(unit.MP + 5, unit.MaxMP);
+                unit.HasMoved = false;
+            }
         }
     }
 }

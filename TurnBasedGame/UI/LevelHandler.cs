@@ -5,12 +5,12 @@ using TurnBasedGame.Main.Entities.Mobs;
 using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame
+namespace TurnBasedGame.Main.UI
 {
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = true;
+        public static bool DummyLevel { get; set; } = false;
         public static bool BossLevel { get; set; } = false;
         public static int DummyCount { get; set; } = 4;
         public static int Pace { get; set; } = 1500;
@@ -31,12 +31,12 @@ namespace TurnBasedGame
             {
                 Level = 0;
                 Pace = 2000;
-                for(int i = 0; i <= DummyCount - 1; i++)
+                for (int i = 0; i <= DummyCount - 1; i++)
                 {
                     mobList.Add(new Dummy() { Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i });
                 }
             }
-            else if(BossLevel)
+            else if (BossLevel)
             {
                 Level = 0;
                 Pace = 1200;
@@ -59,9 +59,9 @@ namespace TurnBasedGame
 
             for (int i = 0; i < numberOfMobs; i++)
             {
-                if (random.Next(1, 101) <= 50 && Level > 2 && numberOfMobs < 4 && !(mobList.Any(u => u is Troll)))
+                if (random.Next(1, 101) <= 50 && Level > 2 && numberOfMobs < 4 && !mobList.Any(u => u is Troll))
                 {
-                    mobList.Add(new Troll() { UnitType = EnumUnitType.Mob });
+                    mobList.Add(new Troll() { UnitType = EnumUnitType.Mob, Position = i });
                 }
                 else
                 {
@@ -74,13 +74,13 @@ namespace TurnBasedGame
                     switch (skeletonType)
                     {
                         case 0:
-                            mobList.Add(new UndeadBrute() { UnitType = EnumUnitType.Mob });
+                            mobList.Add(new UndeadBrute() { UnitType = EnumUnitType.Mob, Position = i });
                             break;
                         case 1:
-                            mobList.Add(new UndeadSwordsman() { UnitType = EnumUnitType.Mob });
+                            mobList.Add(new UndeadSwordsman() { UnitType = EnumUnitType.Mob, Position = i });
                             break;
                         case 2:
-                            mobList.Add(new UndeadSpearsman() { UnitType = EnumUnitType.Mob });
+                            mobList.Add(new UndeadSpearsman() { UnitType = EnumUnitType.Mob, Position = i });
                             break;
                     }
 

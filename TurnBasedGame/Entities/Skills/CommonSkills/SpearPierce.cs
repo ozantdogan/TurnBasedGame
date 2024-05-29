@@ -14,7 +14,9 @@ namespace TurnBasedGame.Main.Entities.Skills.CommonSkills
             PassiveFlag = false;
             PrimarySkillModifier = 1.5;
             PrimaryType = EnumSkillType.Pierce;
-            TargetIndexes = new List<int>() { 0, 1 };
+            TargetIndexes = ValidTargetPositions;
+            ValidTargetPositions = new List<int> { 0, 1 };
+            ValidUserPositions = new List<int> { 0 };
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

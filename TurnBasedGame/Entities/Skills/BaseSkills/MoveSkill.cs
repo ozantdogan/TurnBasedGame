@@ -13,30 +13,6 @@ public class MoveSkill : BaseSkill
         ManaCost = 0;
     }
 
-    //public override int Execute(Unit actor, List<Unit> targets)
-    //{
-    //    int currentIndex = targets.IndexOf(actor);
-    //    if (currentIndex == -1) return -1; // Actor not found in the list
-
-    //    int newIndex = MoveLeft ? currentIndex - 1 : currentIndex + 1;
-    //    if (actor.UnitType == EnumUnitType.Mob)
-    //        newIndex = MoveLeft ? currentIndex + 1 : currentIndex - 1;
-
-    //    if (newIndex >= 0 && newIndex < targets.Count && targets[newIndex].IsAlive)
-    //    {
-    //        // Swap positions
-    //        var temp = targets[newIndex];
-    //        targets[newIndex] = actor;
-    //        targets[currentIndex] = temp;
-
-    //        Console.WriteLine($"{actor.Name} moved {(MoveLeft ? "left" : "right")}.");
-    //        return 1;
-    //    }
-
-    //    Console.WriteLine($"Cannot move {(MoveLeft ? "left" : "right")}.");
-    //    return -1;
-    //}
-
     public override int Execute(Unit actor, List<Unit> targets)
     {
         int currentPosition = actor.Position;
@@ -44,12 +20,11 @@ public class MoveSkill : BaseSkill
 
         if (actor.UnitType == EnumUnitType.Player)
         {
-            // Determine valid move directions
             var moveChoices = new List<string>();
             if (currentPosition < targets.Max(t => t.Position) && targets.Any(t => t.Position == currentPosition + 1 && t.IsAlive))
-                moveChoices.Add("Back"); // Moving towards a higher position
+                moveChoices.Add("Back"); 
             if (currentPosition > 0 && targets.Any(t => t.Position == currentPosition - 1 && t.IsAlive))
-                moveChoices.Add("Front"); // Moving towards a lower position
+                moveChoices.Add("Front"); 
 
             if (moveChoices.Count == 0)
             {
@@ -69,7 +44,6 @@ public class MoveSkill : BaseSkill
             // Calculate new position based on direction
             int newIndex = moveBack ? currentPosition + 1 : currentPosition - 1;
 
-            // Ensure the new index is within bounds and target position is valid
             if (targets.Any(t => t.Position == newIndex && t.IsAlive))
             {
                 // Find the unit in the new position
@@ -80,7 +54,8 @@ public class MoveSkill : BaseSkill
                 actor.Position = newIndex;
 
                 Console.WriteLine($"{actor.Name} moved {(moveBack ? "back" : "front")}.");
-                return 1;
+                actor.HasMoved = true;
+                return 0;
             }
 
             Console.WriteLine($"Cannot move {(moveBack ? "front" : "back")}.");
@@ -104,8 +79,7 @@ public class MoveSkill : BaseSkill
                 newIndex = _random.Next(2) == 0 ? currentPosition - 1 : currentPosition + 1;
             }
 
-            // Ensure the new index is within bounds and target position is valid
-            if (newIndex >= 0 && newIndex < targets.Count && targets.Any(t => t.Position == newIndex && t.IsAlive))
+            if (newIndex >= 0 && newIndex < targets.Count && targets.Any(t => t.Position == newIndex && t.IsAlive) && !actor.HasMoved)
             {
                 // Find the unit in the new position
                 var targetUnit = targets.First(t => t.Position == newIndex);
@@ -115,11 +89,11 @@ public class MoveSkill : BaseSkill
                 actor.Position = newIndex;
 
                 Console.WriteLine($"{actor.Name} moved {(newIndex < currentPosition ? "front" : "back")}.");
-                return 1;
+                actor.HasMoved = true;
+                return 0;
             }
 
-            Console.WriteLine($"Cannot move.");
-            return -1;
+            return actor.Skills.First(p => p is RestSkill).Execute(actor);
         }
     }
 
