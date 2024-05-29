@@ -217,7 +217,7 @@ namespace TurnBasedGame.Main.Entities.Skills.BaseSkills
             if (!target.IsMissable)
                 return false;
 
-            double missChance = 100 / (actor.Dexterity * 0.5 * Accuracy);
+            double missChance = 100 / (actor.Dexterity * 0.8 * Accuracy);
             int roll = _random.Next(100);
             if (roll < missChance)
             {

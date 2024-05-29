@@ -10,7 +10,6 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Code = "{USE}";
             Name = "Undead Soldier";
             DisplayName = $"Undead\nSoldier";
-            MaxHP = 18;
             Strength = 4;
             Dexterity = 4;
             Intelligence = 1;
