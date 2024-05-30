@@ -5,9 +5,9 @@ using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.BossSkills
 {
-    public class CurseCast : AttackSkill
+    public class CurseSpell : AttackSkill
     {
-        public CurseCast()
+        public CurseSpell()
         {
             Name = "Curse";
             ExecutionName = Name;

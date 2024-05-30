@@ -11,12 +11,12 @@ namespace TurnBasedGame.Main.Entities.Bosses
             Code = "{KIN}";
             Name = "Gaiseric";
             DisplayName = "Gaiseric,\nthe Skeleton King";
-            MaxHP = 70;
+            MaxHP = 80;
             MaxMP = 100;
             Strength = 8;
             Dexterity = 6;
-            Intelligence = 5;
-            Faith = 7;
+            Intelligence = 7;
+            Faith = 5;
             CriticalChance = 0;
             SlashResistance = EnumResistanceLevel.Resistant;
             PierceResistance = EnumResistanceLevel.Resistant;
@@ -26,7 +26,7 @@ namespace TurnBasedGame.Main.Entities.Bosses
             StunResistance = EnumResistanceLevel.Immune;
 
             Skills.Add(new CursedSwordSlash());
-            Skills.Add(new CurseCast());
+            Skills.Add(new CurseSpell());
         }
     }
 }
