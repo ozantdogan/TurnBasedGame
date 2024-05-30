@@ -11,9 +11,11 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             Name = "Divine Light";
             ExecutionName = Name;
             ManaCost = 15;
-            PassiveFlag = false;
+            IsPassive = false;
             PrimaryType = EnumSkillType.Holy;
-            TargetIndexes = new List<int>() { 0, 1, 2, 3 };
+            ValidUserPositions = new List<int> { 2, 3 };
+            ValidTargetPositions = new List<int> { 0, 1, 2, 3 };
+            IsAoE = true;
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

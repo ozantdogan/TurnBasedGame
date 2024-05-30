@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             Name = "Star Shard";
             ExecutionName = Name;
             ManaCost = 4;
-            PassiveFlag = false;
+            IsPassive = false;
             PrimaryType = EnumSkillType.Magic;
         }
 

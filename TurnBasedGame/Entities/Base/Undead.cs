@@ -8,7 +8,7 @@ namespace TurnBasedGame.Main.Entities.Base
             Race = EnumRace.Undead;
             HolyResistance = EnumResistanceLevel.Fragile;
             PoisonResistance = EnumResistanceLevel.Resistant;
-            CurseResistance = EnumResistanceLevel.Immune;
+            DarkResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Weak;
             ColdResistance = EnumResistanceLevel.Sturdy;
             BleedResistance = EnumResistanceLevel.Sturdy;

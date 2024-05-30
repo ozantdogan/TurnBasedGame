@@ -6,14 +6,11 @@ namespace TurnBasedGame.Main.Effects
 {
     public class ColdEffect : StatusEffect
     {
-        public ColdEffect(int damagePerTurn, double modifier, int duration)
+        public ColdEffect()
         {
             Name = "Cold";
             SkillType = EnumSkillType.Cold;
-            EffectType = EnumEffectType.COLD;
-            DamagePerTurn = damagePerTurn;
-            Modifier = modifier;
-            Duration = duration;
+            EffectType = EnumEffectType.ColdEffect;
         }
 
         public override void ApplyEffect(Unit unit)

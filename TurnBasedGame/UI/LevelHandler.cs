@@ -34,16 +34,16 @@ namespace TurnBasedGame.Main.UI
                 Pace = 1000;
                 for (int i = 0; i <= DummyCount - 1; i++)
                 {
-                    UnitHelper.AddUnit(new UndeadSpearsman() { UnitType = EnumUnitType.Mob, Position = i, TurnPriority = 3 }, mobList);
-                    //UnitHelper.AddUnit(new Dummy() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5), mobList);
+                    //UnitHelper.AddUnit(new UndeadSpearsman() { Name = $"Spearsman {i}", DisplayName = $"Spearsman {i}", UnitType = EnumUnitType.Mob, Position = i, TurnPriority = -1, HP = 1 }, mobList);
+                    UnitHelper.AddUnit(new Dummy() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i}.SetLevel(5), mobList);
                 }
             }
             else if (BossLevel)
             {
                 Level = 0;
                 Pace = 1200;
-                //UnitHelper.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }, mobList);
-                UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }, mobList);
+                UnitHelper.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }, mobList);
+                //UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }, mobList);
                 //UnitHelper.AddUnit(new Rogue() { UnitType = EnumUnitType.Mob, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(5), mobList);
             }
 

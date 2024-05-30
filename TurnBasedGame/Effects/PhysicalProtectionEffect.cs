@@ -6,12 +6,10 @@ namespace TurnBasedGame.Main.Effects
 {
     public class PhysicalProtectionEffect : StatusEffect
     {
-        public PhysicalProtectionEffect(double modifier = 0.0, int duration = 1)
+        public PhysicalProtectionEffect()
         {
             Name = "Physical Protection";
-            EffectType = EnumEffectType.PROTECTION;
-            Modifier = modifier;
-            Duration = duration;
+            EffectType = EnumEffectType.Protection;
         }
 
         public override void ApplyEffect(Unit unit)

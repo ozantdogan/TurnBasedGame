@@ -5,14 +5,11 @@ namespace TurnBasedGame.Main.Effects
 {
     public class PoisonEffect : StatusEffect
     {
-        public PoisonEffect(int damagePerTurn, double modifier, int duration)
+        public PoisonEffect()
         {
             Name = "Poison";
             SkillType = EnumSkillType.Poison;
-            EffectType = EnumEffectType.POISON;
-            DamagePerTurn = damagePerTurn;
-            Modifier = modifier;
-            Duration = duration;
+            EffectType = EnumEffectType.PoisonEffect;
         }
 
         public override void ApplyEffect(Unit unit)

@@ -6,9 +6,14 @@ using TurnBasedGame.Main.UI;
 
 public class MoveSkill : BaseSkill
 {
+    public string MoveBackText = " 1. Go Back";
+    public string MoveFrontText = " 2. Go Front";
+    public string ReturnText = " 0. Return";
+
     public MoveSkill()
     {
         Name = "Move";
+        IsPassive = true;
         ManaCost = 0;
     }
 
@@ -21,9 +26,11 @@ public class MoveSkill : BaseSkill
         {
             var moveChoices = new List<string>();
             if (currentPosition < targets.Max(t => t.Position) && targets.Any(t => t.Position == currentPosition + 1 && t.IsAlive))
-                moveChoices.Add("Back"); 
+                moveChoices.Add(MoveBackText); 
             if (currentPosition > 0 && targets.Any(t => t.Position == currentPosition - 1 && t.IsAlive))
-                moveChoices.Add("Front"); 
+                moveChoices.Add(MoveFrontText);
+
+            moveChoices.Add(ReturnText);
 
             if (moveChoices.Count == 0)
             {
@@ -38,7 +45,10 @@ public class MoveSkill : BaseSkill
                     .AddChoices(moveChoices)
             );
 
-            bool moveBack = directionChoice == "Back";
+            if (directionChoice == ReturnText)
+                return -2;
+
+            bool moveBack = directionChoice == MoveBackText;
 
             // Calculate new position based on direction
             int newIndex = moveBack ? currentPosition + 1 : currentPosition - 1;

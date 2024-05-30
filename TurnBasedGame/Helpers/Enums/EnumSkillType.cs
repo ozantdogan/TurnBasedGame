@@ -32,14 +32,11 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Type("green", "Poison")]
         Poison,
 
-        [Type("deeppink4_1", "Curse")]
-        Curse,
+        [Type("deeppink4_1", "Dark")]
+        Dark,
 
         [Type("paleturquoise1", "Cold")]
-        Cold,
-
-        [Type("red3_1", "Bleed")]
-        Bleed,
+        Cold
     }
 
     public static class SkillTypeModifier
@@ -52,11 +49,10 @@ namespace TurnBasedGame.Main.Helpers.Enums
             { EnumSkillType.Blunt, actor => actor.Strength * 0.5 },
             { EnumSkillType.Magic, actor => actor.Intelligence * 0.5 },
             { EnumSkillType.Holy, actor => actor.Faith * 0.5 },
-            { EnumSkillType.Curse, actor => actor.Faith * 0.3 + actor.Dexterity * 0.3 },
+            { EnumSkillType.Dark, actor => actor.Faith * 0.3 + actor.Dexterity * 0.3 },
             { EnumSkillType.Fire, actor => actor.Faith * 0.4 + actor.Intelligence * 0.1 },
             { EnumSkillType.Cold, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
             { EnumSkillType.Poison, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
-            { EnumSkillType.Bleed, actor => actor.Strength * 0.3 + actor.Dexterity * 0.2 },
         };
     }
 }

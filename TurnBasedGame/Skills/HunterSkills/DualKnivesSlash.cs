@@ -11,8 +11,8 @@ namespace TurnBasedGame.Main.Skills.HunterSkills
             Name = "Dual Knives Slash";
             ExecutionName = "Knife Slash";
             ManaCost = 8;
-            ExecutionCount = 2;
-            PassiveFlag = false;
+            ExecutionCount = 1;
+            IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
             Accuracy = 0.6;
             PrimarySkillModifier = 0.5;

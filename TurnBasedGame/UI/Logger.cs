@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.UI
@@ -85,6 +86,11 @@ namespace TurnBasedGame.Main.UI
         public static void NotEnoughMana(Unit actor, BaseSkill skill)
         {
             AnsiConsole.MarkupLine($"{FormatUnit(actor)} does not have enough mana to use {FormatSkill(skill)}!");
+        }
+
+        public static void NoValidTargets()
+        {
+            AnsiConsole.MarkupLine($"No valid targets available for this skill.");
         }
 
         private static string FormatUnit(Unit unit)

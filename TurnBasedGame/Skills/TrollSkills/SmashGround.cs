@@ -11,10 +11,11 @@ namespace TurnBasedGame.Main.Skills.TrollSkills
             Name = "Smash Ground";
             ExecutionName = Name;
             ManaCost = 20;
-            PassiveFlag = false;
+            IsPassive = false;
             PrimarySkillModifier = 1.5;
             PrimaryType = EnumSkillType.Blunt;
-            TargetIndexes = new List<int>() { 0, 1, 2 };
+            ValidTargetPositions = new List<int>() { 0, 1, 2 };
+            IsAoE = true;
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

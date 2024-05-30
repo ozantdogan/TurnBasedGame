@@ -11,12 +11,12 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             Name = "Spear Pierce";
             ExecutionName = Name;
             ManaCost = 8;
-            PassiveFlag = false;
+            IsPassive = false;
             PrimarySkillModifier = 1.5;
-            AreaSkill = true;
-            TargetIndexes = ValidTargetPositions;
+            IsAoE = true;
             ValidTargetPositions = new List<int> { 0, 1 };
-            ValidUserPositions = new List<int> { 0, 1, 2 };
+            ValidUserPositions = new List<int> { 0, 1 };
+            IsAoE = true;
         }
 
         //todo: kullanıldığı zaman kullanıcıyı 1 index ileri atsın

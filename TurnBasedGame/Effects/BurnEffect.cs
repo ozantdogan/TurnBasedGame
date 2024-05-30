@@ -5,14 +5,11 @@ namespace TurnBasedGame.Main.Effects
 {
     public class BurnEffect : StatusEffect
     {
-        public BurnEffect(int damagePerTurn, double modifier, int duration)
+        public BurnEffect()
         {
             Name = "Burn";
             SkillType = EnumSkillType.Fire;
-            EffectType = EnumEffectType.BURN;
-            DamagePerTurn = damagePerTurn;
-            Modifier = modifier;
-            Duration = duration;
+            EffectType = EnumEffectType.BurnEffect;
         }
 
         public override void ApplyEffect(Unit unit) { }

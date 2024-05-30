@@ -1,4 +1,5 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
@@ -11,15 +12,12 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             Name = "Sword Slash";
             ExecutionName = Name;
             ManaCost = 0;
-            PassiveFlag = false;
+            IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
-            SecondaryType = EnumSkillType.Bleed;
             EffectChance = 20;
-            DamagePerTurn = 2;
-            Duration = 1;
-            DoTModifier = 1;
             ValidUserPositions = new List<int> { 0, 1 };
             ValidTargetPositions = new List<int> { 0, 1 };
+            SkillStatusEffects.Add(new BleedEffect() { DamagePerTurn = 2, Modifier = 1, Duration = 1, ApplianceChance = 15 });
         }
 
         public override int Execute(Unit actor, Unit target)

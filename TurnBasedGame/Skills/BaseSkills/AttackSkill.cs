@@ -9,10 +9,6 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 {
     public class AttackSkill : BaseSkill
     {
-        public int DamagePerTurn { get; set; } = 0;
-        public int Duration { get; set; } = 0;
-        public double DoTModifier { get; set; } = 1.0;
-
         public AttackSkill()
         {
         }
@@ -39,9 +35,8 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
 
             var critModifier = 1.0;
-            StatusEffect? effect = null;
 
-            for (int i = 0; i <= ExecutionCount - 1; i++)
+            for (int i = 0; i <= ExecutionCount; i++)
             {
                 Logger.LogAction(actor, target, this);
 
@@ -65,30 +60,23 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
                 Logger.LogDamage(actor, target, totalDamageDealt, critModifier);
 
-                int effectDamage;
-                if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType) && TryEffect())
+                foreach(var effect in SkillStatusEffects)
                 {
-                    effectDamage = (int)(DamagePerTurn * primaryDamageTypeModifier * 0.5);
-                    effect = EffectManager.DamageEffectSelector[PrimaryType](this);
-                    effect.DamagePerTurn = effectDamage;
-                    target.AddStatusEffect(effect);
-                }
+                    var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) : 1.0;
+                    if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
+                    {
+                        StatusEffect statusEffect = EffectManager.EffectSelector[effect.EffectType]();
+                        statusEffect.DamagePerTurn = effect.DamagePerTurn;
+                        statusEffect.Modifier = effect.Modifier;
+                        statusEffect.Duration = effect.Duration;
+                        UnitHelper.AddStatusEffect(target, statusEffect);
+                    }
 
-                if (EffectManager.DamageEffectSelector.ContainsKey(SecondaryType) && TryEffect())
-                {
-                    effectDamage = (int)(DamagePerTurn * secondaryDamageTypeModifier * 0.5);
-                    effect = EffectManager.DamageEffectSelector[SecondaryType](this);
-                    effect.DamagePerTurn = effectDamage;
-                    target.AddStatusEffect(effect);
-                }
-
-                if (TryStun(target))
-                    target.AddStatusEffect(new StunEffect(StunDuration));
-
-                if (!target.IsAlive)
-                {
-                    Logger.LogDeath(target);
-                    break;
+                    if (!target.IsAlive)
+                    {
+                        Logger.LogDeath(target);
+                        break;
+                    }
                 }
             }
 
@@ -112,7 +100,6 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
             var critModifier = 1.0;
 
-            StatusEffect? effect = null;
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
                 foreach (var target in targets)
@@ -152,26 +139,24 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
                     Logger.LogDamage(actor, target, totalDamageDealt, critModifier);
 
-                    int effectDamage;
-                    if (EffectManager.DamageEffectSelector.ContainsKey(PrimaryType) && TryEffect())
+                    foreach (var effect in SkillStatusEffects)
                     {
-                        effectDamage = (int)(DamagePerTurn * primaryDamageTypeModifier * 0.5);
-                        effect = EffectManager.DamageEffectSelector[PrimaryType](this);
-                        effect.DamagePerTurn = effectDamage;
-                        target.AddStatusEffect(effect);
+                        var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) : 1.0;
+                        if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
+                        {
+                            StatusEffect statusEffect = EffectManager.EffectSelector[effect.EffectType]();
+                            statusEffect.DamagePerTurn = effect.DamagePerTurn;
+                            statusEffect.Modifier = effect.Modifier;
+                            statusEffect.Duration = effect.Duration;
+                            UnitHelper.AddStatusEffect(target, statusEffect);
+                        }
+
+                        if (!target.IsAlive)
+                        {
+                            Logger.LogDeath(target);
+                            break;
+                        }
                     }
-
-                    if (EffectManager.DamageEffectSelector.ContainsKey(SecondaryType) && TryEffect())
-                    {
-                        effectDamage = (int)(DamagePerTurn * secondaryDamageTypeModifier * 0.5);
-                        effect = EffectManager.DamageEffectSelector[SecondaryType](this);
-                        effect.DamagePerTurn = effectDamage;
-                        target.AddStatusEffect(effect);
-                    }
-
-                    if (TryStun(target))
-                        target.AddStatusEffect(new StunEffect(StunDuration));
-
                 }
             }
 
@@ -221,31 +206,6 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             return false;
         }
 
-        private bool TryStun(Unit target)
-        {
-            if (StunChance <= 0 || !target.CanBeStunned || target.IsStunned || !target.IsAlive)
-                return false;
-
-            int roll = _random.Next(100);
-            if (roll < StunChance)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool TryEffect()
-        {
-            if (EffectChance <= 0 || DamagePerTurn == 0)
-                return false;
-
-            int roll = _random.Next(100);
-            if (roll < EffectChance)
-            {
-                return true;
-            }
-            return false;
-        }
     }
 
 }

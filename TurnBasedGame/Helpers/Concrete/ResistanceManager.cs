@@ -15,8 +15,17 @@ namespace TurnBasedGame.Main.Entities.Resistance
             { EnumSkillType.Holy, target => target.HolyResistance },
             { EnumSkillType.Fire, target => target.FireResistance },
             { EnumSkillType.Poison, target => target.PoisonResistance },
-            { EnumSkillType.Curse, target => target.CurseResistance },
+            { EnumSkillType.Dark, target => target.DarkResistance },
             { EnumSkillType.Cold, target => target.ColdResistance },
+        };
+
+        public static readonly Dictionary<EnumEffectType, Func<Unit, EnumResistanceLevel>> EffectResistanceLevelSelector = new Dictionary<EnumEffectType, Func<Unit, EnumResistanceLevel>>
+        {
+            { EnumEffectType.PoisonEffect, target => target.PoisonResistance },
+            { EnumEffectType.BurnEffect, target => target.FireResistance },
+            { EnumEffectType.CurseEffect, target => target.DarkResistance },
+            { EnumEffectType.BleedEffect, target => target.BleedResistance },
+            { EnumEffectType.ColdEffect, target => target.ColdResistance },
         };
 
         public static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<EnumResistanceLevel, double>
@@ -81,8 +90,8 @@ namespace TurnBasedGame.Main.Entities.Resistance
                 case EnumSkillType.Poison:
                     target.PoisonResistance = newLevel;
                     break;
-                case EnumSkillType.Curse:
-                    target.CurseResistance = newLevel;
+                case EnumSkillType.Dark:
+                    target.DarkResistance = newLevel;
                     break;
                 case EnumSkillType.Cold:
                     target.ColdResistance = newLevel;

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
@@ -115,9 +116,7 @@ namespace TurnBasedGame.Main.Entities.Base
         }
 
         public int CriticalChance { get; set; }
-        public bool CanBeStunned { get; set; } = true;
         public bool IsStunned { get; set; } = false;
-        public int StunDuration { get; set; } = 0;
         public double DodgeModifier { get; set; } = 1.0;
         public bool IsAlive => HP > 0;
 
@@ -175,9 +174,10 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumResistanceLevel HolyResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel FireResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel PoisonResistance { get; set; } = EnumResistanceLevel.Neutral;
-        public EnumResistanceLevel CurseResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel DarkResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel ColdResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel BleedResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel StunResistance { get; set; } = EnumResistanceLevel.Neutral;
 
         #endregion
 
@@ -195,75 +195,6 @@ namespace TurnBasedGame.Main.Entities.Base
                 Level.LevelUp(this);
             }
             return this;
-        }
-
-        public void AddStatusEffect(StatusEffect effect)
-        {
-            if (IsAlive)
-            {
-                var existingEffect = StatusEffects.FirstOrDefault(e => e.EffectType == effect.EffectType);
-                if (existingEffect != null)
-                {
-                    existingEffect.Duration = effect.Duration;
-                    if (existingEffect.DamagePerTurn < effect.DamagePerTurn)
-                    {
-                        existingEffect.DamagePerTurn = effect.DamagePerTurn;
-                    }
-
-                    if (existingEffect.Modifier < effect.Modifier)
-                    {
-                        existingEffect.Modifier = effect.Modifier;
-                    }
-                }
-                else
-                {
-                    StatusEffects.Add(effect);
-                    effect.ApplyEffect(this);
-                }
-
-                Logger.LogStatusEffectApplied(this, effect);
-            }
-        }
-
-        public int ApplyStatusEffects()
-        {
-            var result = 1;
-
-            var orderedEffects = StatusEffects
-                .Where(e => !(e is StunEffect))
-                .Concat(StatusEffects.Where(e => e is StunEffect))
-                .ToList();
-
-            foreach (var effect in orderedEffects)
-            {
-                if (effect.DamagePerTurn > 0)
-                {
-                    effect.ApplyDamage(this);
-                }
-                else if (effect is StunEffect)
-                {
-                    Logger.LogStun(this);
-                    result = 0;
-                }
-
-                if (HP <= 0)
-                {
-                    StatusEffects.Clear();
-                    Logger.LogEffectDeath(this, effect);
-                    return 0;
-                }
-                else
-                {
-                    effect.Duration--;
-                    if (effect.Duration < 0)
-                    {
-                        effect.RestoreEffect(this);
-                        StatusEffects.Remove(effect);
-                    }
-                }
-            }
-
-            return result;
         }
 
     }
