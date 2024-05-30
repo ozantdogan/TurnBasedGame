@@ -17,7 +17,7 @@ namespace TurnBasedGame.Main.Entities.Base
             Intelligence = 10;
             Faith = 10;
             TurnPriority = 0;
-            CanDodge = false;
+            DodgeChance = 0;
             IsMissable = false;
         }
     }

@@ -14,10 +14,12 @@ namespace TurnBasedGame.Main.Skills.HunterSkills
             ExecutionCount = 1;
             IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
-            Accuracy = 0.6;
+            MissChance = 0.6;
             PrimarySkillModifier = 0.5;
             ValidUserPositions = new List<int> { 0 };
             ValidTargetPositions = new List<int> { 0, 1 };
+            MinDamageValue = 3;
+            MaxDamageValue = 4;
         }
 
         public override int Execute(Unit actor, Unit target)

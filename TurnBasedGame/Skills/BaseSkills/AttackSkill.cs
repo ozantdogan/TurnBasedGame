@@ -26,7 +26,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             string skillColor = PrimaryType.GetColor();
 
             var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
-            var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 1.0;
+            var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
 
             var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
             var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
@@ -44,12 +44,12 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     return 1;
 
                 if (CalculateCrit(actor))
-                    critModifier = actor.MaxDamageValue * 1.5;
+                    critModifier = MaxDamageValue * 1.5;
 
-                double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
+                double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
                 double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
 
-                double secondaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+                double secondaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(MinDamageValue, MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
                 double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
 
                 double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
@@ -117,7 +117,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                         continue;
 
                     if (CalculateCrit(actor))
-                        critModifier = actor.MaxDamageValue * 1.5;
+                        critModifier = MaxDamageValue * 1.5;
 
                     var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
                     var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
@@ -125,11 +125,11 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     var primaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[primaryResistanceLevel];
                     var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
 
-                    double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
+                    double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
                     double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
 
-                    double secondaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(actor.MinDamageValue, actor.MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
-                    double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.5;
+                    double secondaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(MinDamageValue,  MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+                    double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
 
                     double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
                     //if (totalDamageDealt > actor.MaxDamageValue * 3)
@@ -178,16 +178,17 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
         private bool HasDodged(Unit target)
         {
-            if (!target.CanDodge)
-                return false;
+            double dexterityFactor = target.Dexterity * 0.1; 
+            int dodgeChance = (int)(target.DodgeChance * (1 + dexterityFactor));
 
-            int dodgeChance = (int)(target.Dexterity * 2 * target.DodgeModifier);
             int roll = _random.Next(100);
+
             if (roll < dodgeChance)
             {
                 Logger.LogDodge(target);
                 return true;
             }
+
             return false;
         }
 
@@ -196,15 +197,20 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             if (!target.IsMissable)
                 return false;
 
-            double missChance = 100 / (actor.Dexterity * 0.8 * Accuracy);
+            double dexterityFactor = actor.Dexterity * 0.1; // Adjust the scaling factor as needed
+            double missChance = MissChance / (1 + dexterityFactor);
+
             int roll = _random.Next(100);
+
             if (roll < missChance)
             {
                 Logger.LogMiss(actor);
                 return true;
             }
+
             return false;
         }
+
 
     }
 

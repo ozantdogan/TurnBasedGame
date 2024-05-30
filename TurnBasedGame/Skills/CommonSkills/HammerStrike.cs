@@ -15,6 +15,8 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             PrimaryType = EnumSkillType.Blunt;
             ValidTargetPositions = new List<int> { 0, 1 };
             ValidUserPositions = new List<int> { 0, 1 };
+            MinDamageValue = 4;
+            MaxDamageValue = 6;
         }
 
         public override int Execute(Unit actor, Unit target)

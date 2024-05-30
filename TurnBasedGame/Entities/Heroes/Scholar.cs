@@ -15,11 +15,9 @@ namespace TurnBasedGame.Main.Entities.Heroes
             MaxHP = 20;
             MaxMP = 30;
             Strength = 2;
-            Dexterity = 5;
+            Dexterity = 3;
             Intelligence = 7;
             Faith = 2;
-            MaxDamageValue = 6;
-            MinDamageValue = 3;
             CriticalChance = 10;
             TurnPriority = 1;
             MagicResistance = EnumResistanceLevel.Resistant;

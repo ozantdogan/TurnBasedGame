@@ -17,6 +17,8 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             PrimaryType = EnumSkillType.Magic;
             ValidUserPositions = new List<int> { 3, 4 };
             IsAoE = true;
+            MinDamageValue = 4;
+            MaxDamageValue = 5;
         }
         public override int Execute(Unit actor, List<Unit> targets)
         {

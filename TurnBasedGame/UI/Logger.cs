@@ -60,7 +60,7 @@ namespace TurnBasedGame.Main.UI
 
         public static void LogEffectDamage(Unit unit, StatusEffect effect, int damageDealt)
         {
-            AnsiConsole.MarkupLine($"({FormatEffect(effect)}) {FormatUnit(unit)} took {FormatDamage(damageDealt)}");
+            AnsiConsole.MarkupLine($"{FormatEffect(effect)} {FormatUnit(unit)} took {FormatDamage(damageDealt)}");
         }
 
         public static void LogEffectDeath(Unit unit, StatusEffect effect)
@@ -108,7 +108,7 @@ namespace TurnBasedGame.Main.UI
         private static string FormatEffect(StatusEffect effect)
         {
             string color = EnumExtensions.GetColor(effect.EffectType);
-            return $"[{color}]{effect.EffectType.GetDisplayName()}[/]";
+            return $"[{color}]({effect.EffectType.GetDisplayName()})[/]";
         }
 
         private static string FormatDamage(double damageDealt, double critModifier = 1.0)

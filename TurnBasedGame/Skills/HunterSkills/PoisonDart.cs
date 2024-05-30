@@ -14,10 +14,11 @@ namespace TurnBasedGame.Main.Skills.HunterSkills
             ManaCost = 4;
             PrimaryType = EnumSkillType.Pierce;
             SecondaryType = EnumSkillType.Poison;
-            PrimarySkillModifier = 0.4;
             SecondarySkillModifier = 0.2;
             ValidUserPositions = new List<int>() { 1, 2, 3 };
-            SkillStatusEffects.Add(new PoisonEffect{ ApplianceChance = 100, Duration = 2, Modifier = 0.5, DamagePerTurn = 5 });
+            SkillStatusEffects.Add(new PoisonEffect{ ApplianceChance = 100, Duration = 2, DamagePerTurn = 4 });
+            MinDamageValue = 2;
+            MaxDamageValue = 4;
         }
 
         public override int Execute(Unit actor, Unit target)

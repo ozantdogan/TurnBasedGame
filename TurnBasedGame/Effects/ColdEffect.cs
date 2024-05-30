@@ -25,7 +25,7 @@ namespace TurnBasedGame.Main.Effects
                 ResistanceManager.AdjustResistance(unit, EnumSkillType.Holy, false);
             }
 
-            unit.DodgeModifier = unit.DodgeModifier * 0.4;
+            unit.DodgeChance = (int)(unit.DodgeChance * 0.4);
         }
 
         public override void RestoreEffect(Unit unit)
@@ -40,7 +40,7 @@ namespace TurnBasedGame.Main.Effects
                 ResistanceManager.AdjustResistance(unit, EnumSkillType.Holy, true);
             }
 
-            unit.DodgeModifier = unit.DodgeModifier / 0.4;
+            unit.DodgeChance = (int)(unit.DodgeChance * 0.4);
         }
     }
 }

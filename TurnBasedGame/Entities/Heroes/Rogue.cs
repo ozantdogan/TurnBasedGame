@@ -13,13 +13,11 @@ namespace TurnBasedGame.Main.Entities.Heroes
             DisplayName = Name;
             MaxHP = 24;
             MaxMP = 20;
-            Strength = 5;
-            Dexterity = 8;
-            Intelligence = 4;
+            Strength = 3;
+            Dexterity = 7;
+            Intelligence = 2;
             Faith = 1;
             TurnPriority = 2;
-            MaxDamageValue = 7;
-            MinDamageValue = 5;
             CriticalChance = 15;
             Skills.Add(new Evade());
             Skills.Add(new KnifePierce());

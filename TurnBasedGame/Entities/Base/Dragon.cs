@@ -11,12 +11,10 @@ namespace TurnBasedGame.Main.Entities.Base
             Name = "Dragon";
             MaxHP = 60;
             MaxMP = 60;
-            Strength = 8;
-            Dexterity = 8;
+            Strength = 11;
+            Dexterity = 10;
             Intelligence = 2;
             Faith = 7;
-            MaxDamageValue = 8;
-            MinDamageValue = 6;
             CriticalChance = 0;
             PierceResistance = EnumResistanceLevel.Weak;
             DarkResistance = EnumResistanceLevel.Resistant;
@@ -30,8 +28,8 @@ namespace TurnBasedGame.Main.Entities.Base
             Race = EnumRace.Dragon;
             TurnPriority = 2;
 
-            Skills.Add(new TailSweep());
-            Skills.Add(new DragonsClaw());
+            //Skills.Add(new TailSweep());
+            //Skills.Add(new DragonsClaw());
         }
     }
 }

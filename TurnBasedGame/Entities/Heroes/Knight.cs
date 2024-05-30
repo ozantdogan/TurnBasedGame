@@ -13,12 +13,10 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Name = "Knight";
             MaxHP = 30;
             MaxMP = 20;
-            Strength = 8;
+            Strength = 6;
             Dexterity = 4;
             Intelligence = 1;
             Faith = 1;
-            MaxDamageValue = 7;
-            MinDamageValue = 5;
             CriticalChance = 10;
             BluntResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new KnightsShield());

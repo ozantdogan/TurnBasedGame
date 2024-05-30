@@ -14,12 +14,10 @@ namespace TurnBasedGame.Main.Entities.Heroes
             DisplayName = Name;
             MaxHP = 18;
             MaxMP = 20;
-            Strength = 3;
-            Dexterity = 6;
-            Intelligence = 3;
-            Faith = 7;
-            MaxDamageValue = 5;
-            MinDamageValue = 3;
+            Strength = 2;
+            Dexterity = 4;
+            Intelligence = 2;
+            Faith = 6;
             CriticalChance = 10;
             TurnPriority = 1;
             HolyResistance = EnumResistanceLevel.Resistant;

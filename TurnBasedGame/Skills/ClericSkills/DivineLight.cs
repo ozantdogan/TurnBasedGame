@@ -16,6 +16,8 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             ValidUserPositions = new List<int> { 2, 3 };
             ValidTargetPositions = new List<int> { 0, 1, 2, 3 };
             IsAoE = true;
+            MinDamageValue = 4;
+            MaxDamageValue = 6;
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

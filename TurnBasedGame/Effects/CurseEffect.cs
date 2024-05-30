@@ -5,6 +5,7 @@ namespace TurnBasedGame.Main.Effects
 {
     public class CurseEffect : StatusEffect
     {
+        public double BaseModifier = 0.9;
         public CurseEffect()
         {
             Name = "Curse";
@@ -14,14 +15,12 @@ namespace TurnBasedGame.Main.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            if (unit.DarkResistance != EnumResistanceLevel.Immune)
-                unit.MaxHP = (int)(unit.MaxHP * 0.75);
+            unit.MaxHP = (int)(unit.MaxHP * (BaseModifier - (Modifier * 0.1) ));
         }
 
         public override void RestoreEffect(Unit unit)
         {
-            if (unit.DarkResistance != EnumResistanceLevel.Immune)
-                unit.MaxHP = (int)(unit.MaxHP / 0.75);
+            unit.MaxHP = (int)(unit.MaxHP / (BaseModifier - (Modifier * 0.1) ));
         }
     }
 }

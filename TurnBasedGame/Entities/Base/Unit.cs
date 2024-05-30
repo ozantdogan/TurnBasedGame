@@ -106,9 +106,6 @@ namespace TurnBasedGame.Main.Entities.Base
             set { _mp = Math.Clamp(value, 0, _maxMP); }
         }
 
-        public int MinDamageValue { get; set; }
-        public int MaxDamageValue { get; set; }
-
         public int BaseCriticalDamage
         {
             get { return _baseCriticalDamage; }
@@ -117,7 +114,7 @@ namespace TurnBasedGame.Main.Entities.Base
 
         public int CriticalChance { get; set; }
         public bool IsStunned { get; set; } = false;
-        public double DodgeModifier { get; set; } = 1.0;
+        public int DodgeChance { get; set; } = 15;
         public bool IsAlive => HP > 0;
 
         public int TurnPriority

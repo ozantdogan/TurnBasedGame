@@ -13,8 +13,6 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Strength = 4;
             Dexterity = 4;
             Intelligence = 1;
-            MaxDamageValue = 4;
-            MinDamageValue = 2;
             CriticalChance = 10;
             PierceResistance = EnumResistanceLevel.Resistant;
             BluntResistance = EnumResistanceLevel.Weak;

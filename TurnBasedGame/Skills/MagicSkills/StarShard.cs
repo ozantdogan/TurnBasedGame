@@ -13,6 +13,8 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             ManaCost = 4;
             IsPassive = false;
             PrimaryType = EnumSkillType.Magic;
+            MinDamageValue = 3;
+            MaxDamageValue = 5;
         }
 
         public override int Execute(Unit actor, Unit target)

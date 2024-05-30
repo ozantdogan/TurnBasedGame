@@ -1,4 +1,5 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
@@ -13,8 +14,9 @@ namespace TurnBasedGame.Main.Skills.BossSkills
             IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
             SecondaryType = EnumSkillType.Dark;
-            SecondarySkillModifier = 1.0;
-            EffectChance = 30;
+            MinDamageValue = 7;
+            MaxDamageValue = 9;
+            SkillStatusEffects.Add(new CurseEffect { DamagePerTurn = 2, Duration = 1, ApplianceChance = 40 });
         }
 
         public override int Execute(Unit actor, Unit target)

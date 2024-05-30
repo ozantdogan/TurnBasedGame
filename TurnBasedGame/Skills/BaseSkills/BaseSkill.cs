@@ -41,6 +41,9 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             }
         }
 
+        public int MinDamageValue = 0;
+        public int MaxDamageValue = 0;
+
         public List<int> ValidUserPositions { get; set; } = new List<int>() { 0, 1, 2, 3 };
         public List<int> ValidTargetPositions { get; set; } = new List<int>() { 0, 1, 2, 3 };
 
@@ -53,7 +56,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public double SecondarySkillModifier { get; set; } = 1.0;
         public int ResistanceValue { get; set; }
         public int ExecutionCount { get; set; } = 0;
-        public double Accuracy { get; set; } = 1.0;
+        public double MissChance { get; set; } = 15;
         public bool IsAoE { get; set; } = false;
         public EnumSkillType PrimaryType { get; set; } = EnumSkillType.None;
         public EnumSkillType SecondaryType { get; set; } = EnumSkillType.None;

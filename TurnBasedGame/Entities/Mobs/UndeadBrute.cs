@@ -11,8 +11,6 @@ namespace TurnBasedGame.Main.Entities.Mobs
             DisplayName = $"Undead\nBrute";
             MaxHP = 22;
             Strength = 5;
-            MaxDamageValue = 6;
-            MinDamageValue = 1;
             Skills.Add(new HammerStrike());
         }
     }

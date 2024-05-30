@@ -196,9 +196,19 @@ namespace TurnBasedGame.Main.UI
 
             List<Unit>? validTargets;
             if (selectedSkill.IsPassive)
-                validTargets = playerTargets.Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position)).ToList();
+            {
+                validTargets = playerTargets
+                                .Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position))
+                                .OrderBy(target => target.Position)
+                                .ToList();
+            }
             else
-                validTargets = mobTargets.Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position)).ToList();
+            {
+                validTargets = mobTargets
+                                .Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position))
+                                .OrderBy(target => target.Position)
+                                .ToList();
+            }
 
             if (validTargets.Count() <= 0)
             {

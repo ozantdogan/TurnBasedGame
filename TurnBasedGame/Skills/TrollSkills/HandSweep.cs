@@ -1,4 +1,5 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
@@ -13,7 +14,10 @@ namespace TurnBasedGame.Main.Skills.TrollSkills
             ManaCost = 10;
             IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
-            StunChance = 30;
+            MinDamageValue = 6;
+            MaxDamageValue = 7;
+            ValidUserPositions = new List<int> { 0, 1 };
+            ValidTargetPositions = new List<int> { 0, 1 };
         }
 
         public override int Execute(Unit actor, Unit target)

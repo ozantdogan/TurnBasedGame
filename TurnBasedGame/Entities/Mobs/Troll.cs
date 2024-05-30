@@ -12,12 +12,10 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Name = "Troll";
             DisplayName = Name;
             MaxHP = 40;
-            Strength = 9;
+            Strength = 8;
             Dexterity = 2;
             Intelligence = 1;
             Faith = 1;
-            MaxDamageValue = 8;
-            MinDamageValue = 2;
             CriticalChance = 3;
             BluntResistance = EnumResistanceLevel.Sturdy;
             SlashResistance = EnumResistanceLevel.Sturdy;

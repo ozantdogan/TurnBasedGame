@@ -14,8 +14,10 @@ namespace TurnBasedGame.Main.Skills.KnightSkills
             ManaCost = 20;
             IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
-            Accuracy = 10;
+            MissChance = 10;
             StunChance = 60;
+            MinDamageValue = 5;
+            MaxDamageValue = 7;
         }
 
         public override int Execute(Unit actor, Unit target)
