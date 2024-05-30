@@ -14,6 +14,7 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             IsPassive = true;
             PrimarySkillModifier = 1.2;
             PrimaryType = EnumSkillType.Holy;
+            IsAoE = true;
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

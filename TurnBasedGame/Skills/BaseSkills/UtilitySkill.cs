@@ -47,8 +47,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
             Logger.LogAction(actor, this);
 
-
-            for (int i = 0; i <= ExecutionCount - 1; i++)
+            for (int i = 0; i <= ExecutionCount; i++)
             {
                 foreach (var target in targets)
                 {

@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             PrimaryType = EnumSkillType.Pierce;
             ValidUserPositions = new List<int>() { 0, 1 };
             ValidTargetPositions = new List<int>() { 0, 1 };
-            SkillStatusEffects.Add(new BleedEffect { ApplianceChance = 8, DamagePerTurn = 2, Duration = 0 });
+            SkillStatusEffects.Add(new BleedEffect { ApplianceChance = 10, DamagePerTurn = 2, Duration = 0 });
         }
 
         public override int Execute(Unit actor, Unit target)
