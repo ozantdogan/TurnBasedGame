@@ -14,7 +14,7 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Blunt;
             ValidTargetPositions = new List<int> { 0, 1 };
-            ValidUserPositions = new List<int> { 0 };
+            ValidUserPositions = new List<int> { 0, 1 };
         }
 
         public override int Execute(Unit actor, Unit target)

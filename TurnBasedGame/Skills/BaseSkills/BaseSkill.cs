@@ -53,6 +53,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public int ResistanceValue { get; set; }
         public int ExecutionCount { get; set; } = 1;
         public double Accuracy { get; set; } = 1.0;
+        public bool AreaSkill { get; set; } = false;
         public EnumSkillType PrimaryType { get; set; } = EnumSkillType.None;
         public EnumSkillType SecondaryType { get; set; } = EnumSkillType.None;
         public List<int> TargetIndexes { get; set; } = new List<int>();

@@ -198,7 +198,7 @@ namespace TurnBasedGame.Main.UI
                 if (selectedSkill.SelfTarget)
                     return selectedSkill.Execute(actor);
 
-                if (selectedSkill.TargetIndexes != null && selectedSkill.TargetIndexes.Count() > 0)
+                if (selectedSkill.TargetIndexes != null && selectedSkill.TargetIndexes.Count() > 0 || selectedSkill.AreaSkill)
                 {
                     if (selectedSkill.PassiveFlag)
                         return selectedSkill.Execute(actor, friendlyTargets);

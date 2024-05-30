@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             ManaCost = 8;
             PassiveFlag = false;
             PrimarySkillModifier = 1.5;
-            PrimaryType = EnumSkillType.Pierce;
+            AreaSkill = true;
             TargetIndexes = ValidTargetPositions;
             ValidTargetPositions = new List<int> { 0, 1 };
             ValidUserPositions = new List<int> { 0, 1, 2 };

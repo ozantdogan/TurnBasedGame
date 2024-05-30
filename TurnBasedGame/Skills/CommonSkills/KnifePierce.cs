@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             PassiveFlag = false;
             PrimaryType = EnumSkillType.Pierce;
             SecondaryType = EnumSkillType.Bleed;
-            ValidUserPositions = new List<int>() { 0 };
+            ValidUserPositions = new List<int>() { 0, 1 };
             ValidTargetPositions = new List<int>() { 0, 1 };
             EffectChance = 8;
             DamagePerTurn = 2;

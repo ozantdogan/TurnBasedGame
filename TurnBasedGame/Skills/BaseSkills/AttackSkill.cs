@@ -111,18 +111,14 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
             var critModifier = 1.0;
-            var targetIndexes = TargetIndexes;
 
             StatusEffect? effect = null;
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
-                foreach (var index in targetIndexes)
+                foreach (var target in targets)
                 {
-                    if (index < 0 || index >= targets.Count)
+                    if (!ValidTargetPositions.Contains(target.Position) || target.Position >= targets.Count)
                         continue;
-
-                    var target = targets[index];
-                    string targetColor = target.UnitType.GetColor();
 
                     if (!target.IsAlive)
                     {
