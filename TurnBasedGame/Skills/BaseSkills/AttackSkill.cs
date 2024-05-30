@@ -100,7 +100,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
             var critModifier = 1.0;
 
-            for (int i = 0; i <= ExecutionCount - 1; i++)
+            for (int i = 0; i <= ExecutionCount; i++)
             {
                 foreach (var target in targets)
                 {

@@ -24,7 +24,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
 
             Logger.LogAction(actor, target, this);
-            for (int i = 0; i <= ExecutionCount - 1; i++)
+            for (int i = 0; i <= ExecutionCount; i++)
             {
                 var targetOldHP = target.HP;
                 double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
