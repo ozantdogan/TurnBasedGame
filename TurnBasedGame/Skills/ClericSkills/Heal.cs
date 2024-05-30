@@ -4,14 +4,14 @@ using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.ClericSkills
 {
-    public class Heal : CastSkill
+    public class Heal : UtilitySkill
     {
         public Heal()
         {
             Name = "Heal";
             ExecutionName = Name;
             ManaCost = 8;
-            PassiveFlag = true;
+            IsPassive = true;
             PrimarySkillModifier = 1.5;
             PrimaryType = EnumSkillType.Holy;
         }

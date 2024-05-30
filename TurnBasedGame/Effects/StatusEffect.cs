@@ -16,6 +16,7 @@ namespace TurnBasedGame.Main.Effects
         public double Modifier { get; set; }
         public EnumSkillType SkillType { get; set; }
         public int DamagePerTurn { get; set; } = 0;
+        public int ApplianceChance = 100;
 
         public StatusEffect()
         {
@@ -30,13 +31,15 @@ namespace TurnBasedGame.Main.Effects
 
         public void ApplyDamage(Unit unit)
         {
-            var resistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SkillType) ? ResistanceManager.ResistanceLevelSelectors[SkillType](unit) : EnumResistanceLevel.Neutral;
+            var resistanceLevel = ResistanceManager.EffectResistanceLevelSelector.ContainsKey(EffectType) ? ResistanceManager.EffectResistanceLevelSelector[EffectType](unit) : EnumResistanceLevel.Neutral;
             var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
 
-            var oldHp = unit.HP;
-            unit.HP = (int)(unit.HP - DamagePerTurn * resistanceModifier * Modifier);
+            var damageDealt = (int)(DamagePerTurn * resistanceModifier * Modifier);
+            if(damageDealt <= 0)
+                damageDealt = 1;
 
-            int damageDealt = oldHp - unit.HP;
+            unit.HP = unit.HP - damageDealt;
+
             Logger.LogEffectDamage(unit, this, damageDealt);
         }
     }

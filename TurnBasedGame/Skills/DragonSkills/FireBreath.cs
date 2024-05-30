@@ -1,4 +1,5 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
@@ -11,10 +12,8 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             Name = "Fire Breath";
             ExecutionCount = 1;
             PrimaryType = EnumSkillType.Fire;
-            DamagePerTurn = 7;
-            Duration = 2;
-            DoTModifier = 1;
-            TargetIndexes = new List<int>() { 0, 1, 2, 3 };
+            SkillStatusEffects.Add(new BurnEffect() { DamagePerTurn = 5, Duration = 2});
+            IsAoE = true;
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

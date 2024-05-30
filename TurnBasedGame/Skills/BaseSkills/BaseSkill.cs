@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
@@ -44,19 +45,19 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public List<int> ValidTargetPositions { get; set; } = new List<int>() { 0, 1, 2, 3 };
 
         [StringLength(100)] public string Description { get; set; } = "";
-        public bool PassiveFlag { get; set; }
+        public bool IsPassive { get; set; }
         public int ManaCost { get; set; }
         public int BaseDamageValue { get; set; }
         public double BaseBuffValue { get; set; } = 1.0;
         public double PrimarySkillModifier { get; set; } = 1.0;
         public double SecondarySkillModifier { get; set; } = 1.0;
         public int ResistanceValue { get; set; }
-        public int ExecutionCount { get; set; } = 1;
+        public int ExecutionCount { get; set; } = 0;
         public double Accuracy { get; set; } = 1.0;
-        public bool AreaSkill { get; set; } = false;
+        public bool IsAoE { get; set; } = false;
         public EnumSkillType PrimaryType { get; set; } = EnumSkillType.None;
         public EnumSkillType SecondaryType { get; set; } = EnumSkillType.None;
-        public List<int> TargetIndexes { get; set; } = new List<int>();
+        public List<StatusEffect> SkillStatusEffects { get; set; } = new List<StatusEffect>();
         public bool SelfTarget { get; set; } = false;
         public int StunChance { get; set; } = 0;
         public int StunDuration { get; set; } = 0;

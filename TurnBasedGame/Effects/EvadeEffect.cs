@@ -5,11 +5,9 @@ namespace TurnBasedGame.Main.Effects
 {
     public class EvadeEffect : StatusEffect
     {
-        public EvadeEffect(int duration, double modifier)
+        public EvadeEffect()
         {
-            EffectType = EnumEffectType.EVADE;
-            Duration = duration;
-            Modifier = modifier;
+            EffectType = EnumEffectType.EvadeEffect;
         }
 
         public override void ApplyEffect(Unit unit)

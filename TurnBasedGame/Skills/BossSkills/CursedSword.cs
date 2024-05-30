@@ -10,9 +10,9 @@ namespace TurnBasedGame.Main.Skills.BossSkills
         {
             Name = "Cursed Sword Slash";
             ExecutionName = "Cursed Sword";
-            PassiveFlag = false;
+            IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
-            SecondaryType = EnumSkillType.Curse;
+            SecondaryType = EnumSkillType.Dark;
             SecondarySkillModifier = 1.0;
             EffectChance = 30;
         }

@@ -12,7 +12,7 @@ namespace TurnBasedGame.Main.Skills.KnightSkills
             ExecutionName = Name;
             PrimarySkillModifier = 1.2;
             ManaCost = 20;
-            PassiveFlag = false;
+            IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
             Accuracy = 10;
             StunChance = 60;

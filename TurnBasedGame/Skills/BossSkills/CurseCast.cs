@@ -4,18 +4,14 @@ using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.BossSkills
 {
-    public class Curse : AttackSkill
+    public class CurseCast : AttackSkill
     {
-        public Curse()
+        public CurseCast()
         {
             Name = "Curse";
             ExecutionName = Name;
-            PrimaryType = EnumSkillType.Curse;
+            PrimaryType = EnumSkillType.Dark;
             ManaCost = 30;
-            DamagePerTurn = 3;
-            Duration = 2;
-            DoTModifier = 1;
-            TargetIndexes = new List<int>() { 0, 1, 2, 3 };
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

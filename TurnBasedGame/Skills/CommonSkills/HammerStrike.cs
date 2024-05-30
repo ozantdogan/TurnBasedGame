@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             Name = "Hammer Strike";
             ExecutionName = Name;
             ManaCost = 0;
-            PassiveFlag = false;
+            IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
             ValidTargetPositions = new List<int> { 0, 1 };
             ValidUserPositions = new List<int> { 0, 1 };

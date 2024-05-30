@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
@@ -6,18 +7,27 @@ namespace TurnBasedGame.Main.Helpers.Concrete
 {
     public static class EffectManager
     {
-        public static Dictionary<EnumSkillType, Func<AttackSkill, StatusEffect>> DamageEffectSelector = new Dictionary<EnumSkillType, Func<AttackSkill, StatusEffect>>
+        public static Dictionary<EnumEffectType, Func<StatusEffect>> EffectSelector = new Dictionary<EnumEffectType, Func<StatusEffect>>
         {
-            { EnumSkillType.Poison, skill => new PoisonEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) },
-            { EnumSkillType.Curse, skill => new CurseEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) },
-            { EnumSkillType.Cold, skill => new ColdEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) },
-            { EnumSkillType.Bleed, skill => new BleedEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) },
-            { EnumSkillType.Fire, skill => new BurnEffect(skill.DamagePerTurn, skill.DoTModifier, skill.Duration) }
+            { EnumEffectType.PoisonEffect, () => new PoisonEffect() },
+            { EnumEffectType.CurseEffect, () => new CurseEffect() },
+            { EnumEffectType.ColdEffect, () => new ColdEffect() },
+            { EnumEffectType.BleedEffect, () => new BleedEffect() },
+            { EnumEffectType.BurnEffect, () => new BurnEffect() }
         };
 
-        public static Dictionary<EnumSkillType, Func<CastSkill, StatusEffect>> ProtectionEffectSelector = new Dictionary<EnumSkillType, Func<CastSkill, StatusEffect>>
+        public static readonly Dictionary<EnumEffectType, Func<Unit, double>> EffectDamageModifier = new Dictionary<EnumEffectType, Func<Unit, double>>
         {
-            { EnumSkillType.Standard, skill => new PhysicalProtectionEffect(skill.BuffModifier, skill.Duration) },
+            { EnumEffectType.PoisonEffect, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
+            { EnumEffectType.BurnEffect, actor => actor.Faith * 0.4 + actor.Intelligence * 0.1 },
+            { EnumEffectType.ColdEffect, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
+            { EnumEffectType.BleedEffect, actor => actor.Strength * 0.3 + actor.Dexterity * 0.2 },
+            { EnumEffectType.CurseEffect, actor => actor.Faith * 0.3 + actor.Dexterity * 0.3 },
+        };
+
+        public static Dictionary<EnumSkillType, Func<UtilitySkill, StatusEffect>> ProtectionEffectSelector = new Dictionary<EnumSkillType, Func<UtilitySkill, StatusEffect>>
+        {
+            { EnumSkillType.Standard, skill => new PhysicalProtectionEffect() },
         };
     }
 }

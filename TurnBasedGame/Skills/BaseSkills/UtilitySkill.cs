@@ -1,4 +1,5 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
@@ -6,11 +7,11 @@ using TurnBasedGame.Main.UI;
 namespace TurnBasedGame.Main.Skills.BaseSkills
 {
     public delegate int? BuffModifierCalculator(Unit actor);
-    public class CastSkill : BaseSkill
+    public class UtilitySkill : BaseSkill
     {
         public double BuffModifier { get; set; } = 1.0;
         public int Duration { get; set; } = 0;
-        public CastSkill() { }
+        public UtilitySkill() { }
 
         protected int PerformHeal(Unit actor, Unit target)
         {
@@ -46,42 +47,26 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
             Logger.LogAction(actor, this);
 
-            var targetIndexes = new List<int>();
-            if (targets.Count() < TargetIndexes.Count)
-            {
-                for (int i = 0; i < targets.Count(); i++)
-                {
-                    targetIndexes.Add(i);
-                }
-            }
-            else
-            {
-                targetIndexes = TargetIndexes;
-            }
 
             for (int i = 0; i <= ExecutionCount - 1; i++)
             {
-                foreach (var index in targetIndexes)
+                foreach (var target in targets)
                 {
-                    if (index < 0 || index >= targets.Count)
+                    if (!ValidTargetPositions.Contains(target.Position) || target.Position >= targets.Count)
                         continue;
 
-                    var target = targets[index];
-                    if (!target.IsAlive)
-                        continue;
-
-                    var targetOldHP = target.HP;
+                    var oldHP = target.HP;
                     double healingValue = _random.Next((int)(castTypeModifier * 0.25), (int)castTypeModifier) * PrimarySkillModifier;
                     target.HP += (int)healingValue;
 
-                    Logger.LogHeal(target, target.HP - targetOldHP);
+                    Logger.LogHeal(target, target.HP - oldHP);
                 }
             }
 
             return 1;
         }
 
-        protected int PerformProtection(Unit actor)
+        protected int PerformProtection(Unit actor, int duration = 0, double modifier = 1.0)
         {
             if (ManaCost > 0)
             {
@@ -92,7 +77,9 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             Logger.LogAction(actor, actor, this);
 
             var effect = EffectManager.ProtectionEffectSelector[PrimaryType](this);
-            actor.AddStatusEffect(effect);
+            effect.Duration = duration;
+            effect.Modifier = modifier;
+            UnitHelper.AddStatusEffect(actor, effect);
             return 1;
         }
 

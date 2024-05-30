@@ -1,22 +1,22 @@
 ﻿using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Skills.HunterSkills
 {
-    public class Evade : CastSkill
+    public class Evade : UtilitySkill
     {
         public Evade()
         {
             Name = "Evade";
             ManaCost = 16;
-            PassiveFlag = true;
+            IsPassive = true;
             PrimaryType = EnumSkillType.Standard;
-            BuffModifier = 3.0;
             SelfTarget = true;
-            Duration = 1;
+            SkillStatusEffects.Add(new EvadeEffect() { Modifier = 3, Duration = 1 });
         }
 
         public override int Execute(Unit actor)
@@ -25,8 +25,10 @@ namespace TurnBasedGame.Main.Skills.HunterSkills
                 return -1;
 
             Logger.LogAction(actor, this);
-            var effect = new EvadeEffect(Duration, BuffModifier);
-            actor.AddStatusEffect(effect);
+            foreach(var effect in SkillStatusEffects)
+            {
+                UnitHelper.AddStatusEffect(actor, effect);
+            }
             return 1;
         }
     }

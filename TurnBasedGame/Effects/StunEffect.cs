@@ -5,10 +5,9 @@ namespace TurnBasedGame.Main.Effects
 {
     public class StunEffect : StatusEffect
     {
-        public StunEffect(int duration)
+        public StunEffect()
         {
-            EffectType = EnumEffectType.STUN;
-            Duration = duration;
+            EffectType = EnumEffectType.StunEffect;
         }
 
         public override void ApplyEffect(Unit unit)

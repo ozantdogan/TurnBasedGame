@@ -19,14 +19,14 @@ namespace TurnBasedGame.Main.Entities.Base
             MinDamageValue = 6;
             CriticalChance = 0;
             PierceResistance = EnumResistanceLevel.Weak;
-            CurseResistance = EnumResistanceLevel.Resistant;
+            DarkResistance = EnumResistanceLevel.Resistant;
             MagicResistance = EnumResistanceLevel.Sturdy;
             HolyResistance = EnumResistanceLevel.Sturdy;
             BleedResistance = EnumResistanceLevel.Sturdy;
             PoisonResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Immune;
             ColdResistance = EnumResistanceLevel.Immune;
-            CanBeStunned = false;
+            StunResistance = EnumResistanceLevel.Immune;
             Race = EnumRace.Dragon;
             TurnPriority = 2;
 
