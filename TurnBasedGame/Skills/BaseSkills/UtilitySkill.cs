@@ -60,6 +60,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
                     Logger.LogHeal(target, target.HP - oldHP);
                 }
+                Thread.Sleep(LevelHandler.Pace);
             }
 
             return 1;

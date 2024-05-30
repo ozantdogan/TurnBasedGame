@@ -9,7 +9,7 @@ namespace TurnBasedGame.Main.Entities.Bosses
         public RedDragon()
         {
             Name = "Red Dragon";
-            ColdResistance = EnumResistanceLevel.Fragile;
+            ColdResistance = EnumResistanceLevel.VeryWeak;
             Skills.Add(new FireBreath());
         }
     }

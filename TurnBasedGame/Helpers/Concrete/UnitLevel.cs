@@ -7,7 +7,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
         private int _currentLevel;
         private const int MaxLevel = 10;
 
-        private double _hpIncreaseRate = 0.2;
+        private double _hpIncreaseRate = 0.25;
         private double _attributeIncreaseRate = 0.25;
 
         public UnitLevel(int startingLevel = 1)

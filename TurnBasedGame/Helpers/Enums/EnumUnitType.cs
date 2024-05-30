@@ -4,14 +4,14 @@ namespace TurnBasedGame.Main.Helpers.Enums
 {
     public enum EnumUnitType
     {
-        [Type("lightcyan1", "Player")]
+        [Info("lightcyan1", "Player")]
         Player,
-        [Type("red", "Mob")]
+        [Info("red", "Mob")]
         Mob,
         NPC,
-        [Type("deeppink4_2", "Boss")]
+        [Info("deeppink4_2", "Boss")]
         Boss,
-        [Type("olive", "Player")]
+        [Info("olive", "Player")]
         Dummy
     }
 }

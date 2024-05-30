@@ -1,12 +1,13 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.ClericSkills
 {
-    public class DivineLight : AttackSkill
+    public class BlindingLight : AttackSkill
     {
-        public DivineLight()
+        public BlindingLight()
         {
             Name = "Divine Light";
             ExecutionName = Name;
@@ -18,6 +19,7 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             IsAoE = true;
             MinDamageValue = 4;
             MaxDamageValue = 6;
+            SkillStatusEffects.Add(new BlindEffect { Duration = 1,  ApplianceChance = 60});
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

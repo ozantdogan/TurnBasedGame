@@ -17,6 +17,8 @@ namespace TurnBasedGame.Main.Skills.ColdSkills
             SkillStatusEffects.Add(new ColdEffect() { DamagePerTurn = 3, Duration = 3, Modifier = 0.6 });
             ValidTargetPositions = new List<int> { 0, 1, 2, 3 };
             ValidUserPositions = new List<int> { 1, 2 };
+            MinDamageValue = 2;
+            MaxDamageValue = 4;
             IsAoE = true;
         }
 

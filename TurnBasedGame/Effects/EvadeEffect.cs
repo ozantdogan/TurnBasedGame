@@ -5,7 +5,7 @@ namespace TurnBasedGame.Main.Effects
 {
     public class EvadeEffect : StatusEffect
     {
-        public double BaseModifier = 1.5;
+        public double BaseModifier = 2.0;
         public EvadeEffect()
         {
             EffectType = EnumEffectType.EvadeEffect;
@@ -13,12 +13,12 @@ namespace TurnBasedGame.Main.Effects
 
         public override void ApplyEffect(Unit unit)
         {
-            unit.DodgeChance = (int)(unit.DodgeChance * (BaseModifier + Modifier * 0.2));
+            unit.DodgeChance = (int)(unit.DodgeChance * (BaseModifier + Modifier * 0.5));
         }
 
         public override void RestoreEffect(Unit unit)
         {
-            unit.DodgeChance = (int)(unit.DodgeChance / (BaseModifier + Modifier * 0.2));
+            unit.DodgeChance = (int)(unit.DodgeChance / (BaseModifier + Modifier * 0.5));
         }
     }
 }

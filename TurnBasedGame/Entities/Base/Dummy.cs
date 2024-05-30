@@ -18,7 +18,7 @@ namespace TurnBasedGame.Main.Entities.Base
             Faith = 10;
             TurnPriority = 0;
             DodgeChance = 0;
-            IsMissable = false;
+            Unmissable = true;
         }
     }
 }

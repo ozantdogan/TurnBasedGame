@@ -157,7 +157,9 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                             break;
                         }
                     }
+                    Console.WriteLine("");
                 }
+                Thread.Sleep(LevelHandler.Pace + 200);
             }
 
             return 1;
@@ -194,7 +196,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
         private bool HasMissed(Unit actor, Unit target)
         {
-            if (!target.IsMissable)
+            if (!target.IsMissable || target.Unmissable)
                 return false;
 
             double dexterityFactor = actor.Dexterity * 0.1; // Adjust the scaling factor as needed

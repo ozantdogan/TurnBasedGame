@@ -18,18 +18,17 @@ namespace TurnBasedGame.Main.Entities.Base
             CriticalChance = 0;
             PierceResistance = EnumResistanceLevel.Weak;
             DarkResistance = EnumResistanceLevel.Resistant;
-            MagicResistance = EnumResistanceLevel.Sturdy;
-            HolyResistance = EnumResistanceLevel.Sturdy;
-            BleedResistance = EnumResistanceLevel.Sturdy;
+            MagicResistance = EnumResistanceLevel.VeryResistant;
+            BleedResistance = EnumResistanceLevel.VeryResistant;
             PoisonResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Immune;
-            ColdResistance = EnumResistanceLevel.Immune;
             StunResistance = EnumResistanceLevel.Immune;
+            DodgeChance = 25;
             Race = EnumRace.Dragon;
             TurnPriority = 2;
 
-            //Skills.Add(new TailSweep());
-            //Skills.Add(new DragonsClaw());
+            Skills.Add(new TailSweep());
+            Skills.Add(new DragonsClaw());
         }
     }
 }

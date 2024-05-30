@@ -17,10 +17,10 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Intelligence = 1;
             Faith = 1;
             CriticalChance = 3;
-            BluntResistance = EnumResistanceLevel.Sturdy;
-            SlashResistance = EnumResistanceLevel.Sturdy;
+            BluntResistance = EnumResistanceLevel.VeryResistant;
+            SlashResistance = EnumResistanceLevel.VeryResistant;
             PierceResistance = EnumResistanceLevel.Weak;
-            FireResistance = EnumResistanceLevel.Fragile;
+            FireResistance = EnumResistanceLevel.VeryWeak;
             Skills.Add(new HandSweep());
             Skills.Add(new SmashGround());
             Race = EnumRace.Giant;

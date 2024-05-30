@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Name = "Knight";
             MaxHP = 30;
             MaxMP = 20;
-            Strength = 6;
+            Strength = 7;
             Dexterity = 4;
             Intelligence = 1;
             Faith = 1;

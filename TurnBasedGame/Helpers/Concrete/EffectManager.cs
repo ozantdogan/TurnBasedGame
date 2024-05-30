@@ -13,7 +13,8 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             { EnumEffectType.CurseEffect, () => new CurseEffect() },
             { EnumEffectType.ColdEffect, () => new ColdEffect() },
             { EnumEffectType.BleedEffect, () => new BleedEffect() },
-            { EnumEffectType.BurnEffect, () => new BurnEffect() }
+            { EnumEffectType.BurnEffect, () => new BurnEffect() },
+            { EnumEffectType.Blindness, () => new BlindEffect() }
         };
 
         public static readonly Dictionary<EnumEffectType, Func<Unit, double>> EffectDamageModifier = new Dictionary<EnumEffectType, Func<Unit, double>>

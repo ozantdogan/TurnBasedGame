@@ -30,21 +30,21 @@ namespace TurnBasedGame.Main.Entities.Resistance
 
         public static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<EnumResistanceLevel, double>
         {
-            { EnumResistanceLevel.Fragile, 2.0 },
-            { EnumResistanceLevel.Weak, 1.5 },
+            { EnumResistanceLevel.VeryWeak, 1.5 },
+            { EnumResistanceLevel.Weak, 1.25 },
             { EnumResistanceLevel.Neutral, 1.0 },
             { EnumResistanceLevel.Resistant, 0.5 },
-            { EnumResistanceLevel.Sturdy, 0.25 },
+            { EnumResistanceLevel.VeryResistant, 0.25 },
             { EnumResistanceLevel.Immune, 0.0 }
         };
 
         private static readonly List<EnumResistanceLevel> ResistanceLevels = new List<EnumResistanceLevel>
         {
-            EnumResistanceLevel.Fragile,
+            EnumResistanceLevel.VeryWeak,
             EnumResistanceLevel.Weak,
             EnumResistanceLevel.Neutral,
             EnumResistanceLevel.Resistant,
-            EnumResistanceLevel.Sturdy,
+            EnumResistanceLevel.VeryResistant,
             EnumResistanceLevel.Immune
         };
 

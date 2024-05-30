@@ -130,7 +130,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumRace Race { get; set; }
         public List<StatusEffect> StatusEffects { get; private set; } = new List<StatusEffect>();
         public bool IsMissable { get; set; } = true;
-        public bool CanDodge { get; set; } = true;
+        public bool Unmissable { get; set; } = false;
 
         #endregion
 

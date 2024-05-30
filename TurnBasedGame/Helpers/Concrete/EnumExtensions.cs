@@ -8,10 +8,10 @@ public static class EnumExtensions
         var memberInfo = type.GetMember(attributeType.ToString());
         if (memberInfo != null && memberInfo.Length > 0)
         {
-            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeAttribute), false);
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(InfoAttribute), false);
             if (attrs != null && attrs.Length > 0)
             {
-                return ((TypeAttribute)attrs[0]).Color;
+                return ((InfoAttribute)attrs[0]).Color;
             }
         }
         return "white";
@@ -23,10 +23,10 @@ public static class EnumExtensions
         var memberInfo = type.GetMember(attributeType.ToString());
         if (memberInfo != null && memberInfo.Length > 0)
         {
-            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeAttribute), false);
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(InfoAttribute), false);
             if (attrs != null && attrs.Length > 0)
             {
-                return ((TypeAttribute)attrs[0]).TypeCode;
+                return ((InfoAttribute)attrs[0]).TypeCode;
             }
         }
         return "";
@@ -38,10 +38,10 @@ public static class EnumExtensions
         var memberInfo = type.GetMember(attributeType.ToString());
         if (memberInfo != null && memberInfo.Length > 0)
         {
-            var attrs = memberInfo[0].GetCustomAttributes(typeof(TypeAttribute), false);
+            var attrs = memberInfo[0].GetCustomAttributes(typeof(InfoAttribute), false);
             if (attrs != null && attrs.Length > 0)
             {
-                return ((TypeAttribute)attrs[0]).DisplayName;
+                return ((InfoAttribute)attrs[0]).DisplayName;
             }
         }
         return "";

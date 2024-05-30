@@ -4,9 +4,9 @@ using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.ClericSkills
 {
-    public class Heal : UtilitySkill
+    public class ClericHeal : UtilitySkill
     {
-        public Heal()
+        public ClericHeal()
         {
             Name = "Heal";
             ExecutionName = Name;

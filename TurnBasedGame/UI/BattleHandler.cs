@@ -221,7 +221,7 @@ namespace TurnBasedGame.Main.UI
                 .Select((target, index) =>
                 {
                     var resistanceLevel = ResistanceManager.ResistanceLevelSelectors[selectedSkill.PrimaryType](target);
-                    return $" {index + 1}.[{(target.IsAlive ? target.UnitType.GetColor() : "grey19")}] {target.Name}[/] {(target.UnitType == EnumUnitType.Player || resistanceLevel == EnumResistanceLevel.Neutral ? "" : "(" + resistanceLevel + ") ")}";
+                    return $" {index + 1}.[{(target.IsAlive ? target.UnitType.GetColor() : "grey19")}] {target.Name}[/] {(target.UnitType == EnumUnitType.Player || resistanceLevel == EnumResistanceLevel.Neutral ? "" : $"[{resistanceLevel.GetColor()}]({resistanceLevel.GetCode()})[/]")}";
                 })
                 .ToList();
 
