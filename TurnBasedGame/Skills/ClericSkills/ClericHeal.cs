@@ -16,9 +16,9 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             PrimaryType = EnumSkillType.Holy;
         }
 
-        public override int Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return PerformHeal(actor, target);
+            return PerformHeal(actor, singleTarget);
         }
     }
 }

@@ -73,6 +73,11 @@ namespace TurnBasedGame.Main.UI
             AnsiConsole.MarkupLine($"{FormatUnit(actor)} chose to rest this round");
         }
 
+        public static void LogTargetMove(Unit actor, int oldPosition, int newPosition)
+        {
+            AnsiConsole.MarkupLine($"{FormatUnit(actor)} moved from '{oldPosition}' to '{newPosition}'.");
+        }
+
         public static void LogMove(Unit actor, bool moveFront)
         {
             AnsiConsole.MarkupLine($"{FormatUnit(actor)} moved {(moveFront ? "front" : "back")}.");

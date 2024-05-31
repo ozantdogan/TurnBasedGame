@@ -12,7 +12,7 @@ namespace TurnBasedGame.Main.Effects
             EffectType = EnumEffectType.Protection;
         }
 
-        public override void ApplyEffect(Unit unit)
+        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)
         {
             for (int i = 0; i <= (int)Modifier; i++)
             {

@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Effects
             EffectType = EnumEffectType.EvadeEffect;
         }
 
-        public override void ApplyEffect(Unit unit)
+        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)
         {
             unit.DodgeChance = (int)(unit.DodgeChance * (BaseModifier + Modifier * 0.5));
         }

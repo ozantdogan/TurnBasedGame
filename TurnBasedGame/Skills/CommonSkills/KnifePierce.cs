@@ -20,9 +20,9 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             MaxDamageValue = 5;
         }
 
-        public override int Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, target);
+            return base.Execute(actor, singleTarget);
         }
     }
 }

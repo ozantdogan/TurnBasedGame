@@ -22,9 +22,9 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             SkillStatusEffects.Add(new BlindEffect { Duration = 1,  ApplianceChance = 60});
         }
 
-        public override int Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, targets);
+            return base.Execute(actor, targets: targets);
         }
     }
 }

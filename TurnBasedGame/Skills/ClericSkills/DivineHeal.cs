@@ -17,7 +17,7 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             IsAoE = true;
         }
 
-        public override int Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
             return PerformHeal(actor, targets);
         }

@@ -17,10 +17,16 @@ public class MoveSkill : BaseSkill
         ManaCost = 0;
     }
 
-    public override int Execute(Unit actor, List<Unit> targets)
+    public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
     {
         int currentPosition = actor.Position;
         if (currentPosition == -1) return -1; // Actor position is invalid
+
+        if (targets == null || !targets.Any())
+        {
+            Logger.NoValidTargets();
+            return -1;
+        }
 
         if (actor.UnitType == EnumUnitType.Player)
         {
@@ -106,15 +112,11 @@ public class MoveSkill : BaseSkill
         }
     }
 
-    //todo push/pull
-
-    public override int Execute(Unit actor, Unit target)
-    {
-        throw new NotImplementedException();
-    }
-
     public override int Execute(Unit actor)
     {
         throw new NotImplementedException();
     }
+
+    //todo push/pull
+
 }

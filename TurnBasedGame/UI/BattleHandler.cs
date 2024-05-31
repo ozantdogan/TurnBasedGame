@@ -148,15 +148,16 @@ namespace TurnBasedGame.Main.UI
             List<Unit> updatedPlayerUnits = playerTargets;
             List<Unit> updatedMobUnits = mobTargets;
             var result = 1;
+
             if (actor.UnitType != EnumUnitType.Player && actor.UnitType != EnumUnitType.Summon)
             {
                 var mobLogic = new MobLogic();
-                result = mobLogic.ExecuteMobTurn(actor, playerTargets, mobTargets);
+                (result, updatedPlayerUnits, updatedMobUnits) = mobLogic.ExecuteMobTurn(actor, playerTargets, mobTargets);
                 return (result, updatedPlayerUnits, updatedMobUnits);
             }
 
-            var availableSkills = actor.Skills.
-                Where(skill => skill.ValidUserPositions.Contains(actor.Position))
+            var availableSkills = actor.Skills
+                .Where(skill => skill.ValidUserPositions.Contains(actor.Position))
                 .Where(skill => !(skill is MoveSkill) || !actor.HasMoved)
                 .ToList();
 
@@ -191,15 +192,9 @@ namespace TurnBasedGame.Main.UI
 
             selectedSkill = availableSkills[skillChoice];
 
-            if (skillChoice < 0 || skillChoice >= actor.Skills.Count)
-            {
-                Console.WriteLine("Invalid choice!");
-                return (-1, updatedPlayerUnits, updatedMobUnits);
-            }
-
             if (selectedSkill is MoveSkill moveSkill && !actor.HasMoved)
             {
-                result = moveSkill.Execute(actor, playerTargets);
+                result = moveSkill.Execute(actor, targets: updatedPlayerUnits);
                 return (result, updatedPlayerUnits, updatedMobUnits);
             }
 
@@ -217,7 +212,7 @@ namespace TurnBasedGame.Main.UI
 
             if (selectedSkill is SummonSkill summonSkill)
             {
-                result = summonSkill.Execute(actor, playerTargets);
+                result = summonSkill.Execute(actor, targets: updatedPlayerUnits);
                 return (result, updatedPlayerUnits, updatedMobUnits);
             }
 
@@ -225,23 +220,22 @@ namespace TurnBasedGame.Main.UI
             if (selectedSkill.IsPassive)
             {
                 validTargets = playerTargets
-                                .Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position))
-                                .OrderBy(target => target.Position)
-                                .ToList();
+                    .Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position))
+                    .OrderBy(target => target.Position)
+                    .ToList();
             }
             else
             {
                 validTargets = mobTargets
-                                .Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position))
-                                .OrderBy(target => target.Position)
-                                .ToList();
+                    .Where(target => selectedSkill.ValidTargetPositions.Contains(target.Position))
+                    .OrderBy(target => target.Position)
+                    .ToList();
             }
 
-            if (validTargets.Count() <= 0)
+            if (validTargets.Count <= 0)
             {
                 Logger.NoValidTargets();
                 return (-1, updatedPlayerUnits, updatedMobUnits);
-
             }
 
             List<string> targetInfoChoices = validTargets
@@ -257,7 +251,7 @@ namespace TurnBasedGame.Main.UI
             var executionChoice = " 1. Use";
 
             string? targetInfo;
-            //AoE skill ise seçenek ekle
+            // If the skill is AoE, add an execution choice
             if (selectedSkill.IsAoE)
             {
                 var titleWithChoices = "Listed targets will be affected:\n" + string.Join("\n", targetInfoChoices);
@@ -281,15 +275,15 @@ namespace TurnBasedGame.Main.UI
             {
                 return (-2, updatedPlayerUnits, updatedMobUnits);
             }
-            else if (targetInfo == executionChoice) //AoE için
+            else if (targetInfo == executionChoice) // For AoE
             {
-                result = selectedSkill.Execute(actor, validTargets);
+                result = selectedSkill.Execute(actor, null, targets : validTargets);
                 return (result, updatedPlayerUnits, updatedMobUnits);
             }
             else
             {
                 int targetChoice = targetInfoChoices.IndexOf(targetInfo);
-                result = selectedSkill.Execute(actor, validTargets[targetChoice]);
+                result = selectedSkill.Execute(actor, singleTarget : validTargets[targetChoice], mobTargets);
                 return (result, updatedPlayerUnits, updatedMobUnits);
             }
         }

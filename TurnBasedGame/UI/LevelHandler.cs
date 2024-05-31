@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.UI
         public static bool DummyLevel { get; set; } = true;
         public static bool BossLevel { get; set; } = false;
         public static int DummyMaxHP { get; set; } = 500;
-        public static int DummyCount { get; set; } = 1;
+        public static int DummyCount { get; set; } = 4;
         public static int Pace { get; set; } = 1500;
 
         public static void Rest(List<Unit> units)

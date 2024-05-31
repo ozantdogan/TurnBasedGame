@@ -10,7 +10,7 @@ namespace TurnBasedGame.Main.Effects
             EffectType = EnumEffectType.Blindness;
         }
 
-        public override void ApplyEffect(Unit unit)
+        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)
         {
             unit.DodgeChance = (int)(unit.DodgeChance * 0.3);
             unit.Dexterity = (int)(unit.Dexterity * 0.6);

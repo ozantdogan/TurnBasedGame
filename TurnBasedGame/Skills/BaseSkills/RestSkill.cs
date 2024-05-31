@@ -15,20 +15,15 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             Name = "Rest";
         }
 
-        public override int Execute(Unit actor, Unit target)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int Execute(Unit actor, List<Unit> targets)
-        {
-            throw new NotImplementedException();
-        }
-
         public override int Execute(Unit actor)
         {
             Logger.LogRest(actor);
             return 1;
+        }
+
+        public override int Execute(Unit actor, Unit? singleTarget, List<Unit>? targets)
+        {
+            throw new NotImplementedException();
         }
     }
 }

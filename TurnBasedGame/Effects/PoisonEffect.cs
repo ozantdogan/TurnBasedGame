@@ -12,7 +12,7 @@ namespace TurnBasedGame.Main.Effects
             EffectType = EnumEffectType.PoisonEffect;
         }
 
-        public override void ApplyEffect(Unit unit)
+        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)
         {
             unit.Strength = (int)(unit.Strength * Modifier);
             unit.Dexterity = (int)(unit.Dexterity * Modifier);

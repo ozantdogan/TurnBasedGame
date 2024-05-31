@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             IsPassive = true;
         }
 
-        public override int Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
             if (SummonRank == 0)
                 SummonType = EnumSummon.MiniStoneGolem;
@@ -21,7 +21,7 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
                 SummonType = EnumSummon.StoneGolem;
 
 
-            return base.Execute(actor, targets);
+            return base.Execute(actor, targets: targets);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Effects
             EffectType = EnumEffectType.CurseEffect;
         }
 
-        public override void ApplyEffect(Unit unit)
+        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)
         {
             unit.MaxHP = (int)(unit.MaxHP * (BaseModifier - (Modifier * 0.1) ));
         }

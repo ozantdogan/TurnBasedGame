@@ -42,7 +42,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             }
         }
 
-        public static void AddStatusEffect(Unit unit, StatusEffect effect)
+        public static void AddStatusEffect(Unit unit, StatusEffect effect, List<Unit>? units = null)
         {
             var resistanceLevel = ResistanceManager.EffectResistanceLevelSelector.ContainsKey(effect.EffectType)
                 ? ResistanceManager.EffectResistanceLevelSelector[effect.EffectType](unit) : EnumResistanceLevel.Neutral;
@@ -54,8 +54,6 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             {
                 apply = true;
             }
-
-
 
             if (unit.IsAlive && apply)
             {
@@ -78,7 +76,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
                     if(resistanceLevel != EnumResistanceLevel.Immune || effect.DamagePerTurn <= 0)
                     {
                         unit.StatusEffects.Add(effect);
-                        effect.ApplyEffect(unit);
+                        effect.ApplyEffect(unit, units);
                         Logger.LogStatusEffectApplied(unit, effect);
                     }
                 }

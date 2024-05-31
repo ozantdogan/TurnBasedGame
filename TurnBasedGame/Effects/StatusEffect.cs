@@ -25,7 +25,7 @@ namespace TurnBasedGame.Main.Effects
             Modifier = 1.0;
         }
 
-        public abstract void ApplyEffect(Unit unit);
+        public abstract void ApplyEffect(Unit unit, List<Unit>? allUnits);
 
         public abstract void RestoreEffect(Unit unit);
 

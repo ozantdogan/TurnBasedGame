@@ -13,7 +13,160 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         {
         }
 
-        public override int Execute(Unit actor, Unit target)
+        //public override int Execute(Unit actor, Unit target)
+        //{
+        //    if (ManaCost > 0)
+        //    {
+        //        if (!CalculateMana(actor, ManaCost))
+        //            return -1;
+        //    }
+
+        //    string actorColor = actor.UnitType.GetColor();
+        //    string targetColor = target.UnitType.GetColor();
+        //    string skillColor = PrimaryType.GetColor();
+
+        //    var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
+        //    var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
+
+        //    var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
+        //    var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
+
+        //    var primaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[primaryResistanceLevel];
+        //    var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
+
+        //    var criticalDamage = 0;
+
+        //    for (int i = 0; i <= ExecutionCount; i++)
+        //    {
+        //        Logger.LogAction(actor, target, this);
+
+        //        if (HasMissed(actor, target) || HasDodged(target))
+        //            return 1;
+
+        //        if (CalculateCrit(actor))
+        //            criticalDamage = (int)(MaxDamageValue * 1.5);
+
+        //        double primaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
+        //        double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
+
+        //        double secondaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+        //        double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
+
+        //        double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
+        //        //if (totalDamageDealt > actor.MaxDamageValue * 3)
+        //        //    totalDamageDealt = actor.MaxDamageValue * 3;
+
+        //        target.HP -= (int)totalDamageDealt;
+
+        //        Logger.LogDamage(actor, target, totalDamageDealt, criticalDamage);
+
+        //        foreach(var effect in SkillStatusEffects)
+        //        {
+        //            var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) : 1.0;
+        //            if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
+        //            {
+        //                StatusEffect statusEffect = EffectManager.EffectSelector[effect.EffectType]();
+        //                statusEffect.DamagePerTurn = effect.DamagePerTurn;
+        //                statusEffect.Modifier = effect.Modifier;
+        //                statusEffect.Duration = effect.Duration;
+        //                UnitHelper.AddStatusEffect(target, statusEffect);
+        //            }
+
+        //            if (!target.IsAlive)
+        //            {
+        //                Logger.LogDeath(target);
+        //                break;
+        //            }
+        //        }
+        //    }
+
+        //    return 1;
+        //}
+
+        //public override int Execute(Unit actor, List<Unit> targets)
+        //{
+        //    if (ManaCost > 0)
+        //    {
+        //        if (!CalculateMana(actor, ManaCost))
+        //            return -1;
+        //    }
+
+        //    string actorColor = actor.UnitType.GetColor();
+        //    string skillColor = PrimaryType.GetColor();
+
+        //    Logger.LogAction(actor, this);
+
+        //    var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
+        //    var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
+        //    var criticalDamage = 0;
+
+        //    for (int i = 0; i <= ExecutionCount; i++)
+        //    {
+        //        foreach (var target in targets)
+        //        {
+        //            if (!ValidTargetPositions.Contains(target.Position) || target.Position >= targets.Count)
+        //                continue;
+
+        //            if (!target.IsAlive)
+        //            {
+        //                Logger.LogDeath(target);
+        //                continue;
+        //            }
+
+        //            if (HasMissed(actor, target) || HasDodged(target))
+        //                continue;
+
+        //            if (CalculateCrit(actor))
+        //                criticalDamage = (int)(MaxDamageValue * 1.5);
+
+        //            var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
+        //            var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
+
+        //            var primaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[primaryResistanceLevel];
+        //            var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
+
+        //            double primaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
+        //            double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
+
+        //            double secondaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue,  MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+        //            double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
+
+        //            double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
+        //            //if (totalDamageDealt > actor.MaxDamageValue * 3)
+        //            //    totalDamageDealt = actor.MaxDamageValue * 3;
+
+        //            var targetOldHP = target.HP;
+        //            target.HP -= (int)totalDamageDealt;
+
+        //            Logger.LogDamage(actor, target, totalDamageDealt, criticalDamage);
+
+        //            foreach (var effect in SkillStatusEffects)
+        //            {
+        //                var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) : 1.0;
+        //                if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
+        //                {
+        //                    StatusEffect statusEffect = EffectManager.EffectSelector[effect.EffectType]();
+        //                    statusEffect.DamagePerTurn = effect.DamagePerTurn;
+        //                    statusEffect.Modifier = effect.Modifier;
+        //                    statusEffect.Duration = effect.Duration;
+        //                    UnitHelper.AddStatusEffect(target, statusEffect);
+        //                }
+
+        //                if (target.HP < targetOldHP && !target.IsAlive)
+        //                {
+        //                    Logger.LogDeath(target);
+        //                    break;
+        //                }
+        //            }
+        //        }
+        //        Console.WriteLine("");
+        //        Thread.Sleep(LevelHandler.Pace + 200);
+        //    }
+
+        //    return 1;
+        //}
+
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
             if (ManaCost > 0)
             {
@@ -22,77 +175,19 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             }
 
             string actorColor = actor.UnitType.GetColor();
-            string targetColor = target.UnitType.GetColor();
             string skillColor = PrimaryType.GetColor();
+            List<Unit>? otherTargets = null;
 
-            var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
-            var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
-
-            var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
-            var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
-
-            var primaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[primaryResistanceLevel];
-            var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
-
-            var criticalDamage = 0;
-
-            for (int i = 0; i <= ExecutionCount; i++)
+            if (singleTarget != null)
             {
-                Logger.LogAction(actor, target, this);
-
-                if (HasMissed(actor, target) || HasDodged(target))
-                    return 1;
-
-                if (CalculateCrit(actor))
-                    criticalDamage = (int)(MaxDamageValue * 1.5);
-
-                double primaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
-                double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
-
-                double secondaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
-                double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
-
-                double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
-                //if (totalDamageDealt > actor.MaxDamageValue * 3)
-                //    totalDamageDealt = actor.MaxDamageValue * 3;
-
-                target.HP -= (int)totalDamageDealt;
-
-                Logger.LogDamage(actor, target, totalDamageDealt, criticalDamage);
-
-                foreach(var effect in SkillStatusEffects)
-                {
-                    var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) : 1.0;
-                    if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
-                    {
-                        StatusEffect statusEffect = EffectManager.EffectSelector[effect.EffectType]();
-                        statusEffect.DamagePerTurn = effect.DamagePerTurn;
-                        statusEffect.Modifier = effect.Modifier;
-                        statusEffect.Duration = effect.Duration;
-                        UnitHelper.AddStatusEffect(target, statusEffect);
-                    }
-
-                    if (!target.IsAlive)
-                    {
-                        Logger.LogDeath(target);
-                        break;
-                    }
-                }
+                otherTargets = targets;
+                targets = new List<Unit> { singleTarget };
             }
 
-            return 1;
-        }
-
-        public override int Execute(Unit actor, List<Unit> targets)
-        {
-            if (ManaCost > 0)
+            if (targets == null || targets.Count == 0)
             {
-                if (!CalculateMana(actor, ManaCost))
-                    return -1;
+                return 0; // No targets to execute on
             }
-
-            string actorColor = actor.UnitType.GetColor();
-            string skillColor = PrimaryType.GetColor();
 
             Logger.LogAction(actor, this);
 
@@ -128,14 +223,13 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     double primaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
                     double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
 
-                    double secondaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue,  MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+                    double secondaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
                     double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
 
                     double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
                     //if (totalDamageDealt > actor.MaxDamageValue * 3)
                     //    totalDamageDealt = actor.MaxDamageValue * 3;
 
-                    var targetOldHP = target.HP;
                     target.HP -= (int)totalDamageDealt;
 
                     Logger.LogDamage(actor, target, totalDamageDealt, criticalDamage);
@@ -149,10 +243,10 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                             statusEffect.DamagePerTurn = effect.DamagePerTurn;
                             statusEffect.Modifier = effect.Modifier;
                             statusEffect.Duration = effect.Duration;
-                            UnitHelper.AddStatusEffect(target, statusEffect);
+                            UnitHelper.AddStatusEffect(target, statusEffect, otherTargets);
                         }
 
-                        if (target.HP < targetOldHP && !target.IsAlive)
+                        if (!target.IsAlive)
                         {
                             Logger.LogDeath(target);
                             break;
@@ -160,7 +254,8 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     }
                 }
                 Console.WriteLine("");
-                Thread.Sleep(LevelHandler.Pace + 200);
+                if(i >= 1)
+                    Thread.Sleep(LevelHandler.Pace);
             }
 
             return 1;

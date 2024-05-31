@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Effects
             EffectType = EnumEffectType.BleedEffect;
         }
 
-        public override void ApplyEffect(Unit unit) { }
+        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null) { }
 
         public override void RestoreEffect(Unit unit) { }
     }

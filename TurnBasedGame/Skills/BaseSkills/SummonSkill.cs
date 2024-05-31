@@ -17,17 +17,18 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             throw new NotImplementedException();
         }
 
-        public override int Execute(Unit actor, Unit target)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
             if (ManaCost > 0)
             {
                 if (!CalculateMana(actor, ManaCost))
                     return -1;
+            }
+
+            if (targets == null || !targets.Any())
+            {
+                Console.WriteLine("No targets available.");
+                return -1;
             }
 
             Logger.LogAction(actor, this);

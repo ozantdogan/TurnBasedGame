@@ -34,10 +34,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("skyblue3", "#", "Holy Protection")]
         HolyProtection,
 
-        [Info("white", ">>", "Push")]
+        [Info("white", ",,", "Push")]
         Push,
-
-        [Info("white", "<<", "Pull")]
-        Pull,
     }
 }

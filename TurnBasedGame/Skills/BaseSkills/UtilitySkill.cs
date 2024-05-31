@@ -21,6 +21,12 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     return -1;
             }
 
+            if(target == null)
+            {
+                Logger.NoValidTargets();
+                return -1;
+            }
+
             var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
 
             Logger.LogAction(actor, target, this);
@@ -41,6 +47,12 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             {
                 if (!CalculateMana(actor, ManaCost))
                     return -1;
+            }
+
+            if(targets == null || targets.Any())
+            {
+                Logger.NoValidTargets();
+                return -1;
             }
 
             var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
@@ -94,12 +106,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             throw new NotImplementedException();
         }
 
-        public override int Execute(Unit actor, Unit target)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override int Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, Unit? singleTarget, List<Unit>? targets)
         {
             throw new NotImplementedException();
         }

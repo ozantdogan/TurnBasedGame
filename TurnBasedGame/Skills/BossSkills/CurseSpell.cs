@@ -19,9 +19,9 @@ namespace TurnBasedGame.Main.Skills.BossSkills
             SkillStatusEffects.Add(new CurseEffect { DamagePerTurn = 3, Duration = 2, Modifier = 1 });
         }
 
-        public override int Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, targets);
+            return base.Execute(actor, targets: targets);
         }
     }
 }

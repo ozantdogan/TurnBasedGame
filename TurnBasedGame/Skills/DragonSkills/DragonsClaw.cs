@@ -16,9 +16,9 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             MaxDamageValue = 9;
         }
 
-        public override int Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, target);
+            return base.Execute(actor, targets: targets);
         }
     }
 }

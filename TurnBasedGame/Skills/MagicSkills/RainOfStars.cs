@@ -20,9 +20,9 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             MinDamageValue = 4;
             MaxDamageValue = 5;
         }
-        public override int Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, targets);
+            return base.Execute(actor, targets: targets);
         }
     }
 }

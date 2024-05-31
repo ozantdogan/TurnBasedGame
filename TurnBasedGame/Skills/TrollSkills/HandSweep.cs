@@ -20,9 +20,9 @@ namespace TurnBasedGame.Main.Skills.TrollSkills
             ValidTargetPositions = new List<int> { 0, 1 };
         }
 
-        public override int Execute(Unit actor, Unit target)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, target);
+            return base.Execute(actor, singleTarget);
         }
     }
 }

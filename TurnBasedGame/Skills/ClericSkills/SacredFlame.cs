@@ -21,9 +21,9 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             MaxDamageValue = 4;
             SkillStatusEffects.Add(new BurnEffect { ApplianceChance = 80, DamagePerTurn = 3 });
         }
-        public override int Execute(Unit actor, List<Unit> targets)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, targets);
+            return base.Execute(actor, targets: targets);
         }
     }
 }

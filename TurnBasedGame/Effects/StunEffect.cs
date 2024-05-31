@@ -10,7 +10,7 @@ namespace TurnBasedGame.Main.Effects
             EffectType = EnumEffectType.StunEffect;
         }
 
-        public override void ApplyEffect(Unit unit)
+        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)
         {
             unit.IsStunned = true;
         }
