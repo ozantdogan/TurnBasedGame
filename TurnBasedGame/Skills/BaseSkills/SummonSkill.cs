@@ -10,6 +10,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public int SummonCount { get; set; } = 0;
         public int SummonLevel { get; set; } = 1;
         public EnumSummon SummonType { get; set; }
+        public int SummonRank { get; set; } = 0;
 
         public override int Execute(Unit actor)
         {
@@ -35,10 +36,19 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             summon.SetLevel(SummonLevel);
             if (actor.UnitType == EnumUnitType.Player)
                 summon.UnitType = EnumUnitType.Summon;
+            else
+                summon.UnitType = EnumUnitType.Mob;
 
-            for(int i  = 0; i <= SummonCount; i++)
+            var existingSummon = targets.FirstOrDefault(t => t.UnitType == summon.UnitType && t.Name == summon.Name);
+            if (existingSummon != null)
+            {
+                UnitHelper.RemoveUnit(existingSummon, targets);
+            }
+
+            for (int i  = 0; i <= SummonCount; i++)
             {
                 UnitHelper.AddUnit(summon, targets, actor.Position);
+                summon.Skills.Reverse();
             }
 
             return 1;

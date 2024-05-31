@@ -32,9 +32,13 @@ namespace TurnBasedGame.Main.UI
                     AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
-                    var effectResult = UnitHelper.ApplyStatusEffects(unit);
-                    battleResult = CheckAlives(playerUnits, mobUnits);
+                    int effectResult = 0;
+                    if(unit.IsAlive)
+                    {
+                        effectResult = UnitHelper.ApplyStatusEffects(unit);
+                    }
 
+                    battleResult = CheckAlives(playerUnits, mobUnits);
                     if (effectResult == 0)
                     {
                         Thread.Sleep(LevelHandler.Pace);
@@ -52,9 +56,9 @@ namespace TurnBasedGame.Main.UI
 
                     while (true)
                     {
-                        int actionResult = 1;
-
-                        actionResult = PerformTurn(unit, playerUnits.Where(u => u.IsAlive).ToList(), mobUnits.Where(u => u.IsAlive).ToList());
+                        (int actionResult, List<Unit> updatedPlayerUnits, List<Unit> updatedMobUnits) = PerformTurn(unit, playerUnits.Where(u => u.IsAlive).ToList(), mobUnits.Where(u => u.IsAlive).ToList());
+                        playerUnits = updatedPlayerUnits;
+                        mobUnits = updatedMobUnits;
 
                         if (actionResult > 0)
                         {
@@ -136,15 +140,19 @@ namespace TurnBasedGame.Main.UI
             return 0;
         }
 
-        private int PerformTurn(Unit actor, List<Unit> playerTargets, List<Unit> mobTargets)
+        private (int result, List<Unit> updatedPlayerUnits, List<Unit> updatedMobUnits) PerformTurn(Unit actor, List<Unit> playerTargets, List<Unit> mobTargets)
         {
             int skillChoice;
             BaseSkill selectedSkill;
 
-            if(actor.UnitType != EnumUnitType.Player && actor.UnitType != EnumUnitType.Summon)
+            List<Unit> updatedPlayerUnits = playerTargets;
+            List<Unit> updatedMobUnits = mobTargets;
+            var result = 1;
+            if (actor.UnitType != EnumUnitType.Player && actor.UnitType != EnumUnitType.Summon)
             {
                 var mobLogic = new MobLogic();
-                return mobLogic.ExecuteMobTurn(actor, playerTargets, mobTargets);
+                result = mobLogic.ExecuteMobTurn(actor, playerTargets, mobTargets);
+                return (result, updatedPlayerUnits, updatedMobUnits);
             }
 
             var availableSkills = actor.Skills.
@@ -155,7 +163,7 @@ namespace TurnBasedGame.Main.UI
             if (availableSkills.Count == 0)
             {
                 Console.WriteLine("No available skills for this position.");
-                return -1;
+                return (-1, updatedPlayerUnits, updatedMobUnits);
             }
 
             var skillChoices = availableSkills.Select((skill, index) =>
@@ -178,7 +186,7 @@ namespace TurnBasedGame.Main.UI
             if (skillChoice < 0 || skillChoice >= availableSkills.Count)
             {
                 Console.WriteLine("Invalid choice!");
-                return -1;
+                return (-1, updatedPlayerUnits, updatedMobUnits);
             }
 
             selectedSkill = availableSkills[skillChoice];
@@ -186,20 +194,32 @@ namespace TurnBasedGame.Main.UI
             if (skillChoice < 0 || skillChoice >= actor.Skills.Count)
             {
                 Console.WriteLine("Invalid choice!");
-                return -1;
+                return (-1, updatedPlayerUnits, updatedMobUnits);
             }
 
             if (selectedSkill is MoveSkill moveSkill && !actor.HasMoved)
-                return moveSkill.Execute(actor, playerTargets);
+            {
+                result = moveSkill.Execute(actor, playerTargets);
+                return (result, updatedPlayerUnits, updatedMobUnits);
+            }
 
             if (selectedSkill is RestSkill restSkill)
-                return restSkill.Execute(actor);
+            {
+                result = restSkill.Execute(actor);
+                return (result, updatedPlayerUnits, updatedMobUnits);
+            }
 
             if (selectedSkill.SelfTarget)
-                return selectedSkill.Execute(actor);
+            {
+                result = selectedSkill.Execute(actor);
+                return (result, updatedPlayerUnits, updatedMobUnits);
+            }
 
             if (selectedSkill is SummonSkill summonSkill)
-                return selectedSkill.Execute(actor, playerTargets);
+            {
+                result = summonSkill.Execute(actor, playerTargets);
+                return (result, updatedPlayerUnits, updatedMobUnits);
+            }
 
             List<Unit>? validTargets;
             if (selectedSkill.IsPassive)
@@ -220,7 +240,8 @@ namespace TurnBasedGame.Main.UI
             if (validTargets.Count() <= 0)
             {
                 Logger.NoValidTargets();
-                return -1;
+                return (-1, updatedPlayerUnits, updatedMobUnits);
+
             }
 
             List<string> targetInfoChoices = validTargets
@@ -258,16 +279,18 @@ namespace TurnBasedGame.Main.UI
 
             if (targetInfo == turnBackChoice)
             {
-                return -2;
+                return (-2, updatedPlayerUnits, updatedMobUnits);
             }
             else if (targetInfo == executionChoice) //AoE için
             {
-                return selectedSkill.Execute(actor, validTargets);
+                result = selectedSkill.Execute(actor, validTargets);
+                return (result, updatedPlayerUnits, updatedMobUnits);
             }
             else
             {
                 int targetChoice = targetInfoChoices.IndexOf(targetInfo);
-                return selectedSkill.Execute(actor, validTargets[targetChoice]);
+                result = selectedSkill.Execute(actor, validTargets[targetChoice]);
+                return (result, updatedPlayerUnits, updatedMobUnits);
             }
         }
 

@@ -14,8 +14,8 @@ namespace TurnBasedGame.Main.Skills.TrollSkills
             ManaCost = 10;
             IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
-            MinDamageValue = 6;
-            MaxDamageValue = 7;
+            MinDamageValue = 4;
+            MaxDamageValue = 5;
             ValidUserPositions = new List<int> { 0, 1 };
             ValidTargetPositions = new List<int> { 0, 1 };
         }

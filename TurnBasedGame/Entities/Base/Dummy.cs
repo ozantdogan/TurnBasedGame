@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.MagicSkills;
 
 namespace TurnBasedGame.Main.Entities.Base
 {
@@ -19,6 +20,7 @@ namespace TurnBasedGame.Main.Entities.Base
             TurnPriority = 0;
             DodgeChance = 0;
             Unmissable = true;
+            Skills.Add(new SummonGolem() { SummonRank = 1});
         }
     }
 }

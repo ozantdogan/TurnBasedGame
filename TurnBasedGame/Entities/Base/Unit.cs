@@ -175,6 +175,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumResistanceLevel ColdResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel BleedResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel StunResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel MoveResistance { get; set; } = EnumResistanceLevel.Neutral;
 
         #endregion
 

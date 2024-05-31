@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("gray", "Resistant")]
         Resistant,    // 50% damage
         [Info("gray", "Very Resistant")]
-        VeryResistant,       // 25% damage
+        VeryResistant, // 25% damage
         [Info("gray", "Immune")]
         Immune        // 0% damage
     }

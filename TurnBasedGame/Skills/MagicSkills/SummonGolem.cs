@@ -9,13 +9,18 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
         public SummonGolem() 
         {
             Name = "Summon Golem";
-            ManaCost = 10;
-            SummonType = EnumSummon.StoneGolem;
+            ManaCost = 25;
             IsPassive = true;
         }
 
         public override int Execute(Unit actor, List<Unit> targets)
         {
+            if (SummonRank == 0)
+                SummonType = EnumSummon.MiniStoneGolem;
+            else
+                SummonType = EnumSummon.StoneGolem;
+
+
             return base.Execute(actor, targets);
         }
     }

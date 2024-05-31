@@ -48,6 +48,9 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             if(selectedSkill.SelfTarget)
                 return selectedSkill.Execute(actor);
 
+            if(selectedSkill is SummonSkill)
+                return selectedSkill.Execute(actor, friendlyTargets);
+
             if(validTargets.Count > 0) 
             {
                 var target = validTargets[_random.Next(validTargets.Count)];

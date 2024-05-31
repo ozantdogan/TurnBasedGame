@@ -25,6 +25,21 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             {
                 unitList[i].Position++;
             }
+            SetPositions(unitList);
+        }
+
+        public static void RemoveUnit(Unit unit, List<Unit> unitList)
+        {
+            int position = unitList.IndexOf(unit);
+            if (position >= 0)
+            {
+                unitList.RemoveAt(position);
+                for (int i = position; i < unitList.Count; i++)
+                {
+                    unitList[i].Position--;
+                }
+                SetPositions(unitList);
+            }
         }
 
         public static void AddStatusEffect(Unit unit, StatusEffect effect)
@@ -39,6 +54,8 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             {
                 apply = true;
             }
+
+
 
             if (unit.IsAlive && apply)
             {
@@ -62,10 +79,9 @@ namespace TurnBasedGame.Main.Helpers.Concrete
                     {
                         unit.StatusEffects.Add(effect);
                         effect.ApplyEffect(unit);
+                        Logger.LogStatusEffectApplied(unit, effect);
                     }
                 }
-
-                Logger.LogStatusEffectApplied(unit, effect);
             }
         }
 
