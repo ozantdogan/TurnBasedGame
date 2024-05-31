@@ -6,9 +6,8 @@ namespace TurnBasedGame.Main.Helpers.Concrete
     {
         private int _currentLevel;
         private const int MaxLevel = 10;
-
-        private double _hpIncreaseRate = 0.25;
-        private double _attributeIncreaseRate = 0.25;
+        private const int StatIncreasePerLevel = 8;
+        private const double PointIncreaseRate = 0.25;
 
         public UnitLevel(int startingLevel = 1)
         {
@@ -26,22 +25,64 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             if (CurrentLevel < MaxLevel)
             {
                 CurrentLevel++;
-                unit.MaxHP = (int)(unit.MaxHP + (unit.MaxHP * _hpIncreaseRate));
-                unit.MaxMP = (int)(unit.MaxMP + (unit.MaxHP * _hpIncreaseRate));
+
+                var stats = new List<(string Name, int Value)>
+                {
+                    ("Strength", unit.Strength),
+                    ("Dexterity", unit.Dexterity),
+                    ("Faith", unit.Faith),
+                    ("Intelligence", unit.Intelligence)
+                };
+
+                stats.Sort((a, b) => b.Value.CompareTo(a.Value));
+
+                int highestStatIncrease = (int)(StatIncreasePerLevel * 0.5);
+                int secondHighestStatIncrease = (int)((StatIncreasePerLevel - highestStatIncrease) * 0.5);
+                int remainingStatIncrease = (StatIncreasePerLevel - highestStatIncrease - secondHighestStatIncrease) / (stats.Count - 2);
+
+                for (int i = 0; i < stats.Count; i++)
+                {
+                    switch (i)
+                    {
+                        case 0: // Highest stat
+                            IncreaseStat(unit, stats[i].Name, highestStatIncrease);
+                            break;
+                        case 1: // Second highest stat
+                            IncreaseStat(unit, stats[i].Name, secondHighestStatIncrease);
+                            break;
+                        default: // Remaining stats
+                            IncreaseStat(unit, stats[i].Name, remainingStatIncrease);
+                            break;
+                    }
+                }
+
+                unit.MaxHP = (int)(unit.MaxHP + (unit.MaxHP * PointIncreaseRate));
+                unit.MaxMP = (int)(unit.MaxMP + (unit.MaxMP * PointIncreaseRate));
                 unit.HP = unit.MaxHP;
                 unit.MP = unit.MaxMP;
-
-                unit.Strength = (int)(unit.Strength + (unit.Strength * _attributeIncreaseRate));
-                unit.Dexterity = (int)(unit.Dexterity + (unit.Dexterity * _attributeIncreaseRate));
-                unit.Intelligence = (int)(unit.Intelligence + (unit.Intelligence * _attributeIncreaseRate));
-                unit.Faith = (int)(unit.Faith + (unit.Faith * _attributeIncreaseRate));
-
-                //unit.MaxDamageValue = (int)(unit.MaxDamageValue * (1 + _damageValueIncreaseRate));
-                //unit.MinDamageValue = (int)(unit.MinDamageValue * (1 + _damageValueIncreaseRate));
             }
             else
             {
                 CurrentLevel = MaxLevel;
+            }
+        }
+
+        private void IncreaseStat(Unit unit, string statName, int amount)
+        {
+            switch (statName)
+            {
+                case "Strength":
+                    unit.Strength += amount;
+                    break;
+                case "Dexterity":
+                    unit.Dexterity += amount;
+                    break;
+                case "Faith":
+                    unit.Faith += amount;
+                    break;
+                case "Intelligence":
+                    unit.Intelligence += amount;
+                    break;
             }
         }
     }

@@ -32,11 +32,11 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("green", "Poison")]
         Poison,
 
-        [Info("deeppink4_1", "Dark")]
-        Dark,
-
         [Info("paleturquoise1", "Cold")]
-        Cold
+        Cold,
+
+        [Info("deeppink4_1", "Occult")]
+        Occult
     }
 
     public static class SkillTypeModifier
@@ -52,7 +52,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
             { EnumSkillType.Fire, actor => actor.Faith * 0.3 + actor.Intelligence * 0.2 },
             { EnumSkillType.Cold, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
             { EnumSkillType.Poison, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
-            { EnumSkillType.Dark, actor => actor.Faith * 0.2 + actor.Intelligence * 0.3 },
+            { EnumSkillType.Occult, actor => actor.Faith * 0.2 + actor.Intelligence * 0.3 },
         };
     }
 }

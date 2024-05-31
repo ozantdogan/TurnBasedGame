@@ -9,7 +9,7 @@ namespace TurnBasedGame.Main.Effects
         public CurseEffect()
         {
             Name = "Curse";
-            SkillType = EnumSkillType.Dark;
+            SkillType = EnumSkillType.Occult;
             EffectType = EnumEffectType.CurseEffect;
         }
 

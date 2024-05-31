@@ -24,6 +24,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Skills.Add(new FreezingMist());
             Skills.Add(new RainOfStars());
             Skills.Add(new StarShard());
+            Skills.Add(new SummonGolem());
         }
     }
 }

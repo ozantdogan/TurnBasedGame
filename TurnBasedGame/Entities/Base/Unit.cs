@@ -171,7 +171,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public EnumResistanceLevel HolyResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel FireResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel PoisonResistance { get; set; } = EnumResistanceLevel.Neutral;
-        public EnumResistanceLevel DarkResistance { get; set; } = EnumResistanceLevel.Neutral;
+        public EnumResistanceLevel OccultResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel ColdResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel BleedResistance { get; set; } = EnumResistanceLevel.Neutral;
         public EnumResistanceLevel StunResistance { get; set; } = EnumResistanceLevel.Neutral;

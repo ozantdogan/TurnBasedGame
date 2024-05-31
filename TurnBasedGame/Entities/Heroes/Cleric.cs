@@ -24,6 +24,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Skills.Add(new BlindingLight());
             Skills.Add(new DivineHeal());
             Skills.Add(new ClericHeal());
+            Skills.Add(new SacredFlame());
             Skills.Add(new KnifePierce());
         }
     }

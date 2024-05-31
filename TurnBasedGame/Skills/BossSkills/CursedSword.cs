@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Skills.BossSkills
             ExecutionName = "Cursed Sword";
             IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
-            SecondaryType = EnumSkillType.Dark;
+            SecondaryType = EnumSkillType.Occult;
             MinDamageValue = 5;
             MaxDamageValue = 8;
             SkillStatusEffects.Add(new CurseEffect { DamagePerTurn = 2, Duration = 1, ApplianceChance = 40 });

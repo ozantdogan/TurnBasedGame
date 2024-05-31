@@ -9,9 +9,9 @@ namespace TurnBasedGame.Main.Skills.BossSkills
     {
         public CurseSpell()
         {
-            Name = "Curse";
+            Name = "Undead's Curse";
             ExecutionName = Name;
-            PrimaryType = EnumSkillType.Dark;
+            PrimaryType = EnumSkillType.Occult;
             ManaCost = 30;
             MinDamageValue = 2;
             MaxDamageValue = 4;

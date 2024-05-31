@@ -18,6 +18,15 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             unitList.Add(unit);
         }
 
+        public static void AddUnit(Unit unit, List<Unit> unitList, int position)
+        {
+            unitList.Insert(position, unit);
+            for (int i = position + 1; i < unitList.Count; i++)
+            {
+                unitList[i].Position++;
+            }
+        }
+
         public static void AddStatusEffect(Unit unit, StatusEffect effect)
         {
             var resistanceLevel = ResistanceManager.EffectResistanceLevelSelector.ContainsKey(effect.EffectType)
@@ -99,6 +108,21 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             }
 
             return result;
+        }
+
+        public static void SetPositions(List<Unit> units)
+        {
+            units = units.Where(u => u.IsAlive).OrderBy(p => p.Position).ToList();
+
+            for (int i = 0; i < units.Count; i++)
+            {
+                units[i].Position = i;
+            }
+
+            for (int i = 0; i < units.Count; i++)
+            {
+                units[i].Position = i;
+            }
         }
     }
 }

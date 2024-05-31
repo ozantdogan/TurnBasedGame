@@ -71,7 +71,11 @@ namespace TurnBasedGame.Main.UI
                     }
                     battleResult = CheckAlives(playerUnits, mobUnits);
                     if (battleResult != 0)
+                    {
+                        SetPositions(playerUnits);
+                        SetPositions(mobUnits);
                         break;
+                    }
                 }
                 PostTurn(playerUnits, mobUnits);
                 battleResult = CheckAlives(playerUnits, mobUnits);
@@ -137,7 +141,7 @@ namespace TurnBasedGame.Main.UI
             int skillChoice;
             BaseSkill selectedSkill;
 
-            if(actor.UnitType != EnumUnitType.Player)
+            if(actor.UnitType != EnumUnitType.Player && actor.UnitType != EnumUnitType.Summon)
             {
                 var mobLogic = new MobLogic();
                 return mobLogic.ExecuteMobTurn(actor, playerTargets, mobTargets);
@@ -193,6 +197,9 @@ namespace TurnBasedGame.Main.UI
 
             if (selectedSkill.SelfTarget)
                 return selectedSkill.Execute(actor);
+
+            if (selectedSkill is SummonSkill summonSkill)
+                return selectedSkill.Execute(actor, playerTargets);
 
             List<Unit>? validTargets;
             if (selectedSkill.IsPassive)
@@ -276,14 +283,22 @@ namespace TurnBasedGame.Main.UI
                 unit.HasMoved = false;
             }
 
-            for (int i = 0; i < alivePlayerUnits.Count; i++)
+            UnitHelper.SetPositions(alivePlayerUnits);
+            UnitHelper.SetPositions(aliveMobUnits);
+        }
+
+        private void SetPositions(List<Unit> units)
+        {
+            units = units.Where(u => u.IsAlive).OrderBy(p => p.Position).ToList();
+
+            for (int i = 0; i < units.Count; i++)
             {
-                alivePlayerUnits[i].Position = i; 
+                units[i].Position = i;
             }
 
-            for (int i = 0; i < aliveMobUnits.Count; i++)
+            for (int i = 0; i < units.Count; i++)
             {
-                aliveMobUnits[i].Position = i;
+                units[i].Position = i;
             }
         }
     }

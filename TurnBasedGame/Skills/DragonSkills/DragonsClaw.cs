@@ -12,8 +12,8 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             ExecutionName = Name;
             PrimaryType = EnumSkillType.Slash;
             ValidTargetPositions = new List<int>() { 0, 1 };
-            MinDamageValue = 7;
-            MaxDamageValue = 10;
+            MinDamageValue = 6;
+            MaxDamageValue = 9;
         }
 
         public override int Execute(Unit actor, Unit target)

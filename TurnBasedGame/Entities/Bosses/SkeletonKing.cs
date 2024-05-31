@@ -13,9 +13,9 @@ namespace TurnBasedGame.Main.Entities.Bosses
             DisplayName = "Gaiseric,\nthe Skeleton King";
             MaxHP = 80;
             MaxMP = 100;
-            Strength = 8;
-            Dexterity = 6;
-            Intelligence = 7;
+            Strength = 7;
+            Dexterity = 5;
+            Intelligence = 4;
             Faith = 5;
             CriticalChance = 0;
             SlashResistance = EnumResistanceLevel.Resistant;

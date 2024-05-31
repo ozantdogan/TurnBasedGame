@@ -5,6 +5,7 @@
         Human,
         Undead,
         Giant,
-        Dragon
+        Dragon,
+        MagicalCreature
     }
 }

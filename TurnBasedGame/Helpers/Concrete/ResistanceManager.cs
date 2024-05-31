@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Entities.Resistance
             { EnumSkillType.Holy, target => target.HolyResistance },
             { EnumSkillType.Fire, target => target.FireResistance },
             { EnumSkillType.Poison, target => target.PoisonResistance },
-            { EnumSkillType.Dark, target => target.DarkResistance },
+            { EnumSkillType.Occult, target => target.OccultResistance },
             { EnumSkillType.Cold, target => target.ColdResistance },
         };
 
@@ -23,7 +23,7 @@ namespace TurnBasedGame.Main.Entities.Resistance
         {
             { EnumEffectType.PoisonEffect, target => target.PoisonResistance },
             { EnumEffectType.BurnEffect, target => target.FireResistance },
-            { EnumEffectType.CurseEffect, target => target.DarkResistance },
+            { EnumEffectType.CurseEffect, target => target.OccultResistance },
             { EnumEffectType.BleedEffect, target => target.BleedResistance },
             { EnumEffectType.ColdEffect, target => target.ColdResistance },
         };
@@ -90,8 +90,8 @@ namespace TurnBasedGame.Main.Entities.Resistance
                 case EnumSkillType.Poison:
                     target.PoisonResistance = newLevel;
                     break;
-                case EnumSkillType.Dark:
-                    target.DarkResistance = newLevel;
+                case EnumSkillType.Occult:
+                    target.OccultResistance = newLevel;
                     break;
                 case EnumSkillType.Cold:
                     target.ColdResistance = newLevel;

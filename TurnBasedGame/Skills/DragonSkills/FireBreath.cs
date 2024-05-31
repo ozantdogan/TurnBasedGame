@@ -10,12 +10,11 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
         public FireBreath()
         {
             Name = "Fire Breath";
-            ExecutionCount = 1;
             PrimaryType = EnumSkillType.Fire;
             SkillStatusEffects.Add(new BurnEffect() { DamagePerTurn = 5, Duration = 2});
             IsAoE = true;
-            MinDamageValue = 2;
-            MaxDamageValue = 6;
+            MinDamageValue = 4;
+            MaxDamageValue = 7;
         }
 
         public override int Execute(Unit actor, List<Unit> targets)

@@ -34,7 +34,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var primaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[primaryResistanceLevel];
             var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
 
-            var critModifier = 1.0;
+            var criticalDamage = 0;
 
             for (int i = 0; i <= ExecutionCount; i++)
             {
@@ -44,12 +44,12 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     return 1;
 
                 if (CalculateCrit(actor))
-                    critModifier = MaxDamageValue * 1.5;
+                    criticalDamage = (int)(MaxDamageValue * 1.5);
 
-                double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
+                double primaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
                 double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
 
-                double secondaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(MinDamageValue, MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+                double secondaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
                 double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
 
                 double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
@@ -58,7 +58,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
                 target.HP -= (int)totalDamageDealt;
 
-                Logger.LogDamage(actor, target, totalDamageDealt, critModifier);
+                Logger.LogDamage(actor, target, totalDamageDealt, criticalDamage);
 
                 foreach(var effect in SkillStatusEffects)
                 {
@@ -98,7 +98,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
             var primaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
             var secondaryDamageTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(SecondaryType) ? SkillTypeModifier.Modifiers[SecondaryType](actor) : 0.0;
-            var critModifier = 1.0;
+            var criticalDamage = 0;
 
             for (int i = 0; i <= ExecutionCount; i++)
             {
@@ -117,7 +117,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                         continue;
 
                     if (CalculateCrit(actor))
-                        critModifier = MaxDamageValue * 1.5;
+                        criticalDamage = (int)(MaxDamageValue * 1.5);
 
                     var primaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(PrimaryType) ? ResistanceManager.ResistanceLevelSelectors[PrimaryType](target) : EnumResistanceLevel.Neutral;
                     var secondaryResistanceLevel = ResistanceManager.ResistanceLevelSelectors.ContainsKey(SecondaryType) ? ResistanceManager.ResistanceLevelSelectors[SecondaryType](target) : EnumResistanceLevel.Neutral;
@@ -125,19 +125,20 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     var primaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[primaryResistanceLevel];
                     var secondaryResistanceModifier = ResistanceManager.ResistanceLevelModifiers[secondaryResistanceLevel];
 
-                    double primaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
+                    double primaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * primaryDamageTypeModifier * PrimarySkillModifier;
                     double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
 
-                    double secondaryBaseDamage = (critModifier > 1.0 ? critModifier : _random.Next(MinDamageValue,  MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
+                    double secondaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue,  MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
                     double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
 
                     double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
                     //if (totalDamageDealt > actor.MaxDamageValue * 3)
                     //    totalDamageDealt = actor.MaxDamageValue * 3;
 
+                    var targetOldHP = target.HP;
                     target.HP -= (int)totalDamageDealt;
 
-                    Logger.LogDamage(actor, target, totalDamageDealt, critModifier);
+                    Logger.LogDamage(actor, target, totalDamageDealt, criticalDamage);
 
                     foreach (var effect in SkillStatusEffects)
                     {
@@ -151,14 +152,14 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                             UnitHelper.AddStatusEffect(target, statusEffect);
                         }
 
-                        if (!target.IsAlive)
+                        if (target.HP < targetOldHP && !target.IsAlive)
                         {
                             Logger.LogDeath(target);
                             break;
                         }
                     }
-                    Console.WriteLine("");
                 }
+                Console.WriteLine("");
                 Thread.Sleep(LevelHandler.Pace + 200);
             }
 
