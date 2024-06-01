@@ -2,6 +2,7 @@
 using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Abstract;
+using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
 
@@ -19,6 +20,8 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             _name = "Skill";
             _executionName = string.Empty;
             Description = string.Empty;
+            Distance = EnumDistance.NoRange;
+            SkillHelper.SetValidPositions(this);
         }
 
         public string ExecutionName
@@ -45,8 +48,10 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
         public int KnockbackChance = 0;
         public double KnockbackModifier = 1.0;
-        public List<int> ValidUserPositions { get; set; } = new List<int>() { 0, 1, 2, 3, 4, 5 };
-        public List<int> ValidTargetPositions { get; set; } = new List<int>() { 0, 1, 2, 3, 4, 5 };
+
+        public EnumDistance Distance { get; set; }
+        public List<int> ValidTargetPositions { get; set; } = new List<int>();
+        public List<int> ValidUserPositions { get; set; } = new List<int>();
 
         [StringLength(100)] public string Description { get; set; } = "";
         public bool IsPassive { get; set; }

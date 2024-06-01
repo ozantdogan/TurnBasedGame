@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
@@ -13,8 +14,10 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             ManaCost = 4;
             IsPassive = false;
             PrimaryType = EnumSkillType.Magic;
+            Distance = EnumDistance.RangedLong;
             MinDamageValue = 3;
             MaxDamageValue = 5;
+            SkillHelper.SetValidPositions(this);
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
