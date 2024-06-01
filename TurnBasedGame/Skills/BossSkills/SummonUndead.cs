@@ -22,6 +22,10 @@ namespace TurnBasedGame.Main.Skills.BossSkills
             SummonType = _random.Next(2) == 0 ? EnumSummon.UndeadSwordsman : EnumSummon.UndeadSpearsman;
             base.Execute(actor, targets: targets);
 
+            var secondSummonType = SummonType == EnumSummon.UndeadSwordsman ? EnumSummon.UndeadSpearsman : EnumSummon.UndeadSwordsman;
+            SummonType = secondSummonType;
+            base.Execute(actor, targets: targets);
+
             return 1; 
         }
     }

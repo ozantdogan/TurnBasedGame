@@ -26,6 +26,7 @@ namespace TurnBasedGame.Main.Entities.Resistance
             { EnumEffectType.CurseEffect, target => target.OccultResistance },
             { EnumEffectType.BleedEffect, target => target.BleedResistance },
             { EnumEffectType.ColdEffect, target => target.ColdResistance },
+            { EnumEffectType.StunEffect, target => target.StunResistance },
         };
 
         public static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<EnumResistanceLevel, double>
@@ -48,10 +49,13 @@ namespace TurnBasedGame.Main.Entities.Resistance
             EnumResistanceLevel.Immune
         };
 
-        public static void AdjustResistance(Unit target, EnumSkillType skillType, bool increase)
+        public static void AdjustResistance(Unit target, EnumSkillType skillType, bool increase, bool allowImmuneResistance = false)
         {
             EnumResistanceLevel currentLevel = ResistanceLevelSelectors[skillType](target);
             int currentIndex = ResistanceLevels.IndexOf(currentLevel);
+
+            if(currentLevel == EnumResistanceLevel.Immune && !allowImmuneResistance)
+                return;
 
             int newIndex = increase ? currentIndex + 1 : currentIndex - 1;
 

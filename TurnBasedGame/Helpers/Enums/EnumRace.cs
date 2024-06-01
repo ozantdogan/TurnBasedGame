@@ -6,6 +6,6 @@
         Undead,
         Giant,
         Dragon,
-        MagicalCreature
+        Homunculus
     }
 }

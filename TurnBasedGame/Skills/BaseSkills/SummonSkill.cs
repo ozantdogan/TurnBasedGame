@@ -53,6 +53,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             summon.HP = summon.MaxHP;
             summon.MaxMP = (int)(summon.MaxMP * statModifier * 0.4);
             summon.MP = summon.MaxMP;
+            summon.SetLevel(actor.Level.CurrentLevel);
 
             UnitHelper.AddUnit(summon, targets, actor.Position);
             summon.Skills.Reverse();

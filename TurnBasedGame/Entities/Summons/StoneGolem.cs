@@ -10,7 +10,7 @@ namespace TurnBasedGame.Main.Entities.Summons
         {
             Name = "Stone Golem";
             DisplayName = "Stone Golem";
-            MaxHP = 30;
+            MaxHP = 20;
             MaxMP = 20;
             Strength = 7;
             Dexterity = 2;
@@ -29,7 +29,7 @@ namespace TurnBasedGame.Main.Entities.Summons
             OccultResistance = EnumResistanceLevel.VeryWeak;
             MagicResistance = EnumResistanceLevel.VeryWeak;
             Skills.Add(new HandSweep());
-            Race = EnumRace.MagicalCreature;
+            Race = EnumRace.Homunculus;
         }
     }
 }
