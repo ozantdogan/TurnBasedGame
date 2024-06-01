@@ -17,6 +17,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             _random = new Random();
         }
 
+        //todo düzelt
         public (int result, List<Unit> updatedPlayerUnits, List<Unit> updatedMobUnits) ExecuteMobTurn(Unit actor, List<Unit> enemyTargets, List<Unit> friendlyTargets)
         {
             var remainingSkills = actor.Skills.
@@ -66,7 +67,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             if (validTargets.Count > 0) 
             {
                 var target = validTargets[_random.Next(validTargets.Count)];
-                result = selectedSkill.Execute(actor, singleTarget : target, null);
+                result = selectedSkill.Execute(actor, singleTarget : target, updatedPlayerUnits);
                 return (result, updatedPlayerUnits, updatedMobUnits);
             }
             else

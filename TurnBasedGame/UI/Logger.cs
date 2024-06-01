@@ -75,7 +75,7 @@ namespace TurnBasedGame.Main.UI
 
         public static void LogTargetMove(Unit actor, int oldPosition, int newPosition)
         {
-            AnsiConsole.MarkupLine($"{FormatUnit(actor)} moved from '{oldPosition}' to '{newPosition}'.");
+            AnsiConsole.MarkupLine($"{FormatUnit(actor)} is knocked! ({oldPosition} => {newPosition})");
         }
 
         public static void LogMove(Unit actor, bool moveFront)

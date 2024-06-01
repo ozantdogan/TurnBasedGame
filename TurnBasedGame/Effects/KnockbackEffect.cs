@@ -13,18 +13,18 @@ namespace TurnBasedGame.Main.Effects
         public KnockbackEffect()
         {
             Name = "Knockback";
-            EffectType = EnumEffectType.Push;
+            EffectType = EnumEffectType.Move;
         }
 
         public override void ApplyEffect(Unit target, List<Unit>? allTargets)
         {
-            if(allTargets != null && allTargets.Count() >= 1) 
+            if(allTargets != null && allTargets.Count() > 1) 
             { 
                 int oldPosition = target.Position;
                 int newPosition = oldPosition - KnockbackDistance + 1;
                 if (newPosition < 0) newPosition = 0; 
 
-                UnitHelper.AddUnit(target, allTargets, newPosition);
+                UnitHelper.SetPosition(target, allTargets, newPosition);
 
                 Logger.LogTargetMove(target, oldPosition, newPosition);
             }

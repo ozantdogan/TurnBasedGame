@@ -20,12 +20,12 @@ namespace TurnBasedGame.Main.Helpers.Concrete
 
         public static void AddUnit(Unit unit, List<Unit> unitList, int position)
         {
+            unit.Position = position;
             unitList.Insert(position, unit);
             for (int i = position + 1; i < unitList.Count; i++)
             {
                 unitList[i].Position++;
             }
-            SetPositions(unitList);
         }
 
         public static void RemoveUnit(Unit unit, List<Unit> unitList)
@@ -38,7 +38,6 @@ namespace TurnBasedGame.Main.Helpers.Concrete
                 {
                     unitList[i].Position--;
                 }
-                SetPositions(unitList);
             }
         }
 
@@ -132,10 +131,18 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             {
                 units[i].Position = i;
             }
+        }
 
-            for (int i = 0; i < units.Count; i++)
+        public static void SetPosition(Unit unit, List<Unit> unitList, int newPosition)
+        {
+            int currentPosition = unitList.IndexOf(unit);
+
+            unitList.RemoveAt(currentPosition);
+            unitList.Insert(newPosition, unit);
+
+            for (int i = 0; i < unitList.Count; i++)
             {
-                units[i].Position = i;
+                unitList[i].Position = i;
             }
         }
     }

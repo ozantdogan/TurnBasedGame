@@ -1,4 +1,5 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Effects;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
@@ -14,6 +15,7 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             ValidTargetPositions = new List<int>() { 0, 1 };
             MinDamageValue = 6;
             MaxDamageValue = 9;
+            SkillStatusEffects.Add(new KnockbackEffect() { ApplianceChance = 90 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
