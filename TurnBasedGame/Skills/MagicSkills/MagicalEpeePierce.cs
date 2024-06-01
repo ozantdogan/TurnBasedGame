@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             Distance = EnumDistance.Melee;
             MinDamageValue = 3;
             MaxDamageValue = 4;
-            SkillDistanceSelector.GetPositions(Distance);
+            SkillHelper.SetValidPositions(this);
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

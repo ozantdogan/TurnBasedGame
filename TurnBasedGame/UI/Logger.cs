@@ -32,6 +32,11 @@ namespace TurnBasedGame.Main.UI
             AnsiConsole.MarkupLine($"({FormatUnit(unit)} has +{healDealt} HP)");
         }
 
+        public static void LogCannotHeal(Unit unit)
+        {
+            AnsiConsole.MarkupLine($"Cannot be healed ({FormatUnit(unit)} is {unit.Race})");
+        }
+
         public static void LogDodge(Unit target)
         {
             AnsiConsole.MarkupLine($"{FormatUnit(target)} managed to dodge the attack!");

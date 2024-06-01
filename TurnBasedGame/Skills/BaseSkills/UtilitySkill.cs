@@ -41,9 +41,16 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
                     var oldHP = target.HP;
                     double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
-                    target.HP += (int)healingValue;
+                    if(!(target.Race == EnumRace.Homunculus))
+                    {
+                        Logger.LogHeal(target, target.HP - oldHP);
+                        target.HP += (int)healingValue;
+                    }
+                    else
+                    {
+                        Logger.LogCannotHeal(target);
+                    }
 
-                    Logger.LogHeal(target, target.HP - oldHP);
                 }
                 Thread.Sleep(LevelHandler.Pace);
             }
