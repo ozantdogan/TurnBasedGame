@@ -46,13 +46,15 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             var resistanceLevel = ResistanceManager.EffectResistanceLevelSelector.ContainsKey(effect.EffectType)
                 ? ResistanceManager.EffectResistanceLevelSelector[effect.EffectType](unit) : EnumResistanceLevel.Neutral;
             var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
-            var isApplied = false;
             var roll = random.Next(100);
             var apply = false;
             if(roll <= effect.ApplianceChance)
             {
                 apply = true;
             }
+
+            if(resistanceLevel == EnumResistanceLevel.Immune)
+                return;
 
             if (unit.IsAlive && apply)
             {
@@ -75,13 +77,9 @@ namespace TurnBasedGame.Main.Helpers.Concrete
                 }
                 else
                 {
-                    if(resistanceLevel != EnumResistanceLevel.Immune || effect.DamagePerTurn <= 0)
-                    {
-                        unit.StatusEffects.Add(effect);
-                        effect.ApplyEffect(unit, units);
-                        isApplied = true;
-                    }
-                    if(!(effect.EffectType == EnumEffectType.MoveEffect) && isApplied)
+                    unit.StatusEffects.Add(effect);
+                    effect.ApplyEffect(unit, units);
+                    if(!(effect.EffectType == EnumEffectType.MoveEffect))
                         Logger.LogStatusEffectApplied(unit, effect);
                 }
             }

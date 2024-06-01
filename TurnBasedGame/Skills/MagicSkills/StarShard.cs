@@ -14,7 +14,7 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             ManaCost = 4;
             IsPassive = false;
             PrimaryType = EnumSkillType.Magic;
-            Distance = EnumDistance.RangedLong;
+            Distance = EnumDistance.RangedMedium;
             MinDamageValue = 3;
             MaxDamageValue = 5;
             SkillHelper.SetValidPositions(this);
