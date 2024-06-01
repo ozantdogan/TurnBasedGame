@@ -12,7 +12,7 @@ namespace TurnBasedGame.Main.Entities.Summons
             DisplayName = "Stone Golem";
             MaxHP = 30;
             MaxMP = 20;
-            Strength = 8;
+            Strength = 7;
             Dexterity = 2;
             Intelligence = 2;
             Faith = 1;

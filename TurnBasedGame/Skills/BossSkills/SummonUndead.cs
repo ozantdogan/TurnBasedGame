@@ -8,17 +8,15 @@ namespace TurnBasedGame.Main.Skills.BossSkills
 {
     public class SummonUndead : SummonSkill
     {
-        private readonly Random _random;
-
         public SummonUndead()
         {
             Name = "Summon Undead";
             ManaCost = 25;
             IsPassive = true;
             PrimaryType = EnumSkillType.Occult;
-            _random = new Random();
         }
 
+        //TODO aynı target türünden var ise summon olmuyor
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
             SummonType = _random.Next(2) == 0 ? EnumSummon.UndeadSwordsman : EnumSummon.UndeadSpearsman;

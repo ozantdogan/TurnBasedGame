@@ -9,8 +9,9 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
         public SummonGolem() 
         {
             Name = "Summon Golem";
-            ManaCost = 25;
+            ManaCost = 1;
             IsPassive = true;
+            PrimaryType = EnumSkillType.Magic;
             SummonType = EnumSummon.StoneGolem;
         }
 

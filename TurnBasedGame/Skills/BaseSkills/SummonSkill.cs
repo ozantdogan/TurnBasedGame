@@ -16,6 +16,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             throw new NotImplementedException();
         }
 
+        //TODO SummonUndead
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
             if (ManaCost > 0)
@@ -42,16 +43,16 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                 summon.UnitType = EnumUnitType.MobSummon;
 
             var existingSummon = targets.FirstOrDefault(t => t.UnitType == summon.UnitType && t.Name == summon.Name);
-            if (existingSummon != null && existingSummon.HP <= 0)
+            if (existingSummon != null)
             {
                 UnitHelper.RemoveUnit(existingSummon, targets);
             }
 
             summon.SetLevel(SummonLevel);
-            summon.MaxHP = (int)(summon.MaxHP * statModifier * 0.5);
+            summon.MaxHP = (int)(summon.MaxHP * statModifier * 0.4);
             summon.HP = summon.MaxHP;
-            summon.MaxMP = (int)(summon.MaxMP * statModifier * 0.5);
-            summon.MaxMP = summon.MaxHP;
+            summon.MaxMP = (int)(summon.MaxMP * statModifier * 0.4);
+            summon.MP = summon.MaxMP;
 
             UnitHelper.AddUnit(summon, targets, actor.Position);
             summon.Skills.Reverse();
