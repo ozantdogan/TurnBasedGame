@@ -7,7 +7,6 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 {
     public class SummonSkill : BaseSkill
     {
-        public int SummonCount { get; set; } = 0;
         public int SummonLevel { get; set; } = 1;
         public EnumSummon SummonType { get; set; }
         public int SummonRank { get; set; } = 0;
@@ -31,10 +30,12 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                 return -1;
             }
 
+            var statModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
+
             Logger.LogAction(actor, this);
 
             var summon = SummonSelector.Selector[SummonType]();
-            summon.SetLevel(SummonLevel);
+
             if (actor.UnitType == EnumUnitType.Player)
                 summon.UnitType = EnumUnitType.Summon;
             else
@@ -46,11 +47,14 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                 UnitHelper.RemoveUnit(existingSummon, targets);
             }
 
-            for (int i  = 0; i <= SummonCount; i++)
-            {
-                UnitHelper.AddUnit(summon, targets, actor.Position);
-                summon.Skills.Reverse();
-            }
+            summon.SetLevel(SummonLevel);
+            summon.MaxHP = (int)(summon.MaxHP * statModifier * 0.5);
+            summon.HP = summon.MaxHP;
+            summon.MaxMP = (int)(summon.MaxMP * statModifier * 0.5);
+            summon.MaxMP = summon.MaxHP;
+
+            UnitHelper.AddUnit(summon, targets, actor.Position);
+            summon.Skills.Reverse();
 
             return 1;
         }

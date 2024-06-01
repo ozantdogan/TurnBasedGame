@@ -32,8 +32,8 @@ namespace TurnBasedGame.Main.Entities.Base
             _mp = MaxMP;
             DisplayName = Name;
             Level = new UnitLevel();
-            Skills.Add(new RestSkill() { ValidUserPositions = new List<int> { 0, 1, 2, 3 } });
-            Skills.Add(new MoveSkill() { ValidUserPositions = new List<int> { 0, 1, 2, 3 } });
+            Skills.Add(new RestSkill());
+            Skills.Add(new MoveSkill());
         }
 
         private Dictionary<string, object> _originalAttributes = new Dictionary<string, object>();

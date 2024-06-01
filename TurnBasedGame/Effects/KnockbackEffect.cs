@@ -26,7 +26,7 @@ namespace TurnBasedGame.Main.Effects
 
                 UnitHelper.SetPosition(target, allTargets, newPosition);
 
-                Logger.LogTargetMove(target, oldPosition, newPosition);
+                //Logger.LogTargetMove(target, oldPosition, newPosition);
             }
         }
 

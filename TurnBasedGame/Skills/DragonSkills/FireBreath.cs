@@ -19,7 +19,7 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, targets: targets);
+            return base.Execute(actor, singleTarget, targets);
         }
     }
 }

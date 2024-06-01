@@ -27,6 +27,7 @@ namespace TurnBasedGame.Main.Entities.Bosses
 
             Skills.Add(new CursedSwordSlash());
             Skills.Add(new CurseSpell());
+            Skills.Add(new SummonUndead());
         }
     }
 }

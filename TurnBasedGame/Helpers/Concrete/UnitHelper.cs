@@ -142,6 +142,9 @@ namespace TurnBasedGame.Main.Helpers.Concrete
         {
             int currentPosition = unitList.IndexOf(unit);
 
+            if (currentPosition == -1 || newPosition < 0 || newPosition >= unitList.Count)
+                return; 
+
             unitList.RemoveAt(currentPosition);
             unitList.Insert(newPosition, unit);
 

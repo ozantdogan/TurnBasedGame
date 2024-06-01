@@ -46,7 +46,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             {
                 foreach (var target in targets)
                 {
-                    if (!ValidTargetPositions.Contains(target.Position) || target.Position > targets.Count)
+                    if (!ValidTargetPositions.Contains(target.Position))
                         continue;
 
                     if (!target.IsAlive && singleTarget != null)

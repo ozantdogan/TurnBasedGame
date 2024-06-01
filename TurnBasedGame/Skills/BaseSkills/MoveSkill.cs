@@ -28,7 +28,7 @@ public class MoveSkill : BaseSkill
             return -1;
         }
 
-        if (actor.UnitType == EnumUnitType.Player)
+        if (actor.UnitType == EnumUnitType.Player || actor.UnitType == EnumUnitType.Summon)
         {
             var moveChoices = new List<string>();
             if (currentPosition < targets.Max(t => t.Position) && targets.Any(t => t.Position == currentPosition + 1 && t.IsAlive))

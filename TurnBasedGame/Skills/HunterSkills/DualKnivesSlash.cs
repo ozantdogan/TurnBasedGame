@@ -24,7 +24,7 @@ namespace TurnBasedGame.Main.Skills.HunterSkills
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return base.Execute(actor, singleTarget);
+            return base.Execute(actor, singleTarget, targets);
         }
     }
 }
