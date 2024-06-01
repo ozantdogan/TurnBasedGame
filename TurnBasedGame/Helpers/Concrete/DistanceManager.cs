@@ -1,6 +1,6 @@
 ﻿namespace TurnBasedGame.Main.Helpers.Concrete
 {
-    public static class SkillPositionSelector
+    public static class SkillDistanceSelector
     {
         private static readonly Dictionary<EnumDistance, SkillPositions> DistancePositionsMap = new Dictionary<EnumDistance, SkillPositions>
         {

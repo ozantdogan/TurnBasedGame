@@ -43,7 +43,8 @@ namespace TurnBasedGame.Main.UI
                 Level = 0;
                 Pace = 1200;
                 //UnitHelper.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(1), mobList);
-                UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss}, mobList);
+                UnitHelper.AddUnit(new Troll() { UnitType = EnumUnitType.Mob}, mobList);
+                //UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss}, mobList);
                 //UnitHelper.AddUnit(new Rogue() { UnitType = EnumUnitType.Mob, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(5), mobList);
             }
 
@@ -53,7 +54,7 @@ namespace TurnBasedGame.Main.UI
             }
             else if (Level >= 3 && Level <= 5)
             {
-                numberOfMobs = random.Next(4, 5);
+                numberOfMobs = random.Next(3, 5);
             }
             else if (Level == 6)
             {

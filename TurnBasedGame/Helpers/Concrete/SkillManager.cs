@@ -6,7 +6,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
     {
         public static void SetValidPositions(BaseSkill skill)
         {
-            var positions = SkillPositionSelector.GetPositions(skill.Distance);
+            var positions = SkillDistanceSelector.GetPositions(skill.Distance);
 
             if (positions != null)
             {

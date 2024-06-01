@@ -20,7 +20,7 @@ namespace TurnBasedGame.Main.Skills.TrollSkills
             IsAoE = true;
             MinDamageValue = 4;
             MaxDamageValue = 6;
-            SkillStatusEffects.Add(new StunEffect { ApplianceChance = 18 });
+            SkillStatusEffects.Add(new StunEffect { ApplianceChance = 15 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

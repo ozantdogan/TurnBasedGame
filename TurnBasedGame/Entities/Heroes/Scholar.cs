@@ -21,10 +21,11 @@ namespace TurnBasedGame.Main.Entities.Heroes
             CriticalChance = 10;
             TurnPriority = 1;
             MagicResistance = EnumResistanceLevel.Resistant;
+            Skills.Add(new SummonGolem());
             Skills.Add(new FreezingMist());
             Skills.Add(new RainOfStars());
             Skills.Add(new StarShard());
-            Skills.Add(new SummonGolem());
+            Skills.Add(new MagicalEpeePierce());
         }
     }
 }
