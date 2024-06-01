@@ -35,6 +35,6 @@ namespace TurnBasedGame.Main.Helpers.Enums
         HolyProtection,
 
         [Info("grey50", "<>", "Move")]
-        Move,
+        MoveEffect,
     }
 }

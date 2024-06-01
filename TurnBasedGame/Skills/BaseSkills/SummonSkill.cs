@@ -38,10 +38,10 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             if (actor.UnitType == EnumUnitType.Player)
                 summon.UnitType = EnumUnitType.Summon;
             else
-                summon.UnitType = EnumUnitType.Mob;
+                summon.UnitType = EnumUnitType.MobSummon;
 
             var existingSummon = targets.FirstOrDefault(t => t.UnitType == summon.UnitType && t.Name == summon.Name);
-            if (existingSummon != null)
+            if (existingSummon != null && existingSummon.HP <= 0)
             {
                 UnitHelper.RemoveUnit(existingSummon, targets);
             }

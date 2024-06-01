@@ -10,10 +10,10 @@ namespace TurnBasedGame.Main.UI
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = false;
+        public static bool DummyLevel { get; set; } = true;
         public static bool BossLevel { get; set; } = true;
         public static int DummyMaxHP { get; set; } = 500;
-        public static int DummyCount { get; set; } = 4;
+        public static int DummyCount { get; set; } = 2;
         public static int Pace { get; set; } = 1500;
 
         public static void Rest(List<Unit> units)
@@ -35,7 +35,7 @@ namespace TurnBasedGame.Main.UI
                 for (int i = 0; i <= DummyCount - 1; i++)
                 {
                     //UnitHelper.AddUnit(new UndeadSpearsman() { Name = $"Spearsman {i}", DisplayName = $"Spearsman {i}", UnitType = EnumUnitType.Mob, Position = i, TurnPriority = 3, HP = 1 }.SetLevel(4), mobList);
-                    UnitHelper.AddUnit(new Dummy() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5), mobList);
+                    UnitHelper.AddUnit(new DummyUnit() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5), mobList);
                 }
             }
             else if (BossLevel)

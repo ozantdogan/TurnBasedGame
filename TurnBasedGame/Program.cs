@@ -25,7 +25,7 @@ namespace TurnBasedGame
             UnitHelper.AddUnit(knight, playerUnits);
             //UnitHelper.AddUnit(rogue, playerUnits);
             //UnitHelper.AddUnit(cleric, playerUnits);
-            //UnitHelper.AddUnit(scholar, playerUnits);
+            UnitHelper.AddUnit(scholar, playerUnits);
             ////UnitHelper.AddUnit(dragon, playerUnits);
             //UnitHelper.AddUnit(skeletonKing, playerUnits);
 

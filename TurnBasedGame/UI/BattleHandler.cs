@@ -56,7 +56,7 @@ namespace TurnBasedGame.Main.UI
 
                     while (true)
                     {
-                        (int actionResult, List<Unit> updatedPlayerUnits, List<Unit> updatedMobUnits) = PerformTurn(unit, playerUnits.Where(u => u.IsAlive).ToList(), mobUnits.Where(u => u.IsAlive).ToList());
+                        (int actionResult, List<Unit> updatedPlayerUnits, List<Unit> updatedMobUnits) = PerformTurn(unit, playerUnits, mobUnits);
                         playerUnits = updatedPlayerUnits;
                         mobUnits = updatedMobUnits;
 

@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Effects
         public KnockbackEffect()
         {
             Name = "Knockback";
-            EffectType = EnumEffectType.Move;
+            EffectType = EnumEffectType.MoveEffect;
         }
 
         public override void ApplyEffect(Unit target, List<Unit>? allTargets)

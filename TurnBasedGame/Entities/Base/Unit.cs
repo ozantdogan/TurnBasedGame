@@ -122,9 +122,6 @@ namespace TurnBasedGame.Main.Entities.Base
             get { return _turnPriority; }
             set { _turnPriority = value < 0 ? 0 : value; }
         }
-
-        public int Order { get; set; }
-
         public EnumUnitType UnitType { get; set; }
 
         public EnumRace Race { get; set; }

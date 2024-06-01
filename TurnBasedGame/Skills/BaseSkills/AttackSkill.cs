@@ -202,9 +202,13 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     if (!ValidTargetPositions.Contains(target.Position) || target.Position > targets.Count)
                         continue;
 
-                    if (!target.IsAlive)
+                    if (!target.IsAlive && singleTarget != null)
                     {
                         Logger.LogDeath(target);
+                        return 0;                    
+                    }
+                    else if (!target.IsAlive)
+                    {
                         continue;
                     }
 

@@ -3,9 +3,9 @@ using TurnBasedGame.Main.Skills.MagicSkills;
 
 namespace TurnBasedGame.Main.Entities.Base
 {
-    public class Dummy : Unit
+    public class DummyUnit : Unit
     {
-        public Dummy() 
+        public DummyUnit() 
         {
             Code = "{000}";
             Name = "Dummy";
@@ -20,7 +20,7 @@ namespace TurnBasedGame.Main.Entities.Base
             TurnPriority = 0;
             DodgeChance = 0;
             Unmissable = true;
-            Skills.Add(new SummonGolem() { SummonRank = 1});
+            //Skills.Add(new SummonGolem() { SummonRank = 1});
         }
     }
 }

@@ -11,9 +11,11 @@ namespace TurnBasedGame.Main.Helpers.Enums
         NPC,
         [Info("deeppink4_2", "Boss")]
         Boss,
-        [Info("olive", "Dummy")]
+        [Info("red", "Dummy")]
         Dummy,
-        [Info("cyan2", "Summon")]
-        Summon
+        [Info("honeydew2", "Summon")]
+        Summon,
+        [Info("indianred1_1", "Summon")]
+        MobSummon
     }
 }
