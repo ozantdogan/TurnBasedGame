@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public int Duration { get; set; } = 0;
         public UtilitySkill() { }
 
-        protected int PerformHeal(Unit actor, Unit target)
+        protected int PerformHeal(Unit actor, IEnumerable<Unit> targets)
         {
             if (ManaCost > 0)
             {
@@ -21,35 +21,8 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     return -1;
             }
 
-            if(target == null)
-            {
-                Logger.NoValidTargets();
-                return -1;
-            }
-
-            var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
-
-            Logger.LogAction(actor, target, this);
-            for (int i = 0; i <= ExecutionCount; i++)
-            {
-                var targetOldHP = target.HP;
-                double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
-                target.HP += (int)healingValue;
-
-                Logger.LogHeal(target, target.HP - targetOldHP);
-            }
-            return 1;
-        }
-
-        protected int PerformHeal(Unit actor, List<Unit> targets)
-        {
-            if (ManaCost > 0)
-            {
-                if (!CalculateMana(actor, ManaCost))
-                    return -1;
-            }
-
-            if(targets == null || targets.Any())
+            var targetList = targets.ToList();
+            if (!targetList.Any())
             {
                 Logger.NoValidTargets();
                 return -1;
@@ -61,13 +34,13 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
             for (int i = 0; i <= ExecutionCount; i++)
             {
-                foreach (var target in targets)
+                foreach (var target in targetList)
                 {
-                    if (!ValidTargetPositions.Contains(target.Position) || target.Position >= targets.Count)
+                    if (!ValidTargetPositions.Contains(target.Position))
                         continue;
 
                     var oldHP = target.HP;
-                    double healingValue = _random.Next((int)(castTypeModifier * 0.25), (int)castTypeModifier) * PrimarySkillModifier;
+                    double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
                     target.HP += (int)healingValue;
 
                     Logger.LogHeal(target, target.HP - oldHP);
@@ -76,6 +49,16 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             }
 
             return 1;
+        }
+
+        protected int PerformHeal(Unit actor, Unit target)
+        {
+            if(!target.IsAlive)
+            {
+                Logger.LogDeath(target);
+                return -1;
+            }
+            return PerformHeal(actor, new List<Unit> { target });
         }
 
         protected int PerformProtection(Unit actor, int duration = 0, double modifier = 1.0)
