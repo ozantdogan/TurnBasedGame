@@ -62,7 +62,6 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     }
 
                 }
-                Thread.Sleep(LevelHandler.Pace);
             }
 
             return 1;

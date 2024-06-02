@@ -45,6 +45,8 @@ namespace TurnBasedGame.Main.Helpers.Concrete
                 .Where(skill => skill is AttackSkill && skill.ValidUserPositions.Contains(actor.Position))
                 .ToList();
 
+            attackSkills = attackSkills.OrderBy(_ => _random.Next()).ToList();
+
             foreach (var attackSkill in attackSkills)
             {
                 var validTargets = playerUnits
