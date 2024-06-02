@@ -23,7 +23,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             HolyResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new BlindingLight());
             Skills.Add(new DivineHeal());
-            Skills.Add(new ClericHeal());
+            Skills.Add(new DivineAid());
             Skills.Add(new SacredFlame());
             Skills.Add(new KnifePierce());
         }

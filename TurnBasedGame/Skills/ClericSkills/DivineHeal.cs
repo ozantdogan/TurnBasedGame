@@ -12,7 +12,6 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             ExecutionName = Name;
             ManaCost = 12;
             IsPassive = true;
-            PrimarySkillModifier = 1.2;
             PrimaryType = EnumSkillType.Holy;
             IsAoE = true;
         }
