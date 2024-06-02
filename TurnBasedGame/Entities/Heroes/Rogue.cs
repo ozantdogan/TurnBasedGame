@@ -19,7 +19,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Faith = 1;
             TurnPriority = 2;
             CriticalChance = 15;
-            Skills.Add(new Evade());
+            Skills.Add(new EvadeSkill());
             Skills.Add(new KnifePierce());
             Skills.Add(new DualKnivesSlash());
             Skills.Add(new PoisonDart());

@@ -10,6 +10,7 @@ namespace TurnBasedGame.Main.Effects
             Name = "Burn";
             SkillType = EnumSkillType.Fire;
             EffectType = EnumEffectType.BurnEffect;
+            Category = EnumEffectCategory.Damage;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null) { }

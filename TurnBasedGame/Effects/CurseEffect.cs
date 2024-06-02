@@ -11,6 +11,7 @@ namespace TurnBasedGame.Main.Effects
             Name = "Curse";
             SkillType = EnumSkillType.Occult;
             EffectType = EnumEffectType.CurseEffect;
+            Category = EnumEffectCategory.Damage;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)

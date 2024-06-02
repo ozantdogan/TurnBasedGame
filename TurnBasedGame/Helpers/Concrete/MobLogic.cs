@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
@@ -25,11 +20,27 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             var result = 1;
 
             // Check if any mobUnits have less or equal HP than their MaxHP * 0.5
-            var utilitySkill = actor.Skills.FirstOrDefault(skill => skill is UtilitySkill && skill.ValidUserPositions.Contains(actor.Position));
-            if (mobUnits.Any(mob => mob.HP <= mob.MaxHP * 0.5) && utilitySkill != null)
+            var validateBuffEffects = actor.StatusEffects.Where(e => e.Category == EnumEffectCategory.Buff).ToList();
+
+            List<BaseSkill>? utilitySkills = actor.Skills
+                ?.Where(skill => skill is UtilitySkill && skill.ValidUserPositions.Contains(actor.Position))
+                .ToList();
+
+            if (utilitySkills != null)
             {
-                result = utilitySkill.Execute(actor, null, targets: updatedMobUnits);
-                return (result, updatedPlayerUnits, updatedMobUnits);
+                foreach(var skill in utilitySkills)
+                {
+                    if (skill.SelfTarget && !validateBuffEffects.Any())
+                    {
+                        result = skill.Execute(actor);
+                        return (result, updatedPlayerUnits, updatedMobUnits);
+                    }
+                    else if(!skill.SelfTarget && mobUnits.Any(mob => mob.HP <= mob.MaxHP * 0.5))
+                    {
+                        result = skill.Execute(actor, null, targets: updatedMobUnits);
+                        return (result, updatedPlayerUnits, updatedMobUnits);
+                    }
+                }
             }
 
             // Check if there are any units with UnitType == EnumUnitType.MobSummon

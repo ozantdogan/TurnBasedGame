@@ -8,22 +8,23 @@ namespace TurnBasedGame.Main.Effects
         public BlindEffect() 
         {
             EffectType = EnumEffectType.Blindness;
+            Category = EnumEffectCategory.Debuff;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)
         {
-            unit.DodgeChance = (int)(unit.DodgeChance * 0.3);
-            unit.Dexterity = (int)(unit.Dexterity * 0.6);
-            unit.TurnPriority = unit.TurnPriority - 2;
+            unit.DodgeChance = (int)(unit.DodgeChance * 0.7);
+            unit.Dexterity = (int)(unit.Dexterity * 0.9);
+            unit.TurnPriority = unit.TurnPriority - 1;
             if(unit.IsMissable)
                 unit.IsMissable = false;
         }
 
         public override void RestoreEffect(Unit unit)
         {
-            unit.DodgeChance = (int)(unit.DodgeChance / 0.3);
-            unit.Dexterity = (int)(unit.Dexterity / 0.6);
-            unit.TurnPriority = unit.TurnPriority + 2;
+            unit.DodgeChance = (int)(unit.DodgeChance / 0.7);
+            unit.Dexterity = (int)(unit.Dexterity / 0.9);
+            unit.TurnPriority = unit.TurnPriority + 1;
             if (!unit.IsMissable)
                 unit.IsMissable = true;
         }

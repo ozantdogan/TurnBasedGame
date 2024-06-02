@@ -14,6 +14,7 @@ namespace TurnBasedGame.Main.Effects
         {
             Name = "Knockback";
             EffectType = EnumEffectType.MoveEffect;
+            Category = EnumEffectCategory.Debuff;
         }
 
         public override void ApplyEffect(Unit target, List<Unit>? allTargets)

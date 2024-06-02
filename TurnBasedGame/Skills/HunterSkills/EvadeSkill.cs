@@ -7,9 +7,9 @@ using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Skills.HunterSkills
 {
-    public class Evade : UtilitySkill
+    public class EvadeSkill : UtilitySkill
     {
-        public Evade()
+        public EvadeSkill()
         {
             Name = "Evade";
             ManaCost = 16;
@@ -25,9 +25,16 @@ namespace TurnBasedGame.Main.Skills.HunterSkills
                 return -1;
 
             Logger.LogAction(actor, this);
-            foreach(var effect in SkillStatusEffects)
+            foreach (var effect in SkillStatusEffects)
             {
-                UnitHelper.AddStatusEffect(actor, effect);
+                if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
+                {
+                    StatusEffect statusEffect = EffectManager.EffectSelector[effect.EffectType]();
+                    statusEffect.DamagePerTurn = effect.DamagePerTurn;
+                    statusEffect.Modifier = effect.Modifier;
+                    statusEffect.Duration = effect.Duration;
+                    UnitHelper.AddStatusEffect(actor, statusEffect);
+                }
             }
             return 1;
         }

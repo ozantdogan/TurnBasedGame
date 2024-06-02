@@ -10,6 +10,7 @@ namespace TurnBasedGame.Main.Effects
         {
             Name = "Physical Protection";
             EffectType = EnumEffectType.Protection;
+            Category = EnumEffectCategory.Buff;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)

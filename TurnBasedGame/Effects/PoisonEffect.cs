@@ -10,6 +10,7 @@ namespace TurnBasedGame.Main.Effects
             Name = "Poison";
             SkillType = EnumSkillType.Poison;
             EffectType = EnumEffectType.PoisonEffect;
+            Category = EnumEffectCategory.Damage;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)

@@ -127,8 +127,8 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
         private bool HasDodged(Unit target)
         {
-            double dexterityFactor = target.Dexterity * 0.1; 
-            int dodgeChance = (int)(target.DodgeChance * (1 + dexterityFactor));
+            double dexterityFactor = target.Dexterity * 0.25; 
+            int dodgeChance = (int)(target.DodgeChance + dexterityFactor);
 
             int roll = _random.Next(100);
 

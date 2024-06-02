@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Effects
         public StunEffect()
         {
             EffectType = EnumEffectType.StunEffect;
+            Category = EnumEffectCategory.Debuff;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)

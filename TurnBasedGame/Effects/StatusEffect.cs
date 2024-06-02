@@ -15,6 +15,7 @@ namespace TurnBasedGame.Main.Effects
         public int Duration { get; set; }
         public double Modifier { get; set; } = 1.0;
         public EnumSkillType SkillType { get; set; }
+        public EnumEffectCategory Category { get; set; } = EnumEffectCategory.None;
         public int DamagePerTurn { get; set; } = 0;
         public int ApplianceChance = 100;
 

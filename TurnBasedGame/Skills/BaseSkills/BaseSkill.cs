@@ -77,7 +77,8 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public abstract int Execute(Unit actor, Unit? singleTarget, List<Unit>? targets);
         protected bool CalculateMana(Unit actor, int manaCost)
         {
-            if (actor.UnitType != EnumUnitType.Player) return true;
+            if (!(actor.UnitType == EnumUnitType.Player || actor.UnitType == EnumUnitType.Summon)) 
+                return true;
 
             if (actor.MP < ManaCost)
             {

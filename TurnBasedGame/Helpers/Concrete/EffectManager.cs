@@ -16,7 +16,8 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             { EnumEffectType.BurnEffect, () => new BurnEffect() },
             { EnumEffectType.Blindness, () => new BlindEffect() },
             { EnumEffectType.MoveEffect, () => new KnockbackEffect() },
-            { EnumEffectType.StunEffect, () => new StunEffect() }
+            { EnumEffectType.StunEffect, () => new StunEffect() },
+            { EnumEffectType.EvadeEffect, () => new EvadeEffect() }
         };
 
         public static readonly Dictionary<EnumEffectType, Func<Unit, double>> EffectDamageModifier = new Dictionary<EnumEffectType, Func<Unit, double>>

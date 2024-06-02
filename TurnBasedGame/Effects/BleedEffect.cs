@@ -9,6 +9,7 @@ namespace TurnBasedGame.Main.Effects
         {
             Name = "Bleed";
             EffectType = EnumEffectType.BleedEffect;
+            Category = EnumEffectCategory.Damage;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null) { }

@@ -11,6 +11,7 @@ namespace TurnBasedGame.Main.Effects
             Name = "Cold";
             SkillType = EnumSkillType.Cold;
             EffectType = EnumEffectType.ColdEffect;
+            Category = EnumEffectCategory.Damage;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)
