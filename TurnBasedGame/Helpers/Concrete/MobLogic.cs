@@ -30,7 +30,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             {
                 foreach(var skill in utilitySkills)
                 {
-                    if (skill.SelfTarget && !validateBuffEffects.Any())
+                    if (skill.SelfTarget && !validateBuffEffects.Any() && actor.HP <= actor.MaxHP * 0.5)
                     {
                         result = skill.Execute(actor);
                         return (result, updatedPlayerUnits, updatedMobUnits);
@@ -44,7 +44,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             }
 
             // Check if there are any units with UnitType == EnumUnitType.MobSummon
-            var summonSkill = actor.Skills.FirstOrDefault(skill => skill is SummonSkill && skill.ValidUserPositions.Contains(actor.Position));
+            var summonSkill = actor.Skills?.FirstOrDefault(skill => skill is SummonSkill && skill.ValidUserPositions.Contains(actor.Position));
             if (!mobUnits.Any(mob => mob.UnitType == EnumUnitType.MobSummon) && summonSkill != null)
             {
                 result = summonSkill.Execute(actor, null, targets: updatedMobUnits);

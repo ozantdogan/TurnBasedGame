@@ -1,4 +1,5 @@
 ﻿using Spectre.Console;
+using System.Drawing;
 using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
@@ -51,14 +52,19 @@ namespace TurnBasedGame.Main.UI
 
             #endregion
 
-            var playerLevelRow = new List<string> { "[lightsteelblue1] Lv[/]" };
-            var playerHpRow = new List<string> { "[seagreen2] HP[/]" };
-            var playerMpRow = new List<string> { "[cyan] MP[/]" };
+            //var playerLevelRow = new List<string> { "[lightsteelblue1] Lv[/]" };
+            //var playerHpRow = new List<string> { "[seagreen2] HP[/]" };
+            //var playerMpRow = new List<string> { "[cyan] MP[/]" };
+
+            var playerLevelRow = new List<string> { "" };
+            var playerHpRow = new List<string> { "" };
+            var playerMpRow = new List<string> { "" };
+
             foreach (var unit in playerUnits)
             {
                 playerLevelRow.Add($"{unit.Level.CurrentLevel}");
-                playerHpRow.Add($"{unit.HP}/{unit.MaxHP}");
-                playerMpRow.Add($"{unit.MP}/{unit.MaxMP}"); 
+                playerHpRow.Add($"[{GetHpColor(unit)}]{unit.HP}[/][grey35]/{unit.MaxHP}[/]");
+                playerMpRow.Add($"[{GetMpColor(unit)}]{unit.MP}[/][grey35]/{unit.MaxMP}[/]"); 
             }
 
             playerTable.AddRow(playerLevelRow.ToArray());
@@ -102,12 +108,12 @@ namespace TurnBasedGame.Main.UI
             #endregion
 
             // Add HP rows for mobs
-            var mobLevelRow = new List<string> { "[lightsteelblue1] Lv[/]" };
-            var mobHpRow = new List<string> { "[seagreen2] HP[/]" };
+            var mobLevelRow = new List<string> { "" };
+            var mobHpRow = new List<string> { "" };
             foreach (Unit unit in mobUnits)
             {
                 mobLevelRow.Add($"{unit.Level.CurrentLevel}");
-                mobHpRow.Add($"{unit.HP}/{unit.MaxHP}");
+                mobHpRow.Add($"[{GetHpColor(unit)}]{unit.HP}[/][grey35]/{unit.MaxHP}[/]");
             }
 
             mobTable.AddRow(mobLevelRow.ToArray());
@@ -118,6 +124,28 @@ namespace TurnBasedGame.Main.UI
             AnsiConsole.Write(mobTable);
             AnsiConsole.Write(playerTable);
 
+        }
+
+        private string GetHpColor(Unit unit)
+        {
+            var hpColor = "seagreen2";
+            if (unit.HP > unit.MaxHP * 0.33 && unit.HP <= unit.MaxHP * 0.66)
+                hpColor = "darkorange";
+            else if (unit.HP > 0 && unit.HP <= unit.MaxHP * 0.33)
+                hpColor = "deeppink2";
+            else if (unit.HP <= 0)
+                hpColor = "grey35";
+
+            return hpColor;
+        }
+
+        private string GetMpColor(Unit unit)
+        {
+            var mpColor = "cyan";
+            if (unit.HP <= 0)
+                mpColor = "grey35";
+
+            return mpColor;
         }
     }
 }

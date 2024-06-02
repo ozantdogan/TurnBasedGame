@@ -31,7 +31,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                 return -1;
             }
 
-            var statModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
+            //var statModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
 
             Logger.LogAction(actor, this);
 
@@ -49,9 +49,9 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             }
 
             summon.SetLevel(SummonLevel);
-            summon.MaxHP = (int)(summon.MaxHP * statModifier * 0.4);
+            summon.MaxHP = (int)(summon.MaxHP);
             summon.HP = summon.MaxHP;
-            summon.MaxMP = (int)(summon.MaxMP * statModifier * 0.4);
+            summon.MaxMP = (int)(summon.MaxMP);
             summon.MP = summon.MaxMP;
             summon.SetLevel(actor.Level.CurrentLevel);
 

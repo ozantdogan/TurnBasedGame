@@ -94,6 +94,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                             statusEffect.DamagePerTurn = effect.DamagePerTurn;
                             statusEffect.Modifier = effect.Modifier;
                             statusEffect.Duration = effect.Duration;
+                            statusEffect.ApplianceChance = effect.ApplianceChance;
                             UnitHelper.AddStatusEffect(target, statusEffect, otherTargets);
                         }
 
