@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TurnBasedGame.Main.Effects;
-using TurnBasedGame.Main.Entities.Resistance;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.Skills.BaseSkills;
-using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Entities.Base
 {
@@ -31,7 +29,7 @@ namespace TurnBasedGame.Main.Entities.Base
             _hp = MaxHP;
             _mp = MaxMP;
             DisplayName = Name;
-            Level = new UnitLevel();
+            Level = new UnitLevelManager();
             Skills.Add(new RestSkill());
             Skills.Add(new MoveSkill());
         }
@@ -54,7 +52,7 @@ namespace TurnBasedGame.Main.Entities.Base
         }
 
         public List<BaseSkill> Skills { get; set; } = new List<BaseSkill>();
-        public UnitLevel Level { get; set; }
+        public UnitLevelManager Level { get; set; }
 
         public int Position { get; set; } = 0;
         public int MaxHP

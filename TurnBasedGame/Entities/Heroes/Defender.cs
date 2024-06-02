@@ -1,16 +1,16 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.CommonSkills;
-using TurnBasedGame.Main.Skills.KnightSkills;
+using TurnBasedGame.Main.Skills.DefenderSkills;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {
-    public class Knight : Human
+    public class Defender : Human
     {
-        public Knight()
+        public Defender()
         {
-            Code = "{KNT}";
-            Name = "Knight";
+            Code = "{DEF}";
+            Name = "Defender";
             MaxHP = 30;
             MaxMP = 20;
             Strength = 7;
@@ -19,7 +19,8 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Faith = 1;
             CriticalChance = 10;
             BluntResistance = EnumResistanceLevel.Resistant;
-            Skills.Add(new KnightsShield());
+            Skills.Add(new WarCry());
+            Skills.Add(new DefendersShield());
             Skills.Add(new ShieldBash());
             Skills.Add(new SwordSlash());
         }

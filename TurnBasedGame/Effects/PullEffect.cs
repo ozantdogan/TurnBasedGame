@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 
 namespace TurnBasedGame.Main.Effects
 {
@@ -12,7 +12,6 @@ namespace TurnBasedGame.Main.Effects
         {
             Name = "Pull";
             EffectType = EnumEffectType.PullEffect;
-            Category = EnumEffectCategory.Move;
         }
 
         public override void ApplyEffect(Unit target, List<Unit>? allTargets)
@@ -27,7 +26,7 @@ namespace TurnBasedGame.Main.Effects
                     newPosition = allTargets.Count - 1;
                 }
 
-                UnitHelper.SetPosition(target, allTargets, newPosition);
+                UnitManager.SetPosition(target, allTargets, newPosition);
 
                 // Logger.LogTargetMove(target, oldPosition, newPosition);
             }

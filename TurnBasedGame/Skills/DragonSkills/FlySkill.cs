@@ -1,7 +1,7 @@
 ﻿using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.Skills.BaseSkills;
 using TurnBasedGame.Main.UI;
 
@@ -32,7 +32,7 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
                     statusEffect.DamagePerTurn = effect.DamagePerTurn;
                     statusEffect.Modifier = effect.Modifier;
                     statusEffect.Duration = effect.Duration;
-                    UnitHelper.AddStatusEffect(actor, statusEffect);
+                    UnitManager.AddStatusEffect(actor, statusEffect);
                 }
             }
             return 1;

@@ -2,13 +2,13 @@
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
-namespace TurnBasedGame.Main.Helpers.Concrete
+namespace TurnBasedGame.Main.Managers
 {
-    public class MobLogic
+    public class MobManager
     {
         private readonly Random _random;
 
-        public MobLogic()
+        public MobManager()
         {
             _random = new Random();
         }
@@ -20,7 +20,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             var result = 1;
 
             // Check if any mobUnits have less or equal HP than their MaxHP * 0.5
-            var validateBuffEffects = actor.StatusEffects.Where(e => e.Category == EnumEffectCategory.Buff).ToList();
+            var validateBuffEffects = actor.StatusEffects.Where(e => e.EffectType.GetCode() == "+").ToList();
 
             List<BaseSkill>? utilitySkills = actor.Skills
                 ?.Where(skill => skill is UtilitySkill && skill.ValidUserPositions.Contains(actor.Position))
@@ -28,14 +28,14 @@ namespace TurnBasedGame.Main.Helpers.Concrete
 
             if (utilitySkills != null)
             {
-                foreach(var skill in utilitySkills)
+                foreach (var skill in utilitySkills)
                 {
                     if (skill.SelfTarget && !validateBuffEffects.Any() && actor.HP <= actor.MaxHP * 0.5)
                     {
                         result = skill.Execute(actor);
                         return (result, updatedPlayerUnits, updatedMobUnits);
                     }
-                    else if(!skill.SelfTarget && mobUnits.Any(mob => mob.HP <= mob.MaxHP * 0.5))
+                    else if (!skill.SelfTarget && mobUnits.Any(mob => mob.HP <= mob.MaxHP * 0.5))
                     {
                         result = skill.Execute(actor, null, targets: updatedMobUnits);
                         return (result, updatedPlayerUnits, updatedMobUnits);
@@ -52,31 +52,33 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             }
 
             // Check if there are any AttackSkills available and any playerUnits alive in the target positions
-            var attackSkills = actor.Skills
+            var attackSkills = actor.Skills?
                 .Where(skill => skill is AttackSkill && skill.ValidUserPositions.Contains(actor.Position))
                 .ToList();
 
-            attackSkills = attackSkills.OrderBy(_ => _random.Next()).ToList();
-
-            foreach (var attackSkill in attackSkills)
+            if(attackSkills != null) 
             {
-                var validTargets = playerUnits
-                    .Where(target => attackSkill.ValidTargetPositions.Contains(target.Position) && target.IsAlive)
-                    .ToList();
-
-                if (validTargets.Count == 0) continue;
-
-                // If AttackSkill is AoE
-                if (attackSkill.IsAoE)
+                attackSkills = attackSkills.OrderBy(_ => _random.Next()).ToList();
+                foreach (var attackSkill in attackSkills)
                 {
-                    result = attackSkill.Execute(actor, null, targets: validTargets);
+                    var validTargets = playerUnits
+                        .Where(target => attackSkill.ValidTargetPositions.Contains(target.Position) && target.IsAlive)
+                        .ToList();
+
+                    if (validTargets.Count == 0) continue;
+
+                    // If AttackSkill is AoE
+                    if (attackSkill.IsAoE)
+                    {
+                        result = attackSkill.Execute(actor, null, targets: validTargets);
+                        return (result, updatedPlayerUnits, updatedMobUnits);
+                    }
+
+                    // If AttackSkill is not AoE, randomly select a target
+                    var target = validTargets[_random.Next(validTargets.Count)];
+                    result = attackSkill.Execute(actor, singleTarget: target, updatedPlayerUnits);
                     return (result, updatedPlayerUnits, updatedMobUnits);
                 }
-
-                // If AttackSkill is not AoE, randomly select a target
-                var target = validTargets[_random.Next(validTargets.Count)];
-                result = attackSkill.Execute(actor, singleTarget: target, updatedPlayerUnits);
-                return (result, updatedPlayerUnits, updatedMobUnits);
             }
 
             // If none of the conditions above are met, use a MoveSkill

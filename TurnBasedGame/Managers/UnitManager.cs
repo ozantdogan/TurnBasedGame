@@ -2,14 +2,13 @@
 using System.Numerics;
 using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.UI;
 
-namespace TurnBasedGame.Main.Helpers.Concrete
+namespace TurnBasedGame.Main.Managers
 {
-    public static class UnitHelper
+    public static class UnitManager
     {
         private static Random random = new Random();
 
@@ -65,19 +64,22 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
             var roll = random.Next(100);
 
-            if(roll > statusEffect.ApplianceChance)
+            if (resistanceLevel == EnumResistanceLevel.Immune)
+                return;
+
+            if (roll > statusEffect.ApplianceChance)
                 return;
 
             var resistanceStrength = ResistanceManager.ResistanceLevelStrength[resistanceLevel];
-            if (resistanceStrength > statusEffect.EffectStrength && statusEffect.Category == EnumEffectCategory.Move)
+            if (resistanceStrength > statusEffect.EffectStrength && statusEffect.EffectType.GetCode() != "<")
                 return;
 
             if (unit.IsAlive)
             {
                 var existingEffect = unit.StatusEffects
-                    .Where(e => e.Category != EnumEffectCategory.Move)
-                    .FirstOrDefault(e => e.EffectType == statusEffect.EffectType); 
-                
+                    .Where(e => e.EffectType.GetCode() != "<")
+                    .FirstOrDefault(e => e.EffectType == statusEffect.EffectType);
+
                 if (existingEffect != null)
                 {
                     existingEffect.Duration = statusEffect.Duration;
@@ -95,7 +97,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
                 {
                     unit.StatusEffects.Add(statusEffect);
                     statusEffect.ApplyEffect(unit, units);
-                    if(!(statusEffect.Category == EnumEffectCategory.Move))
+                    if (statusEffect.EffectType.GetCode() != "<")
                         Logger.LogStatusEffectApplied(unit, effect);
                 }
             }
@@ -157,7 +159,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             int currentPosition = unitList.IndexOf(unit);
 
             if (currentPosition == -1 || newPosition < 0 || newPosition >= unitList.Count)
-                return; 
+                return;
 
             unitList.RemoveAt(currentPosition);
             unitList.Insert(newPosition, unit);

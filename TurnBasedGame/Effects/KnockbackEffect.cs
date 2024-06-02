@@ -1,8 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Resistance;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
-using TurnBasedGame.Main.UI;
+using TurnBasedGame.Main.Managers;
 
 namespace TurnBasedGame.Main.Effects
 {
@@ -14,18 +12,17 @@ namespace TurnBasedGame.Main.Effects
         {
             Name = "Knockback";
             EffectType = EnumEffectType.KnockbackEffect;
-            Category = EnumEffectCategory.Move;
         }
 
         public override void ApplyEffect(Unit target, List<Unit>? allTargets)
         {
-            if(allTargets != null && allTargets.Count() > 1) 
-            { 
+            if (allTargets != null && allTargets.Count() > 1)
+            {
                 int oldPosition = target.Position;
                 int newPosition = oldPosition - KnockbackDistance + 1;
-                if (newPosition < 0) newPosition = 0; 
+                if (newPosition < 0) newPosition = 0;
 
-                UnitHelper.SetPosition(target, allTargets, newPosition);
+                UnitManager.SetPosition(target, allTargets, newPosition);
 
                 //Logger.LogTargetMove(target, oldPosition, newPosition);
             }
@@ -33,7 +30,7 @@ namespace TurnBasedGame.Main.Effects
 
         public override void RestoreEffect(Unit unit)
         {
-            
+
         }
     }
 }

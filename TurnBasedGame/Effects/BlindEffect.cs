@@ -7,8 +7,7 @@ namespace TurnBasedGame.Main.Effects
     {
         public BlindEffect() 
         {
-            EffectType = EnumEffectType.Blindness;
-            Category = EnumEffectCategory.Debuff;
+            EffectType = EnumEffectType.BlindEffect;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)

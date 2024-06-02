@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 
 namespace TurnBasedGame.Main.Effects
 {
@@ -11,7 +11,6 @@ namespace TurnBasedGame.Main.Effects
             Name = "Cold";
             SkillType = EnumSkillType.Cold;
             EffectType = EnumEffectType.ColdEffect;
-            Category = EnumEffectCategory.Damage;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)

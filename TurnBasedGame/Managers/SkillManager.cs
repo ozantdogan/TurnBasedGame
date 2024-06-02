@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Skills.BaseSkills;
 
-namespace TurnBasedGame.Main.Helpers.Concrete
+namespace TurnBasedGame.Main.Managers
 {
     public static class SkillHelper
     {

@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Skills.BaseSkills
@@ -45,7 +45,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var existingSummon = targets.FirstOrDefault(t => t.UnitType == summon.UnitType && t.Name == summon.Name);
             if (existingSummon != null)
             {
-                UnitHelper.RemoveUnit(existingSummon, targets);
+                UnitManager.RemoveUnit(existingSummon, targets);
             }
 
             summon.SetLevel(SummonLevel);
@@ -55,7 +55,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             summon.MP = summon.MaxMP;
             summon.SetLevel(actor.Level.CurrentLevel);
 
-            UnitHelper.AddUnit(summon, targets, actor.Position);
+            UnitManager.AddUnit(summon, targets, actor.Position);
             summon.Skills.Reverse();
 
             return 1;

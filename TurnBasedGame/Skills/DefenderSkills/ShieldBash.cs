@@ -3,7 +3,7 @@ using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
-namespace TurnBasedGame.Main.Skills.KnightSkills
+namespace TurnBasedGame.Main.Skills.DefenderSkills
 {
     public class ShieldBash : AttackSkill
     {
@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Skills.KnightSkills
         {
             Name = "Shield Bash";
             ExecutionName = Name;
-            ManaCost = 20;
+            ManaCost = 8;
             IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
             MissChance = 0;

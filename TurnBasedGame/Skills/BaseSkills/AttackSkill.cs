@@ -1,8 +1,7 @@
 ﻿using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Resistance;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Skills.BaseSkills
@@ -87,7 +86,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     foreach (var effect in SkillStatusEffects)
                     {
                         var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) : 1.0;
-                        UnitHelper.AddStatusEffect(target, effect, otherTargets);
+                        UnitManager.AddStatusEffect(target, effect, otherTargets);
 
                         if (!target.IsAlive)
                         {
@@ -119,12 +118,9 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
         private bool HasDodged(Unit target)
         {
-            double dexterityFactor = target.Dexterity * 0.25; 
-            int dodgeChance = (int)(target.DodgeChance + dexterityFactor);
-
             int roll = _random.Next(100);
 
-            if (roll < dodgeChance)
+            if (roll < target.DodgeChance)
             {
                 Logger.LogDodge(target);
                 return true;

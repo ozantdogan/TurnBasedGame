@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Helpers.Concrete
+namespace TurnBasedGame.Main.Managers
 {
     public static class SkillDistanceSelector
     {
@@ -20,7 +20,7 @@ namespace TurnBasedGame.Main.Helpers.Concrete
     }
 
     public class SkillPositions
-    { 
+    {
         public List<int> ValidTargetPositions { get; set; } = new List<int>();
         public List<int> ValidUserPositions { get; set; } = new List<int>();
     }

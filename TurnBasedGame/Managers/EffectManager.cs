@@ -3,7 +3,7 @@ using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
-namespace TurnBasedGame.Main.Helpers.Concrete
+namespace TurnBasedGame.Main.Managers
 {
     public static class EffectManager
     {
@@ -14,11 +14,13 @@ namespace TurnBasedGame.Main.Helpers.Concrete
             { EnumEffectType.ColdEffect, () => new ColdEffect() },
             { EnumEffectType.BleedEffect, () => new BleedEffect() },
             { EnumEffectType.BurnEffect, () => new BurnEffect() },
-            { EnumEffectType.Blindness, () => new BlindEffect() },
+            { EnumEffectType.BlindEffect, () => new BlindEffect() },
             { EnumEffectType.StunEffect, () => new StunEffect() },
             { EnumEffectType.EvadeEffect, () => new EvadeEffect() },
             { EnumEffectType.KnockbackEffect, () => new KnockbackEffect() },
-            { EnumEffectType.PullEffect, () => new PullEffect() }
+            { EnumEffectType.PullEffect, () => new PullEffect() },
+            { EnumEffectType.PhysicalProtection, () => new PhysicalProtectionEffect() },
+            { EnumEffectType.BerserkEffect, () => new BerserkEffect() }
         };
 
         public static readonly Dictionary<EnumEffectType, Func<Unit, double>> EffectDamageModifier = new Dictionary<EnumEffectType, Func<Unit, double>>
@@ -33,6 +35,16 @@ namespace TurnBasedGame.Main.Helpers.Concrete
         public static Dictionary<EnumSkillType, Func<UtilitySkill, StatusEffect>> ProtectionEffectSelector = new Dictionary<EnumSkillType, Func<UtilitySkill, StatusEffect>>
         {
             { EnumSkillType.Standard, skill => new PhysicalProtectionEffect() },
+            //{ EnumSkillType.Holy, skill => new HolyProtection() },
+            //{ EnumSkillType.Magic, skill => new MagicalProtection() },
+            //{ EnumSkillType.Fire, skill => new FireProtection() },
+            //{ EnumSkillType.Occult, skill => new DarkProtection() },
+        };
+
+        public static Dictionary<EnumEffectType, Func<UtilitySkill, StatusEffect>> BuffEffectSelector = new Dictionary<EnumEffectType, Func<UtilitySkill, StatusEffect>>
+        {
+            { EnumEffectType.EvadeEffect, skill => new EvadeEffect() },
+            { EnumEffectType.BerserkEffect, skill => new BerserkEffect() },
         };
     }
 }

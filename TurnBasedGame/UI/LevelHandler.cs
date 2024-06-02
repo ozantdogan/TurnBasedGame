@@ -2,16 +2,16 @@
 using TurnBasedGame.Main.Entities.Bosses;
 using TurnBasedGame.Main.Entities.Heroes;
 using TurnBasedGame.Main.Entities.Mobs;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 
 namespace TurnBasedGame.Main.UI
 {
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = true;
-        public static bool BossLevel { get; set; } = false;
+        public static bool DummyLevel { get; set; } = false;
+        public static bool BossLevel { get; set; } = true;
         public static int DummyMaxHP { get; set; } = 500;
         public static int DummyCount { get; set; } = 4;
         public static int Pace { get; set; } = 1500;
@@ -35,14 +35,14 @@ namespace TurnBasedGame.Main.UI
                 for (int i = 0; i <= DummyCount - 1; i++)
                 {
                     //UnitHelper.AddUnit(new UndeadSpearsman() { Name = $"Spearsman {i}", DisplayName = $"Spearsman {i}", UnitType = EnumUnitType.Mob, Position = i, TurnPriority = 3, HP = 1 }.SetLevel(4), mobList);
-                    UnitHelper.AddUnit(new DummyUnit() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5), mobList);
+                    UnitManager.AddUnit(new DummyUnit() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5), mobList);
                 }
             }
             else if (BossLevel)
             {
                 Level = 0;
                 Pace = 1200;
-                UnitHelper.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(3), mobList);
+                UnitManager.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(3), mobList);
                 //UnitHelper.AddUnit(new Troll() { UnitType = EnumUnitType.Mob}, mobList);
                 //UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }.SetLevel(3), mobList);
                 //UnitHelper.AddUnit(new Rogue() { UnitType = EnumUnitType.Boss, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1), mobList);
@@ -58,14 +58,14 @@ namespace TurnBasedGame.Main.UI
             }
             else if (Level == 6)
             {
-                UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }, mobList);
+                UnitManager.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }, mobList);
             }
 
             for (int i = 0; i < numberOfMobs; i++)
             {
                 if (random.Next(1, 101) <= 50 && Level > 2 && numberOfMobs < 4 && !mobList.Any(u => u is Troll))
                 {
-                    UnitHelper.AddUnit(new Troll() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
+                    UnitManager.AddUnit(new Troll() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                 }
                 else
                 {
@@ -78,13 +78,13 @@ namespace TurnBasedGame.Main.UI
                     switch (skeletonType)
                     {
                         case 0:
-                            UnitHelper.AddUnit(new UndeadBrute() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
+                            UnitManager.AddUnit(new UndeadBrute() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                             break;
                         case 1:
-                            UnitHelper.AddUnit(new UndeadSwordsman() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
+                            UnitManager.AddUnit(new UndeadSwordsman() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                             break;
                         case 2:
-                            UnitHelper.AddUnit(new UndeadSpearsman() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
+                            UnitManager.AddUnit(new UndeadSpearsman() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                             break;
                     }
 

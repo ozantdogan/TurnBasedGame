@@ -1,7 +1,7 @@
 ﻿using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.NomadSkills
@@ -12,7 +12,7 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
         {
             Name = "Sand Surge";
             ManaCost = 12;
-            PrimarySkillModifier = 3.0;
+            PrimarySkillModifier = 4.0;
             IsPassive = true;
             SelfTarget = true;
             PrimaryType = EnumSkillType.Standard;
@@ -23,7 +23,7 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
         {
             PerformHeal(actor, actor);
             foreach (var effect in SkillStatusEffects)
-                UnitHelper.AddStatusEffect(actor, effect);
+                UnitManager.AddStatusEffect(actor, effect);
             return 1;
         }
     }

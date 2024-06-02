@@ -1,7 +1,7 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 
-namespace TurnBasedGame.Main.Entities.Resistance
+namespace TurnBasedGame.Main.Managers
 {
     public static class ResistanceManager
     {
@@ -66,7 +66,7 @@ namespace TurnBasedGame.Main.Entities.Resistance
             EnumResistanceLevel currentLevel = ResistanceLevelSelectors[skillType](target);
             int currentIndex = ResistanceLevels.IndexOf(currentLevel);
 
-            if(currentLevel == EnumResistanceLevel.Immune && !allowImmuneResistance)
+            if (currentLevel == EnumResistanceLevel.Immune && !allowImmuneResistance)
                 return;
 
             int newIndex = increase ? currentIndex + 1 : currentIndex - 1;

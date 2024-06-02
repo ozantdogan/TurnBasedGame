@@ -1,7 +1,7 @@
 ﻿using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Skills.BaseSkills
@@ -9,8 +9,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
     public delegate int? BuffModifierCalculator(Unit actor);
     public class UtilitySkill : BaseSkill
     {
-        public double BuffModifier { get; set; } = 1.0;
-        public int Duration { get; set; } = 0;
+        public UtilityType UtilityType { get; set; }
         public UtilitySkill() { }
 
         protected int PerformHeal(Unit actor, IEnumerable<Unit> targets)
@@ -31,7 +30,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
 
             Logger.LogAction(actor, this);
-            double attributeModifier;
+            double attributeModifier = 1.0;
 
             for (int i = 0; i <= ExecutionCount; i++)
             {
@@ -46,8 +45,8 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                         attributeModifier = actor.Intelligence;
                     else if (PrimaryType == EnumSkillType.Occult)
                         attributeModifier = actor.Intelligence * 0.5 + actor.Faith * 0.5;
-                    else
-                        attributeModifier = 1.0;
+                    else if(PrimaryType == EnumSkillType.Standard)
+                        attributeModifier = actor.Dexterity * 0.5 + actor.Intelligence * 0.5;
 
                     var oldHP = target.HP;
                     double healingValue = castTypeModifier * PrimarySkillModifier * (1 + _random.Next(0, (int)(attributeModifier * 0.5)));
@@ -77,7 +76,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             return PerformHeal(actor, new List<Unit> { target });
         }
 
-        protected int PerformProtection(Unit actor, int duration = 0, double modifier = 1.0)
+        protected int PerformBuff(Unit actor, List<Unit> targets)
         {
             if (ManaCost > 0)
             {
@@ -85,13 +84,30 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     return -1;
             }
 
-            Logger.LogAction(actor, actor, this);
+            foreach(var target in targets)
+            {
+                if (!target.IsAlive)
+                    continue;
 
-            var effect = EffectManager.ProtectionEffectSelector[PrimaryType](this);
-            effect.Duration = duration;
-            effect.Modifier = modifier;
-            UnitHelper.AddStatusEffect(actor, effect);
+                Logger.LogAction(actor, target, this);
+
+                foreach (var effect in SkillStatusEffects)
+                {
+                    UnitManager.AddStatusEffect(target, effect, targets);
+                }
+            }
+                
             return 1;
+        }
+
+        protected int PerformBuff(Unit actor, Unit target)
+        {
+            if (!target.IsAlive)
+            {
+                Logger.LogDeath(target);
+                return -1;
+            }
+            return PerformBuff(actor, new List<Unit> { target });
         }
 
         //todo:

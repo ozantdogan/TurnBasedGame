@@ -1,9 +1,8 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Abstract;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.UI
@@ -35,7 +34,7 @@ namespace TurnBasedGame.Main.UI
                     int effectResult = 0;
                     if(unit.IsAlive)
                     {
-                        effectResult = UnitHelper.ApplyStatusEffects(unit);
+                        effectResult = UnitManager.ApplyStatusEffects(unit);
                     }
 
                     battleResult = CheckAlives(playerUnits, mobUnits);
@@ -151,7 +150,7 @@ namespace TurnBasedGame.Main.UI
 
             if (actor.UnitType != EnumUnitType.Player && actor.UnitType != EnumUnitType.Summon)
             {
-                var mobLogic = new MobLogic();
+                var mobLogic = new MobManager();
                 (result, updatedPlayerUnits, updatedMobUnits) = mobLogic.ExecuteMobTurn(actor, playerTargets, mobTargets);
                 return (result, updatedPlayerUnits, updatedMobUnits);
             }
@@ -300,8 +299,8 @@ namespace TurnBasedGame.Main.UI
                 unit.HasMoved = false;
             }
 
-            UnitHelper.SetPositions(alivePlayerUnits);
-            UnitHelper.SetPositions(aliveMobUnits);
+            UnitManager.SetPositions(alivePlayerUnits);
+            UnitManager.SetPositions(aliveMobUnits);
         }
 
         private void SetPositions(List<Unit> units)

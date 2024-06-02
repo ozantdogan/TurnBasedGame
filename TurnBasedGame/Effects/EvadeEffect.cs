@@ -9,7 +9,6 @@ namespace TurnBasedGame.Main.Effects
         public EvadeEffect()
         {
             EffectType = EnumEffectType.EvadeEffect;
-            Category = EnumEffectCategory.Buff;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)

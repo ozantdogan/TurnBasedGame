@@ -1,7 +1,7 @@
 ﻿using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Helpers.Concrete;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.Skills.BaseSkills;
 using TurnBasedGame.Main.UI;
 
@@ -26,7 +26,7 @@ namespace TurnBasedGame.Main.Skills.RogueSkills
 
             Logger.LogAction(actor, this);
             foreach (var effect in SkillStatusEffects)
-                UnitHelper.AddStatusEffect(actor, effect);
+                UnitManager.AddStatusEffect(actor, effect);
 
             return 1;
         }

@@ -23,21 +23,33 @@ namespace TurnBasedGame.Main.Helpers.Enums
         StunEffect,
 
         [Info("blue3", "~", "Blindness")]
-        Blindness,
+        BlindEffect,
 
         [Info("cyan", "+", "Evade")]
         EvadeEffect,
 
+        [Info("maroon", "+", "Berserk")]
+        BerserkEffect,
+
+        [Info("springgreen1", "+", "Agility")]
+        AgilityEffect,
+
+        [Info("deepskyblue4_2", "+", "Wisdom")]
+        WisdomEffect,
+
+        [Info("yellow", "+", "Blessing")]
+        BlessingEffect,
+
         [Info("white", "#", "Protection")]
-        Protection,
+        PhysicalProtection,
 
         [Info("skyblue3", "#", "Holy Protection")]
         HolyProtection,
 
-        [Info("grey50", "<>", "Knockback")]
+        [Info("grey50", "<", "Knockback")]
         KnockbackEffect,
 
-        [Info("grey50", "><", "Pull")]
+        [Info("grey50", "<", "Pull")]
         PullEffect,
     }
 }

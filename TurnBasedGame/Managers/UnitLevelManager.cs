@@ -1,15 +1,15 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 
-namespace TurnBasedGame.Main.Helpers.Concrete
+namespace TurnBasedGame.Main.Managers
 {
-    public class UnitLevel
+    public class UnitLevelManager
     {
         private int _currentLevel;
         private const int MaxLevel = 10;
         private const int StatIncreasePerLevel = 8;
         private const double PointIncreaseRate = 0.25;
 
-        public UnitLevel(int startingLevel = 1)
+        public UnitLevelManager(int startingLevel = 1)
         {
             CurrentLevel = startingLevel;
         }
@@ -56,8 +56,8 @@ namespace TurnBasedGame.Main.Helpers.Concrete
                     }
                 }
 
-                unit.MaxHP = (int)(unit.MaxHP + (unit.MaxHP * PointIncreaseRate));
-                unit.MaxMP = (int)(unit.MaxMP + (unit.MaxMP * PointIncreaseRate));
+                unit.MaxHP = (int)(unit.MaxHP + unit.MaxHP * PointIncreaseRate);
+                unit.MaxMP = (int)(unit.MaxMP + unit.MaxMP * PointIncreaseRate);
                 unit.HP = unit.MaxHP;
                 unit.MP = unit.MaxMP;
             }

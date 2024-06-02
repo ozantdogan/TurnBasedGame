@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 
 namespace TurnBasedGame.Main.Effects
 {
@@ -9,8 +9,7 @@ namespace TurnBasedGame.Main.Effects
         public PhysicalProtectionEffect()
         {
             Name = "Physical Protection";
-            EffectType = EnumEffectType.Protection;
-            Category = EnumEffectCategory.Buff;
+            EffectType = EnumEffectType.PhysicalProtection;
         }
 
         public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null)

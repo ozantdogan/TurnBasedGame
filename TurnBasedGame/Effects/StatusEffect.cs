@@ -1,7 +1,7 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
-using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.UI;
 
 namespace TurnBasedGame.Main.Effects
@@ -14,7 +14,6 @@ namespace TurnBasedGame.Main.Effects
         public int Duration { get; set; }
         public double Modifier { get; set; } = 1.0;
         public EnumSkillType SkillType { get; set; }
-        public EnumEffectCategory Category { get; set; } = EnumEffectCategory.None;
         public int DamagePerTurn { get; set; } = 0;
         public int ApplianceChance = 100;
         public double EffectStrength = 1.0;
