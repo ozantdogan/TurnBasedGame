@@ -296,7 +296,7 @@ namespace TurnBasedGame.Main.UI
 
             foreach (var unit in allAliveUnits)
             {
-                unit.MP = Math.Min(unit.MP + 5, unit.MaxMP);
+                unit.MP = Math.Min(unit.MP + 3, unit.MaxMP);
                 unit.HasMoved = false;
             }
 

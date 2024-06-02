@@ -8,9 +8,9 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
     {
         public ClericHeal()
         {
-            Name = "Heal";
+            Name = "Divine Aid";
             ExecutionName = Name;
-            ManaCost = 8;
+            ManaCost = 6;
             IsPassive = true;
             PrimarySkillModifier = 1.5;
             PrimaryType = EnumSkillType.Holy;

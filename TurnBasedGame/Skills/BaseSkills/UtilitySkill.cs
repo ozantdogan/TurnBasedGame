@@ -31,6 +31,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             var castTypeModifier = SkillTypeModifier.Modifiers.ContainsKey(PrimaryType) ? SkillTypeModifier.Modifiers[PrimaryType](actor) : 1.0;
 
             Logger.LogAction(actor, this);
+            double attributeModifier;
 
             for (int i = 0; i <= ExecutionCount; i++)
             {
@@ -39,12 +40,21 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     if (!ValidTargetPositions.Contains(target.Position))
                         continue;
 
+                    if (PrimaryType == EnumSkillType.Holy)
+                        attributeModifier = actor.Faith;
+                    else if (PrimaryType == EnumSkillType.Magic)
+                        attributeModifier = actor.Intelligence;
+                    else if (PrimaryType == EnumSkillType.Occult)
+                        attributeModifier = actor.Intelligence * 0.5 + actor.Faith * 0.5;
+                    else
+                        attributeModifier = 1.0;
+
                     var oldHP = target.HP;
-                    double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(actor.Faith * 0.25), (int)(actor.Faith * 0.5));
+                    double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(attributeModifier * 0.25), (int)(attributeModifier * 0.5));
                     if(!(target.Race == EnumRace.Homunculus))
                     {
-                        Logger.LogHeal(target, target.HP - oldHP);
                         target.HP += (int)healingValue;
+                        Logger.LogHeal(target, target.HP - oldHP);
                     }
                     else
                     {
