@@ -19,7 +19,7 @@ namespace TurnBasedGame.Main.Skills.TrollSkills
             ValidUserPositions = new List<int> { 0, 1 };
             ValidTargetPositions = new List<int> { 0, 1 };
             SkillStatusEffects.Add(new StunEffect() { ApplianceChance = 100 });
-            SkillStatusEffects.Add(new KnockbackEffect() { ApplianceChance = 70 });
+            SkillStatusEffects.Add(new KnockbackEffect() { ApplianceChance = 70, EffectStrength = 1.0 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

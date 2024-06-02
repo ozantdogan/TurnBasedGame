@@ -6,5 +6,6 @@
         Damage,
         Buff,
         Debuff,
+        Move,
     }
 }

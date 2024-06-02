@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             PrimarySkillModifier = 1.2;
             ValidTargetPositions = new List<int>() { 0, 1, 2 };
             IsAoE = true;
-            SkillStatusEffects.Add(new StunEffect { ApplianceChance = 40 });
+            SkillStatusEffects.Add(new StunEffect { ApplianceChance = 40, EffectStrength = 2.0 });
             MinDamageValue = 4;
             MaxDamageValue = 6;
         }

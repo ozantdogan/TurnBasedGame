@@ -18,7 +18,9 @@ namespace TurnBasedGame.Main.Entities.Summons
             Faith = 1;
             CriticalChance = 10;
             DodgeChance = 0;
-            StandardResistance = EnumResistanceLevel.VeryResistant;
+            StandardResistance = EnumResistanceLevel.Neutral;
+            StunResistance = EnumResistanceLevel.Resistant;
+            MoveResistance = EnumResistanceLevel.Resistant;
             SlashResistance = EnumResistanceLevel.VeryResistant;
             BluntResistance = EnumResistanceLevel.VeryResistant;
             PierceResistance = EnumResistanceLevel.VeryResistant;

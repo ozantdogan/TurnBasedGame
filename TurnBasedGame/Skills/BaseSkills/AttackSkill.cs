@@ -95,6 +95,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                             statusEffect.Modifier = effect.Modifier;
                             statusEffect.Duration = effect.Duration;
                             statusEffect.ApplianceChance = effect.ApplianceChance;
+                            statusEffect.EffectStrength = effect.EffectStrength;
                             UnitHelper.AddStatusEffect(target, statusEffect, otherTargets);
                         }
 

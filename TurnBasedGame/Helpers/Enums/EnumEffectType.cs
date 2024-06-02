@@ -34,7 +34,10 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("skyblue3", "#", "Holy Protection")]
         HolyProtection,
 
-        [Info("grey50", "<>", "Move")]
-        MoveEffect,
+        [Info("grey50", "<>", "Knockback")]
+        KnockbackEffect,
+
+        [Info("grey50", "><", "Pull")]
+        PullEffect,
     }
 }

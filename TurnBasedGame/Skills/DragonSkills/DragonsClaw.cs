@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             ValidTargetPositions = new List<int>() { 0, 1 };
             MinDamageValue = 6;
             MaxDamageValue = 9;
-            SkillStatusEffects.Add(new KnockbackEffect() { ApplianceChance = 90 });
+            SkillStatusEffects.Add(new KnockbackEffect() { ApplianceChance = 90, EffectStrength = 2.0 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

@@ -1,5 +1,4 @@
-﻿using Spectre.Console;
-using TurnBasedGame.Main.Entities.Base;
+﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Resistance;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
@@ -18,6 +17,7 @@ namespace TurnBasedGame.Main.Effects
         public EnumEffectCategory Category { get; set; } = EnumEffectCategory.None;
         public int DamagePerTurn { get; set; } = 0;
         public int ApplianceChance = 100;
+        public double EffectStrength = 1.0;
 
         public StatusEffect()
         {
@@ -36,7 +36,7 @@ namespace TurnBasedGame.Main.Effects
             var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
 
             var damageDealt = (int)(DamagePerTurn * resistanceModifier * Modifier);
-            if(damageDealt <= 0)
+            if (damageDealt <= 0)
                 damageDealt = 1;
 
             unit.HP = unit.HP - damageDealt;

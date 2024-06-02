@@ -21,6 +21,7 @@ namespace TurnBasedGame.Main.Entities.Bosses
             SlashResistance = EnumResistanceLevel.Resistant;
             PierceResistance = EnumResistanceLevel.Resistant;
             MagicResistance = EnumResistanceLevel.Resistant;
+            MoveResistance = EnumResistanceLevel.VeryResistant;
             PoisonResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Immune;
             StunResistance = EnumResistanceLevel.Immune;

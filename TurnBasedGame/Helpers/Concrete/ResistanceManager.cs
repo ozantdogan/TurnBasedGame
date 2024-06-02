@@ -27,6 +27,8 @@ namespace TurnBasedGame.Main.Entities.Resistance
             { EnumEffectType.BleedEffect, target => target.BleedResistance },
             { EnumEffectType.ColdEffect, target => target.ColdResistance },
             { EnumEffectType.StunEffect, target => target.StunResistance },
+            { EnumEffectType.KnockbackEffect, target => target.MoveResistance },
+            { EnumEffectType.PullEffect, target => target.MoveResistance },
         };
 
         public static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelModifiers = new Dictionary<EnumResistanceLevel, double>
@@ -37,6 +39,16 @@ namespace TurnBasedGame.Main.Entities.Resistance
             { EnumResistanceLevel.Resistant, 0.5 },
             { EnumResistanceLevel.VeryResistant, 0.25 },
             { EnumResistanceLevel.Immune, 0.0 }
+        };
+
+        public static readonly Dictionary<EnumResistanceLevel, double> ResistanceLevelStrength = new Dictionary<EnumResistanceLevel, double>
+        {
+            { EnumResistanceLevel.VeryWeak, 0.0 },
+            { EnumResistanceLevel.Weak, 0.5 },
+            { EnumResistanceLevel.Neutral, 1.0 },
+            { EnumResistanceLevel.Resistant, 1.5 },
+            { EnumResistanceLevel.VeryResistant, 2.0 },
+            { EnumResistanceLevel.Immune, double.PositiveInfinity }
         };
 
         private static readonly List<EnumResistanceLevel> ResistanceLevels = new List<EnumResistanceLevel>
