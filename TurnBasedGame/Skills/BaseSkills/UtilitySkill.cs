@@ -50,7 +50,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                         attributeModifier = 1.0;
 
                     var oldHP = target.HP;
-                    double healingValue = castTypeModifier * PrimarySkillModifier * _random.Next((int)(attributeModifier * 0.25), (int)(attributeModifier * 0.5));
+                    double healingValue = castTypeModifier * PrimarySkillModifier * (1 + _random.Next(0, (int)(attributeModifier * 0.5)));
                     if(!(target.Race == EnumRace.Homunculus))
                     {
                         target.HP += (int)healingValue;

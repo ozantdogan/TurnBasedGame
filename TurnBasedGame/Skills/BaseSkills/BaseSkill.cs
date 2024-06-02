@@ -59,7 +59,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public int BaseDamageValue { get; set; }
         public double BaseBuffValue { get; set; } = 1.0;
         public double PrimarySkillModifier { get; set; } = 1.0;
-        public double SecondarySkillModifier { get; set; } = 1.0;
+        public double SecondarySkillModifier { get; set; } = 0.2;
         public int ResistanceValue { get; set; }
         public int ExecutionCount { get; set; } = 0;
         public double MissChance { get; set; } = 15;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Resistance;
@@ -43,42 +44,58 @@ namespace TurnBasedGame.Main.Helpers.Concrete
 
         public static void AddStatusEffect(Unit unit, StatusEffect effect, List<Unit>? units = null)
         {
+            StatusEffect? statusEffect = null;
+
+            if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
+            {
+                statusEffect = EffectManager.EffectSelector[effect.EffectType]();
+                statusEffect.DamagePerTurn = effect.DamagePerTurn;
+                statusEffect.Modifier = effect.Modifier;
+                statusEffect.Duration = effect.Duration;
+                statusEffect.ApplianceChance = effect.ApplianceChance;
+                statusEffect.EffectStrength = effect.EffectStrength;
+            }
+            else
+            {
+                return;
+            }
+
             var resistanceLevel = ResistanceManager.EffectResistanceLevelSelector.ContainsKey(effect.EffectType)
                 ? ResistanceManager.EffectResistanceLevelSelector[effect.EffectType](unit) : EnumResistanceLevel.Neutral;
             var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
             var roll = random.Next(100);
 
-            if(roll > effect.ApplianceChance)
+            if(roll > statusEffect.ApplianceChance)
                 return;
 
             var resistanceStrength = ResistanceManager.ResistanceLevelStrength[resistanceLevel];
-            if (resistanceStrength > effect.EffectStrength)
+            if (resistanceStrength > statusEffect.EffectStrength && statusEffect.Category == EnumEffectCategory.Move)
                 return;
 
             if (unit.IsAlive)
             {
                 var existingEffect = unit.StatusEffects
                     .Where(e => e.Category != EnumEffectCategory.Move)
-                    .FirstOrDefault(e => e.EffectType == effect.EffectType); 
+                    .FirstOrDefault(e => e.EffectType == statusEffect.EffectType); 
                 
                 if (existingEffect != null)
                 {
-                    existingEffect.Duration = effect.Duration;
-                    if (existingEffect.DamagePerTurn < effect.DamagePerTurn * resistanceModifier)
+                    existingEffect.Duration = statusEffect.Duration;
+                    if (existingEffect.DamagePerTurn < statusEffect.DamagePerTurn * resistanceModifier)
                     {
-                        existingEffect.DamagePerTurn = effect.DamagePerTurn;
+                        existingEffect.DamagePerTurn = statusEffect.DamagePerTurn;
                     }
 
-                    if (existingEffect.Modifier < effect.Modifier)
+                    if (existingEffect.Modifier < statusEffect.Modifier)
                     {
-                        existingEffect.Modifier = effect.Modifier;
+                        existingEffect.Modifier = statusEffect.Modifier;
                     }
                 }
                 else
                 {
-                    unit.StatusEffects.Add(effect);
-                    effect.ApplyEffect(unit, units);
-                    if(!(effect.Category == EnumEffectCategory.Move))
+                    unit.StatusEffects.Add(statusEffect);
+                    statusEffect.ApplyEffect(unit, units);
+                    if(!(statusEffect.Category == EnumEffectCategory.Move))
                         Logger.LogStatusEffectApplied(unit, effect);
                 }
             }

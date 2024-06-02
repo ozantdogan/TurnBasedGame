@@ -23,11 +23,10 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
             string actorColor = actor.UnitType.GetColor();
             string skillColor = PrimaryType.GetColor();
-            List<Unit>? otherTargets = null;
+            List<Unit>? otherTargets = targets;
 
             if (singleTarget != null)
             {
-                otherTargets = targets;
                 targets = new List<Unit> { singleTarget };
             }
 
@@ -75,7 +74,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     double primaryDamageDealt = primaryBaseDamage * primaryResistanceModifier;
 
                     double secondaryBaseDamage = (criticalDamage > 0 ? criticalDamage : _random.Next(MinDamageValue, MaxDamageValue)) * secondaryDamageTypeModifier * SecondarySkillModifier;
-                    double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier * 0.2;
+                    double secondaryDamageDealt = secondaryBaseDamage * secondaryResistanceModifier;
 
                     double totalDamageDealt = primaryDamageDealt + secondaryDamageDealt;
                     //if (totalDamageDealt > actor.MaxDamageValue * 3)
@@ -88,16 +87,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     foreach (var effect in SkillStatusEffects)
                     {
                         var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) : 1.0;
-                        if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
-                        {
-                            StatusEffect statusEffect = EffectManager.EffectSelector[effect.EffectType]();
-                            statusEffect.DamagePerTurn = effect.DamagePerTurn;
-                            statusEffect.Modifier = effect.Modifier;
-                            statusEffect.Duration = effect.Duration;
-                            statusEffect.ApplianceChance = effect.ApplianceChance;
-                            statusEffect.EffectStrength = effect.EffectStrength;
-                            UnitHelper.AddStatusEffect(target, statusEffect, otherTargets);
-                        }
+                        UnitHelper.AddStatusEffect(target, effect, otherTargets);
 
                         if (!target.IsAlive)
                         {

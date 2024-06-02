@@ -1,6 +1,6 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Skills.CommonSkills;
-using TurnBasedGame.Main.Skills.HunterSkills;
+using TurnBasedGame.Main.Skills.RogueSkills;
 
 namespace TurnBasedGame.Main.Entities.Heroes
 {
@@ -17,9 +17,9 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Dexterity = 7;
             Intelligence = 2;
             Faith = 1;
-            TurnPriority = 2;
+            TurnPriority = 1;
             CriticalChance = 15;
-            Skills.Add(new EvadeSkill());
+            Skills.Add(new ShadowStep());
             Skills.Add(new KnifePierce());
             Skills.Add(new DualKnivesSlash());
             Skills.Add(new PoisonDart());

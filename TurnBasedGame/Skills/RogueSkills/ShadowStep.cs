@@ -5,13 +5,13 @@ using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 using TurnBasedGame.Main.UI;
 
-namespace TurnBasedGame.Main.Skills.HunterSkills
+namespace TurnBasedGame.Main.Skills.RogueSkills
 {
-    public class EvadeSkill : UtilitySkill
+    public class ShadowStep : UtilitySkill
     {
-        public EvadeSkill()
+        public ShadowStep()
         {
-            Name = "Evade";
+            Name = "Shadow Step";
             ManaCost = 16;
             IsPassive = true;
             PrimaryType = EnumSkillType.Standard;
@@ -26,16 +26,8 @@ namespace TurnBasedGame.Main.Skills.HunterSkills
 
             Logger.LogAction(actor, this);
             foreach (var effect in SkillStatusEffects)
-            {
-                if (EffectManager.EffectSelector.ContainsKey(effect.EffectType))
-                {
-                    StatusEffect statusEffect = EffectManager.EffectSelector[effect.EffectType]();
-                    statusEffect.DamagePerTurn = effect.DamagePerTurn;
-                    statusEffect.Modifier = effect.Modifier;
-                    statusEffect.Duration = effect.Duration;
-                    UnitHelper.AddStatusEffect(actor, statusEffect);
-                }
-            }
+                UnitHelper.AddStatusEffect(actor, effect);
+
             return 1;
         }
     }

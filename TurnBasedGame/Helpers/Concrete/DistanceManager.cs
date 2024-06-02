@@ -1,4 +1,6 @@
-﻿namespace TurnBasedGame.Main.Helpers.Concrete
+﻿using TurnBasedGame.Main.Helpers.Enums;
+
+namespace TurnBasedGame.Main.Helpers.Concrete
 {
     public static class SkillDistanceSelector
     {
@@ -6,8 +8,8 @@
         {
             { EnumDistance.Melee, new SkillPositions { ValidTargetPositions = new List<int> { 0, 1 }, ValidUserPositions = new List<int> { 0, 1 } } },
             { EnumDistance.RangedShort, new SkillPositions { ValidTargetPositions = new List<int> { 0, 1, 2 }, ValidUserPositions = new List<int> { 0, 1 } } },
-            { EnumDistance.RangedMedium, new SkillPositions { ValidTargetPositions = new List<int> { 0, 1, 2, 3 }, ValidUserPositions = new List<int> { 1, 2 } } },
-            { EnumDistance.RangedLong, new SkillPositions { ValidTargetPositions = new List<int> { 0, 1, 2, 3, 4 }, ValidUserPositions = new List<int> { 2, 3 } } },
+            { EnumDistance.RangedMedium, new SkillPositions { ValidTargetPositions = new List<int> { 0, 1, 2 }, ValidUserPositions = new List<int> { 1, 2 } } },
+            { EnumDistance.RangedLong, new SkillPositions { ValidTargetPositions = new List<int> { 0, 1, 2, 3}, ValidUserPositions = new List<int> { 2, 3 } } },
             { EnumDistance.NoRange, new SkillPositions { ValidTargetPositions = Enumerable.Range(0, 10).ToList(), ValidUserPositions = Enumerable.Range(0, 10).ToList() } }
         };
 
@@ -15,15 +17,6 @@
         {
             return DistancePositionsMap.TryGetValue(distance, out var positions) ? positions : new SkillPositions();
         }
-    }
-
-    public enum EnumDistance
-    {
-        Melee,
-        RangedShort,
-        RangedMedium,
-        RangedLong,
-        NoRange,
     }
 
     public class SkillPositions

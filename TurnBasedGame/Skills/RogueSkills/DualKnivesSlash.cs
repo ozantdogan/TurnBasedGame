@@ -2,7 +2,7 @@
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
-namespace TurnBasedGame.Main.Skills.HunterSkills
+namespace TurnBasedGame.Main.Skills.RogueSkills
 {
     public class DualKnivesSlash : AttackSkill
     {
@@ -14,11 +14,10 @@ namespace TurnBasedGame.Main.Skills.HunterSkills
             ExecutionCount = 1;
             IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
-            MissChance = 0.6;
-            PrimarySkillModifier = 0.5;
+            MissChance = 0.75;
             ValidUserPositions = new List<int> { 0 };
             ValidTargetPositions = new List<int> { 0, 1 };
-            MinDamageValue = 3;
+            MinDamageValue = 2;
             MaxDamageValue = 4;
         }
 
