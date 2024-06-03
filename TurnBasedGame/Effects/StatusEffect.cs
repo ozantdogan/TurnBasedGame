@@ -15,6 +15,7 @@ namespace TurnBasedGame.Main.Effects
         public double Modifier { get; set; } = 1.0;
         public EnumSkillType SkillType { get; set; }
         public int DamagePerTurn { get; set; } = 0;
+        public int HealPerTurn { get; set; } = 0;
         public int ApplianceChance = 100;
         public double EffectStrength = 1.0;
 

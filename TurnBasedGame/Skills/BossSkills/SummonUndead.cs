@@ -24,9 +24,7 @@ namespace TurnBasedGame.Main.Skills.BossSkills
 
             var secondSummonType = SummonType == EnumSummon.UndeadSwordsman ? EnumSummon.UndeadSpearsman : EnumSummon.UndeadSwordsman;
             SummonType = secondSummonType;
-            base.Execute(actor, targets: targets);
-
-            return 1; 
+            return base.Execute(actor, targets: targets);
         }
     }
 }

@@ -126,6 +126,7 @@ namespace TurnBasedGame.Main.Entities.Base
         public List<StatusEffect> StatusEffects { get; private set; } = new List<StatusEffect>();
         public bool IsMissable { get; set; } = true;
         public bool Unmissable { get; set; } = false;
+        public bool CanBeHealed { get; set; } = true;
 
         #endregion
 

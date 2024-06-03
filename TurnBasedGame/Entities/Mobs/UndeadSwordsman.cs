@@ -8,6 +8,7 @@ namespace TurnBasedGame.Main.Entities.Mobs
         {
             Code = "{USW}";
             MaxHP = 18;
+            MaxMP = 20;
             Name = "Undead Swordsman";
             DisplayName = $"Undead\nSwordsman";
             Skills.Add(new SwordSlash());

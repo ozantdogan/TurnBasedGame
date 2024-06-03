@@ -20,19 +20,13 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                     return -1;
             }
 
-            string actorColor = actor.UnitType.GetColor();
-            string skillColor = PrimaryType.GetColor();
             List<Unit>? otherTargets = targets;
 
             if (singleTarget != null)
-            {
                 targets = new List<Unit> { singleTarget };
-            }
 
             if (targets == null || targets.Count == 0)
-            {
                 return 0; // No targets to execute on
-            }
 
             Logger.LogAction(actor, this);
 

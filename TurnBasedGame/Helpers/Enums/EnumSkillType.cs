@@ -35,7 +35,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("paleturquoise1", "Cold")]
         Cold,
 
-        [Info("deeppink4_1", "Occult")]
+        [Info("darkmagenta_1", "Occult")]
         Occult
     }
 

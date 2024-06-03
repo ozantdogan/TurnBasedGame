@@ -93,6 +93,21 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
                 foreach (var effect in SkillStatusEffects)
                 {
+                    if(effect is HealEffect)
+                    {
+                        double attributeModifier = 0.0;
+                        if (PrimaryType == EnumSkillType.Holy)
+                            attributeModifier = actor.Faith;
+                        else if (PrimaryType == EnumSkillType.Magic)
+                            attributeModifier = actor.Intelligence;
+                        else if (PrimaryType == EnumSkillType.Occult)
+                            attributeModifier = actor.Intelligence * 0.5 + actor.Faith * 0.5;
+                        else if (PrimaryType == EnumSkillType.Standard)
+                            attributeModifier = actor.Dexterity * 0.5 + actor.Intelligence * 0.5;
+
+                        effect.HealPerTurn = effect.HealPerTurn * (int)attributeModifier;
+                    }
+
                     UnitManager.AddStatusEffect(target, effect, targets);
                 }
             }
@@ -123,7 +138,48 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
         public override int Execute(Unit actor, Unit? singleTarget, List<Unit>? targets)
         {
-            throw new NotImplementedException();
+            if (ManaCost > 0)
+            {
+                if (!CalculateMana(actor, ManaCost))
+                    return -1;
+            }
+
+            List<Unit>? otherTargets = targets;
+
+            if (singleTarget != null)
+                targets = new List<Unit> { singleTarget };
+
+            if (targets == null || targets.Count == 0)
+                return 0; // No targets to execute on
+            
+            Logger.LogAction(actor, this);
+            foreach (var target in targets)
+            {
+                if (!target.IsAlive)
+                    continue;
+
+                foreach (var effect in SkillStatusEffects)
+                {
+                    if (effect is HealEffect)
+                    {
+                        double attributeModifier = 0.0;
+                        if (PrimaryType == EnumSkillType.Holy)
+                            attributeModifier = actor.Faith;
+                        else if (PrimaryType == EnumSkillType.Magic)
+                            attributeModifier = actor.Intelligence;
+                        else if (PrimaryType == EnumSkillType.Occult)
+                            attributeModifier = actor.Intelligence * 0.5 + actor.Faith * 0.5;
+                        else if (PrimaryType == EnumSkillType.Standard)
+                            attributeModifier = actor.Dexterity * 0.5 + actor.Intelligence * 0.5;
+
+                        effect.Modifier = attributeModifier * 0.25;
+                    }
+
+                    UnitManager.AddStatusEffect(target, effect, otherTargets);
+                }
+            }
+
+            return 1;
         }
     }
 }

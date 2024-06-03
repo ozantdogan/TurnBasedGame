@@ -29,12 +29,12 @@ namespace TurnBasedGame.Main.UI
 
         public static void LogHeal(Unit unit, int healDealt)
         {
-            AnsiConsole.MarkupLine($"({FormatUnit(unit)} has +{healDealt} HP)");
+            AnsiConsole.MarkupLine($"{FormatUnit(unit)} has [seagreen2]+{healDealt} HP[/]");
         }
 
         public static void LogCannotHeal(Unit unit)
         {
-            AnsiConsole.MarkupLine($"Cannot be healed ({FormatUnit(unit)} is {unit.Race})");
+            AnsiConsole.MarkupLine($"{FormatUnit(unit)} cannot be healed)");
         }
 
         public static void LogDodge(Unit target)

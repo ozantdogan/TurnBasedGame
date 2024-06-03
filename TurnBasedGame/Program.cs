@@ -1,4 +1,5 @@
 ﻿using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Bosses;
 using TurnBasedGame.Main.Entities.Heroes;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Managers;
@@ -10,26 +11,26 @@ namespace TurnBasedGame
     {
         static void Main(string[] args)
         {
-            Unit knight = new Defender() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender", TurnPriority = 1 }.SetLevel(6);
+            Unit knight = new Defender() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender"}.SetLevel(1);
             ////Unit knight2 = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Old Town", DisplayName = "Knight of\nthe Old Town" };
-            Unit cleric = new Cleric() { UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric" }.SetLevel(1);
-            Unit rogue = new Rogue() { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1);
-            Unit scholar = new Scholar() { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(1);
-            Unit nomad = new DesertNomad() { UnitType = EnumUnitType.Player, Name = "Nomad", DisplayName = "Desert\nNomad" }.SetLevel(6);
-            //Unit skeletonKing = new SkeletonKing() { UnitType = EnumUnitType.Player, TurnPriority = 3 };
+            Unit cleric = new Cleric() { HP = 30, UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric", TurnPriority = 1 }.SetLevel(5);
+            Unit rogue = new Rogue() { HP = 30, UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1);
+            Unit scholar = new Scholar() {HP = 30, UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(5);
+            Unit nomad = new Nomad() { UnitType = EnumUnitType.Player, Name = "Nomad", DisplayName = "Desert\nNomad" }.SetLevel(5);
+            Unit skeletonKing = new SkeletonKing() { UnitType = EnumUnitType.Player, TurnPriority = 3 };
             //Unit dragon = new RedDragon() { UnitType = EnumUnitType.Player, Name = "Green Dragon" }.SetLevel(1);
 
             List<Unit> playerUnits = new List<Unit>();
             List<Unit> mobUnits = new List<Unit>();
 
-            UnitManager.AddUnit(knight, playerUnits);
+            //UnitManager.AddUnit(knight, playerUnits);
             UnitManager.AddUnit(nomad, playerUnits);
 
             //UnitHelper.AddUnit(rogue, playerUnits);
-            //UnitHelper.AddUnit(scholar, playerUnits);
-            //UnitHelper.AddUnit(cleric, playerUnits);
+            UnitManager.AddUnit(scholar, playerUnits);
+            UnitManager.AddUnit(cleric, playerUnits);
             ////UnitHelper.AddUnit(dragon, playerUnits);
-            //UnitHelper.AddUnit(skeletonKing, playerUnits);
+            //UnitManager.AddUnit(skeletonKing, playerUnits);
 
             foreach (var playerUnit in playerUnits)
                 playerUnit.Skills.Reverse();

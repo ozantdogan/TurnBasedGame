@@ -282,7 +282,11 @@ namespace TurnBasedGame.Main.UI
             else
             {
                 int targetChoice = targetInfoChoices.IndexOf(targetInfo);
-                result = selectedSkill.Execute(actor, singleTarget : validTargets[targetChoice], mobTargets);
+                if(selectedSkill.IsPassive)
+                    result = selectedSkill.Execute(actor, singleTarget: validTargets[targetChoice], playerTargets);
+                else
+                    result = selectedSkill.Execute(actor, singleTarget : validTargets[targetChoice], mobTargets);
+
                 return (result, updatedPlayerUnits, updatedMobUnits);
             }
         }

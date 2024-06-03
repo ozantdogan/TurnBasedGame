@@ -26,6 +26,7 @@ namespace TurnBasedGame.Main.Managers
                 ?.Where(skill => skill is UtilitySkill && skill.ValidUserPositions.Contains(actor.Position))
                 .ToList();
 
+            //todo singletarget utilityskill
             if (utilitySkills != null)
             {
                 foreach (var skill in utilitySkills)

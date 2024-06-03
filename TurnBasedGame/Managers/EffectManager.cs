@@ -20,7 +20,8 @@ namespace TurnBasedGame.Main.Managers
             { EnumEffectType.KnockbackEffect, () => new KnockbackEffect() },
             { EnumEffectType.PullEffect, () => new PullEffect() },
             { EnumEffectType.PhysicalProtection, () => new PhysicalProtectionEffect() },
-            { EnumEffectType.BerserkEffect, () => new BerserkEffect() }
+            { EnumEffectType.BerserkEffect, () => new BerserkEffect() },
+            { EnumEffectType.HealEffect, () => new HealEffect() }
         };
 
         public static readonly Dictionary<EnumEffectType, Func<Unit, double>> EffectDamageModifier = new Dictionary<EnumEffectType, Func<Unit, double>>
@@ -32,6 +33,7 @@ namespace TurnBasedGame.Main.Managers
             { EnumEffectType.CurseEffect, actor => actor.Faith * 0.3 + actor.Dexterity * 0.3 },
         };
 
+        //todo remove
         public static Dictionary<EnumSkillType, Func<UtilitySkill, StatusEffect>> ProtectionEffectSelector = new Dictionary<EnumSkillType, Func<UtilitySkill, StatusEffect>>
         {
             { EnumSkillType.Standard, skill => new PhysicalProtectionEffect() },
@@ -41,8 +43,10 @@ namespace TurnBasedGame.Main.Managers
             //{ EnumSkillType.Occult, skill => new DarkProtection() },
         };
 
+        //todo remove
         public static Dictionary<EnumEffectType, Func<UtilitySkill, StatusEffect>> BuffEffectSelector = new Dictionary<EnumEffectType, Func<UtilitySkill, StatusEffect>>
         {
+            { EnumEffectType.HealEffect, skill => new HealEffect() },
             { EnumEffectType.EvadeEffect, skill => new EvadeEffect() },
             { EnumEffectType.BerserkEffect, skill => new BerserkEffect() },
         };

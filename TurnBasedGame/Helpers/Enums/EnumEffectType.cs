@@ -4,13 +4,16 @@ namespace TurnBasedGame.Main.Helpers.Enums
 {
     public enum EnumEffectType
     {
+        [Info("seagreen2", "+", "Heal")]
+        HealEffect,
+
         [Info("green", "&", "Poison")]
         PoisonEffect,
 
         [Info("darkorange3", "&", "Burn")]
         BurnEffect,
 
-        [Info("deeppink4_1", "&", "Curse")]
+        [Info("darkmagenta_1", "&", "Curse")]
         CurseEffect,
 
         [Info("paleturquoise1", "&", "Cold")]

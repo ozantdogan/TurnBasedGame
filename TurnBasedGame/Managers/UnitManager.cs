@@ -49,10 +49,12 @@ namespace TurnBasedGame.Main.Managers
             {
                 statusEffect = EffectManager.EffectSelector[effect.EffectType]();
                 statusEffect.DamagePerTurn = effect.DamagePerTurn;
+                statusEffect.HealPerTurn = effect.HealPerTurn;
                 statusEffect.Modifier = effect.Modifier;
                 statusEffect.Duration = effect.Duration;
                 statusEffect.ApplianceChance = effect.ApplianceChance;
                 statusEffect.EffectStrength = effect.EffectStrength;
+                statusEffect.SkillType = effect.SkillType;
             }
             else
             {
@@ -61,7 +63,6 @@ namespace TurnBasedGame.Main.Managers
 
             var resistanceLevel = ResistanceManager.EffectResistanceLevelSelector.ContainsKey(effect.EffectType)
                 ? ResistanceManager.EffectResistanceLevelSelector[effect.EffectType](unit) : EnumResistanceLevel.Neutral;
-            var resistanceModifier = ResistanceManager.ResistanceLevelModifiers[resistanceLevel];
             var roll = random.Next(100);
 
             if (resistanceLevel == EnumResistanceLevel.Immune)
@@ -71,7 +72,7 @@ namespace TurnBasedGame.Main.Managers
                 return;
 
             var resistanceStrength = ResistanceManager.ResistanceLevelStrength[resistanceLevel];
-            if (resistanceStrength > statusEffect.EffectStrength && statusEffect.EffectType.GetCode() != "<")
+            if (resistanceStrength > statusEffect.EffectStrength && statusEffect.EffectType.GetCode() == "<")
                 return;
 
             if (unit.IsAlive)
@@ -83,21 +84,17 @@ namespace TurnBasedGame.Main.Managers
                 if (existingEffect != null)
                 {
                     existingEffect.Duration = statusEffect.Duration;
-                    if (existingEffect.DamagePerTurn < statusEffect.DamagePerTurn * resistanceModifier)
-                    {
+                    if (existingEffect.DamagePerTurn < statusEffect.DamagePerTurn)
                         existingEffect.DamagePerTurn = statusEffect.DamagePerTurn;
-                    }
 
                     if (existingEffect.Modifier < statusEffect.Modifier)
-                    {
                         existingEffect.Modifier = statusEffect.Modifier;
-                    }
                 }
                 else
                 {
                     unit.StatusEffects.Add(statusEffect);
                     statusEffect.ApplyEffect(unit, units);
-                    if (statusEffect.EffectType.GetCode() != "<")
+                    if (statusEffect.EffectType.GetCode() != "<" && unit.StatusEffects.Any(e => e.EffectType == effect.EffectType))
                         Logger.LogStatusEffectApplied(unit, effect);
                 }
             }
@@ -122,6 +119,12 @@ namespace TurnBasedGame.Main.Managers
                 {
                     Logger.LogStun(unit);
                     result = 0;
+                }
+
+                if(effect is HealEffect)
+                {
+                    effect.ApplyEffect(unit, null);
+                    return 1;
                 }
 
                 if (unit.HP <= 0)

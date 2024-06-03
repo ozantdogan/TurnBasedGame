@@ -19,7 +19,6 @@ namespace TurnBasedGame.Main.Entities.Base
             PierceResistance = EnumResistanceLevel.Weak;
             OccultResistance = EnumResistanceLevel.Resistant;
             MagicResistance = EnumResistanceLevel.VeryResistant;
-            BleedResistance = EnumResistanceLevel.VeryResistant;
             MoveResistance = EnumResistanceLevel.VeryResistant;
             PoisonResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Immune;

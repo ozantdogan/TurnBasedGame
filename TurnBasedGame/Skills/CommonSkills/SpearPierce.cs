@@ -10,13 +10,12 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
         {
             Name = "Spear Pierce";
             ExecutionName = Name;
-            ManaCost = 8;
+            ManaCost = 6;
             IsPassive = false;
-            PrimarySkillModifier = 1.5;
+            PrimaryType = EnumSkillType.Pierce;
             IsAoE = true;
             ValidTargetPositions = new List<int> { 0, 1 };
             ValidUserPositions = new List<int> { 0, 1 };
-            IsAoE = true;
             MinDamageValue = 3;
             MaxDamageValue = 5;
         }

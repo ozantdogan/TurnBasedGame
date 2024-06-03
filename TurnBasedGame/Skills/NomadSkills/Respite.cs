@@ -6,11 +6,11 @@ using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.NomadSkills
 {
-    public class SandSurge : UtilitySkill
+    public class Respite : UtilitySkill
     {
-        public SandSurge() 
+        public Respite() 
         {
-            Name = "Sand Surge";
+            Name = "Nomad's Respite";
             ManaCost = 12;
             PrimarySkillModifier = 4.0;
             IsPassive = true;
