@@ -16,8 +16,8 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
             SecondaryType = EnumSkillType.Fire;
             PrimarySkillModifier = 0.5;
             SecondarySkillModifier = 0.5;
-            MinDamageValue = 4;
-            MaxDamageValue = 6;
+            MinDamageValue = 3;
+            MaxDamageValue = 4;
             Distance = EnumDistance.RangedShort;
             SkillStatusEffects.Add(new BurnEffect() { DamagePerTurn = 3, ApplianceChance = 75, Duration = 1 });
             SkillHelper.SetValidPositions(this);  

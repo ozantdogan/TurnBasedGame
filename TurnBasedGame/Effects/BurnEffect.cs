@@ -12,7 +12,15 @@ namespace TurnBasedGame.Main.Effects
             EffectType = EnumEffectType.BurnEffect;
         }
 
-        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null) { }
+        public override void ApplyEffect(Unit unit, List<Unit>? allUnits = null) 
+        {
+            var coldEffect = unit.StatusEffects.Select(e => e as ColdEffect).First();
+            if (coldEffect != null)
+            {
+                coldEffect.RestoreEffect(unit);
+                unit.StatusEffects.Remove(coldEffect);
+            }
+        }
 
         public override void RestoreEffect(Unit unit) { }
     }

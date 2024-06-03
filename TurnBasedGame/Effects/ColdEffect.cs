@@ -25,6 +25,13 @@ namespace TurnBasedGame.Main.Effects
                 ResistanceManager.AdjustResistance(unit, EnumSkillType.Holy, false);
             }
 
+            var burnEffect = unit.StatusEffects.Select(e => e as BurnEffect).First();
+            if(burnEffect != null)
+            {
+                burnEffect.RestoreEffect(unit);
+                unit.StatusEffects.Remove(burnEffect);
+            }
+
             unit.DodgeChance = (int)(unit.DodgeChance * 0.6);
         }
 

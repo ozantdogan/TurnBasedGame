@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             IsPassive = false;
             ExecutionCount = 1;
             PrimaryType = EnumSkillType.Magic;
-            ValidUserPositions = new List<int> { 3, 4 };
+            ValidUserPositions = new List<int> { 2, 3 };
             IsAoE = true;
             MinDamageValue = 2;
             MaxDamageValue = 4;

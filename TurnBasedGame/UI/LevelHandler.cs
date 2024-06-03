@@ -10,11 +10,11 @@ namespace TurnBasedGame.Main.UI
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = false;
-        public static bool BossLevel { get; set; } = false;
+        public static bool DummyLevel { get; set; } = true;
+        public static bool BossLevel { get; set; } = true;
         public static int DummyMaxHP { get; set; } = 500;
         public static int DummyCount { get; set; } = 4;
-        public static int Pace { get; set; } = 1500;
+        public static int Pace { get; set; } = 500;
 
         public static void Rest(List<Unit> units)
         {
@@ -88,11 +88,9 @@ namespace TurnBasedGame.Main.UI
                             break;
                     }
 
-                    if (Level > 3)
+                    if (Level >= 4)
                         mobList[i].LevelUp();
 
-                    if (Level >= 5)
-                        mobList[i].LevelUp();
                 }
             }
 
