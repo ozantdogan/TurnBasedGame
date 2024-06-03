@@ -13,7 +13,7 @@ namespace TurnBasedGame
         {
             Unit knight = new Defender() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender"}.SetLevel(4);
             ////Unit knight2 = new Knight() { UnitType = EnumUnitType.Player, Name = "Knight of the Old Town", DisplayName = "Knight of\nthe Old Town" };
-            Unit cleric = new Cleric() { HP = 30, UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric", TurnPriority = 1 }.SetLevel(1);
+            Unit cleric = new Cleric() { HP = 30, UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric", TurnPriority = 1 }.SetLevel(4);
             Unit rogue = new Rogue() { HP = 30, UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1);
             Unit scholar = new Scholar() {HP = 30, UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(4);
             Unit nomad = new Nomad() { UnitType = EnumUnitType.Player, Name = "Nomad", DisplayName = "Desert\nNomad" }.SetLevel(4);
@@ -28,7 +28,7 @@ namespace TurnBasedGame
 
             //UnitHelper.AddUnit(rogue, playerUnits);
             //UnitManager.AddUnit(scholar, playerUnits);
-            //UnitManager.AddUnit(cleric, playerUnits);
+            UnitManager.AddUnit(cleric, playerUnits);
             ////UnitHelper.AddUnit(dragon, playerUnits);
             //UnitManager.AddUnit(skeletonKing, playerUnits);
 

@@ -171,8 +171,9 @@ namespace TurnBasedGame.Main.UI
                 var color = skill.PrimaryType.GetColor();
                 string primaryTypeText = (skill.PrimaryType != EnumSkillType.None ? $"[{skill.PrimaryType.GetColor()}]({skill.PrimaryType.GetCode()})[/] " : string.Empty);
                 string secondaryTypeText = (skill.SecondaryType != EnumSkillType.None ? $"[{skill.SecondaryType.GetColor()}]({skill.SecondaryType.GetCode()})[/] " : string.Empty);
-                string manaCostText = (skill.ManaCost > 0 ? $"[cyan]({skill.ManaCost})[/]" : string.Empty);
-                return $"{index + 1}. {skill.Name} {primaryTypeText}{secondaryTypeText}{manaCostText}";
+                string manaCostText = (skill.ManaCost > 0 ? $"[cyan]({skill.ManaCost})[/] " : string.Empty);
+                string healthCostText = (skill.HealthCost > 0 ? $"[deeppink2]({skill.HealthCost})[/] " : string.Empty);
+                return $"{index + 1}. {skill.Name} {primaryTypeText}{secondaryTypeText}{manaCostText}{healthCostText}";
             }).ToArray();
 
             var skillChoiceText = AnsiConsole.Prompt(

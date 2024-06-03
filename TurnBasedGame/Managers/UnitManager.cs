@@ -108,6 +108,7 @@ namespace TurnBasedGame.Main.Managers
             var orderedEffects = unit.StatusEffects
                 .Where(e => !(e is StunEffect))
                 .Concat(unit.StatusEffects.Where(e => e is StunEffect))
+                .OrderByDescending(e => e.HealPerTurn > 0)
                 .ToList();
 
             foreach (var effect in orderedEffects)
@@ -125,7 +126,6 @@ namespace TurnBasedGame.Main.Managers
                 if(effect is HealEffect)
                 {
                     effect.ApplyEffect(unit, null);
-                    return 1;
                 }
 
                 if (unit.HP <= 0)

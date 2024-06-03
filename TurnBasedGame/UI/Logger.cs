@@ -27,9 +27,9 @@ namespace TurnBasedGame.Main.UI
             AnsiConsole.MarkupLine($"{FormatUnit(unit)} has {FormatEffect(effect)} effect!");
         }
 
-        public static void LogHeal(Unit unit, int healDealt)
+        public static void LogHeal(Unit unit, StatusEffect effect, int healDealt)
         {
-            AnsiConsole.MarkupLine($"{FormatUnit(unit)} has [seagreen2]+{healDealt}[/] HP");
+            AnsiConsole.MarkupLine($"{FormatEffectPerTurn(effect)} {FormatUnit(unit)} has [palegreen1]+{healDealt} HP[/] ");
         }
 
         public static void LogCannotHeal(Unit unit)
@@ -58,6 +58,12 @@ namespace TurnBasedGame.Main.UI
                                    $"({target.HP} HP left)");
         }
 
+        public static void LogHealthCost(Unit actor, BaseSkill skill)
+        {
+            AnsiConsole.MarkupLine($"{FormatSkill(skill)} took [deeppink2]{skill.HealthCost} HP[/] from {FormatUnit(actor)} " +
+                                   $"({actor.HP} HP left)");
+        }
+
         public static void LogDeath(Unit unit)
         {
             AnsiConsole.MarkupLine($"{FormatUnit(unit)} is dead");
@@ -65,7 +71,7 @@ namespace TurnBasedGame.Main.UI
 
         public static void LogEffectDamage(Unit unit, StatusEffect effect, int damageDealt)
         {
-            AnsiConsole.MarkupLine($"{FormatEffectDamage(effect)} {FormatUnit(unit)} took {FormatDamage(damageDealt)}");
+            AnsiConsole.MarkupLine($"{FormatEffectPerTurn(effect)} {FormatUnit(unit)} took {FormatDamage(damageDealt)}");
         }
 
         public static void LogEffectDeath(Unit unit, StatusEffect effect)
@@ -121,7 +127,7 @@ namespace TurnBasedGame.Main.UI
             return $"[{color}]{effect.EffectType.GetDisplayName()}[/]";
         }
 
-        private static string FormatEffectDamage(StatusEffect effect)
+        private static string FormatEffectPerTurn(StatusEffect effect)
         {
             string color = EnumExtensions.GetColor(effect.EffectType);
             return $"[{color}]({effect.EffectType.GetDisplayName()})[/]";

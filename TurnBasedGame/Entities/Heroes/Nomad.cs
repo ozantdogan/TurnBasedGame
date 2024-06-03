@@ -22,7 +22,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Faith = 3;
             TurnPriority = 1;
             CriticalChance = 12;
-            Skills.Add(new Respite());
+            Skills.Add(new Respite() { Name = "Nomad's Respite" });
             Skills.Add(new ToxicTempest());
             Skills.Add(new ScorchingStrike());
             Skills.Add(new WhipGrapple());

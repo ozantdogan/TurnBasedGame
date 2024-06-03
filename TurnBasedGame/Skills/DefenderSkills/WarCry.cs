@@ -11,6 +11,7 @@ namespace TurnBasedGame.Main.Skills.DefenderSkills
         {
             Name = "War Cry";
             ManaCost = 12;
+            HealthCost = 6;
             PrimaryType = EnumSkillType.Standard;
             IsPassive = true;
             SkillStatusEffects.Add(new BerserkEffect { Duration = 2 });
@@ -19,7 +20,7 @@ namespace TurnBasedGame.Main.Skills.DefenderSkills
 
         public override int Execute(Unit actor, Unit? singleTarget, List<Unit>? targets)
         {
-            return PerformBuff(actor, targets);
+            return base.Execute(actor, null, targets);
         }
     }
 }

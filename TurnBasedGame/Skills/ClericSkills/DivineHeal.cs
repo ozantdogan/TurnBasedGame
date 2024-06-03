@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             IsPassive = true;
             PrimaryType = EnumSkillType.Holy;
             IsAoE = true;
-            SkillStatusEffects.Add(new HealEffect { HealPerTurn = 3 });
+            SkillStatusEffects.Add(new HealEffect { HealPerTurn = 3, Duration = 1 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

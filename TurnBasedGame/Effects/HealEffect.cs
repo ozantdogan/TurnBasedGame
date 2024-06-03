@@ -35,7 +35,8 @@ namespace TurnBasedGame.Main.Effects
             if (unit.CanBeHealed)
             {
                 unit.HP += (int)healingValue;
-                Logger.LogHeal(unit, unit.HP - oldHP);
+                Logger.LogHeal(unit, this, unit.HP - oldHP);
+                Duration--;
             }
             else
             {
@@ -43,7 +44,7 @@ namespace TurnBasedGame.Main.Effects
                 unit.StatusEffects.Remove(this);
             }
 
-            if(Duration == 0)
+            if(Duration < 0)
                 unit.StatusEffects.Remove(this);
         }
 

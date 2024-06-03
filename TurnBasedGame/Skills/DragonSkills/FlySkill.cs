@@ -20,7 +20,7 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            if (!CalculateMana(actor, ManaCost))
+            if (!CalculateManaCost(actor, ManaCost))
                 return -1;
 
             Logger.LogAction(actor, this);

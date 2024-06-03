@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         {
             if (ManaCost > 0)
             {
-                if (!CalculateMana(actor, ManaCost))
+                if (!CalculateManaCost(actor, ManaCost))
                     return -1;
             }
 

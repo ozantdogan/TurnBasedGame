@@ -10,7 +10,7 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
     {
         public Respite() 
         {
-            Name = "Nomad's Respite";
+            Name = "Respite";
             ManaCost = 12;
             PrimarySkillModifier = 4.0;
             IsPassive = true;

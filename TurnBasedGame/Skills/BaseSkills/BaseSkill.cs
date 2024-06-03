@@ -56,6 +56,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         [StringLength(100)] public string Description { get; set; } = "";
         public bool IsPassive { get; set; }
         public int ManaCost { get; set; }
+        public int HealthCost { get; set; }
         public int BaseDamageValue { get; set; }
         public double BaseBuffValue { get; set; } = 1.0;
         public double PrimarySkillModifier { get; set; } = 1.0;
@@ -71,10 +72,9 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public int StunChance { get; set; } = 0;
         public int StunDuration { get; set; } = 0;
         public int EffectChance { get; set; } = 100;
-        //public abstract int Execute(Unit actor, Unit target);
-        //public abstract int Execute(Unit actor, List<Unit> targets);
+
         public abstract int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null);
-        protected bool CalculateMana(Unit actor, int manaCost)
+        protected bool CalculateManaCost(Unit actor, int manaCost)
         {
             if (!(actor.UnitType == EnumUnitType.Player || actor.UnitType == EnumUnitType.Summon)) 
                 return true;
@@ -89,6 +89,14 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                 actor.MP -= manaCost;
                 return true;
             }
+        }
+
+        protected void CalculateHealthCost(Unit actor, int healthCost)
+        {
+            actor.HP -= healthCost;
+            Logger.LogHealthCost(actor, this);
+            if (actor.HP <= 0 || !actor.IsAlive)
+                Logger.LogDeath(actor);
         }
 
         //protected List<int> AdjustTargetIndexes(List<int> targetIndexes)
