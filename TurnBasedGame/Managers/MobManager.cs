@@ -33,7 +33,7 @@ namespace TurnBasedGame.Main.Managers
                 {
                     if (skill.SelfTarget && !validateBuffEffects.Any() && actor.HP <= actor.MaxHP * 0.5)
                     {
-                        result = skill.Execute(actor);
+                        result = skill.Execute(actor, null, null);
                         return (result, updatedPlayerUnits, updatedMobUnits);
                     }
                     else if (!skill.SelfTarget && mobUnits.Any(mob => mob.HP <= mob.MaxHP * 0.5))

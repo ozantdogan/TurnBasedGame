@@ -125,17 +125,6 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             return PerformBuff(actor, new List<Unit> { target });
         }
 
-        //todo:
-        //PerformProtection(Unit actor, Unit target)
-
-        //todo:
-        //PerformProtection(Unit actor, List<Unit> targets)
-
-        public override int Execute(Unit actor)
-        {
-            throw new NotImplementedException();
-        }
-
         public override int Execute(Unit actor, Unit? singleTarget, List<Unit>? targets)
         {
             if (ManaCost > 0)
@@ -145,6 +134,9 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             }
 
             List<Unit>? otherTargets = targets;
+
+            if (SelfTarget)
+                targets = new List<Unit> { actor };
 
             if (singleTarget != null)
                 targets = new List<Unit> { singleTarget };

@@ -111,12 +111,4 @@ public class MoveSkill : BaseSkill
             return actor.Skills.First(p => p is RestSkill).Execute(actor);
         }
     }
-
-    public override int Execute(Unit actor)
-    {
-        throw new NotImplementedException();
-    }
-
-    //todo push/pull
-
 }

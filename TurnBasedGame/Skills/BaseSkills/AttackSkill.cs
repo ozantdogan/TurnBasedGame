@@ -97,11 +97,6 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             return 1;
         }
 
-        public override int Execute(Unit actor)
-        {
-            throw new NotImplementedException();
-        }
-
         private bool CalculateCrit(Unit actor)
         {
             if (actor.CriticalChance > _random.Next(101))

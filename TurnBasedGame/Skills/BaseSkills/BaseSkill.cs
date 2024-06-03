@@ -71,10 +71,9 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public int StunChance { get; set; } = 0;
         public int StunDuration { get; set; } = 0;
         public int EffectChance { get; set; } = 100;
-        public abstract int Execute(Unit actor);
         //public abstract int Execute(Unit actor, Unit target);
         //public abstract int Execute(Unit actor, List<Unit> targets);
-        public abstract int Execute(Unit actor, Unit? singleTarget, List<Unit>? targets);
+        public abstract int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null);
         protected bool CalculateMana(Unit actor, int manaCost)
         {
             if (!(actor.UnitType == EnumUnitType.Player || actor.UnitType == EnumUnitType.Summon)) 

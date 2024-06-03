@@ -11,11 +11,6 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
         public EnumSummon SummonType { get; set; }
         public int SummonRank { get; set; } = 0;
 
-        public override int Execute(Unit actor)
-        {
-            throw new NotImplementedException();
-        }
-
         //TODO SummonUndead
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {

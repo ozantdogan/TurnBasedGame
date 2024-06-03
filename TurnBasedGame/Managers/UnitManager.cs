@@ -50,6 +50,7 @@ namespace TurnBasedGame.Main.Managers
                 statusEffect = EffectManager.EffectSelector[effect.EffectType]();
                 statusEffect.DamagePerTurn = effect.DamagePerTurn;
                 statusEffect.HealPerTurn = effect.HealPerTurn;
+                statusEffect.HealPercentage = effect.HealPercentage;
                 statusEffect.Modifier = effect.Modifier;
                 statusEffect.Duration = effect.Duration;
                 statusEffect.ApplianceChance = effect.ApplianceChance;

@@ -18,7 +18,7 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             SkillStatusEffects.Add(new EvadeEffect() { Modifier = 2, Duration = 1 });
         }
 
-        public override int Execute(Unit actor)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
             if (!CalculateMana(actor, ManaCost))
                 return -1;

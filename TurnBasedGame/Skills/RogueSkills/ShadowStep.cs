@@ -19,16 +19,9 @@ namespace TurnBasedGame.Main.Skills.RogueSkills
             SkillStatusEffects.Add(new EvadeEffect() { Modifier = 3, Duration = 1 });
         }
 
-        public override int Execute(Unit actor)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            if (!CalculateMana(actor, ManaCost))
-                return -1;
-
-            Logger.LogAction(actor, this);
-            foreach (var effect in SkillStatusEffects)
-                UnitManager.AddStatusEffect(actor, effect);
-
-            return 1;
+            return base.Execute(actor, singleTarget, targets);
         }
     }
 }

@@ -21,7 +21,17 @@ namespace TurnBasedGame.Main.Effects
                 HealPerTurn = 1;
 
             var oldHP = unit.HP;
-            double healingValue = Math.Max(1, Modifier) * _random.Next(HealPerTurn, (int)(HealPerTurn * 1.5));
+
+            double healingValue;
+            if (HealPercentage <= 0)
+            {
+                healingValue = Math.Max(1, Modifier) * _random.Next(HealPerTurn, (int)(HealPerTurn * 1.5));
+            }
+            else
+            {
+                healingValue = unit.MaxHP * HealPercentage;
+            }
+
             if (unit.CanBeHealed)
             {
                 unit.HP += (int)healingValue;

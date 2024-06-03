@@ -18,9 +18,9 @@ namespace TurnBasedGame.Main.Skills.DefenderSkills
             SkillStatusEffects.Add(new PhysicalProtectionEffect { Duration = 3, Modifier = 1 });
         }
 
-        public override int Execute(Unit actor)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            return PerformBuff(actor, actor);
+            return base.Execute(actor, null, null);
         }
     }
 }

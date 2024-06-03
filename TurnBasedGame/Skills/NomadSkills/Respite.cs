@@ -16,15 +16,13 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
             IsPassive = true;
             SelfTarget = true;
             PrimaryType = EnumSkillType.Standard;
+            SkillStatusEffects.Add(new HealEffect { HealPercentage = 0.6 });
             SkillStatusEffects.Add(new StunEffect { });
         }
 
-        public override int Execute(Unit actor)
+        public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            PerformHeal(actor, actor);
-            foreach (var effect in SkillStatusEffects)
-                UnitManager.AddStatusEffect(actor, effect);
-            return 1;
+            return base.Execute(actor, singleTarget, targets);
         }
     }
 }

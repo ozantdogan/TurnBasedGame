@@ -13,9 +13,8 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             ExecutionName = Name;
             ManaCost = 6;
             IsPassive = true;
-            PrimarySkillModifier = 1.5;
             PrimaryType = EnumSkillType.Holy;
-            SkillStatusEffects.Add(new HealEffect { HealPerTurn = 3});
+            SkillStatusEffects.Add(new HealEffect { HealPerTurn = 6});
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
