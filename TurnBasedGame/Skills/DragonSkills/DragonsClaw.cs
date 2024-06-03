@@ -13,8 +13,8 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             ExecutionName = Name;
             PrimaryType = EnumSkillType.Slash;
             ValidTargetPositions = new List<int>() { 0, 1 };
-            MinDamageValue = 6;
-            MaxDamageValue = 9;
+            MinDamageValue = 5;
+            MaxDamageValue = 7;
             SkillStatusEffects.Add(new KnockbackEffect() { ApplianceChance = 90, EffectStrength = 2.0 });
         }
 

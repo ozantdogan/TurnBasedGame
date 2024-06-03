@@ -9,16 +9,14 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
         public RainOfStars()
         {
             Name = "Rain of Stars";
-            PrimarySkillModifier = 1.5;
             ManaCost = 20;
             IsPassive = false;
             ExecutionCount = 1;
-            PrimarySkillModifier = 0.6;
             PrimaryType = EnumSkillType.Magic;
             ValidUserPositions = new List<int> { 3, 4 };
             IsAoE = true;
-            MinDamageValue = 4;
-            MaxDamageValue = 5;
+            MinDamageValue = 2;
+            MaxDamageValue = 4;
         }
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {

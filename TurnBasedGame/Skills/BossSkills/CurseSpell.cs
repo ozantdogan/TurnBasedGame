@@ -13,8 +13,8 @@ namespace TurnBasedGame.Main.Skills.BossSkills
             ExecutionName = Name;
             PrimaryType = EnumSkillType.Occult;
             ManaCost = 30;
-            MinDamageValue = 2;
-            MaxDamageValue = 4;
+            MinDamageValue = 1;
+            MaxDamageValue = 3;
             IsAoE = true;
             SkillStatusEffects.Add(new CurseEffect { DamagePerTurn = 3, Duration = 2, Modifier = 1 });
         }

@@ -17,7 +17,7 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             ValidTargetPositions = new List<int> { 0, 1 };
             ValidUserPositions = new List<int> { 0, 1 };
             MinDamageValue = 3;
-            MaxDamageValue = 5;
+            MaxDamageValue = 4;
         }
 
         //todo: kullanıldığı zaman kullanıcıyı 1 index ileri atsın

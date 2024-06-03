@@ -14,8 +14,8 @@ namespace TurnBasedGame.Main.Skills.BossSkills
             IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
             SecondaryType = EnumSkillType.Occult;
-            MinDamageValue = 5;
-            MaxDamageValue = 8;
+            MinDamageValue = 4;
+            MaxDamageValue = 6;
             ValidTargetPositions = new List<int> { 0, 1 };
             ValidUserPositions = new List<int> { 0, 1 };
             SkillStatusEffects.Add(new CurseEffect { DamagePerTurn = 2, Duration = 1, ApplianceChance = 40 });

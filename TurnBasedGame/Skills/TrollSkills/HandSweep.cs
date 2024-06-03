@@ -14,8 +14,8 @@ namespace TurnBasedGame.Main.Skills.TrollSkills
             ManaCost = 10;
             IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
-            MinDamageValue = 4;
-            MaxDamageValue = 5;
+            MinDamageValue = 3;
+            MaxDamageValue = 4;
             ValidUserPositions = new List<int> { 0, 1 };
             ValidTargetPositions = new List<int> { 0, 1 };
             SkillStatusEffects.Add(new StunEffect() { ApplianceChance = 100 });

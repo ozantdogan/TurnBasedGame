@@ -16,8 +16,8 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             ValidTargetPositions = new List<int>() { 0, 1, 2 };
             IsAoE = true;
             SkillStatusEffects.Add(new StunEffect { ApplianceChance = 40, EffectStrength = 2.0 });
-            MinDamageValue = 4;
-            MaxDamageValue = 6;
+            MinDamageValue = 3;
+            MaxDamageValue = 5;
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
