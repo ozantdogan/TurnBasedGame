@@ -10,7 +10,7 @@ namespace TurnBasedGame.Main.UI
     public class LevelHandler
     {
         public static int Level { get; private set; } = 1;
-        public static bool DummyLevel { get; set; } = true;
+        public static bool DummyLevel { get; set; } = false;
         public static bool BossLevel { get; set; } = true;
         public static int DummyMaxHP { get; set; } = 500;
         public static int DummyCount { get; set; } = 4;
@@ -31,7 +31,6 @@ namespace TurnBasedGame.Main.UI
             if (DummyLevel)
             {
                 Level = 0;
-                Pace = 1000;
                 for (int i = 0; i <= DummyCount - 1; i++)
                 {
                     //UnitHelper.AddUnit(new UndeadSpearsman() { Name = $"Spearsman {i}", DisplayName = $"Spearsman {i}", UnitType = EnumUnitType.Mob, Position = i, TurnPriority = 3, HP = 1 }.SetLevel(4), mobList);
@@ -41,10 +40,9 @@ namespace TurnBasedGame.Main.UI
             else if (BossLevel)
             {
                 Level = 0;
-                Pace = 1200;
-                UnitManager.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(4), mobList);
+                //UnitManager.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(4), mobList);
                 //UnitHelper.AddUnit(new Troll() { UnitType = EnumUnitType.Mob}, mobList);
-                //UnitHelper.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }.SetLevel(3), mobList);
+                UnitManager.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }.SetLevel(1), mobList);
                 //UnitHelper.AddUnit(new Rogue() { UnitType = EnumUnitType.Boss, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1), mobList);
             }
 
