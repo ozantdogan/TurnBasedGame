@@ -40,10 +40,10 @@ namespace TurnBasedGame.Main.UI
             else if (BossLevel)
             {
                 Level = 0;
-                //UnitManager.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(4), mobList);
+                UnitManager.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(4), mobList);
                 //UnitHelper.AddUnit(new Troll() { UnitType = EnumUnitType.Mob}, mobList);
                 //UnitManager.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }.SetLevel(1), mobList);
-                UnitManager.AddUnit(new Rogue() { UnitType = EnumUnitType.Boss, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(6), mobList);
+                //UnitManager.AddUnit(new Rogue() { UnitType = EnumUnitType.Boss, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(6), mobList);
             }
 
             if (Level <= 2 && Level > 0)

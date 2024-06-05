@@ -20,9 +20,9 @@ namespace TurnBasedGame.Main.UI
             _ui.ShowTitle();
             List<string> menuButtonTexts = new List<string>()
             {
-                "Play",
-                "Settings",
-                "Exit"
+                "                                                       Play",
+                "                                                       Settings",
+                "                                                       Exit"
             };
 
             var menuButtonChoice = AnsiConsole.Prompt(
@@ -34,7 +34,7 @@ namespace TurnBasedGame.Main.UI
 
             AnsiConsole.Clear(); // Clear the screen before displaying the centered prompt
 
-            if (menuButtonChoice == "Play")
+            if (menuButtonChoice.Contains("Play"))
             {
                 var i = Play();
                 if (i)
@@ -43,7 +43,7 @@ namespace TurnBasedGame.Main.UI
                     ShowMainMenu();
                 }
             }
-            else if(menuButtonChoice == "Settings")
+            else if(menuButtonChoice.Contains("Settings"))
             {
                 while (true)
                 {
@@ -81,7 +81,7 @@ namespace TurnBasedGame.Main.UI
                 AnsiConsole.Clear();
                 ShowMainMenu();
             }
-            else if(menuButtonChoice == "Exit")
+            else if(menuButtonChoice.Contains("Exit"))
             {
                 return;
             }
@@ -92,7 +92,7 @@ namespace TurnBasedGame.Main.UI
             Console.Clear();
             while(true)
             {
-                Unit knight = new Defender() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender", HP = 1 }.SetLevel(1);
+                Unit knight = new Defender() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender" }.SetLevel(1);
                 Unit cleric = new Cleric() { HP = 30, UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric", TurnPriority = 1 }.SetLevel(1);
                 Unit rogue = new Rogue() { HP = 30, UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1);
                 Unit scholar = new Scholar() { HP = 30, UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(1);
@@ -103,9 +103,9 @@ namespace TurnBasedGame.Main.UI
 
                 UnitManager.AddUnit(knight, playerUnits);
                 //UnitManager.AddUnit(nomad, playerUnits);
-                ////UnitManager.AddUnit(rogue, playerUnits);
-                //UnitManager.AddUnit(scholar, playerUnits);
-                //UnitManager.AddUnit(cleric, playerUnits);
+                UnitManager.AddUnit(rogue, playerUnits);
+                UnitManager.AddUnit(scholar, playerUnits);
+                UnitManager.AddUnit(cleric, playerUnits);
 
                 foreach (var playerUnit in playerUnits)
                     playerUnit.Skills.Reverse();
