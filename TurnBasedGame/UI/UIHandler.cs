@@ -126,6 +126,15 @@ namespace TurnBasedGame.Main.UI
 
         }
 
+        public void ShowTitle()
+        {
+            AnsiConsole.Write(
+            new FigletText("Turn Based Game")
+                .Centered()
+                .Color(Spectre.Console.Color.Red));
+
+        }
+
         private string GetHpColor(Unit unit)
         {
             var hpColor = "seagreen2";

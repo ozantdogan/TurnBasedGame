@@ -15,7 +15,7 @@ namespace TurnBasedGame.Main.Skills.ColdSkills
             ManaCost = 12;
             SkillStatusEffects.Add(new ColdEffect() { DamagePerTurn = 3, Duration = 3});
             ValidTargetPositions = new List<int> { 0, 1, 2, 3 };
-            ValidUserPositions = new List<int> { 1, 2 };
+            ValidUserPositions = new List<int> { 0, 1, 2 };
             MinDamageValue = 1;
             MaxDamageValue = 3;
             IsAoE = true;

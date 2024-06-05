@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using TurnBasedGame.Main.Entities.Base;
+using TurnBasedGame.Main.Entities.Heroes;
 using TurnBasedGame.Main.Helpers.Abstract;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Managers;
@@ -14,6 +15,7 @@ namespace TurnBasedGame.Main.UI
         public BattleHandler()
         {
             _ui = new UIHandler();
+
         }
 
         public bool StartBattle(List<Unit> playerUnits, List<Unit> mobUnits, int level)

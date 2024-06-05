@@ -46,7 +46,7 @@ namespace TurnBasedGame.Main.Managers
 
             // Check if there are any units with UnitType == EnumUnitType.MobSummon
             var summonSkill = actor.Skills?.FirstOrDefault(skill => skill is SummonSkill && skill.ValidUserPositions.Contains(actor.Position));
-            if (!mobUnits.Any(mob => mob.UnitType == EnumUnitType.MobSummon) && summonSkill != null)
+            if (!mobUnits.Any(mob => mob.UnitType == EnumUnitType.MobSummon) && summonSkill != null && actor.HP <= actor.MaxHP * 0.5)
             {
                 result = summonSkill.Execute(actor, null, targets: updatedMobUnits);
                 return (result, updatedPlayerUnits, updatedMobUnits);

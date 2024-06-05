@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.UI
     {
         public static int Level { get; private set; } = 1;
         public static bool DummyLevel { get; set; } = false;
-        public static bool BossLevel { get; set; } = true;
+        public static bool BossLevel { get; set; } = false;
         public static int DummyMaxHP { get; set; } = 500;
         public static int DummyCount { get; set; } = 4;
         public static int Pace { get; set; } = 500;
@@ -42,8 +42,8 @@ namespace TurnBasedGame.Main.UI
                 Level = 0;
                 //UnitManager.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(4), mobList);
                 //UnitHelper.AddUnit(new Troll() { UnitType = EnumUnitType.Mob}, mobList);
-                UnitManager.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }.SetLevel(1), mobList);
-                //UnitHelper.AddUnit(new Rogue() { UnitType = EnumUnitType.Boss, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1), mobList);
+                //UnitManager.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }.SetLevel(1), mobList);
+                UnitManager.AddUnit(new Rogue() { UnitType = EnumUnitType.Boss, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(6), mobList);
             }
 
             if (Level <= 2 && Level > 0)
