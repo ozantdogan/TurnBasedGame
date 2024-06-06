@@ -112,7 +112,7 @@ namespace TurnBasedGame.Main.UI
             List<Unit> selectedUnits = new List<Unit>();
             int maxUnits = 4; // Set the number of units players can choose
 
-            string selectedUnitColor = "teal";
+            string selectedUnitColor = "Yellow";
 
             while (true)
             {
@@ -143,38 +143,6 @@ namespace TurnBasedGame.Main.UI
 
                 AnsiConsole.Write(table);
 
-                // Prompt for character selection
-                List<string> unitChoices = availableUnits
-                    .Where(unit => unit != null) // Skip null units
-                    .Select(unit =>
-                    {
-                        var displayName = unit.DisplayName ?? "Unknown";
-                        return selectedUnits.Contains(unit) ? $"[{selectedUnitColor}]{displayName}[/]" : displayName;
-                    })
-                    .ToList();
-
-                var selectedUnitName = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title($"Select a character ({maxUnits - selectedUnits.Count()} left):")
-                        .PageSize(10)
-                        .AddChoices(unitChoices)
-                        .HighlightStyle(new Style(Color.LightSkyBlue1))
-                );
-
-                // Find the selected unit
-                var unitToSelect = availableUnits.FirstOrDefault(u =>
-                    selectedUnits.Contains(u) ? $"[{selectedUnitColor}]{u?.DisplayName}[/]" == selectedUnitName : u?.DisplayName == selectedUnitName
-                );
-
-                if (unitToSelect != null && !selectedUnits.Contains(unitToSelect))
-                {
-                    selectedUnits.Add(unitToSelect);
-                }
-                else if (unitToSelect != null)
-                {
-                    selectedUnits.Remove(unitToSelect);
-                }
-
                 if (selectedUnits.Count == maxUnits)
                 {
                     var confirmSelection = AnsiConsole.Prompt(
@@ -196,10 +164,43 @@ namespace TurnBasedGame.Main.UI
                 }
                 else
                 {
+                    // Prompt for character selection
+                    List<string> unitChoices = availableUnits
+                        .Where(unit => unit != null) // Skip null units
+                        .Select(unit =>
+                        {
+                            var displayName = unit.DisplayName ?? "Unknown";
+                            return selectedUnits.Contains(unit) ? $"[{selectedUnitColor}]{displayName}[/]" : displayName;
+                        })
+                        .ToList();
+
+                    var selectedUnitName = AnsiConsole.Prompt(
+                        new SelectionPrompt<string>()
+                            .Title($"Select a character ({maxUnits - selectedUnits.Count()} left):")
+                            .PageSize(10)
+                            .AddChoices(unitChoices)
+                            .HighlightStyle(new Style(Color.Red))
+                    );
+
+                    // Find the selected unit
+                    var unitToSelect = availableUnits.FirstOrDefault(u =>
+                        selectedUnits.Contains(u) ? $"[{selectedUnitColor}]{u?.DisplayName}[/]" == selectedUnitName : u?.DisplayName == selectedUnitName
+                    );
+
+                    if (unitToSelect != null && !selectedUnits.Contains(unitToSelect))
+                    {
+                        selectedUnits.Add(unitToSelect);
+                    }
+                    else if (unitToSelect != null)
+                    {
+                        selectedUnits.Remove(unitToSelect);
+                    }
+
                     AnsiConsole.Clear();
                 }
             }
 
+            AnsiConsole.Clear();
             ArrangeUnits(selectedUnits);
             return selectedUnits;
         }
@@ -209,7 +210,31 @@ namespace TurnBasedGame.Main.UI
         {
             while (true)
             {
-                List<string> unitPositions = units.Select((unit, index) => $"{index + 1}. {unit.DisplayName}").ToList();
+                var table = new Table()
+                    .Border(TableBorder.Heavy)
+                    .BorderColor(Color.Grey)
+                    .Title("[bold white]Available Units[/]")
+                    .AddColumn("Name")
+                    .AddColumn("Class")
+                    .AddColumn("HP");
+
+                foreach (var unit in units)
+                {
+                    if (unit == null) continue; // Skip null units to prevent exceptions
+
+                    var name = unit.Name ?? "Unknown"; // Handle potential null DisplayName
+                    var className = unit.GetType().Name ?? ""; // Handle potential null UnitType
+
+                    table.AddRow(
+                        new Markup(name),
+                        new Markup(className),
+                        new Markup(unit.HP.ToString())
+                    );
+                }
+                AnsiConsole.Write(table);
+
+                List<string> unitPositions = units.Select((unit, index) => $"{index + 1}. {unit.Name}").ToList();
+                unitPositions.Add($"[white]Start[/]");
 
                 var selectedPosition = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
@@ -218,6 +243,9 @@ namespace TurnBasedGame.Main.UI
                         .AddChoices(unitPositions)
                         .HighlightStyle(new Style(Color.Yellow))
                 );
+
+                if (selectedPosition.Contains("Start"))
+                    break;
 
                 int selectedIndex = unitPositions.IndexOf(selectedPosition);
 
@@ -229,19 +257,6 @@ namespace TurnBasedGame.Main.UI
 
                 UnitManager.SetPosition(units[selectedIndex], units, newPosition - 1);
                 AnsiConsole.Clear();
-
-                var continueArranging = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title("Do you want to rearrange more units?")
-                        .AddChoices("Yes", "No")
-                        .HighlightStyle(new Style(Color.Green))
-                ) == "Yes";
-
-
-                if (!continueArranging)
-                {
-                    break;
-                }
             }
         }
 
