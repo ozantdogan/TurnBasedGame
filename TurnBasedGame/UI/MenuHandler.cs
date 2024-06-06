@@ -67,6 +67,7 @@ namespace TurnBasedGame.Main.UI
                 {
                     $"1. Dummy level: {(LevelHandler.DummyLevel ? "ON" : "OFF")}",
                     $"2. Boss level: {(LevelHandler.BossLevel ? "ON" : "OFF")}",
+                    $"3. Pace: {LevelHandler.Pace}",
                     $"0. Back to Menu"
                 };
 
@@ -78,8 +79,6 @@ namespace TurnBasedGame.Main.UI
                         .HighlightStyle(new Style(Color.Red))
                 );
 
-                AnsiConsole.Clear();
-
                 if (settingButtonChoice.Contains("Dummy level"))
                 {
                     LevelHandler.DummyLevel = !LevelHandler.DummyLevel;
@@ -88,10 +87,20 @@ namespace TurnBasedGame.Main.UI
                 {
                     LevelHandler.BossLevel = !LevelHandler.BossLevel;
                 }
+                else if (settingButtonChoice.Contains("Pace"))
+                {
+                    var newPace = AnsiConsole.Prompt(
+                        new TextPrompt<int>("Enter a decimal for the new pace: ")
+                            .ValidationErrorMessage("[red]That's not a valid pace[/]")
+                    );
+
+                    LevelHandler.Pace = newPace;
+                }
                 else
                 {
                     break;
                 }
+                AnsiConsole.Clear();
             }
 
             AnsiConsole.Clear();
@@ -169,8 +178,8 @@ namespace TurnBasedGame.Main.UI
                         .Where(unit => unit != null) // Skip null units
                         .Select(unit =>
                         {
-                            var displayName = unit.DisplayName ?? "Unknown";
-                            return selectedUnits.Contains(unit) ? $"[{selectedUnitColor}]{displayName}[/]" : displayName;
+                            var name = unit.Name ?? "Unknown";
+                            return selectedUnits.Contains(unit) ? $"[{selectedUnitColor}]{name}[/]" : name;
                         })
                         .ToList();
 
@@ -184,7 +193,7 @@ namespace TurnBasedGame.Main.UI
 
                     // Find the selected unit
                     var unitToSelect = availableUnits.FirstOrDefault(u =>
-                        selectedUnits.Contains(u) ? $"[{selectedUnitColor}]{u?.DisplayName}[/]" == selectedUnitName : u?.DisplayName == selectedUnitName
+                        selectedUnits.Contains(u) ? $"[{selectedUnitColor}]{u?.Name}[/]" == selectedUnitName : u?.Name == selectedUnitName
                     );
 
                     if (unitToSelect != null && !selectedUnits.Contains(unitToSelect))
@@ -204,7 +213,6 @@ namespace TurnBasedGame.Main.UI
             ArrangeUnits(selectedUnits);
             return selectedUnits;
         }
-
 
         private void ArrangeUnits(List<Unit> units)
         {
@@ -234,7 +242,7 @@ namespace TurnBasedGame.Main.UI
                 AnsiConsole.Write(table);
 
                 List<string> unitPositions = units.Select((unit, index) => $"{index + 1}. {unit.Name}").ToList();
-                unitPositions.Add($"[white]Start[/]");
+                unitPositions.Add("[white]Start[/]");
 
                 var selectedPosition = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
@@ -248,14 +256,24 @@ namespace TurnBasedGame.Main.UI
                     break;
 
                 int selectedIndex = unitPositions.IndexOf(selectedPosition);
+                var selectedUnit = units[selectedIndex];
+                int previousIndex = selectedUnit.Position;
 
-                var newPosition = AnsiConsole.Prompt(
-                    new TextPrompt<int>($"Enter the new position for {units[selectedIndex].DisplayName} (1-{units.Count}):")
-                        .ValidationErrorMessage("[red]That's not a valid position[/]")
-                        .Validate(pos => pos >= 1 && pos <= units.Count)
+                // Prompt for the second unit to swap with
+                var swapUnitPosition = AnsiConsole.Prompt(
+                    new SelectionPrompt<string>()
+                        .Title($"Select a unit to swap with {selectedUnit.Name}:")
+                        .PageSize(10)
+                        .AddChoices(unitPositions.Where(pos => !pos.Contains(selectedUnit.Name ?? "")).ToList())
+                        .HighlightStyle(new Style(Color.Red))
                 );
 
-                UnitManager.SetPosition(units[selectedIndex], units, newPosition - 1);
+                int swapIndex = unitPositions.IndexOf(swapUnitPosition);
+                var swapUnit = units[swapIndex];  
+
+                // Swap the selected unit with the unit at the swapIndex
+                UnitManager.SetPosition(selectedUnit, units, swapIndex);
+                UnitManager.SetPosition(swapUnit, units, previousIndex);
                 AnsiConsole.Clear();
             }
         }
