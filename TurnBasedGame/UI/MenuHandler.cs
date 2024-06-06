@@ -90,26 +90,26 @@ namespace TurnBasedGame.Main.UI
         private bool Play()
         {
             Console.Clear();
+            Unit knight = new Defender() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender" }.SetLevel(1);
+            Unit cleric = new Cleric() { HP = 30, UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric", TurnPriority = 1 }.SetLevel(1);
+            Unit rogue = new Rogue() { HP = 30, UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1);
+            Unit scholar = new Scholar() { HP = 30, UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(1);
+            Unit nomad = new Nomad() { UnitType = EnumUnitType.Player, Name = "Nomad", DisplayName = "Desert\nNomad" }.SetLevel(1);
+
+            List<Unit> playerUnits = new List<Unit>();
+            List<Unit> mobUnits = new List<Unit>();
+
+            UnitManager.AddUnit(knight, playerUnits);
+            //UnitManager.AddUnit(nomad, playerUnits);
+            UnitManager.AddUnit(rogue, playerUnits);
+            UnitManager.AddUnit(scholar, playerUnits);
+            UnitManager.AddUnit(cleric, playerUnits);
+
+            foreach (var playerUnit in playerUnits)
+                playerUnit.Skills.Reverse();
+
             while(true)
             {
-                Unit knight = new Defender() { UnitType = EnumUnitType.Player, Name = "Roderick", DisplayName = "Roderick,\nthe Defender" }.SetLevel(1);
-                Unit cleric = new Cleric() { HP = 30, UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric", TurnPriority = 1 }.SetLevel(1);
-                Unit rogue = new Rogue() { HP = 30, UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(1);
-                Unit scholar = new Scholar() { HP = 30, UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" }.SetLevel(1);
-                Unit nomad = new Nomad() { UnitType = EnumUnitType.Player, Name = "Nomad", DisplayName = "Desert\nNomad" }.SetLevel(1);
-
-                List<Unit> playerUnits = new List<Unit>();
-                List<Unit> mobUnits = new List<Unit>();
-
-                UnitManager.AddUnit(knight, playerUnits);
-                //UnitManager.AddUnit(nomad, playerUnits);
-                UnitManager.AddUnit(rogue, playerUnits);
-                UnitManager.AddUnit(scholar, playerUnits);
-                UnitManager.AddUnit(cleric, playerUnits);
-
-                foreach (var playerUnit in playerUnits)
-                    playerUnit.Skills.Reverse();
-
                 LevelHandler.AddMobs(mobUnits);
                 BattleHandler battle = new BattleHandler();
                 var i = battle.StartBattle(playerUnits, mobUnits, LevelHandler.Level);
