@@ -106,19 +106,21 @@ namespace TurnBasedGame.Main.UI
                 new Cleric { UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric" },
                 new Rogue { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" },
                 new Scholar { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" },
-                new Nomad { UnitType = EnumUnitType.Player, Name = "Nomad", DisplayName = "Tair,\nDesert Nomad" }
+                new Nomad { UnitType = EnumUnitType.Player, Name = "Tair", DisplayName = "Tair,\nDesert Nomad" }
             };
 
             List<Unit> selectedUnits = new List<Unit>();
             int maxUnits = 4; // Set the number of units players can choose
 
+            string selectedUnitColor = "teal";
+
             while (true)
             {
                 // Create the table for available units
                 var table = new Table()
-                    .Border(TableBorder.Rounded)
-                    .BorderColor(Color.Blue)
-                    .Title("[bold yellow]Available Units[/]")
+                    .Border(TableBorder.Heavy)
+                    .BorderColor(Color.Grey)
+                    .Title("[bold white]Available Units[/]")
                     .AddColumn("Name")
                     .AddColumn("Class")
                     .AddColumn("HP");
@@ -128,13 +130,14 @@ namespace TurnBasedGame.Main.UI
                     if (unit == null) continue; // Skip null units to prevent exceptions
 
                     bool isSelected = selectedUnits.Contains(unit);
-                    var displayName = unit.DisplayName ?? "Unknown"; // Handle potential null DisplayName
+                    var name = unit.Name ?? "Unknown"; // Handle potential null DisplayName
                     var className = unit.GetType().Name ?? ""; // Handle potential null UnitType
 
+
                     table.AddRow(
-                        new Markup(isSelected ? $"[green]{displayName}[/]" : displayName),
-                        new Markup(className),
-                        new Markup($"{unit.HP} HP")
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{name}[/]" : name),
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{className}[/]" : className),
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.HP}[/]" : unit.HP.ToString())
                     );
                 }
 
@@ -146,29 +149,31 @@ namespace TurnBasedGame.Main.UI
                     .Select(unit =>
                     {
                         var displayName = unit.DisplayName ?? "Unknown";
-                        return selectedUnits.Contains(unit) ? $"[green]{displayName}[/]" : displayName;
+                        return selectedUnits.Contains(unit) ? $"[{selectedUnitColor}]{displayName}[/]" : displayName;
                     })
                     .ToList();
 
                 var selectedUnitName = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
-                        .Title("Select a character (green = selected):")
+                        .Title($"Select a character ({maxUnits - selectedUnits.Count()} left):")
                         .PageSize(10)
                         .AddChoices(unitChoices)
-                        .HighlightStyle(new Style(Color.Yellow))
+                        .HighlightStyle(new Style(Color.LightSkyBlue1))
                 );
 
                 // Find the selected unit
                 var unitToSelect = availableUnits.FirstOrDefault(u =>
-                    selectedUnits.Contains(u) ? $"[green]{u?.DisplayName}[/]" == selectedUnitName : u?.DisplayName == selectedUnitName
+                    selectedUnits.Contains(u) ? $"[{selectedUnitColor}]{u?.DisplayName}[/]" == selectedUnitName : u?.DisplayName == selectedUnitName
                 );
 
                 if (unitToSelect != null && !selectedUnits.Contains(unitToSelect))
                 {
                     selectedUnits.Add(unitToSelect);
                 }
-
-                AnsiConsole.Clear();
+                else if (unitToSelect != null)
+                {
+                    selectedUnits.Remove(unitToSelect);
+                }
 
                 if (selectedUnits.Count == maxUnits)
                 {
@@ -176,7 +181,7 @@ namespace TurnBasedGame.Main.UI
                         new SelectionPrompt<string>()
                             .Title("You have selected all characters. Do you want to confirm the selection?")
                             .AddChoices("Yes", "No")
-                            .HighlightStyle(new Style(Color.Green))
+                            .HighlightStyle(new Style(Color.Red))
                     );
 
                     if (confirmSelection == "Yes")
@@ -188,6 +193,10 @@ namespace TurnBasedGame.Main.UI
                         selectedUnits.Clear();
                         AnsiConsole.Clear();
                     }
+                }
+                else
+                {
+                    AnsiConsole.Clear();
                 }
             }
 
