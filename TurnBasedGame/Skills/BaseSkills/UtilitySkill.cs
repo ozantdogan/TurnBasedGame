@@ -45,7 +45,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                             attributeModifier = actor.Faith;
                         else if (PrimaryType == EnumSkillType.Magic)
                             attributeModifier = actor.Intelligence;
-                        else if (PrimaryType == EnumSkillType.Occult)
+                        else if (PrimaryType == EnumSkillType.Dark)
                             attributeModifier = actor.Intelligence * 0.5 + actor.Faith * 0.5;
                         else if (PrimaryType == EnumSkillType.Standard)
                             attributeModifier = actor.Dexterity * 0.5 + actor.Intelligence * 0.5;

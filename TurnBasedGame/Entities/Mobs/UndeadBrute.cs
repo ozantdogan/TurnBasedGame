@@ -12,6 +12,8 @@ namespace TurnBasedGame.Main.Entities.Mobs
             MaxHP = 22;
             Strength = 5;
             Skills.Add(new HammerStrike());
+            MinDamageValue = 3;
+            MaxDamageValue = 5;
         }
     }
 }

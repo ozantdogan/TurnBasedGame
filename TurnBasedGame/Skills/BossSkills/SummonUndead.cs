@@ -13,7 +13,7 @@ namespace TurnBasedGame.Main.Skills.BossSkills
             Name = "Summon Undead";
             ManaCost = 25;
             IsPassive = true;
-            PrimaryType = EnumSkillType.Occult;
+            PrimaryType = EnumSkillType.Dark;
         }
 
         //TODO aynı target türünden var ise summon olmuyor

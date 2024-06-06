@@ -12,12 +12,9 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             Name = "Tail Toss";
             ExecutionName = Name;
             PrimaryType = EnumSkillType.Blunt;
-            PrimarySkillModifier = 1.2;
             ValidTargetPositions = new List<int>() { 0, 1, 2 };
             IsAoE = true;
             SkillStatusEffects.Add(new StunEffect { ApplianceChance = 40, EffectStrength = 2.0 });
-            MinDamageValue = 3;
-            MaxDamageValue = 5;
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

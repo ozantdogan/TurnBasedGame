@@ -9,15 +9,15 @@ namespace TurnBasedGame.Main.Entities.Base
         {
             Code = "{DRG}";
             Name = "Dragon";
-            MaxHP = 80;
-            MaxMP = 80;
-            Strength = 8;
-            Dexterity = 9;
-            Intelligence = 4;
-            Faith = 3;
+            MaxHP = 70;
+            MaxMP = 70;
+            Strength = 6;
+            Dexterity = 6;
+            Intelligence = 3;
+            Faith = 2;
             CriticalChance = 0;
             PierceResistance = EnumResistanceLevel.Weak;
-            OccultResistance = EnumResistanceLevel.Resistant;
+            DarkResistance = EnumResistanceLevel.Resistant;
             MagicResistance = EnumResistanceLevel.VeryResistant;
             MoveResistance = EnumResistanceLevel.VeryResistant;
             PoisonResistance = EnumResistanceLevel.Immune;
@@ -25,10 +25,12 @@ namespace TurnBasedGame.Main.Entities.Base
             StunResistance = EnumResistanceLevel.Immune;
             Race = EnumRace.Dragon;
             TurnPriority = 2;
+            MinDamageValue = 6;
+            MaxDamageValue = 9;
 
-            //Skills.Add(new FlySkill());
-            //Skills.Add(new TailSweep());
-            //Skills.Add(new DragonsClaw());
+            Skills.Add(new FlySkill());
+            Skills.Add(new TailSweep());
+            Skills.Add(new DragonsClaw());
         }
     }
 }

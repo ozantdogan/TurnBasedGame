@@ -142,7 +142,6 @@ namespace TurnBasedGame.Main.UI
                     var name = unit.Name ?? "Unknown"; // Handle potential null DisplayName
                     var className = unit.GetType().Name ?? ""; // Handle potential null UnitType
 
-
                     table.AddRow(
                         new Markup(isSelected ? $"[{selectedUnitColor}]{name}[/]" : name),
                         new Markup(isSelected ? $"[{selectedUnitColor}]{className}[/]" : className),
@@ -198,11 +197,11 @@ namespace TurnBasedGame.Main.UI
 
                     if (unitToSelect != null && !selectedUnits.Contains(unitToSelect))
                     {
-                        selectedUnits.Add(unitToSelect);
+                        UnitManager.AddUnit(unitToSelect, selectedUnits);
                     }
                     else if (unitToSelect != null)
                     {
-                        selectedUnits.Remove(unitToSelect);
+                        UnitManager.RemoveUnit(unitToSelect, selectedUnits);
                     }
 
                     AnsiConsole.Clear();
@@ -297,7 +296,10 @@ namespace TurnBasedGame.Main.UI
                 mobUnits.Clear();
 
                 if (result || LevelHandler.Level > 6)
+                {
+                    LevelHandler.Level = 0;
                     break;
+                }
             }
 
             return true;

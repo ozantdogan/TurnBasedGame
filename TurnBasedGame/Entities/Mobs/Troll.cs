@@ -11,12 +11,12 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Code = "{TRL}";
             Name = "Troll";
             DisplayName = Name;
-            MaxHP = 40;
-            Strength = 8;
-            Dexterity = 2;
+            MaxHP = 30;
+            Strength = 6;
+            Dexterity = 1;
             Intelligence = 1;
             Faith = 1;
-            CriticalChance = 3;
+            CriticalChance = 2;
             BluntResistance = EnumResistanceLevel.VeryResistant;
             SlashResistance = EnumResistanceLevel.VeryResistant;
             PierceResistance = EnumResistanceLevel.Weak;
@@ -24,6 +24,8 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Skills.Add(new HandSweep());
             Skills.Add(new SmashGround());
             Race = EnumRace.Giant;
+            MinDamageValue = 3;
+            MaxDamageValue = 6;
         }
     }
 }

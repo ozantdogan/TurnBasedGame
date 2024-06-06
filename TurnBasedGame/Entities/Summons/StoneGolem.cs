@@ -12,9 +12,9 @@ namespace TurnBasedGame.Main.Entities.Summons
             DisplayName = "Stone Golem";
             MaxHP = 20;
             MaxMP = 20;
-            Strength = 7;
+            Strength = 6;
             Dexterity = 2;
-            Intelligence = 2;
+            Intelligence = 1;
             Faith = 1;
             CriticalChance = 10;
             DodgeChance = 0;
@@ -28,10 +28,12 @@ namespace TurnBasedGame.Main.Entities.Summons
             PoisonResistance = EnumResistanceLevel.Immune;
             FireResistance = EnumResistanceLevel.Immune;
             ColdResistance = EnumResistanceLevel.Immune;
-            OccultResistance = EnumResistanceLevel.VeryWeak;
+            DarkResistance = EnumResistanceLevel.VeryWeak;
             MagicResistance = EnumResistanceLevel.VeryWeak;
             Skills.Add(new HandSweep());
             Race = EnumRace.Homunculus;
+            MinDamageValue = 3;
+            MaxDamageValue = 7;
         }
     }
 }

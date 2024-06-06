@@ -12,13 +12,13 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{SCH}";
             Name = "Scholar";
             DisplayName = Name;
-            MaxHP = 20;
+            MaxHP = 15;
             MaxMP = 30;
-            Strength = 2;
-            Dexterity = 3;
-            Intelligence = 7;
+            Strength = 1;
+            Dexterity = 2;
+            Intelligence = 5;
             Faith = 2;
-            CriticalChance = 10;
+            CriticalChance = 8;
             TurnPriority = 1;
             MagicResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new SummonGolem());
@@ -26,6 +26,8 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Skills.Add(new RainOfStars());
             Skills.Add(new StarShard());
             Skills.Add(new MagicalEpeePierce());
+            MinDamageValue = 2;
+            MaxDamageValue = 5;
         }
     }
 }

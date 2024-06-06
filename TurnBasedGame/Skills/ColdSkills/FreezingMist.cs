@@ -12,12 +12,11 @@ namespace TurnBasedGame.Main.Skills.ColdSkills
             Name = "Freezing Mist";
             ExecutionName = Name;
             PrimaryType = EnumSkillType.Cold;
+            DamageModifier = 0.5;
             ManaCost = 12;
             SkillStatusEffects.Add(new ColdEffect() { DamagePerTurn = 3, Duration = 3});
             ValidTargetPositions = new List<int> { 0, 1, 2, 3 };
             ValidUserPositions = new List<int> { 0, 1, 2 };
-            MinDamageValue = 1;
-            MaxDamageValue = 3;
             IsAoE = true;
         }
 

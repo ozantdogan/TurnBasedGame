@@ -17,8 +17,6 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             ValidUserPositions = new List<int>() { 0, 1 };
             ValidTargetPositions = new List<int>() { 0, 1 };
             IsAoE = true;
-            MinDamageValue = 3;
-            MaxDamageValue = 4;
             SkillStatusEffects.Add(new BurnEffect { ApplianceChance = 80, DamagePerTurn = 3 });
         }
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

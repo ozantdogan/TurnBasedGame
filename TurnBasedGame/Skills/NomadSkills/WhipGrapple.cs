@@ -13,8 +13,6 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
             Name = "Whip Grapple";
             ManaCost = 8;
             PrimaryType = EnumSkillType.Slash;
-            MinDamageValue = 2;
-            MaxDamageValue = 4;
             Distance = EnumDistance.NoRange;
             SkillStatusEffects.Add(new PullEffect { EffectStrength = 1.5 });
             SkillHelper.SetValidPositions(this);

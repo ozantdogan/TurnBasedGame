@@ -15,8 +15,6 @@ namespace TurnBasedGame.Main.Skills.DefenderSkills
             IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
             MissChance = 0;
-            MinDamageValue = 3;
-            MaxDamageValue = 5;
             SkillStatusEffects.Add(new StunEffect() { ApplianceChance = 60, Duration = 1 });
         }
 

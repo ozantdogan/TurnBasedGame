@@ -12,13 +12,13 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{CLE}";
             Name = "Cleric";
             DisplayName = Name;
-            MaxHP = 18;
+            MaxHP = 14;
             MaxMP = 20;
-            Strength = 2;
-            Dexterity = 4;
+            Strength = 1;
+            Dexterity = 3;
             Intelligence = 2;
-            Faith = 6;
-            CriticalChance = 10;
+            Faith = 4;
+            CriticalChance = 8;
             TurnPriority = 1;
             HolyResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new BlindingLight());
@@ -26,6 +26,8 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Skills.Add(new DivineAid());
             Skills.Add(new SacredFlame());
             Skills.Add(new KnifePierce());
+            MinDamageValue = 2;
+            MaxDamageValue = 4;
         }
     }
 }

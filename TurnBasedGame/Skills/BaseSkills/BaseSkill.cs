@@ -43,8 +43,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
             }
         }
 
-        public int MinDamageValue = 0;
-        public int MaxDamageValue = 0;
+        public double DamageModifier { get; set; } = 1.0;
 
         public int KnockbackChance = 0;
         public double KnockbackModifier = 1.0;

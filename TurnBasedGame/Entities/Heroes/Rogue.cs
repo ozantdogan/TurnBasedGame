@@ -11,18 +11,20 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{ROG}";
             Name = "Rogue";
             DisplayName = Name;
-            MaxHP = 24;
+            MaxHP = 18;
             MaxMP = 20;
-            Strength = 3;
-            Dexterity = 7;
+            Strength = 2;
+            Dexterity = 5;
             Intelligence = 2;
             Faith = 1;
             TurnPriority = 1;
-            CriticalChance = 15;
+            CriticalChance = 12;
             Skills.Add(new ShadowStep());
             Skills.Add(new KnifePierce());
             Skills.Add(new DualKnivesSlash());
             Skills.Add(new PoisonDart());
+            MinDamageValue = 3;
+            MaxDamageValue = 5;
         }
     }
 }

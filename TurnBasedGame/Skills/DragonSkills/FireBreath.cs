@@ -13,8 +13,6 @@ namespace TurnBasedGame.Main.Skills.DragonSkills
             PrimaryType = EnumSkillType.Fire;
             SkillStatusEffects.Add(new BurnEffect() { DamagePerTurn = 5, Duration = 2});
             IsAoE = true;
-            MinDamageValue = 3;
-            MaxDamageValue = 5;
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

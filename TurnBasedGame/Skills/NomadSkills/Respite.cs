@@ -1,7 +1,6 @@
 ﻿using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
-using TurnBasedGame.Main.Managers;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.NomadSkills
@@ -12,7 +11,6 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
         {
             Name = "Respite";
             ManaCost = 12;
-            PrimarySkillModifier = 4.0;
             IsPassive = true;
             SelfTarget = true;
             PrimaryType = EnumSkillType.Standard;

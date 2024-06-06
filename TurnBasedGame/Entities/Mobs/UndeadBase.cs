@@ -10,12 +10,14 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Code = "{USE}";
             Name = "Undead Soldier";
             DisplayName = $"Undead\nSoldier";
-            Strength = 4;
-            Dexterity = 4;
+            Strength = 2;
+            Dexterity = 2;
             Intelligence = 1;
-            CriticalChance = 10;
+            CriticalChance = 4;
             PierceResistance = EnumResistanceLevel.Resistant;
             BluntResistance = EnumResistanceLevel.Weak;
+            MinDamageValue = 2;
+            MaxDamageValue = 4;
         }
     }
 }

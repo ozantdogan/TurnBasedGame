@@ -15,8 +15,6 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             IsPassive = false;
             PrimaryType = EnumSkillType.Magic;
             Distance = EnumDistance.RangedMedium;
-            MinDamageValue = 2;
-            MaxDamageValue = 4;
             SkillHelper.SetValidPositions(this);
         }
 

@@ -36,7 +36,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         Cold,
 
         [Info("darkmagenta_1", "Occult")]
-        Occult
+        Dark
     }
 
     public static class SkillTypeModifier
@@ -52,7 +52,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
             { EnumSkillType.Fire, actor => actor.Faith * 0.3 + actor.Intelligence * 0.2 },
             { EnumSkillType.Cold, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
             { EnumSkillType.Poison, actor => actor.Intelligence * 0.4 + actor.Faith * 0.1 },
-            { EnumSkillType.Occult, actor => actor.Faith * 0.2 + actor.Intelligence * 0.3 },
+            { EnumSkillType.Dark, actor => actor.Faith * 0.2 + actor.Intelligence * 0.3 },
         };
     }
 }

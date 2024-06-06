@@ -11,10 +11,9 @@ namespace TurnBasedGame.Main.Skills.BossSkills
         {
             Name = "Undead's Curse";
             ExecutionName = Name;
-            PrimaryType = EnumSkillType.Occult;
+            PrimaryType = EnumSkillType.Dark;
             ManaCost = 30;
-            MinDamageValue = 1;
-            MaxDamageValue = 3;
+            DamageModifier = 0.5;
             IsAoE = true;
             SkillStatusEffects.Add(new CurseEffect { DamagePerTurn = 3, Duration = 2, Modifier = 1 });
         }

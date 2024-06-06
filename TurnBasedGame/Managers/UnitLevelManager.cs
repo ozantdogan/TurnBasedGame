@@ -6,8 +6,9 @@ namespace TurnBasedGame.Main.Managers
     {
         private int _currentLevel;
         private const int MaxLevel = 10;
-        private const int StatIncreasePerLevel = 8;
+        private const int StatIncreasePerLevel = 6;
         private const double PointIncreaseRate = 0.25;
+        private const double DamageIncreaseRate = 0.1;
 
         public UnitLevelManager(int startingLevel = 1)
         {
@@ -60,6 +61,8 @@ namespace TurnBasedGame.Main.Managers
                 unit.MaxMP = (int)(unit.MaxMP + unit.MaxMP * PointIncreaseRate);
                 unit.HP = unit.MaxHP;
                 unit.MP = unit.MaxMP;
+                unit.MinDamageValue = (int)(unit.MinDamageValue + unit.MinDamageValue * DamageIncreaseRate);
+                unit.MaxDamageValue = (int)(unit.MaxDamageValue + unit.MaxDamageValue * DamageIncreaseRate);
             }
             else
             {

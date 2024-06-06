@@ -7,7 +7,7 @@ namespace TurnBasedGame.Main.Entities.Mobs
         public UndeadSpearsman()
         {
             Code = "{USP}";
-            MaxHP = 18;
+            MaxHP = 14;
             MaxMP = 20;
             Name = "Undead Spearsman";
             DisplayName = $"Undead\nSpearsman";

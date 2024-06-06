@@ -12,11 +12,10 @@ namespace TurnBasedGame.Main.Skills.MagicSkills
             ManaCost = 20;
             IsPassive = false;
             ExecutionCount = 1;
+            DamageModifier = 0.5;
             PrimaryType = EnumSkillType.Magic;
             ValidUserPositions = new List<int> { 2, 3 };
             IsAoE = true;
-            MinDamageValue = 2;
-            MaxDamageValue = 4;
         }
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {

@@ -13,13 +13,12 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
             ExecutionName = Name;
             ManaCost = 15;
             IsPassive = false;
+            DamageModifier = 0.75;
             PrimaryType = EnumSkillType.Holy;
             ValidUserPositions = new List<int> { 2, 3 };
             ValidTargetPositions = new List<int> { 0, 1, 2, 3 };
             IsAoE = true;
-            MinDamageValue = 2;
-            MaxDamageValue = 4;
-            SkillStatusEffects.Add(new BlindEffect() { ApplianceChance = 60, Duration = 1 });
+            SkillStatusEffects.Add(new BlindEffect() { ApplianceChance = 70, Duration = 1 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

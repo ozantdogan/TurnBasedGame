@@ -15,8 +15,6 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
             ManaCost = 12;
             IsPassive = false;
             IsAoE = true;
-            MinDamageValue = 2;
-            MaxDamageValue = 4;
             Distance = EnumDistance.RangedLong;
             SkillStatusEffects.Add(new PoisonEffect() { DamagePerTurn = 3, ApplianceChance = 100, Duration = 2 });
             SkillHelper.SetValidPositions(this);

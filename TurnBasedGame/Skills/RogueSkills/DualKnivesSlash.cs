@@ -17,8 +17,6 @@ namespace TurnBasedGame.Main.Skills.RogueSkills
             MissChance = 0.75;
             ValidUserPositions = new List<int> { 0 };
             ValidTargetPositions = new List<int> { 0, 1 };
-            MinDamageValue = 2;
-            MaxDamageValue = 4;
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

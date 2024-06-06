@@ -12,6 +12,8 @@
             Dexterity = 1;
             Intelligence = 1;
             Faith = 1;
+            MinDamageValue = 2;
+            MaxDamageValue = 5;
         }
     }
 }

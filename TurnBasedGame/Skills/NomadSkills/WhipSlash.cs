@@ -16,8 +16,6 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
             PrimaryType = EnumSkillType.Slash;
             Distance = EnumDistance.RangedShort;
             SkillStatusEffects.Add(new BleedEffect { DamagePerTurn = 5, ApplianceChance = 40 });
-            MinDamageValue = 3;
-            MaxDamageValue = 4;
             SkillHelper.SetValidPositions(this);
         }
 

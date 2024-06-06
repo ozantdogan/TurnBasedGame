@@ -18,8 +18,6 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             ValidUserPositions = new List<int> { 0, 1 };
             ValidTargetPositions = new List<int> { 0, 1 };
             SkillStatusEffects.Add(new BleedEffect() { DamagePerTurn = 2, Modifier = 1, Duration = 1, ApplianceChance = 10 });
-            MinDamageValue = 3;
-            MaxDamageValue = 4;
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

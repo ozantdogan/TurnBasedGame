@@ -11,18 +11,20 @@ namespace TurnBasedGame.Main.Entities.Heroes
         {
             Code = "{DEF}";
             Name = "Defender";
-            MaxHP = 30;
+            MaxHP = 22;
             MaxMP = 20;
-            Strength = 7;
-            Dexterity = 4;
+            Strength = 5;
+            Dexterity = 2;
             Intelligence = 1;
             Faith = 1;
-            CriticalChance = 10;
+            CriticalChance = 8;
             BluntResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new WarCry());
             Skills.Add(new DefendersShield());
             Skills.Add(new ShieldBash());
             Skills.Add(new SwordSlash());
+            MinDamageValue = 4;
+            MaxDamageValue = 6;
         }
     }
 }
