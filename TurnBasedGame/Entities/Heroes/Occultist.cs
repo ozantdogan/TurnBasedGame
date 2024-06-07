@@ -23,7 +23,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             BleedResistance = EnumResistanceLevel.Resistant;
             HolyResistance = EnumResistanceLevel.Weak;
             Skills.Add(new CrimsonRain());
-            Skills.Add(new DarkReconstruction());
+            Skills.Add(new WoundWeaver());
             Skills.Add(new BloodRitual());
             Skills.Add(new CursedScimitarSlash());
             MinDamageValue = 2;

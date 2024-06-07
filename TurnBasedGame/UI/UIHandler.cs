@@ -193,9 +193,9 @@ namespace TurnBasedGame.Main.UI
             foreach (var skill in unitSkills)
             {
                 #region cost
-                string manaCost = (skill.ManaCost > 0 ? $"[cyan]{skill.ManaCost}[/]" : $"[gray]-[/]");
-                string healthCost = (skill.HealthCost > 0 ? $"[gray]/[/][deeppink2]{skill.HealthCost}[/]" : string.Empty);
-                string costText = manaCost + healthCost;
+                string manaCost = (skill.ManaCost > 0 ? $"[cyan]{skill.ManaCost}[/]" : string.Empty);
+                string healthCost = (skill.HealthCost > 0 ? $"[deeppink2]{skill.HealthCost}[/]" : string.Empty);
+                string costText = (manaCost + healthCost).Length == 0 ? $"[gray]-[/]" : manaCost + " " + healthCost;
 
                 costRow.Add(costText);
                 #endregion cost

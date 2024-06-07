@@ -16,7 +16,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("darkorange3", "&", "Burn")]
         BurnEffect,
 
-        [Info("darkmagenta_1", "&", "Curse")]
+        [Info("mediumpurple3", "&", "Curse")]
         CurseEffect,
 
         [Info("paleturquoise1", "&", "Cold")]
@@ -28,7 +28,7 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("grey50", "~", "Stun")]
         StunEffect,
 
-        [Info("blue3", "~", "Blindness")]
+        [Info("blueviolet", "~", "Blindness")]
         BlindEffect,
 
         [Info("cyan", "+", "Evade")]

@@ -5,11 +5,11 @@ using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.OccultistSkills
 {
-    public class DarkReconstruction : UtilitySkill
+    public class WoundWeaver : UtilitySkill
     {
-        public DarkReconstruction() 
+        public WoundWeaver() 
         {
-            Name = "Dark Reconstruction";
+            Name = "Wound Weaver";
             ManaCost = 3;
             IsPassive = true;
             PrimaryType = EnumSkillType.Dark;

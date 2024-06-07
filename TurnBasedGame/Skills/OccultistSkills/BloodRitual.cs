@@ -14,7 +14,7 @@ namespace TurnBasedGame.Main.Skills.OccultistSkills
             IsPassive = true;
             PrimaryType = EnumSkillType.Dark;
             IsAoE = true;
-            SkillStatusEffects.Add(new RestoreManaEffect { HealPerTurn = 10 });
+            SkillStatusEffects.Add(new RestoreManaEffect { HealPerTurn = 8, Duration = 1 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)

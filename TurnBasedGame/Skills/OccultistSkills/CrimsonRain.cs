@@ -15,11 +15,10 @@ namespace TurnBasedGame.Main.Skills.OccultistSkills
             ManaCost = 16;
             DamageModifier = 0.75;
             PrimaryType = EnumSkillType.Dark;
-            ManaCost = 0;
             IsPassive = false;
             IsAoE = true;
             Distance = EnumDistance.RangedLong;
-            SkillStatusEffects.Add(new BleedEffect() { DamagePerTurn = 4, Duration = 2 });
+            SkillStatusEffects.Add(new BleedEffect() { DamagePerTurn = 5, Duration = 2 });
             SkillHelper.SetValidPositions(this);
         }
 
