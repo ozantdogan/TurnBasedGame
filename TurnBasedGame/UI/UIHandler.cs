@@ -239,31 +239,45 @@ namespace TurnBasedGame.Main.UI
                 #endregion user positions
 
                 #region target positions
-
-                var targetStringBuilder = new StringBuilder();
-                var validPositions = new HashSet<int>(skill.ValidTargetPositions);
-                var targetColor = skill.IsPassive ? "springgreen1" : "red3";
-
-                for (int i = 0; i < 4; i++)
+                if (!skill.SelfTarget)
                 {
-                    if (validPositions.Contains(i))
-                    {
-                        targetStringBuilder.Append($"[{targetColor}]o[/]");
-                    }
-                    else
-                    {
-                        targetStringBuilder.Append("o");
-                    }
+                    var targetStringBuilder = new StringBuilder();
+                    var validPositions = new HashSet<int>(skill.ValidTargetPositions);
+                    var targetColor = skill.IsPassive ? "springgreen1" : "red3";
 
-                    if (i < 3)
+                    for (int i = 0; i < 4; i++)
                     {
-                        targetStringBuilder.Append(" ");
+                        if (validPositions.Contains(i))
+                        {
+                            targetStringBuilder.Append($"[{targetColor}]o[/]");
+                        }
+                        else
+                        {
+                            targetStringBuilder.Append("o");
+                        }
+
+                        if (i < 3)
+                        {
+                            targetStringBuilder.Append(" ");
+                        }
                     }
+                    targetPositionsRow.Add(targetStringBuilder.ToString());
+                }
+                else
+                {
+                    targetPositionsRow.Add("Self");
                 }
 
-                targetPositionsRow.Add(targetStringBuilder.ToString());
-
                 #endregion target positions
+
+                #region dmg modifier
+
+                var dmgModifierText = ((int)(skill.DamageModifier * 100 - 100)).ToString() + "%";
+                if((int)(skill.DamageModifier * 100 - 100) >= 0)
+                    dmgModifierText = "+" + dmgModifierText;
+                dmgModifierRow.Add(dmgModifierText);
+
+                #endregion dmg modifier
             }
 
             infoTable.AddRow(costRow.ToArray());
@@ -271,6 +285,7 @@ namespace TurnBasedGame.Main.UI
             infoTable.AddRow(subskillTypeRow.ToArray());
             infoTable.AddRow(userPositionsRow.ToArray());
             infoTable.AddRow(targetPositionsRow.ToArray());
+            infoTable.AddRow(dmgModifierRow.ToArray());
 
             AnsiConsole.Write(infoTable);
         }

@@ -13,6 +13,7 @@ namespace TurnBasedGame.Main.Skills.NomadSkills
             Name = "Toxic Tempest";
             PrimaryType = EnumSkillType.Poison;
             ManaCost = 12;
+            DamageModifier = 0.25;
             IsPassive = false;
             IsAoE = true;
             Distance = EnumDistance.RangedLong;
