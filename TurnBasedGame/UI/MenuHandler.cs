@@ -117,7 +117,8 @@ namespace TurnBasedGame.Main.UI
                 new Rogue { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" },
                 new Scholar { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" },
                 new Nomad { UnitType = EnumUnitType.Player, Name = "Tair", DisplayName = "Tair,\nDesert Nomad" },
-                new SkeletonKing { UnitType = EnumUnitType.Player, Name = "Gaiseric", DisplayName = "Gaiseric,\nthe Skeleton King" }
+                new SkeletonKing { UnitType = EnumUnitType.Player, Name = "Gaiseric", DisplayName = "Gaiseric,\nthe Skeleton King" },
+                new RedDragon { UnitType = EnumUnitType.Player, Name = "Green Dragon", DisplayName = "Green\nDragon" }
             };
 
             List<Unit> selectedUnits = new List<Unit>();
@@ -168,7 +169,7 @@ namespace TurnBasedGame.Main.UI
                 {
                     var confirmSelection = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
-                            .Title("You have selected all characters. Do you want to confirm the selection?")
+                            .Title("You have selected maximum amount of units. Do you want to continue?")
                             .AddChoices("Yes", "No")
                             .HighlightStyle(new Style(Color.Red))
                     );
@@ -195,6 +196,8 @@ namespace TurnBasedGame.Main.UI
                         })
                         .ToList();
 
+                    unitChoices.Add("[white]Continue[/]");
+
                     var selectedUnitName = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
                             .Title($"Select a character ({maxUnits - selectedUnits.Count()} left):")
@@ -202,6 +205,9 @@ namespace TurnBasedGame.Main.UI
                             .AddChoices(unitChoices)
                             .HighlightStyle(new Style(Color.Red))
                     );
+
+                    if (selectedUnitName.Contains("Continue"))
+                        break;
 
                     // Find the selected unit
                     var unitToSelect = availableUnits.FirstOrDefault(u =>
@@ -222,7 +228,8 @@ namespace TurnBasedGame.Main.UI
             }
 
             AnsiConsole.Clear();
-            ArrangeUnits(selectedUnits);
+            if(selectedUnits.Count > 1)
+                ArrangeUnits(selectedUnits);
             return selectedUnits;
         }
 
