@@ -3,23 +3,22 @@ using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
-namespace TurnBasedGame.Main.Skills.ClericSkills
+namespace TurnBasedGame.Main.Skills.OccultistSkills
 {
-    public class DivineAid : UtilitySkill
+    public class DarkReconstruction : UtilitySkill
     {
-        public DivineAid()
+        public DarkReconstruction() 
         {
-            Name = "Divine Aid";
-            ExecutionName = Name;
+            Name = "Dark Reconstruction";
             ManaCost = 3;
             IsPassive = true;
-            PrimaryType = EnumSkillType.Holy;
-            SkillStatusEffects.Add(new HealEffect { HealPerTurn = 6});
+            PrimaryType = EnumSkillType.Dark;
+            SkillStatusEffects.Add(new HealEffect { HealPerTurn = 7 });
+            SkillStatusEffects.Add(new BleedEffect { DamagePerTurn = 2 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            //return PerformHeal(actor, singleTarget);
             return base.Execute(actor, singleTarget, targets);
         }
     }

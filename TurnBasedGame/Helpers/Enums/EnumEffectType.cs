@@ -7,6 +7,9 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("seagreen2", "+", "Heal")]
         HealEffect,
 
+        [Info("cyan", "+", "Restore")]
+        RestoreManaEffect,
+
         [Info("green", "&", "Poison")]
         PoisonEffect,
 

@@ -116,7 +116,8 @@ namespace TurnBasedGame.Main.UI
                 new Cleric { UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric" },
                 new Rogue { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" },
                 new Scholar { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" },
-                new Nomad { UnitType = EnumUnitType.Player, Name = "Tair", DisplayName = "Tair,\nDesert Nomad" },
+                new Nomad { UnitType = EnumUnitType.Player, Name = "Ali", DisplayName = "Ali,\nDesert Nomad" },
+                new Occultist { UnitType = EnumUnitType.Player, Name = "Occultist", DisplayName = "Occultist" }.SetLevel(3),
                 new SkeletonKing { UnitType = EnumUnitType.Player, Name = "Gaiseric", DisplayName = "Gaiseric,\nthe Skeleton King" },
                 new RedDragon { UnitType = EnumUnitType.Player, Name = "Green Dragon", DisplayName = "Green\nDragon" }
             };
@@ -206,7 +207,7 @@ namespace TurnBasedGame.Main.UI
                             .HighlightStyle(new Style(Color.Red))
                     );
 
-                    if (selectedUnitName.Contains("Continue"))
+                    if (selectedUnitName.Contains("Continue") && selectedUnits.Count > 0)
                         break;
 
                     // Find the selected unit

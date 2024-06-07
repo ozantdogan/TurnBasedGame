@@ -38,7 +38,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
                 foreach (var effect in SkillStatusEffects)
                 {
-                    if (effect is HealEffect)
+                    if (effect is RestoreManaEffect || effect is HealEffect)
                     {
                         double attributeModifier = 0.0;
                         if (PrimaryType == EnumSkillType.Holy)

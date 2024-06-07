@@ -3,23 +3,22 @@ using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Skills.BaseSkills;
 
-namespace TurnBasedGame.Main.Skills.ClericSkills
+namespace TurnBasedGame.Main.Skills.OccultistSkills
 {
-    public class DivineAid : UtilitySkill
+    public class BloodRitual : UtilitySkill
     {
-        public DivineAid()
+        public BloodRitual() 
         {
-            Name = "Divine Aid";
-            ExecutionName = Name;
-            ManaCost = 3;
+            Name = "Blood Ritual";
+            HealthCost = 6;
             IsPassive = true;
-            PrimaryType = EnumSkillType.Holy;
-            SkillStatusEffects.Add(new HealEffect { HealPerTurn = 6});
+            PrimaryType = EnumSkillType.Dark;
+            IsAoE = true;
+            SkillStatusEffects.Add(new RestoreManaEffect { HealPerTurn = 10 });
         }
 
         public override int Execute(Unit actor, Unit? singleTarget = null, List<Unit>? targets = null)
         {
-            //return PerformHeal(actor, singleTarget);
             return base.Execute(actor, singleTarget, targets);
         }
     }

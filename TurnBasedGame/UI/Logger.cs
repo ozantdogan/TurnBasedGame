@@ -37,6 +37,11 @@ namespace TurnBasedGame.Main.UI
             AnsiConsole.MarkupLine($"{FormatUnit(unit)} cannot be healed)");
         }
 
+        public static void LogRestore(Unit unit, StatusEffect effect, int healDealt)
+        {
+            AnsiConsole.MarkupLine($"{FormatEffectPerTurn(effect)} {FormatUnit(unit)} has [cyan]+{healDealt} MP[/] ");
+        }
+
         public static void LogDodge(Unit target)
         {
             AnsiConsole.MarkupLine($"{FormatUnit(target)} managed to dodge the attack!");

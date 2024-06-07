@@ -14,7 +14,6 @@ namespace TurnBasedGame.Main.Skills.CommonSkills
             ManaCost = 0;
             IsPassive = false;
             PrimaryType = EnumSkillType.Slash;
-            EffectChance = 20;
             ValidUserPositions = new List<int> { 0, 1 };
             ValidTargetPositions = new List<int> { 0, 1 };
             SkillStatusEffects.Add(new BleedEffect() { DamagePerTurn = 2, Modifier = 1, Duration = 1, ApplianceChance = 10 });

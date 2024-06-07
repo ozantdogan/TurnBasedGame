@@ -21,7 +21,8 @@ namespace TurnBasedGame.Main.Managers
             { EnumEffectType.PullEffect, () => new PullEffect() },
             { EnumEffectType.PhysicalProtection, () => new PhysicalProtectionEffect() },
             { EnumEffectType.BerserkEffect, () => new BerserkEffect() },
-            { EnumEffectType.HealEffect, () => new HealEffect() }
+            { EnumEffectType.HealEffect, () => new HealEffect() },
+            { EnumEffectType.RestoreManaEffect, () => new RestoreManaEffect() }
         };
 
         public static readonly Dictionary<EnumEffectType, Func<Unit, double>> EffectDamageModifier = new Dictionary<EnumEffectType, Func<Unit, double>>
@@ -49,6 +50,7 @@ namespace TurnBasedGame.Main.Managers
             { EnumEffectType.HealEffect, skill => new HealEffect() },
             { EnumEffectType.EvadeEffect, skill => new EvadeEffect() },
             { EnumEffectType.BerserkEffect, skill => new BerserkEffect() },
+            { EnumEffectType.RestoreManaEffect, skill => new RestoreManaEffect() }
         };
     }
 }
