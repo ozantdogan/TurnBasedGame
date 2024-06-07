@@ -134,7 +134,7 @@ namespace TurnBasedGame.Main.UI
                 .Centered()
                 .Color(Spectre.Console.Color.Red);
 
-            var authorText = new Markup("[gray][link=https://github.com/ozantdogan]© 2024 Ozan T. Doğan[/][/]")
+            var authorText = new Markup("[grey15][link=https://github.com/ozantdogan]© 2024 Ozan T. Dogan[/][/]")
                 .RightJustified();
 
             AnsiConsole.Write(titleText);

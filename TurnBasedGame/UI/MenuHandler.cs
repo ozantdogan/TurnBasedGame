@@ -126,11 +126,11 @@ namespace TurnBasedGame.Main.UI
             List<Unit> selectedUnits = new List<Unit>();
             int maxUnits = 4; // Set the number of units players can choose
 
-            string selectedUnitColor = "Yellow";
+            string selectedUnitColor = "cyan2";
 
             while (true)
             {
-                var table = new Table().Border(TableBorder.AsciiDoubleHead).BorderColor(Color.DarkGoldenrod);
+                var table = new Table().Border(TableBorder.AsciiDoubleHead).BorderColor(Color.Grey15);
                 table.AddColumn(" ");
 
                 foreach (var unit in availableUnits)
@@ -204,7 +204,7 @@ namespace TurnBasedGame.Main.UI
                         })
                         .ToList();
 
-                    unitChoices.Add("[darkgoldenrod]Continue[/]");
+                    unitChoices.Add("[darkred_1]Continue[/]");
                     unitChoices.Add("[gray]Main Menu[/]");
 
                     var selectedUnitName = AnsiConsole.Prompt(
@@ -311,7 +311,7 @@ namespace TurnBasedGame.Main.UI
                 AnsiConsole.Write(table);
 
                 List<string> unitPositions = units.Select((unit, index) => $"{index + 1}. {unit.Name}").ToList();
-                unitPositions.Add("[darkgoldenrod]Start[/]");
+                unitPositions.Add("[darkred_1]Start[/]");
                 unitPositions.Add("[gray]Main Menu[/]");
 
                 var selectedPosition = AnsiConsole.Prompt(
@@ -319,7 +319,7 @@ namespace TurnBasedGame.Main.UI
                         .Title("Select a unit to move:")
                         .PageSize(10)
                         .AddChoices(unitPositions)
-                        .HighlightStyle(new Style(Color.Yellow))
+                        .HighlightStyle(new Style(Color.Red))
                 );
 
                 if (selectedPosition.Contains("Start"))
