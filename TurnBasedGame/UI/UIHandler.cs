@@ -166,16 +166,16 @@ namespace TurnBasedGame.Main.UI
         {
             var infoTable = new Table()
                 .Border(TableBorder.Ascii2)
-                .BorderColor(Spectre.Console.Color.Grey);
-            infoTable.AddColumn($"[lightskyblue1]{unit.Name}[/]");
+                .BorderColor(Spectre.Console.Color.DarkRed);
+            infoTable.AddColumn($"[italic][gray]{unit.Name}[/][/]");
 
-            var costRow = new List<string> { "Cost:" };
-            var dmgTypesRow = new List<string> { "Affinity:" };
-            var subskillTypeRow = new List<string> { "Type:" };
-            var userPositionsRow = new List<string> { "Rank:" };
-            var targetPositionsRow = new List<string> { "Target:" };
-            var dmgModifierRow = new List<string> { "Modifier:" };
-            var effectsRow = new List<string> { "Effect:" };
+            var costRow = new List<string> { "[gray]Cost[/]" };
+            var dmgTypesRow = new List<string> { "[gray]Affinity[/]" };
+            var subskillTypeRow = new List<string> { "[gray]Type[/]" };
+            var userPositionsRow = new List<string> { "[gray]Rank[/]" };
+            var targetPositionsRow = new List<string> { "[gray]Target[/]" };
+            var dmgModifierRow = new List<string> { "[gray]Modifier[/]" };
+            var effectsRow = new List<string> { "[gray]Effects[/]" };
 
             var unitSkills = new List<BaseSkill>();
 
@@ -193,9 +193,9 @@ namespace TurnBasedGame.Main.UI
             foreach (var skill in unitSkills)
             {
                 #region cost
-                string manaCost = (skill.ManaCost > 0 ? $"[cyan]{skill.ManaCost}[/]" : string.Empty);
+                string manaCost = (skill.ManaCost > 0 ? $"[cyan]{skill.ManaCost} [/]" : string.Empty);
                 string healthCost = (skill.HealthCost > 0 ? $"[deeppink2]{skill.HealthCost}[/]" : string.Empty);
-                string costText = (manaCost + healthCost).Length == 0 ? $"[gray]-[/]" : manaCost + " " + healthCost;
+                string costText = (manaCost + healthCost).Length == 0 ? $"[gray]-[/]" : manaCost  + healthCost;
 
                 costRow.Add(costText);
                 #endregion cost

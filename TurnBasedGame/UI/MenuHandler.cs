@@ -6,6 +6,7 @@ using TurnBasedGame.Main.Managers;
 using System.Collections.Generic;
 using System.Linq;
 using TurnBasedGame.Main.Entities.Bosses;
+using System.Xml.Linq;
 
 namespace TurnBasedGame.Main.UI
 {
@@ -129,39 +130,84 @@ namespace TurnBasedGame.Main.UI
 
             while (true)
             {
+                #region old
                 // Create the table for available units
-                var table = new Table()
-                    .Border(TableBorder.AsciiDoubleHead)
-                    .BorderColor(Color.DarkGoldenrod)
-                    .Title("[bold white]Available Units[/]")
-                    .AddColumn("Name")
-                    .AddColumn("Class")
-                    .AddColumn("HP")
-                    .AddColumn("STR")
-                    .AddColumn("DEX")
-                    .AddColumn("INT")
-                    .AddColumn("FAI")
-                    .AddColumn("DMG");
+                //var table = new Table()
+                //    .Border(TableBorder.AsciiDoubleHead)
+                //    .BorderColor(Color.DarkGoldenrod)
+                //    .Title("[bold white]Available Units[/]")
+                //    .AddColumn("Name")
+                //    .AddColumn("Class")
+                //    .AddColumn("HP")
+                //    .AddColumn("STR")
+                //    .AddColumn("DEX")
+                //    .AddColumn("INT")
+                //    .AddColumn("FAI")
+                //    .AddColumn("DMG");
+
+                //foreach (var unit in availableUnits)
+                //{
+                //    if (unit == null) continue; // Skip null units to prevent exceptions
+
+                //    bool isSelected = selectedUnits.Contains(unit);
+                //    var name = unit.Name ?? "Unknown"; // Handle potential null DisplayName
+                //    var className = unit.GetType().Name ?? ""; // Handle potential null UnitType
+                //    var dmgValues = $"{unit.MinDamageValue}-{unit.MaxDamageValue}";
+
+                //    table.AddRow(
+                //        new Markup(isSelected ? $"[{selectedUnitColor}]{name}[/]" : name),
+                //        new Markup(isSelected ? $"[{selectedUnitColor}]{className}[/]" : className),
+                //        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.HP}[/]" : unit.HP.ToString()),
+                //        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Strength}[/]" : unit.Strength.ToString()),
+                //        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Dexterity}[/]" : unit.Dexterity.ToString()),
+                //        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Intelligence}[/]" : unit.Intelligence.ToString()),
+                //        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Faith}[/]" : unit.Faith.ToString()),
+                //        new Markup(isSelected ? $"[{selectedUnitColor}]{dmgValues}[/]" : dmgValues));
+                //}
+                #endregion old
+
+                var table = new Table().Border(TableBorder.AsciiDoubleHead).BorderColor(Color.DarkGoldenrod);
+                table.AddColumn(" ");
+
+
 
                 foreach (var unit in availableUnits)
                 {
-                    if (unit == null) continue; // Skip null units to prevent exceptions
-
                     bool isSelected = selectedUnits.Contains(unit);
-                    var name = unit.Name ?? "Unknown"; // Handle potential null DisplayName
-                    var className = unit.GetType().Name ?? ""; // Handle potential null UnitType
-                    var dmgValues = $"{unit.MinDamageValue}-{unit.MaxDamageValue}";
-
-                    table.AddRow(
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{name}[/]" : name),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{className}[/]" : className),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.HP}[/]" : unit.HP.ToString()),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Strength}[/]" : unit.Strength.ToString()),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Dexterity}[/]" : unit.Dexterity.ToString()),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Intelligence}[/]" : unit.Intelligence.ToString()),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Faith}[/]" : unit.Faith.ToString()),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{dmgValues}[/]" : dmgValues));
+                    var name = unit.Name ?? "Unknown";
+                    table.AddColumn(isSelected ? $"[italic][{selectedUnitColor}]{name}[/][/]" : $"[italic]{name}[/]");
                 }
+
+                var hpMpRow = new List<string> { "[gray]HP/MP[/]" };
+                var classRow = new List<string> { "[gray]Class[/]" };
+                var strRow = new List<string> { "[gray]STR[/]" };
+                var dexRow = new List<string> { "[gray]DEX[/]" };
+                var intRow = new List<string> { "[gray]INT[/]" };
+                var faithRow = new List<string> { "[gray]FAI[/]" };
+                var dmgRow = new List<string> { "[gray]DMG[/]" };
+
+                foreach (var unit in availableUnits)
+                {
+                    var className = unit.GetType().Name ?? "";
+                    var dmgValues = $"{unit.MinDamageValue}-{unit.MaxDamageValue}";
+                    bool isSelected = selectedUnits.Contains(unit);
+
+                    hpMpRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.HP}/{unit.MP}[/]" : $"[seagreen2]{unit.HP}[/][gray]/[/][cyan]{unit.MP}[/]");
+                    classRow.Add(isSelected ? $"[{selectedUnitColor}]{className}[/]" : className);
+                    strRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.Strength}[/]" : unit.Strength.ToString());
+                    dexRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.Dexterity}[/]" : unit.Dexterity.ToString());
+                    intRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.Intelligence}[/]" : unit.Intelligence.ToString());
+                    faithRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.Faith}[/]" : unit.Faith.ToString());
+                    dmgRow.Add(isSelected ? $"[{selectedUnitColor}]{dmgValues}[/]" : dmgValues);
+                };
+
+                table.AddRow(hpMpRow.ToArray());
+                table.AddRow(classRow.ToArray());
+                table.AddRow(strRow.ToArray());
+                table.AddRow(dexRow.ToArray());
+                table.AddRow(intRow.ToArray());
+                table.AddRow(faithRow.ToArray());
+                table.AddRow(dmgRow.ToArray());
 
                 AnsiConsole.Write(table);
 
