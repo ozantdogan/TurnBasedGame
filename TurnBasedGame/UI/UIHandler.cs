@@ -271,13 +271,25 @@ namespace TurnBasedGame.Main.UI
                 #endregion target positions
 
                 #region dmg modifier
-
                 var dmgModifierText = ((int)(skill.DamageModifier * 100 - 100)).ToString() + "%";
                 if((int)(skill.DamageModifier * 100 - 100) >= 0)
                     dmgModifierText = "+" + dmgModifierText;
                 dmgModifierRow.Add(dmgModifierText);
-
                 #endregion dmg modifier
+
+                #region effects
+                string effectsString = String.Empty;
+                foreach(var effect in skill.SkillStatusEffects)
+                {
+                    var effectText = $"[{effect.EffectType.GetColor()}]{effect.EffectType.GetDisplayName()}[/]";
+                    var applianceChanceText = (effect.ApplianceChance != 100 ? $"({effect.ApplianceChance}%)" : string.Empty);
+                    effectText = effectText + applianceChanceText;
+                    if (effectsString.Length > 0)
+                        effectsString = effectsString + ", ";
+                    effectsString = effectsString + effectText;
+                }
+                effectsRow.Add(effectsString);
+                #endregion effects
             }
 
             infoTable.AddRow(costRow.ToArray());
@@ -286,6 +298,7 @@ namespace TurnBasedGame.Main.UI
             infoTable.AddRow(userPositionsRow.ToArray());
             infoTable.AddRow(targetPositionsRow.ToArray());
             infoTable.AddRow(dmgModifierRow.ToArray());
+            infoTable.AddRow(effectsRow.ToArray());
 
             AnsiConsole.Write(infoTable);
         }
