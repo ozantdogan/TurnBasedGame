@@ -1,5 +1,6 @@
 ﻿using Spectre.Console;
 using System.Drawing;
+using System.Text;
 using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
@@ -159,16 +160,19 @@ namespace TurnBasedGame.Main.UI
         }
         public void ShowSkillInfo(Unit unit, BaseSkill? singleSkill)
         {
-            var infoTable = new Table().Border(TableBorder.Rounded).LeftAligned();
+            var infoTable = new Table()
+                .Border(TableBorder.Rounded)
+                .BorderColor(Spectre.Console.Color.Grey)
+                .Title($"[bold white]{unit.Name}'s skills[/]");
             infoTable.AddColumn(" ");
 
             var costRow = new List<string> { "Cost:" };
-            var dmgTypesRow = new List<string> { "Type:" };
-            var subskillTypeRow = new List<string> { "" };
-            var userPositionsRow = new List<string> { "" };
-            var targetPositionsRow = new List<string> { "" };
-            var dmgModifierRow = new List<string> { "" };
-            var effectsRow = new List<string> { "" };
+            var dmgTypesRow = new List<string> { "Affinity:" };
+            var subskillTypeRow = new List<string> { "Type:" };
+            var userPositionsRow = new List<string> { "Rank:" };
+            var targetPositionsRow = new List<string> { "Target:" };
+            var dmgModifierRow = new List<string> { "Modifier:" };
+            var effectsRow = new List<string> { "Effect:" };
 
             var unitSkills = new List<BaseSkill>();
 
@@ -185,20 +189,88 @@ namespace TurnBasedGame.Main.UI
 
             foreach (var skill in unitSkills)
             {
+                #region cost
                 string manaCost = (skill.ManaCost > 0 ? $"[cyan]{skill.ManaCost}[/]" : $"[gray]-[/]");
                 string healthCost = (skill.HealthCost > 0 ? $"[gray]/[/][deeppink2]{skill.HealthCost}[/]" : string.Empty);
                 string costText = manaCost + healthCost;
 
                 costRow.Add(costText);
+                #endregion cost
 
+                #region affinity
                 string dmgTypesText = $"[{skill.PrimaryType.GetColor()}]{skill.PrimaryType.GetCode()}[/]" + 
                     (skill.SecondaryType != EnumSkillType.None ? $"[gray]/[/][{skill.SecondaryType.GetColor()}]{skill.SecondaryType.GetCode()}[/]" : string.Empty);
 
                 dmgTypesRow.Add(dmgTypesText);
+                #endregion affinity
+
+                #region type
+                var parentType = skill.GetType().BaseType;
+                if (parentType != null)
+                {
+                    string parentTypeName = parentType.Name;
+                    string extractedName = parentTypeName.Replace("Skill", ""); 
+                    subskillTypeRow.Add(extractedName);
+                }
+                else
+                {
+                    subskillTypeRow.Add($"[gray]-[/]"); 
+                }
+                #endregion type
+
+                #region user positions
+                string positions = "o o o o";
+                var stringBuilder = new StringBuilder(positions);
+
+                foreach (var pos in skill.ValidUserPositions)
+                {
+                    if (pos >= 0 && pos < 4) // Only consider positions 0, 1, 2, and 3
+                    {
+                        // Calculate the reversed position index in the string (6, 4, 2, 0)
+                        int index = (3 - pos) * 2;
+
+                        // Replace 'o' with '[yellow]o[/]'
+                        stringBuilder.Remove(index, 1);
+                        stringBuilder.Insert(index, "[darkorange]o[/]");
+                    }
+                }
+
+                userPositionsRow.Add(stringBuilder.ToString());
+                #endregion user positions
+
+                #region target positions
+
+                var targetStringBuilder = new StringBuilder();
+                var validPositions = new HashSet<int>(skill.ValidTargetPositions);
+                var targetColor = skill.IsPassive ? "springgreen1" : "red3";
+
+                for (int i = 0; i < 4; i++)
+                {
+                    if (validPositions.Contains(i))
+                    {
+                        targetStringBuilder.Append($"[{targetColor}]o[/]");
+                    }
+                    else
+                    {
+                        targetStringBuilder.Append("o");
+                    }
+
+                    if (i < 3)
+                    {
+                        targetStringBuilder.Append(" ");
+                    }
+                }
+
+                targetPositionsRow.Add(targetStringBuilder.ToString());
+
+                #endregion target positions
             }
 
             infoTable.AddRow(costRow.ToArray());
             infoTable.AddRow(dmgTypesRow.ToArray());
+            infoTable.AddRow(subskillTypeRow.ToArray());
+            infoTable.AddRow(userPositionsRow.ToArray());
+            infoTable.AddRow(targetPositionsRow.ToArray());
 
             AnsiConsole.Write(infoTable);
         }
