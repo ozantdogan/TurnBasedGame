@@ -8,7 +8,7 @@ namespace TurnBasedGame.Main.Managers
         private const int MaxLevel = 10;
         private const int StatIncreasePerLevel = 6;
         private const double PointIncreaseRate = 0.25;
-        private const double DamageIncreaseRate = 0.1;
+        private const double DamageIncreaseRate = 0.25;
 
         public UnitLevelManager(int startingLevel = 1)
         {

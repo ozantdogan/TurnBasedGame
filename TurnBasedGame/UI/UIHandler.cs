@@ -3,6 +3,7 @@ using System.Drawing;
 using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Helpers.Enums;
+using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.UI
 {
@@ -155,6 +156,51 @@ namespace TurnBasedGame.Main.UI
                 mpColor = "grey35";
 
             return mpColor;
+        }
+        public void ShowSkillInfo(Unit unit, BaseSkill? singleSkill)
+        {
+            var infoTable = new Table().Border(TableBorder.Rounded).LeftAligned();
+            infoTable.AddColumn(" ");
+
+            var costRow = new List<string> { "Cost:" };
+            var dmgTypesRow = new List<string> { "Type:" };
+            var subskillTypeRow = new List<string> { "" };
+            var userPositionsRow = new List<string> { "" };
+            var targetPositionsRow = new List<string> { "" };
+            var dmgModifierRow = new List<string> { "" };
+            var effectsRow = new List<string> { "" };
+
+            var unitSkills = new List<BaseSkill>();
+
+            if(singleSkill != null)
+                unitSkills.Add(singleSkill);
+            else
+                unitSkills.AddRange(unit.Skills.
+                    Where(skill => !(skill is MoveSkill) && !(skill is RestSkill)));
+
+            foreach (var skill in unitSkills)
+            {
+                infoTable.AddColumn($"{skill.Name}");
+            }
+
+            foreach (var skill in unitSkills)
+            {
+                string manaCost = (skill.ManaCost > 0 ? $"[cyan]{skill.ManaCost}[/]" : $"[gray]-[/]");
+                string healthCost = (skill.HealthCost > 0 ? $"[gray]/[/][deeppink2]{skill.HealthCost}[/]" : string.Empty);
+                string costText = manaCost + healthCost;
+
+                costRow.Add(costText);
+
+                string dmgTypesText = $"[{skill.PrimaryType.GetColor()}]{skill.PrimaryType.GetCode()}[/]" + 
+                    (skill.SecondaryType != EnumSkillType.None ? $"[gray]/[/][{skill.SecondaryType.GetColor()}]{skill.SecondaryType.GetCode()}[/]" : string.Empty);
+
+                dmgTypesRow.Add(dmgTypesText);
+            }
+
+            infoTable.AddRow(costRow.ToArray());
+            infoTable.AddRow(dmgTypesRow.ToArray());
+
+            AnsiConsole.Write(infoTable);
         }
     }
 }

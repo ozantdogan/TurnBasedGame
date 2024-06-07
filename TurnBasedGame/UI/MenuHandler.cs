@@ -5,6 +5,7 @@ using TurnBasedGame.Main.Helpers.Enums;
 using TurnBasedGame.Main.Managers;
 using System.Collections.Generic;
 using System.Linq;
+using TurnBasedGame.Main.Entities.Bosses;
 
 namespace TurnBasedGame.Main.UI
 {
@@ -115,7 +116,8 @@ namespace TurnBasedGame.Main.UI
                 new Cleric { UnitType = EnumUnitType.Player, Name = "Flora", DisplayName = "Flora,\nthe Cleric" },
                 new Rogue { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" },
                 new Scholar { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" },
-                new Nomad { UnitType = EnumUnitType.Player, Name = "Tair", DisplayName = "Tair,\nDesert Nomad" }
+                new Nomad { UnitType = EnumUnitType.Player, Name = "Tair", DisplayName = "Tair,\nDesert Nomad" },
+                new SkeletonKing { UnitType = EnumUnitType.Player, Name = "Gaiseric", DisplayName = "Gaiseric,\nthe Skeleton King" }
             };
 
             List<Unit> selectedUnits = new List<Unit>();
@@ -132,7 +134,12 @@ namespace TurnBasedGame.Main.UI
                     .Title("[bold white]Available Units[/]")
                     .AddColumn("Name")
                     .AddColumn("Class")
-                    .AddColumn("HP");
+                    .AddColumn("HP")
+                    .AddColumn("STR")
+                    .AddColumn("DEX")
+                    .AddColumn("INT")
+                    .AddColumn("FAI")
+                    .AddColumn("DMG");
 
                 foreach (var unit in availableUnits)
                 {
@@ -141,11 +148,17 @@ namespace TurnBasedGame.Main.UI
                     bool isSelected = selectedUnits.Contains(unit);
                     var name = unit.Name ?? "Unknown"; // Handle potential null DisplayName
                     var className = unit.GetType().Name ?? ""; // Handle potential null UnitType
+                    var dmgValues = $"{unit.MinDamageValue}-{unit.MaxDamageValue}";
 
                     table.AddRow(
                         new Markup(isSelected ? $"[{selectedUnitColor}]{name}[/]" : name),
                         new Markup(isSelected ? $"[{selectedUnitColor}]{className}[/]" : className),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.HP}[/]" : unit.HP.ToString())
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.HP}[/]" : unit.HP.ToString()),
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Strength}[/]" : unit.Strength.ToString()),
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Dexterity}[/]" : unit.Dexterity.ToString()),
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Intelligence}[/]" : unit.Intelligence.ToString()),
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Faith}[/]" : unit.Faith.ToString()),
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{dmgValues}[/]" : dmgValues)
                     );
                 }
 
@@ -257,6 +270,8 @@ namespace TurnBasedGame.Main.UI
                 int selectedIndex = unitPositions.IndexOf(selectedPosition);
                 var selectedUnit = units[selectedIndex];
                 int previousIndex = selectedUnit.Position;
+
+                _ui.ShowSkillInfo(selectedUnit, null);
 
                 // Prompt for the second unit to swap with
                 var swapUnitPosition = AnsiConsole.Prompt(

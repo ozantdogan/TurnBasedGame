@@ -8,16 +8,16 @@ namespace TurnBasedGame.Main.Helpers.Enums
         [Info("gray", "None")]
         None,
 
-        [Info("gray", "Standard")]
+        [Info("white", "Standard")]
         Standard,
 
-        [Info("gray", "Blunt")]
+        [Info("white", "Blunt")]
         Blunt,
 
-        [Info("gray", "Slash")]
+        [Info("white", "Slash")]
         Slash,
 
-        [Info("gray", "Pierce")]
+        [Info("white", "Pierce")]
         Pierce,
 
         [Info("deepskyblue4_2", "Magic")]
