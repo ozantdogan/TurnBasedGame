@@ -131,8 +131,8 @@ namespace TurnBasedGame.Main.UI
             {
                 // Create the table for available units
                 var table = new Table()
-                    .Border(TableBorder.Heavy)
-                    .BorderColor(Color.Grey)
+                    .Border(TableBorder.AsciiDoubleHead)
+                    .BorderColor(Color.DarkGoldenrod)
                     .Title("[bold white]Available Units[/]")
                     .AddColumn("Name")
                     .AddColumn("Class")
@@ -314,6 +314,12 @@ namespace TurnBasedGame.Main.UI
                 int swapIndex = unitPositions.IndexOf(swapUnitPosition);
                 if (unitPositions[swapIndex].Contains("Start"))
                     break;
+
+                if (unitPositions[swapIndex].Contains("Menu"))
+                {
+                    AnsiConsole.Clear();
+                    ShowMainMenu();
+                }
 
                 var swapUnit = units[swapIndex];  
 
