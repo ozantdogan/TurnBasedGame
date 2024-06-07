@@ -69,7 +69,7 @@ namespace TurnBasedGame.Main.UI
                     $"1. Dummy level: {(LevelHandler.DummyLevel ? "ON" : "OFF")}",
                     $"2. Boss level: {(LevelHandler.BossLevel ? "ON" : "OFF")}",
                     $"3. Pace: {LevelHandler.Pace}",
-                    $"0. Back to Menu"
+                    $"[gray]Main Menu[/]"
                 };
 
                 var settingButtonChoice = AnsiConsole.Prompt(
@@ -117,7 +117,7 @@ namespace TurnBasedGame.Main.UI
                 new Rogue { UnitType = EnumUnitType.Player, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" },
                 new Scholar { UnitType = EnumUnitType.Player, Name = "Tudor", DisplayName = "Tudor,\nthe Wizard" },
                 new Nomad { UnitType = EnumUnitType.Player, Name = "Ali", DisplayName = "Ali,\nDesert Nomad" },
-                new Occultist { UnitType = EnumUnitType.Player, Name = "Occultist", DisplayName = "Occultist" }.SetLevel(3),
+                new Occultist { UnitType = EnumUnitType.Player, Name = "Occultist", DisplayName = "Occultist" },
                 new SkeletonKing { UnitType = EnumUnitType.Player, Name = "Gaiseric", DisplayName = "Gaiseric,\nthe Skeleton King" },
                 new RedDragon { UnitType = EnumUnitType.Player, Name = "Green Dragon", DisplayName = "Green\nDragon" }
             };
@@ -198,6 +198,7 @@ namespace TurnBasedGame.Main.UI
                         .ToList();
 
                     unitChoices.Add("[white]Continue[/]");
+                    unitChoices.Add("[gray]Main Menu[/]");
 
                     var selectedUnitName = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
@@ -208,7 +209,20 @@ namespace TurnBasedGame.Main.UI
                     );
 
                     if (selectedUnitName.Contains("Continue") && selectedUnits.Count > 0)
+                    {
                         break;
+                    }
+                    else if(selectedUnitName.Contains("Continue") && selectedUnits.Count <= 0)
+                    {
+                        AnsiConsole.Markup("[red]You must select at least one character[/]");
+                        Thread.Sleep(500);
+                    }
+
+                    if (selectedUnitName.Contains("Menu"))
+                    {
+                        AnsiConsole.Clear();
+                        ShowMainMenu();
+                    }
 
                     // Find the selected unit
                     var unitToSelect = availableUnits.FirstOrDefault(u =>
@@ -263,6 +277,7 @@ namespace TurnBasedGame.Main.UI
 
                 List<string> unitPositions = units.Select((unit, index) => $"{index + 1}. {unit.Name}").ToList();
                 unitPositions.Add("[white]Start[/]");
+                unitPositions.Add("[gray]Main Menu[/]");
 
                 var selectedPosition = AnsiConsole.Prompt(
                     new SelectionPrompt<string>()
@@ -274,6 +289,12 @@ namespace TurnBasedGame.Main.UI
 
                 if (selectedPosition.Contains("Start"))
                     break;
+
+                if (selectedPosition.Contains("Menu"))
+                {
+                    Console.Clear();
+                    ShowMainMenu();
+                }
 
                 int selectedIndex = unitPositions.IndexOf(selectedPosition);
                 var selectedUnit = units[selectedIndex];
