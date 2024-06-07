@@ -14,6 +14,7 @@ namespace TurnBasedGame.Main.Skills.DefenderSkills
             ManaCost = 8;
             IsPassive = false;
             PrimaryType = EnumSkillType.Blunt;
+            DamageModifier = 1.25;
             MissChance = 0;
             SkillStatusEffects.Add(new StunEffect() { ApplianceChance = 60, Duration = 1 });
         }

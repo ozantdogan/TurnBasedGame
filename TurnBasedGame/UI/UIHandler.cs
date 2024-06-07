@@ -242,29 +242,67 @@ namespace TurnBasedGame.Main.UI
                 #endregion user positions
 
                 #region target positions
+
+                var targetColor = skill.IsPassive ? "springgreen1" : "red3";
+                var targetStringBuilder = new StringBuilder();
+                var validPositions = new HashSet<int>(skill.ValidTargetPositions);
+
                 if (!skill.SelfTarget)
                 {
-                    var targetStringBuilder = new StringBuilder();
-                    var validPositions = new HashSet<int>(skill.ValidTargetPositions);
-                    var targetColor = skill.IsPassive ? "springgreen1" : "red3";
-
-                    for (int i = 0; i < 4; i++)
+                    if (!skill.IsPassive)
                     {
-                        if (validPositions.Contains(i))
+                        for (int i = 0; i < 4; i++)
                         {
-                            targetStringBuilder.Append($"[{targetColor}]o[/]");
+                            if (validPositions.Contains(i))
+                            {
+                                targetStringBuilder.Append($"[{targetColor}]o[/]");
+                                if (skill.IsAoE && i < 3 && validPositions.Contains(i + 1))
+                                {
+                                    targetStringBuilder.Append($"[{targetColor}]-[/]");
+                                }
+                                else if (i < 3)
+                                {
+                                    targetStringBuilder.Append(" ");
+                                }
+                            }
+                            else
+                            {
+                                targetStringBuilder.Append("o");
+                                if (i < 3)
+                                {
+                                    targetStringBuilder.Append(" ");
+                                }
+                            }
                         }
-                        else
-                        {
-                            targetStringBuilder.Append("o");
-                        }
-
-                        if (i < 3)
-                        {
-                            targetStringBuilder.Append(" ");
-                        }
+                        targetPositionsRow.Add(targetStringBuilder.ToString());
                     }
-                    targetPositionsRow.Add(targetStringBuilder.ToString());
+                    else if (skill.IsPassive)
+                    {
+                        for (int i = 3; i >= 0; i--)
+                        {
+                            if (validPositions.Contains(i))
+                            {
+                                targetStringBuilder.Append($"[{targetColor}]o[/]");
+                                if (skill.IsAoE && i > 0 && validPositions.Contains(i - 1))
+                                {
+                                    targetStringBuilder.Append($"[{targetColor}]-[/]");
+                                }
+                                else if (i > 0)
+                                {
+                                    targetStringBuilder.Append(" ");
+                                }
+                            }
+                            else
+                            {
+                                targetStringBuilder.Append("o");
+                                if (i > 0)
+                                {
+                                    targetStringBuilder.Append(" ");
+                                }
+                            }
+                        }
+                        targetPositionsRow.Add(targetStringBuilder.ToString());
+                    }
                 }
                 else
                 {
