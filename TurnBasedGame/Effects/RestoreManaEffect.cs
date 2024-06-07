@@ -32,7 +32,7 @@ namespace TurnBasedGame.Main.Effects
             }
 
             unit.MP += (int)restoringValue;
-            Logger.LogHeal(unit, this, unit.MP - oldMP);
+            Logger.LogRestore(unit, this, unit.MP - oldMP);
             Duration--;
             
             if (Duration < 0)
