@@ -31,6 +31,8 @@ namespace TurnBasedGame.Main.UI
                 {
                     _ui.ShowStatus(playerUnits, mobUnits, level);
                     AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
+                    if (unit.UnitType == EnumUnitType.Player || unit.UnitType == EnumUnitType.Summon)
+                        _ui.ShowSkillInfo(unit, null);
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
                     int effectResult = 0;
@@ -53,6 +55,8 @@ namespace TurnBasedGame.Main.UI
 
                     _ui.ShowStatus(playerUnits, mobUnits, level);
                     AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
+                    if (unit.UnitType == EnumUnitType.Player || unit.UnitType == EnumUnitType.Summon)
+                        _ui.ShowSkillInfo(unit, null);
                     AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
 
                     while (true)
@@ -71,8 +75,9 @@ namespace TurnBasedGame.Main.UI
 
                         _ui.ShowStatus(playerUnits, mobUnits, level);
                         AnsiConsole.MarkupLine($"[{unit.UnitType.GetColor()}]{unit.Name}[/]'s turn!");
+                        if(unit.UnitType == EnumUnitType.Player || unit.UnitType == EnumUnitType.Summon)
+                            _ui.ShowSkillInfo(unit, null);
                         AnsiConsole.Write(new Markup($"[gray] - {round} - [/]\n"));
-
                     }
                     battleResult = CheckAlives(playerUnits, mobUnits);
                     if (battleResult != 0)

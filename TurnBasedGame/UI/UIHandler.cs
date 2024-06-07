@@ -162,8 +162,7 @@ namespace TurnBasedGame.Main.UI
         {
             var infoTable = new Table()
                 .Border(TableBorder.Rounded)
-                .BorderColor(Spectre.Console.Color.Grey)
-                .Title($"[bold white]{unit.Name}'s skills[/]");
+                .BorderColor(Spectre.Console.Color.Grey);
             infoTable.AddColumn(" ");
 
             var costRow = new List<string> { "Cost:" };

@@ -283,6 +283,9 @@ namespace TurnBasedGame.Main.UI
                 );
 
                 int swapIndex = unitPositions.IndexOf(swapUnitPosition);
+                if (unitPositions[swapIndex].Contains("Start"))
+                    break;
+
                 var swapUnit = units[swapIndex];  
 
                 // Swap the selected unit with the unit at the swapIndex
