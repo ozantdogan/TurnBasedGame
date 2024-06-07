@@ -130,11 +130,15 @@ namespace TurnBasedGame.Main.UI
 
         public void ShowTitle()
         {
-            AnsiConsole.Write(
-            new FigletText("Turn Based Game")
+            var titleText = new FigletText("Turn Based Game")
                 .Centered()
-                .Color(Spectre.Console.Color.Red));
+                .Color(Spectre.Console.Color.Red);
 
+            var authorText = new Markup("[gray][link=https://github.com/ozantdogan]© 2024 Ozan T. Doğan[/][/]")
+                .RightJustified();
+
+            AnsiConsole.Write(titleText);
+            AnsiConsole.Write(authorText);
         }
 
         private string GetHpColor(Unit unit)
@@ -161,9 +165,9 @@ namespace TurnBasedGame.Main.UI
         public void ShowSkillInfo(Unit unit, BaseSkill? singleSkill)
         {
             var infoTable = new Table()
-                .Border(TableBorder.Rounded)
+                .Border(TableBorder.Ascii2)
                 .BorderColor(Spectre.Console.Color.Grey);
-            infoTable.AddColumn(" ");
+            infoTable.AddColumn($"[lightskyblue1]{unit.Name}[/]");
 
             var costRow = new List<string> { "Cost:" };
             var dmgTypesRow = new List<string> { "Affinity:" };

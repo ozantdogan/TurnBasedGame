@@ -23,9 +23,9 @@ namespace TurnBasedGame.Main.UI
             _ui.ShowTitle();
             List<string> menuButtonTexts = new List<string>()
             {
-                "                                                       Play",
-                "                                                       Settings",
-                "                                                       Exit"
+                " Play",
+                " Settings",
+                " Exit"
             };
 
             var menuButtonChoice = AnsiConsole.Prompt(
@@ -56,7 +56,7 @@ namespace TurnBasedGame.Main.UI
             }
             else if (menuButtonChoice.Contains("Exit"))
             {
-                return;
+                Environment.Exit(0);
             }
         }
 
@@ -160,8 +160,7 @@ namespace TurnBasedGame.Main.UI
                         new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Dexterity}[/]" : unit.Dexterity.ToString()),
                         new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Intelligence}[/]" : unit.Intelligence.ToString()),
                         new Markup(isSelected ? $"[{selectedUnitColor}]{unit.Faith}[/]" : unit.Faith.ToString()),
-                        new Markup(isSelected ? $"[{selectedUnitColor}]{dmgValues}[/]" : dmgValues)
-                    );
+                        new Markup(isSelected ? $"[{selectedUnitColor}]{dmgValues}[/]" : dmgValues));
                 }
 
                 AnsiConsole.Write(table);
@@ -170,7 +169,7 @@ namespace TurnBasedGame.Main.UI
                 {
                     var confirmSelection = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
-                            .Title("You have selected maximum amount of units. Do you want to continue?")
+                            .Title("You have selected the maximum number of units. Do you want to continue?")
                             .AddChoices("Yes", "No")
                             .HighlightStyle(new Style(Color.Red))
                     );
@@ -197,12 +196,12 @@ namespace TurnBasedGame.Main.UI
                         })
                         .ToList();
 
-                    unitChoices.Add("[white]Continue[/]");
+                    unitChoices.Add("[darkgoldenrod]Continue[/]");
                     unitChoices.Add("[gray]Main Menu[/]");
 
                     var selectedUnitName = AnsiConsole.Prompt(
                         new SelectionPrompt<string>()
-                            .Title($"Select a character ({maxUnits - selectedUnits.Count()} left):")
+                            .Title($"Select a character ({maxUnits - selectedUnits.Count} left):")
                             .PageSize(10)
                             .AddChoices(unitChoices)
                             .HighlightStyle(new Style(Color.Red))
@@ -212,10 +211,12 @@ namespace TurnBasedGame.Main.UI
                     {
                         break;
                     }
-                    else if(selectedUnitName.Contains("Continue") && selectedUnits.Count <= 0)
+                    else if (selectedUnitName.Contains("Continue") && selectedUnits.Count <= 0)
                     {
                         AnsiConsole.Markup("[red]You must select at least one character[/]");
                         Thread.Sleep(500);
+                        AnsiConsole.Clear();
+                        SelectCharacters();
                     }
 
                     if (selectedUnitName.Contains("Menu"))
@@ -229,21 +230,47 @@ namespace TurnBasedGame.Main.UI
                         selectedUnits.Contains(u) ? $"[{selectedUnitColor}]{u?.Name}[/]" == selectedUnitName : u?.Name == selectedUnitName
                     );
 
-                    if (unitToSelect != null && !selectedUnits.Contains(unitToSelect))
+                    if (unitToSelect != null)
                     {
-                        UnitManager.AddUnit(unitToSelect, selectedUnits);
-                    }
-                    else if (unitToSelect != null)
-                    {
-                        UnitManager.RemoveUnit(unitToSelect, selectedUnits);
-                    }
+                        // Show unit skills info
+                        _ui.ShowSkillInfo(unitToSelect, null);
 
-                    AnsiConsole.Clear();
+                        var unitInput = string.Empty;
+                        unitInput = !selectedUnits.Contains(unitToSelect) ? "Add" : "Remove";
+
+                        // Prompt for add/remove or back
+                        var action = AnsiConsole.Prompt(
+                            new SelectionPrompt<string>()
+                                .Title("Choose an action:")
+                                .AddChoices($"{unitInput}", "[darkgoldenrod]Back[/]", "[gray]Main Menu[/]")
+                                .HighlightStyle(new Style(Color.Red))
+                        );
+
+                        if (action == unitInput)
+                        {
+                            if (!selectedUnits.Contains(unitToSelect))
+                            {
+                                UnitManager.AddUnit(unitToSelect, selectedUnits);
+                            }
+                            else
+                            {
+                                UnitManager.RemoveUnit(unitToSelect, selectedUnits);
+                            }
+                        }
+                        else if (action.Contains("Menu"))
+                        {
+                            AnsiConsole.Clear();
+                            ShowMainMenu();
+                        }
+
+                        // Clear console before showing the updated list again
+                        AnsiConsole.Clear();
+                    }
                 }
             }
 
             AnsiConsole.Clear();
-            if(selectedUnits.Count > 1)
+            if (selectedUnits.Count > 1)
                 ArrangeUnits(selectedUnits);
             return selectedUnits;
         }
@@ -276,7 +303,7 @@ namespace TurnBasedGame.Main.UI
                 AnsiConsole.Write(table);
 
                 List<string> unitPositions = units.Select((unit, index) => $"{index + 1}. {unit.Name}").ToList();
-                unitPositions.Add("[white]Start[/]");
+                unitPositions.Add("[darkgoldenrod]Start[/]");
                 unitPositions.Add("[gray]Main Menu[/]");
 
                 var selectedPosition = AnsiConsole.Prompt(
