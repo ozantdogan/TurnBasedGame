@@ -14,7 +14,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             ColdResistance = EnumResistanceLevel.Weak;
             PoisonResistance = EnumResistanceLevel.VeryResistant;
             DarkResistance = EnumResistanceLevel.Resistant;
-            MaxHP = 18;
+            MaxHP = 28;
             MaxMP = 20;
             Strength = 2;
             Dexterity = 3;

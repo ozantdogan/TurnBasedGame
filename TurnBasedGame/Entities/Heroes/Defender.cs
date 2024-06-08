@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
         {
             Code = "{DEF}";
             Name = "Defender";
-            MaxHP = 22;
+            MaxHP = 32;
             MaxMP = 20;
             Strength = 5;
             Dexterity = 2;

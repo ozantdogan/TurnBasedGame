@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{ROG}";
             Name = "Rogue";
             DisplayName = Name;
-            MaxHP = 18;
+            MaxHP = 28;
             MaxMP = 20;
             Strength = 2;
             Dexterity = 5;

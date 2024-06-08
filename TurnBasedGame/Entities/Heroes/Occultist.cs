@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{OCL}";
             Name = "Occultist";
             DisplayName = Name;
-            MaxHP = 15;
+            MaxHP = 24;
             MaxMP = 20;
             Strength = 1;
             Dexterity = 2;

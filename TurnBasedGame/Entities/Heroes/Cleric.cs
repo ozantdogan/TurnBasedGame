@@ -12,7 +12,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             Code = "{CLE}";
             Name = "Cleric";
             DisplayName = Name;
-            MaxHP = 14;
+            MaxHP = 22;
             MaxMP = 20;
             Strength = 1;
             Dexterity = 3;
