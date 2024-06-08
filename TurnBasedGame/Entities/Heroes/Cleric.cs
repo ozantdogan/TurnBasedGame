@@ -22,7 +22,7 @@ namespace TurnBasedGame.Main.Entities.Heroes
             TurnPriority = 1;
             HolyResistance = EnumResistanceLevel.Resistant;
             Skills.Add(new BlindingLight());
-            Skills.Add(new DivineHeal());
+            Skills.Add(new HolyRejuvenation());
             Skills.Add(new DivineAid());
             Skills.Add(new SacredFlame());
             Skills.Add(new KnifePierce());

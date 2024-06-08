@@ -9,8 +9,8 @@ namespace TurnBasedGame.Main.Entities.Base
         {
             Code = "{DRG}";
             Name = "Dragon";
-            MaxHP = 70;
-            MaxMP = 70;
+            MaxHP = 120;
+            MaxMP = 120;
             Strength = 6;
             Dexterity = 6;
             Intelligence = 3;

@@ -5,11 +5,11 @@ using TurnBasedGame.Main.Skills.BaseSkills;
 
 namespace TurnBasedGame.Main.Skills.ClericSkills
 {
-    public class DivineHeal : UtilitySkill
+    public class HolyRejuvenation : UtilitySkill
     {
-        public DivineHeal()
+        public HolyRejuvenation()
         {
-            Name = "Divine Heal";
+            Name = "Holy Rejuvenation";
             ExecutionName = Name;
             ManaCost = 12;
             IsPassive = true;

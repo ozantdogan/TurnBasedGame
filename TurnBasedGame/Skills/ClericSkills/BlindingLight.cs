@@ -9,7 +9,7 @@ namespace TurnBasedGame.Main.Skills.ClericSkills
     {
         public BlindingLight()
         {
-            Name = "Divine Light";
+            Name = "Blinding Light";
             ExecutionName = Name;
             ManaCost = 15;
             IsPassive = false;

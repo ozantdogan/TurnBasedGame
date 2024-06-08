@@ -47,7 +47,7 @@ namespace TurnBasedGame.Main.Effects
                 ResistanceManager.AdjustResistance(unit, EnumSkillType.Holy, true);
             }
 
-            unit.DodgeChance = (int)(unit.DodgeChance * 0.4);
+            unit.DodgeChance = (int)(unit.DodgeChance / 0.6);
         }
     }
 }
