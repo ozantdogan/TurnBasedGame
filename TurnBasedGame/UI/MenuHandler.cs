@@ -67,7 +67,7 @@ namespace TurnBasedGame.Main.UI
             {
                 List<string> settingButtonTexts = new List<string>()
                 {
-                    $"1. Level: {LevelHandler.LevelType}",
+                    $"1. Level: {LevelHandler.LevelName.GetDisplayName()}",
                     $"2. Pace: {LevelHandler.Pace}",
                     $"[gray]Main Menu[/]"
                 };
@@ -86,14 +86,14 @@ namespace TurnBasedGame.Main.UI
                     Array enumValues = Enum.GetValues(typeof(EnumLevel));
                     if (enumValues.Length > 0)
                     {
-                        int currentIndex = Array.IndexOf(enumValues, LevelHandler.LevelType);
+                        int currentIndex = Array.IndexOf(enumValues, LevelHandler.LevelName);
                         int nextIndex = (currentIndex + 1) % enumValues.Length;
                         object? nextValue = enumValues.GetValue(nextIndex);
 
                         if (nextValue is EnumLevel nextLevel)
                         {
-                            LevelHandler.LevelType = nextLevel;
-                            AnsiConsole.MarkupLine($"Level changed to: {LevelHandler.LevelType}");
+                            LevelHandler.LevelName = nextLevel;
+                            AnsiConsole.MarkupLine($"Level changed to: {LevelHandler.LevelName}");
                         }
                     }
                 }

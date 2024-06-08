@@ -14,6 +14,7 @@ namespace TurnBasedGame.Main.UI
         {
             Console.Clear();
 
+            AnsiConsole.Write(new Markup($"[lightpink4]    {LevelHandler.LevelName.GetDisplayName()}    [/]").Centered());
             AnsiConsole.Write(new Markup($"[lightpink4] == {level} == [/]").Centered());
 
             #region Players

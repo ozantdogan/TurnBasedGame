@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.UI
     public class LevelHandler
     {
         public static int Level { get; set; } = 1;
-        public static EnumLevel LevelType { get; set; } = EnumLevel.UndeadValley;
+        public static EnumLevel LevelName { get; set; } = EnumLevel.UndeadValley;
         public static int DummyMaxHP { get; set; } = 500;
         public static int DummyCount { get; set; } = 4;
         public static int Pace { get; set; } = 1000;
@@ -31,7 +31,7 @@ namespace TurnBasedGame.Main.UI
         }
         public static void AddMobs(List<Unit> mobList)
         {
-            if (LevelType == EnumLevel.Dummy)
+            if (LevelName == EnumLevel.Dummy)
             {
                 Level = 0;
                 for (int i = 0; i <= DummyCount - 1; i++)
@@ -40,7 +40,7 @@ namespace TurnBasedGame.Main.UI
                     UnitManager.AddUnit(new DummyUnit() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5), mobList);
                 }
             }
-            else if (LevelType == EnumLevel.Boss)
+            else if (LevelName == EnumLevel.Boss)
             {
                 Level = 0;
                 UnitManager.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(1), mobList);
@@ -48,8 +48,7 @@ namespace TurnBasedGame.Main.UI
                 //UnitManager.AddUnit(new SkeletonKing() { UnitType = EnumUnitType.Boss }.SetLevel(1), mobList);
                 //UnitManager.AddUnit(new Rogue() { UnitType = EnumUnitType.Boss, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(6), mobList);
             }
-
-            if(LevelType == EnumLevel.UndeadValley)
+            else if(LevelName == EnumLevel.UndeadValley)
             {
                 UndeadValleyLevel(mobList);
             }
