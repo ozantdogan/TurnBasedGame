@@ -67,9 +67,8 @@ namespace TurnBasedGame.Main.UI
             {
                 List<string> settingButtonTexts = new List<string>()
                 {
-                    $"1. Dummy level: {(LevelHandler.DummyLevel ? "ON" : "OFF")}",
-                    $"2. Boss level: {(LevelHandler.BossLevel ? "ON" : "OFF")}",
-                    $"3. Pace: {LevelHandler.Pace}",
+                    $"1. Level: {LevelHandler.LevelType}",
+                    $"2. Pace: {LevelHandler.Pace}",
                     $"[gray]Main Menu[/]"
                 };
 
@@ -81,13 +80,22 @@ namespace TurnBasedGame.Main.UI
                         .HighlightStyle(new Style(Color.Red))
                 );
 
-                if (settingButtonChoice.Contains("Dummy level"))
+                if (settingButtonChoice.Contains("Level"))
                 {
-                    LevelHandler.DummyLevel = !LevelHandler.DummyLevel;
-                }
-                else if (settingButtonChoice.Contains("Boss level"))
-                {
-                    LevelHandler.BossLevel = !LevelHandler.BossLevel;
+                    // Iterate through the EnumLevel values
+                    Array enumValues = Enum.GetValues(typeof(EnumLevel));
+                    if (enumValues.Length > 0)
+                    {
+                        int currentIndex = Array.IndexOf(enumValues, LevelHandler.LevelType);
+                        int nextIndex = (currentIndex + 1) % enumValues.Length;
+                        object? nextValue = enumValues.GetValue(nextIndex);
+
+                        if (nextValue is EnumLevel nextLevel)
+                        {
+                            LevelHandler.LevelType = nextLevel;
+                            AnsiConsole.MarkupLine($"Level changed to: {LevelHandler.LevelType}");
+                        }
+                    }
                 }
                 else if (settingButtonChoice.Contains("Pace"))
                 {

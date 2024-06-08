@@ -1,4 +1,5 @@
-﻿using TurnBasedGame.Main.Entities.Base;
+﻿using System;
+using TurnBasedGame.Main.Entities.Base;
 using TurnBasedGame.Main.Entities.Bosses;
 using TurnBasedGame.Main.Entities.Heroes;
 using TurnBasedGame.Main.Entities.Mobs;
@@ -10,11 +11,15 @@ namespace TurnBasedGame.Main.UI
     public class LevelHandler
     {
         public static int Level { get; set; } = 1;
-        public static bool DummyLevel { get; set; } = false;
-        public static bool BossLevel { get; set; } = false;
+        public static EnumLevel LevelType { get; set; } = EnumLevel.UndeadValley;
         public static int DummyMaxHP { get; set; } = 500;
         public static int DummyCount { get; set; } = 4;
         public static int Pace { get; set; } = 1000;
+        private static Random _random = new Random();
+
+        public LevelHandler()
+        {
+        }
 
         public static void Rest(List<Unit> units)
         {
@@ -26,9 +31,7 @@ namespace TurnBasedGame.Main.UI
         }
         public static void AddMobs(List<Unit> mobList)
         {
-            Random random = new Random();
-            int numberOfMobs = 0;
-            if (DummyLevel)
+            if (LevelType == EnumLevel.Dummy)
             {
                 Level = 0;
                 for (int i = 0; i <= DummyCount - 1; i++)
@@ -37,7 +40,7 @@ namespace TurnBasedGame.Main.UI
                     UnitManager.AddUnit(new DummyUnit() { MaxHP = DummyMaxHP, Name = $"Dummy {i}", DisplayName = $"Dummy {i}", Position = i }.SetLevel(5), mobList);
                 }
             }
-            else if (BossLevel)
+            else if (LevelType == EnumLevel.Boss)
             {
                 Level = 0;
                 UnitManager.AddUnit(new RedDragon() { UnitType = EnumUnitType.Boss }.SetLevel(1), mobList);
@@ -46,13 +49,24 @@ namespace TurnBasedGame.Main.UI
                 //UnitManager.AddUnit(new Rogue() { UnitType = EnumUnitType.Boss, Name = "Judeau", DisplayName = "Judeau,\nthe Hunter" }.SetLevel(6), mobList);
             }
 
+            if(LevelType == EnumLevel.UndeadValley)
+            {
+                UndeadValleyLevel(mobList);
+            }
+
+            mobList = mobList.OrderBy(p => p.Position).ToList();
+        }
+
+        private static void UndeadValleyLevel(List<Unit> mobList)
+        {
+            int numberOfMobs = 0;
             if (Level <= 2 && Level > 0)
             {
-                numberOfMobs = random.Next(3, 4);
+                numberOfMobs = _random.Next(3, 4);
             }
             else if (Level >= 3 && Level <= 5)
             {
-                numberOfMobs = random.Next(3, 5);
+                numberOfMobs = _random.Next(3, 5);
             }
             else if (Level == 6)
             {
@@ -61,7 +75,7 @@ namespace TurnBasedGame.Main.UI
 
             for (int i = 0; i < numberOfMobs; i++)
             {
-                if (random.Next(1, 101) <= 50 && Level > 2 && numberOfMobs < 4 && !mobList.Any(u => u is Troll))
+                if (_random.Next(1, 101) <= 50 && Level > 2 && numberOfMobs < 4 && !mobList.Any(u => u is Troll))
                 {
                     UnitManager.AddUnit(new Troll() { UnitType = EnumUnitType.Mob, Position = i }, mobList);
                 }
@@ -70,7 +84,7 @@ namespace TurnBasedGame.Main.UI
                     int skeletonType;
                     do
                     {
-                        skeletonType = random.Next(3);
+                        skeletonType = _random.Next(3);
                     }
                     while (skeletonType == 0 && mobList.Where(u => u is UndeadBrute).Count() >= 2);
                     switch (skeletonType)
@@ -91,8 +105,6 @@ namespace TurnBasedGame.Main.UI
 
                 }
             }
-
-            mobList = mobList.OrderBy(p => p.Position).ToList();
         }
 
         public static void IncreaseLevel()
