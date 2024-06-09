@@ -128,7 +128,7 @@ namespace TurnBasedGame.Main.UI
                 new Nomad { UnitType = EnumUnitType.Player, Name = "Ali", DisplayName = "Ali,\nDesert Nomad" },
                 new Occultist { UnitType = EnumUnitType.Player, Name = "Occultist", DisplayName = "Occultist" },
                 new SkeletonKing { UnitType = EnumUnitType.Player, Name = "Gaiseric", DisplayName = "Gaiseric,\nthe Skeleton King" },
-                new RedDragon { UnitType = EnumUnitType.Player, Name = "Green Dragon", DisplayName = "Green\nDragon" }
+                new RedDragon { UnitType = EnumUnitType.Player, Name = "Green Dragon", DisplayName = "Green\nDragon" }.SetLevel(3)
             };
 
             List<Unit> selectedUnits = new List<Unit>();

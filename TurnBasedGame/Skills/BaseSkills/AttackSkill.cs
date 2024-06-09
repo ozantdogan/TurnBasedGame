@@ -40,6 +40,12 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
                 PrimaryDamageModifier = 0.8;
             }
 
+            foreach (var effect in SkillStatusEffects)
+            {
+                var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) * 0.2 : 0.0;
+                effect.DamagePerTurn = (int)(effect.DamagePerTurn * (1 + effectDamageModifier));
+            }
+
             var criticalDamage = 0;
 
             for (int i = 0; i <= ExecutionCount; i++)
@@ -88,9 +94,7 @@ namespace TurnBasedGame.Main.Skills.BaseSkills
 
                     foreach (var effect in SkillStatusEffects)
                     {
-                        var effectDamageModifier = EffectManager.EffectDamageModifier.ContainsKey(effect.EffectType) ? EffectManager.EffectDamageModifier[effect.EffectType](actor) : 1.0;
                         UnitManager.AddStatusEffect(target, effect, otherTargets);
-
                         if (!target.IsAlive)
                         {
                             Logger.LogDeath(target);
