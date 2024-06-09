@@ -1,5 +1,4 @@
 ﻿using Spectre.Console;
-using System.Drawing;
 using System.Text;
 using TurnBasedGame.Main.Effects;
 using TurnBasedGame.Main.Entities.Base;
@@ -165,9 +164,13 @@ namespace TurnBasedGame.Main.UI
         }
         public void ShowSkillInfo(Unit unit, BaseSkill? singleSkill)
         {
+            var borderColor = Color.DarkRed_1;
+            if (unit.UnitType == EnumUnitType.Player || unit.UnitType == EnumUnitType.Summon)
+                borderColor = Color.Cyan2;
+
             var infoTable = new Table()
                 .Border(TableBorder.Ascii2)
-                .BorderColor(Spectre.Console.Color.DarkRed);
+                .BorderColor(borderColor);
             infoTable.AddColumn($"[italic][gray]{unit.Name}[/][/]");
 
             var costRow = new List<string> { "[gray]Cost[/]" };

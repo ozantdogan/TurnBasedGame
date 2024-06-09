@@ -1,4 +1,6 @@
-﻿namespace TurnBasedGame.Main.Helpers.Attributes
+﻿using Spectre.Console;
+
+namespace TurnBasedGame.Main.Helpers.Attributes
 {
     public class InfoAttribute : Attribute
     {

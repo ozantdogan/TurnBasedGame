@@ -149,6 +149,7 @@ namespace TurnBasedGame.Main.UI
                 }
 
                 var hpMpRow = new List<string> { "[gray]HP/MP[/]" };
+                var lvlRow = new List<string> { "[gray]Level[/]" };
                 var classRow = new List<string> { "[gray]Class[/]" };
                 var strRow = new List<string> { "[gray]STR[/]" };
                 var dexRow = new List<string> { "[gray]DEX[/]" };
@@ -163,6 +164,7 @@ namespace TurnBasedGame.Main.UI
                     bool isSelected = selectedUnits.Contains(unit);
 
                     hpMpRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.HP}/{unit.MP}[/]" : $"[seagreen2]{unit.HP}[/][gray]/[/][cyan]{unit.MP}[/]");
+                    lvlRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.Level.CurrentLevel}[/]" : unit.Level.CurrentLevel.ToString());
                     classRow.Add(isSelected ? $"[{selectedUnitColor}]{className}[/]" : className);
                     strRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.Strength}[/]" : unit.Strength.ToString());
                     dexRow.Add(isSelected ? $"[{selectedUnitColor}]{unit.Dexterity}[/]" : unit.Dexterity.ToString());
@@ -172,6 +174,7 @@ namespace TurnBasedGame.Main.UI
                 };
 
                 table.AddRow(hpMpRow.ToArray());
+                table.AddRow(lvlRow.ToArray());
                 table.AddRow(classRow.ToArray());
                 table.AddRow(strRow.ToArray());
                 table.AddRow(dexRow.ToArray());
@@ -258,7 +261,7 @@ namespace TurnBasedGame.Main.UI
                         var action = AnsiConsole.Prompt(
                             new SelectionPrompt<string>()
                                 .Title("Choose an action:")
-                                .AddChoices($"{unitInput}", "[darkgoldenrod]Back[/]", "[gray]Main Menu[/]")
+                                .AddChoices($"{unitInput}", "[darkred_1]Back[/]", "[gray]Main Menu[/]")
                                 .HighlightStyle(new Style(Color.Red))
                         );
 
