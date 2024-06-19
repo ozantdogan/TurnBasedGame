@@ -168,10 +168,18 @@ namespace TurnBasedGame.Main.UI
             if (unit.UnitType == EnumUnitType.Player || unit.UnitType == EnumUnitType.Summon)
                 borderColor = Color.Cyan2;
 
-            var infoTable = new Table()
-                .Border(TableBorder.Ascii2)
-                .BorderColor(borderColor);
-            infoTable.AddColumn($"[italic][gray]{unit.Name}[/][/]");
+            var infoTable = new Table();
+
+            if (unit.UnitType == EnumUnitType.Player || unit.UnitType == EnumUnitType.Summon)
+            {
+                infoTable = infoTable.Border(TableBorder.Ascii2).BorderColor(borderColor);
+                infoTable.AddColumn($"[italic][gray]{unit.Name}[/][/]");
+            }
+            else
+            {
+                infoTable = infoTable.Border(TableBorder.Ascii2).BorderColor(borderColor).RightAligned();
+                infoTable.AddColumn($"[italic][gray]{unit.Name}[/][/]");
+            }
 
             var costRow = new List<string> { "[gray]Cost[/]" };
             var dmgTypesRow = new List<string> { "[gray]Affinity[/]" };

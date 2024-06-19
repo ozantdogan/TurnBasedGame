@@ -11,7 +11,7 @@ namespace TurnBasedGame.Main.Entities.Mobs
             Code = "{TRL}";
             Name = "Troll";
             DisplayName = Name;
-            MaxHP = 30;
+            MaxHP = 50;
             Strength = 6;
             Dexterity = 1;
             Intelligence = 1;
